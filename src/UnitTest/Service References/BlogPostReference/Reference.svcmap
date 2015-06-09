@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3fb99086-e853-4698-bb75-e6ef9f97de25" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1305/BlogPosts/BlogPostService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BlogPostService1.xsd" MetadataType="Schema" ID="d1e4066f-f97f-4f46-becd-50bac2924d43" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?xsd=xsd3" />
+    <MetadataFile FileName="BlogPostService4.xsd" MetadataType="Schema" ID="b2a6dbf1-2598-4d76-834f-9463a6979d72" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?xsd=xsd0" />
+    <MetadataFile FileName="BlogPostService21.xsd" MetadataType="Schema" ID="6de2d383-e7c5-4d69-83e3-bb529dfc5fde" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?xsd=xsd4" />
+    <MetadataFile FileName="BlogPostService.wsdl" MetadataType="Wsdl" ID="b4adcdc5-25a7-48fa-a203-4433e769c2cf" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?wsdl" />
+    <MetadataFile FileName="BlogPostService3.xsd" MetadataType="Schema" ID="fd726f49-f2cf-432f-a743-7fd57db58e15" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?xsd=xsd2" />
+    <MetadataFile FileName="BlogPostService.xsd" MetadataType="Schema" ID="bc908f23-919b-49c2-945a-af38083504f5" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?xsd=xsd1" />
+    <MetadataFile FileName="BlogPostService.disco" MetadataType="Disco" ID="9f9e544b-4912-4824-8877-0a82e644b72d" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?disco" />
+    <MetadataFile FileName="BlogPostService2.xsd" MetadataType="Schema" ID="e8a0ebde-b602-4383-b518-ce00da5e22b1" SourceId="1" SourceUrl="http://localhost:1305/BlogPosts/BlogPostService.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

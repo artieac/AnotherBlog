@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.AnotherBlog.DataLayer"
+                   namespace="AlwaysMoveForward.AnotherBlog.DataLayer.Entities">
+  <class name="NHibernateUser" table="Users">
+    <id name="UserId" column="UserId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="UserName" column="UserName" type="String"/>
+    <property name="Password" column="Password" type="String"/>
+    <property name="Email" column="Email" type="String"/>
+    <property name="ApprovedCommenter" column="ApprovedCommenter" type="Boolean"/>
+    <property name="IsSiteAdministrator" column="IsSiteAdministrator" type="Boolean"/>
+    <property name="IsActive" column="IsActive" type="Boolean"/>
+    <property name="About" column="About" type="StringClob"/>
+    <bag name="BlogEntries" table="BlogEntries" fetch="join" outer-join="false" lazy="true">
+      <key column="UserId"/>
+      <one-to-many class="AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities.BlogPost" />
+    </bag>
+  </class>
+</hibernate-mapping>

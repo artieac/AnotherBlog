@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.Common"
+                   namespace="AlwaysMoveForward.Common.DataLayer.Entities">
+  <class name="DbInfo" table="DbInfo">
+    <id name="Version" column="Version" type="Int32">
+      <generator class="identity" />
+    </id>
+  </class>
+</hibernate-mapping>

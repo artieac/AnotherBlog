@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AnotherBlog.Common.Data.Entities" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AnotherBlog.Common.Data.Entities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfBlogUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BlogUser" nillable="true" type="tns:BlogUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBlogUser" nillable="true" type="tns:ArrayOfBlogUser" />
+  <xs:complexType name="BlogUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Blog" nillable="true" type="tns:Blog" />
+      <xs:element minOccurs="0" name="BlogUserId" type="xs:int" />
+      <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="UserRole" nillable="true" type="tns:Role" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BlogUser" nillable="true" type="tns:BlogUser" />
+  <xs:complexType name="Blog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="About" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BlogId" type="xs:int" />
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="tns:ArrayOfComment" />
+      <xs:element minOccurs="0" name="ContactEmail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Posts" nillable="true" type="tns:ArrayOfBlogPost" />
+      <xs:element minOccurs="0" name="SubFolder" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Theme" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Users" nillable="true" type="tns:ArrayOfBlogUser" />
+      <xs:element minOccurs="0" name="WelcomeMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Blog" nillable="true" type="tns:Blog" />
+  <xs:complexType name="ArrayOfComment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Comment" nillable="true" type="tns:Comment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfComment" nillable="true" type="tns:ArrayOfComment" />
+  <xs:complexType name="Comment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AuthorEmail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AuthorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Blog" nillable="true" type="tns:Blog" />
+      <xs:element minOccurs="0" name="CommentId" type="xs:int" />
+      <xs:element minOccurs="0" name="DatePosted" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Link" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Post" nillable="true" type="tns:BlogPost" />
+      <xs:element minOccurs="0" name="Status" type="xs:int" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Comment" nillable="true" type="tns:Comment" />
+  <xs:complexType name="BlogPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Author" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="Blog" nillable="true" type="tns:Blog" />
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="tns:ArrayOfComment" />
+      <xs:element minOccurs="0" name="DateCreated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DatePosted" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EntryId" type="xs:int" />
+      <xs:element minOccurs="0" name="EntryText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsPublished" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Tags" nillable="true" type="tns:ArrayOfTag" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BlogPost" nillable="true" type="tns:BlogPost" />
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="About" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApprovedCommenter" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BlogEntries" nillable="true" type="tns:ArrayOfBlogPost" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSiteAdministrator" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserBlogs" nillable="true" type="tns:ArrayOfBlogUser" />
+      <xs:element minOccurs="0" name="UserId" type="xs:int" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfBlogPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BlogPost" nillable="true" type="tns:BlogPost" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBlogPost" nillable="true" type="tns:ArrayOfBlogPost" />
+  <xs:complexType name="ArrayOfTag">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Tag" nillable="true" type="tns:Tag" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTag" nillable="true" type="tns:ArrayOfTag" />
+  <xs:complexType name="Tag">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Blog" nillable="true" type="tns:Blog" />
+      <xs:element minOccurs="0" name="BlogEntries" nillable="true" type="tns:ArrayOfBlogPost" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Tag" nillable="true" type="tns:Tag" />
+  <xs:complexType name="Role">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RoleId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Role" nillable="true" type="tns:Role" />
+</xs:schema>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.AnotherBlog.Common"
+                   namespace="AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities">
+  <class name="BlogExtension" table="BlogExtensions">
+    <id name="ExtensionId" column="ExtensionId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="PageLocation" column="PageLocation" type="Int32"/>
+    <property name="SectionOrder" column="SectionOrder" type="Int32"/>
+    <property name="AssemblyName" column="AssemblyName" type="String"/>
+    <property name="ClassName" column="ClassName" type="String"/>
+    <property name="AssemblyPath" column="AssemblyPath" type="String"/>
+  </class>
+</hibernate-mapping>

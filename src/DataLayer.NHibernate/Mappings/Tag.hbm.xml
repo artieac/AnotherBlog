@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.AnotherBlog.Common"
+                   namespace="AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities">
+  <class name="Tag" table="Tags">
+    <id name="Id" column="id" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="Name" type="String"/>
+    <many-to-one name="Blog" column="BlogId" class="Blog" />
+    <bag name="BlogEntries" table="BlogEntryTags" lazy="true">
+      <key column="id"/>
+      <many-to-many class="PostTag" column="BlogEntryId" fetch="join" outer-join="false"/>
+    </bag>
+
+  </class>
+</hibernate-mapping>

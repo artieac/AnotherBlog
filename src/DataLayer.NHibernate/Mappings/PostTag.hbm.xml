@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.AnotherBlog.Common"
+                   namespace="AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities">
+  <class name="PostTag" table="BlogEntryTags">
+    <id name="PostTagId" column="BlogEntryTagId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <many-to-one name="Tag" class="Tag" column="TagId" />
+    <many-to-one name="Post" class="BlogPost" column="BlogEntryId" />
+  </class>
+</hibernate-mapping>

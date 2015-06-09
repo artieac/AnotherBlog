@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.AnotherBlog.Common"                    
+                   namespace="AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities">
+  <class name="Blog" table="Blogs">
+    <id name="BlogId" column="BlogId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="Name" type="String"/>
+    <property name="Description" column="Description" type="String"/>
+    <property name="SubFolder" column="SubFolder" type="String"/>
+    <property name="About" column="About" type="StringClob"/>
+    <property name="WelcomeMessage" column="WelcomeMessage" type="StringClob"/>
+    <property name="ContactEmail" column="ContactEmail" type="String"/>
+    <property name="Theme" column="Theme" type="String"/>
+    <bag name="Posts" lazy="true">
+      <key column="BlogId"/>
+      <one-to-many class="BlogPost" />
+    </bag>
+    <bag name="Users" lazy="true">
+      <key column="BlogId"/>
+      <one-to-many class="BlogUser" />
+    </bag>
+    <bag name="Comments" lazy="true">
+      <key column="BlogId"/>
+      <one-to-many class="Comment" />
+    </bag>
+  </class>
+</hibernate-mapping>

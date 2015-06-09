@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.Common"
+                   namespace="AlwaysMoveForward.Common.DataLayer.Entities">
+  <class name="SiteInfo" table="SiteInfo">
+    <id name="SiteId" column="SiteId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="Name" type="String"/>
+    <property name="About" column="About" type="StringClob"/>
+    <property name="ContactEmail" column="ContactEmail" type="String"/>
+    <property name="DefaultTheme" column="DefaultTheme" type="String"/>
+    <property name="SiteAnalyticsId" column="SiteAnalyticsId" type="String"/>
+  </class>
+</hibernate-mapping>

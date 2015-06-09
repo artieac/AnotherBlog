@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.AnotherBlog.Common"
+                   namespace="AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities">
+  <class name="BlogUser" table="BlogUsers">
+    <id name="BlogUserId" column="BlogUserId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <many-to-one name="Blog" class="Blog" column="BlogId"/>
+    <many-to-one name="User" class="AlwaysMoveForward.AnotherBlog.DataLayer.Entities.NHibernateUser" column="UserId"/>
+    <many-to-one name="Role" class="AlwaysMoveForward.Common.DataLayer.Entities.Role" column="RoleId"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="AlwaysMoveForward.AnotherBlog.Common"
+                   namespace="AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities">
+  <class name="ExtensionConfiguration" table="ExtensionConfiguration">
+    <id name="ConfigurationId" column="ConfigurationId" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="ExtensionId" column="ExtensionId" type="Int32"/>
+    <property name="ExtensionSettings" column="ExtensionSettings" type="String"/>
+  </class>
+</hibernate-mapping>

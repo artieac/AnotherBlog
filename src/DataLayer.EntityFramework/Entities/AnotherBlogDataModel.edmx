@@ -1,0 +1,1022 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ABTestDbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ABTestDbModelStoreContainer">
+          <EntitySet Name="BlogEntries" EntityType="ABTestDbModel.Store.BlogEntries" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BlogEntryTags" EntityType="ABTestDbModel.Store.BlogEntryTags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BlogExtensions" EntityType="ABTestDbModel.Store.BlogExtensions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BlogListItems" EntityType="ABTestDbModel.Store.BlogListItems" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BlogLists" EntityType="ABTestDbModel.Store.BlogLists" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BlogRollLinks" EntityType="ABTestDbModel.Store.BlogRollLinks" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Blogs" EntityType="ABTestDbModel.Store.Blogs" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BlogUsers" EntityType="ABTestDbModel.Store.BlogUsers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DbInfo" EntityType="ABTestDbModel.Store.DbInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EntryComments" EntityType="ABTestDbModel.Store.EntryComments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ExtensionConfiguration" EntityType="ABTestDbModel.Store.ExtensionConfiguration" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="ABTestDbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SiteInfo" EntityType="ABTestDbModel.Store.SiteInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tags" EntityType="ABTestDbModel.Store.Tags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="ABTestDbModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_BlogEntries_Blogs" Association="ABTestDbModel.Store.FK_BlogEntries_Blogs">
+            <End Role="Blogs" EntitySet="Blogs" />
+            <End Role="BlogEntries" EntitySet="BlogEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogEntries_Users" Association="ABTestDbModel.Store.FK_BlogEntries_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BlogEntries" EntitySet="BlogEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogEntryTags_BlogEntries" Association="ABTestDbModel.Store.FK_BlogEntryTags_BlogEntries">
+            <End Role="BlogEntries" EntitySet="BlogEntries" />
+            <End Role="BlogEntryTags" EntitySet="BlogEntryTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogEntryTags_Tags" Association="ABTestDbModel.Store.FK_BlogEntryTags_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="BlogEntryTags" EntitySet="BlogEntryTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogLinks_Blogs" Association="ABTestDbModel.Store.FK_BlogLinks_Blogs">
+            <End Role="Blogs" EntitySet="Blogs" />
+            <End Role="BlogRollLinks" EntitySet="BlogRollLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogList_Blogs" Association="ABTestDbModel.Store.FK_BlogList_Blogs">
+            <End Role="Blogs" EntitySet="Blogs" />
+            <End Role="BlogLists" EntitySet="BlogLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogListItems_BlogList" Association="ABTestDbModel.Store.FK_BlogListItems_BlogList">
+            <End Role="BlogLists" EntitySet="BlogLists" />
+            <End Role="BlogListItems" EntitySet="BlogListItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUsers_Blogs" Association="ABTestDbModel.Store.FK_BlogUsers_Blogs">
+            <End Role="Blogs" EntitySet="Blogs" />
+            <End Role="BlogUsers" EntitySet="BlogUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUsers_Roles" Association="ABTestDbModel.Store.FK_BlogUsers_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="BlogUsers" EntitySet="BlogUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUsers_Users" Association="ABTestDbModel.Store.FK_BlogUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BlogUsers" EntitySet="BlogUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryComments_BlogEntries" Association="ABTestDbModel.Store.FK_EntryComments_BlogEntries">
+            <End Role="BlogEntries" EntitySet="BlogEntries" />
+            <End Role="EntryComments" EntitySet="EntryComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryComments_Blogs" Association="ABTestDbModel.Store.FK_EntryComments_Blogs">
+            <End Role="Blogs" EntitySet="Blogs" />
+            <End Role="EntryComments" EntitySet="EntryComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags_Blogs" Association="ABTestDbModel.Store.FK_Tags_Blogs">
+            <End Role="Blogs" EntitySet="Blogs" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BlogEntries">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntryText" Type="text" Nullable="false" />
+          <Property Name="BlogId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="DatePosted" Type="datetime" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="TimesViewed" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogEntryTags">
+          <Key>
+            <PropertyRef Name="BlogEntryTagId" />
+          </Key>
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="BlogEntryId" Type="int" Nullable="false" />
+          <Property Name="BlogEntryTagId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="BlogExtensions">
+          <Key>
+            <PropertyRef Name="ExtensionId" />
+          </Key>
+          <Property Name="AssemblyName" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="PageLocation" Type="int" Nullable="false" />
+          <Property Name="ExtensionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SectionOrder" Type="int" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="AssemblyPath" Type="nvarchar" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="BlogListItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="RelatedLink" Type="nvarchar" MaxLength="255" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="BlogListId" Type="int" />
+        </EntityType>
+        <EntityType Name="BlogLists">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShowOrdered" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogRollLinks">
+          <Key>
+            <PropertyRef Name="BlogRollLinkId" />
+          </Key>
+          <Property Name="LinkName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="BlogId" Type="int" Nullable="false" />
+          <Property Name="BlogRollLinkId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Blogs">
+          <Key>
+            <PropertyRef Name="BlogId" />
+          </Key>
+          <Property Name="BlogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="SubFolder" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="About" Type="text" />
+          <Property Name="WelcomeMessage" Type="text" />
+          <Property Name="ContactEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Theme" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="BlogUsers">
+          <Key>
+            <PropertyRef Name="BlogUserId" />
+          </Key>
+          <Property Name="BlogId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="BlogUserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="DbInfo">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntryComments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntryId" Type="int" Nullable="false" />
+          <Property Name="AuthorEmail" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="RelatedComment" Type="int" />
+          <Property Name="BlogId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="text" Nullable="false" />
+          <Property Name="AuthorName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="100" />
+          <Property Name="DatePosted" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExtensionConfiguration">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ExtensionId" Type="int" Nullable="false" />
+          <Property Name="ConfigurationId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ExtensionSettings" Type="text" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SiteInfo">
+          <Key>
+            <PropertyRef Name="SiteId" />
+          </Key>
+          <Property Name="About" Type="text" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ContactEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="SiteId" Type="int" Nullable="false" />
+          <Property Name="DefaultTheme" Type="nvarchar" MaxLength="50" />
+          <Property Name="SiteAnalyticsId" Type="nvarchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ApprovedCommenter" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsSiteAdministrator" Type="bit" Nullable="false" />
+          <Property Name="About" Type="text" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_BlogEntries_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.Store.Blogs" Multiplicity="1" />
+          <End Role="BlogEntries" Type="ABTestDbModel.Store.BlogEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogEntries">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogEntries_Users">
+          <End Role="Users" Type="ABTestDbModel.Store.Users" Multiplicity="1" />
+          <End Role="BlogEntries" Type="ABTestDbModel.Store.BlogEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogEntries">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogEntryTags_BlogEntries">
+          <End Role="BlogEntries" Type="ABTestDbModel.Store.BlogEntries" Multiplicity="1" />
+          <End Role="BlogEntryTags" Type="ABTestDbModel.Store.BlogEntryTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogEntries">
+              <PropertyRef Name="EntryId" />
+            </Principal>
+            <Dependent Role="BlogEntryTags">
+              <PropertyRef Name="BlogEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogEntryTags_Tags">
+          <End Role="Tags" Type="ABTestDbModel.Store.Tags" Multiplicity="1" />
+          <End Role="BlogEntryTags" Type="ABTestDbModel.Store.BlogEntryTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BlogEntryTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogLinks_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.Store.Blogs" Multiplicity="1" />
+          <End Role="BlogRollLinks" Type="ABTestDbModel.Store.BlogRollLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogRollLinks">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogList_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.Store.Blogs" Multiplicity="0..1" />
+          <End Role="BlogLists" Type="ABTestDbModel.Store.BlogLists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogLists">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogListItems_BlogList">
+          <End Role="BlogLists" Type="ABTestDbModel.Store.BlogLists" Multiplicity="0..1" />
+          <End Role="BlogListItems" Type="ABTestDbModel.Store.BlogListItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogLists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlogListItems">
+              <PropertyRef Name="BlogListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUsers_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.Store.Blogs" Multiplicity="1" />
+          <End Role="BlogUsers" Type="ABTestDbModel.Store.BlogUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogUsers">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUsers_Roles">
+          <End Role="Roles" Type="ABTestDbModel.Store.Roles" Multiplicity="1" />
+          <End Role="BlogUsers" Type="ABTestDbModel.Store.BlogUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="BlogUsers">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUsers_Users">
+          <End Role="Users" Type="ABTestDbModel.Store.Users" Multiplicity="1" />
+          <End Role="BlogUsers" Type="ABTestDbModel.Store.BlogUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryComments_BlogEntries">
+          <End Role="BlogEntries" Type="ABTestDbModel.Store.BlogEntries" Multiplicity="1" />
+          <End Role="EntryComments" Type="ABTestDbModel.Store.EntryComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogEntries">
+              <PropertyRef Name="EntryId" />
+            </Principal>
+            <Dependent Role="EntryComments">
+              <PropertyRef Name="EntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryComments_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.Store.Blogs" Multiplicity="1" />
+          <End Role="EntryComments" Type="ABTestDbModel.Store.EntryComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="EntryComments">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.Store.Blogs" Multiplicity="1" />
+          <End Role="Tags" Type="ABTestDbModel.Store.Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ABTestDbModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AnotherBlogDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BlogEntryDTOs" EntityType="ABTestDbModel.BlogEntryDTO" />
+          <EntitySet Name="BlogEntryTagDTOs" EntityType="ABTestDbModel.BlogEntryTagDTO" />
+          <EntitySet Name="BlogExtensionDTOs" EntityType="ABTestDbModel.BlogExtensionDTO" />
+          <EntitySet Name="BlogListItemDTOs" EntityType="ABTestDbModel.BlogListItemDTO" />
+          <EntitySet Name="BlogListDTOs" EntityType="ABTestDbModel.BlogListDTO" />
+          <EntitySet Name="BlogRollLinkDTOs" EntityType="ABTestDbModel.BlogRollLinkDTO" />
+          <EntitySet Name="BlogDTOs" EntityType="ABTestDbModel.BlogDTO" />
+          <EntitySet Name="BlogUserDTOs" EntityType="ABTestDbModel.BlogUserDTO" />
+          <EntitySet Name="DbInfoDTOs" EntityType="ABTestDbModel.DbInfoDTO" />
+          <EntitySet Name="EntryCommentDTOs" EntityType="ABTestDbModel.EntryCommentDTO" />
+          <EntitySet Name="ExtensionConfigurationDTOs" EntityType="ABTestDbModel.ExtensionConfigurationDTO" />
+          <EntitySet Name="RoleDTOs" EntityType="ABTestDbModel.RoleDTO" />
+          <EntitySet Name="SiteInfoDTOs" EntityType="ABTestDbModel.SiteInfoDTO" />
+          <EntitySet Name="TagDTOs" EntityType="ABTestDbModel.TagDTO" />
+          <EntitySet Name="UserDTOs" EntityType="ABTestDbModel.UserDTO" />
+          <AssociationSet Name="FK_BlogEntries_Blogs" Association="ABTestDbModel.FK_BlogEntries_Blogs">
+            <End Role="Blogs" EntitySet="BlogDTOs" />
+            <End Role="BlogEntries" EntitySet="BlogEntryDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogEntries_Users" Association="ABTestDbModel.FK_BlogEntries_Users">
+            <End Role="Users" EntitySet="UserDTOs" />
+            <End Role="BlogEntries" EntitySet="BlogEntryDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogEntryTags_BlogEntries" Association="ABTestDbModel.FK_BlogEntryTags_BlogEntries">
+            <End Role="BlogEntries" EntitySet="BlogEntryDTOs" />
+            <End Role="BlogEntryTags" EntitySet="BlogEntryTagDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryComments_BlogEntries" Association="ABTestDbModel.FK_EntryComments_BlogEntries">
+            <End Role="BlogEntries" EntitySet="BlogEntryDTOs" />
+            <End Role="EntryComments" EntitySet="EntryCommentDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogEntryTags_Tags" Association="ABTestDbModel.FK_BlogEntryTags_Tags">
+            <End Role="Tags" EntitySet="TagDTOs" />
+            <End Role="BlogEntryTags" EntitySet="BlogEntryTagDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogListItems_BlogList" Association="ABTestDbModel.FK_BlogListItems_BlogList">
+            <End Role="BlogLists" EntitySet="BlogListDTOs" />
+            <End Role="BlogListItems" EntitySet="BlogListItemDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogList_Blogs" Association="ABTestDbModel.FK_BlogList_Blogs">
+            <End Role="Blogs" EntitySet="BlogDTOs" />
+            <End Role="BlogLists" EntitySet="BlogListDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogLinks_Blogs" Association="ABTestDbModel.FK_BlogLinks_Blogs">
+            <End Role="Blogs" EntitySet="BlogDTOs" />
+            <End Role="BlogRollLinks" EntitySet="BlogRollLinkDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUsers_Blogs" Association="ABTestDbModel.FK_BlogUsers_Blogs">
+            <End Role="Blogs" EntitySet="BlogDTOs" />
+            <End Role="BlogUsers" EntitySet="BlogUserDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryComments_Blogs" Association="ABTestDbModel.FK_EntryComments_Blogs">
+            <End Role="Blogs" EntitySet="BlogDTOs" />
+            <End Role="EntryComments" EntitySet="EntryCommentDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags_Blogs" Association="ABTestDbModel.FK_Tags_Blogs">
+            <End Role="Blogs" EntitySet="BlogDTOs" />
+            <End Role="Tags" EntitySet="TagDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUsers_Roles" Association="ABTestDbModel.FK_BlogUsers_Roles">
+            <End Role="Roles" EntitySet="RoleDTOs" />
+            <End Role="BlogUsers" EntitySet="BlogUserDTOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUsers_Users" Association="ABTestDbModel.FK_BlogUsers_Users">
+            <End Role="Users" EntitySet="UserDTOs" />
+            <End Role="BlogUsers" EntitySet="BlogUserDTOs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BlogEntryDTO">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryText" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IsPublished" Type="Boolean" Nullable="false" />
+          <Property Name="DatePosted" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="TimesViewed" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Blog" Relationship="ABTestDbModel.FK_BlogEntries_Blogs" FromRole="BlogEntries" ToRole="Blogs" />
+          <NavigationProperty Name="Author" Relationship="ABTestDbModel.FK_BlogEntries_Users" FromRole="BlogEntries" ToRole="Users" />
+          <NavigationProperty Name="BlogEntryTags" Relationship="ABTestDbModel.FK_BlogEntryTags_BlogEntries" FromRole="BlogEntries" ToRole="BlogEntryTags" />
+          <NavigationProperty Name="EntryComments" Relationship="ABTestDbModel.FK_EntryComments_BlogEntries" FromRole="BlogEntries" ToRole="EntryComments" />
+        </EntityType>
+        <EntityType Name="BlogEntryTagDTO">
+          <Key>
+            <PropertyRef Name="BlogEntryTagId" />
+          </Key>
+          <Property Name="TagId" Type="Int32" Nullable="false" />
+          <Property Name="BlogEntryId" Type="Int32" Nullable="false" />
+          <Property Name="BlogEntryTagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="BlogEntry" Relationship="ABTestDbModel.FK_BlogEntryTags_BlogEntries" FromRole="BlogEntryTags" ToRole="BlogEntries" />
+          <NavigationProperty Name="Tag" Relationship="ABTestDbModel.FK_BlogEntryTags_Tags" FromRole="BlogEntryTags" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="BlogExtensionDTO">
+          <Key>
+            <PropertyRef Name="ExtensionId" />
+          </Key>
+          <Property Name="AssemblyName" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="PageLocation" Type="Int32" Nullable="false" />
+          <Property Name="ExtensionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectionOrder" Type="Int32" Nullable="false" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="AssemblyPath" Type="String" MaxLength="1024" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="BlogListItemDTO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="RelatedLink" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="BlogListId" Type="Int32" />
+          <NavigationProperty Name="BlogList" Relationship="ABTestDbModel.FK_BlogListItems_BlogList" FromRole="BlogListItems" ToRole="BlogLists" />
+        </EntityType>
+        <EntityType Name="BlogListDTO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShowOrdered" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BlogListItems" Relationship="ABTestDbModel.FK_BlogListItems_BlogList" FromRole="BlogLists" ToRole="BlogListItems" />
+          <NavigationProperty Name="Blog" Relationship="ABTestDbModel.FK_BlogList_Blogs" FromRole="BlogLists" ToRole="Blogs" />
+        </EntityType>
+        <EntityType Name="BlogRollLinkDTO">
+          <Key>
+            <PropertyRef Name="BlogRollLinkId" />
+          </Key>
+          <Property Name="LinkName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="BlogRollLinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Blog" Relationship="ABTestDbModel.FK_BlogLinks_Blogs" FromRole="BlogRollLinks" ToRole="Blogs" />
+        </EntityType>
+        <EntityType Name="BlogDTO">
+          <Key>
+            <PropertyRef Name="BlogId" />
+          </Key>
+          <Property Name="BlogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="SubFolder" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="About" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="WelcomeMessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="ContactEmail" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Theme" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="BlogEntries" Relationship="ABTestDbModel.FK_BlogEntries_Blogs" FromRole="Blogs" ToRole="BlogEntries" />
+          <NavigationProperty Name="BlogLists" Relationship="ABTestDbModel.FK_BlogList_Blogs" FromRole="Blogs" ToRole="BlogLists" />
+          <NavigationProperty Name="BlogRollLinks" Relationship="ABTestDbModel.FK_BlogLinks_Blogs" FromRole="Blogs" ToRole="BlogRollLinks" />
+          <NavigationProperty Name="BlogUsers" Relationship="ABTestDbModel.FK_BlogUsers_Blogs" FromRole="Blogs" ToRole="BlogUsers" />
+          <NavigationProperty Name="EntryComments" Relationship="ABTestDbModel.FK_EntryComments_Blogs" FromRole="Blogs" ToRole="EntryComments" />
+          <NavigationProperty Name="Tags" Relationship="ABTestDbModel.FK_Tags_Blogs" FromRole="Blogs" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="BlogUserDTO">
+          <Key>
+            <PropertyRef Name="BlogUserId" />
+          </Key>
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="BlogUserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Blog" Relationship="ABTestDbModel.FK_BlogUsers_Blogs" FromRole="BlogUsers" ToRole="Blogs" />
+          <NavigationProperty Name="Role" Relationship="ABTestDbModel.FK_BlogUsers_Roles" FromRole="BlogUsers" ToRole="Roles" />
+          <NavigationProperty Name="User" Relationship="ABTestDbModel.FK_BlogUsers_Users" FromRole="BlogUsers" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="DbInfoDTO">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntryCommentDTO">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryId" Type="Int32" Nullable="false" />
+          <Property Name="AuthorEmail" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="RelatedComment" Type="Int32" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="AuthorName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="DatePosted" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="BlogEntry" Relationship="ABTestDbModel.FK_EntryComments_BlogEntries" FromRole="EntryComments" ToRole="BlogEntries" />
+          <NavigationProperty Name="Blog" Relationship="ABTestDbModel.FK_EntryComments_Blogs" FromRole="EntryComments" ToRole="Blogs" />
+        </EntityType>
+        <EntityType Name="ExtensionConfigurationDTO">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ExtensionId" Type="Int32" Nullable="false" />
+          <Property Name="ConfigurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExtensionSettings" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="RoleDTO">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="BlogUsers" Relationship="ABTestDbModel.FK_BlogUsers_Roles" FromRole="Roles" ToRole="BlogUsers" />
+        </EntityType>
+        <EntityType Name="SiteInfoDTO">
+          <Key>
+            <PropertyRef Name="SiteId" />
+          </Key>
+          <Property Name="About" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ContactEmail" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SiteId" Type="Int32" Nullable="false" />
+          <Property Name="DefaultTheme" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SiteAnalyticsId" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TagDTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BlogEntryTags" Relationship="ABTestDbModel.FK_BlogEntryTags_Tags" FromRole="Tags" ToRole="BlogEntryTags" />
+          <NavigationProperty Name="Blog" Relationship="ABTestDbModel.FK_Tags_Blogs" FromRole="Tags" ToRole="Blogs" />
+        </EntityType>
+        <EntityType Name="UserDTO">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ApprovedCommenter" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsSiteAdministrator" Type="Boolean" Nullable="false" />
+          <Property Name="About" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="BlogEntries" Relationship="ABTestDbModel.FK_BlogEntries_Users" FromRole="Users" ToRole="BlogEntries" />
+          <NavigationProperty Name="BlogUsers" Relationship="ABTestDbModel.FK_BlogUsers_Users" FromRole="Users" ToRole="BlogUsers" />
+        </EntityType>
+        <Association Name="FK_BlogEntries_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.BlogDTO" Multiplicity="1" />
+          <End Role="BlogEntries" Type="ABTestDbModel.BlogEntryDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogEntries">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogEntries_Users">
+          <End Role="Users" Type="ABTestDbModel.UserDTO" Multiplicity="1" />
+          <End Role="BlogEntries" Type="ABTestDbModel.BlogEntryDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogEntries">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogEntryTags_BlogEntries">
+          <End Role="BlogEntries" Type="ABTestDbModel.BlogEntryDTO" Multiplicity="1" />
+          <End Role="BlogEntryTags" Type="ABTestDbModel.BlogEntryTagDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogEntries">
+              <PropertyRef Name="EntryId" />
+            </Principal>
+            <Dependent Role="BlogEntryTags">
+              <PropertyRef Name="BlogEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryComments_BlogEntries">
+          <End Role="BlogEntries" Type="ABTestDbModel.BlogEntryDTO" Multiplicity="1" />
+          <End Role="EntryComments" Type="ABTestDbModel.EntryCommentDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogEntries">
+              <PropertyRef Name="EntryId" />
+            </Principal>
+            <Dependent Role="EntryComments">
+              <PropertyRef Name="EntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogEntryTags_Tags">
+          <End Role="Tags" Type="ABTestDbModel.TagDTO" Multiplicity="1" />
+          <End Role="BlogEntryTags" Type="ABTestDbModel.BlogEntryTagDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BlogEntryTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogListItems_BlogList">
+          <End Role="BlogLists" Type="ABTestDbModel.BlogListDTO" Multiplicity="0..1" />
+          <End Role="BlogListItems" Type="ABTestDbModel.BlogListItemDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogLists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlogListItems">
+              <PropertyRef Name="BlogListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogList_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.BlogDTO" Multiplicity="0..1" />
+          <End Role="BlogLists" Type="ABTestDbModel.BlogListDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogLists">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogLinks_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.BlogDTO" Multiplicity="1" />
+          <End Role="BlogRollLinks" Type="ABTestDbModel.BlogRollLinkDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogRollLinks">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUsers_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.BlogDTO" Multiplicity="1" />
+          <End Role="BlogUsers" Type="ABTestDbModel.BlogUserDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogUsers">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryComments_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.BlogDTO" Multiplicity="1" />
+          <End Role="EntryComments" Type="ABTestDbModel.EntryCommentDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="EntryComments">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags_Blogs">
+          <End Role="Blogs" Type="ABTestDbModel.BlogDTO" Multiplicity="1" />
+          <End Role="Tags" Type="ABTestDbModel.TagDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogs">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUsers_Roles">
+          <End Role="Roles" Type="ABTestDbModel.RoleDTO" Multiplicity="1" />
+          <End Role="BlogUsers" Type="ABTestDbModel.BlogUserDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="BlogUsers">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUsers_Users">
+          <End Role="Users" Type="ABTestDbModel.UserDTO" Multiplicity="1" />
+          <End Role="BlogUsers" Type="ABTestDbModel.BlogUserDTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ABTestDbModelStoreContainer" CdmEntityContainer="AnotherBlogDbEntities">
+          <EntitySetMapping Name="BlogEntryDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogEntryDTO"><MappingFragment StoreEntitySet="BlogEntries">
+            <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+            <ScalarProperty Name="EntryText" ColumnName="EntryText" />
+            <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+            <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="TimesViewed" ColumnName="TimesViewed" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BlogEntryTagDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogEntryTagDTO"><MappingFragment StoreEntitySet="BlogEntryTags">
+            <ScalarProperty Name="TagId" ColumnName="TagId" />
+            <ScalarProperty Name="BlogEntryId" ColumnName="BlogEntryId" />
+            <ScalarProperty Name="BlogEntryTagId" ColumnName="BlogEntryTagId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BlogExtensionDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogExtensionDTO"><MappingFragment StoreEntitySet="BlogExtensions">
+            <ScalarProperty Name="AssemblyName" ColumnName="AssemblyName" />
+            <ScalarProperty Name="PageLocation" ColumnName="PageLocation" />
+            <ScalarProperty Name="ExtensionId" ColumnName="ExtensionId" />
+            <ScalarProperty Name="SectionOrder" ColumnName="SectionOrder" />
+            <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+            <ScalarProperty Name="AssemblyPath" ColumnName="AssemblyPath" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BlogListItemDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogListItemDTO"><MappingFragment StoreEntitySet="BlogListItems">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="RelatedLink" ColumnName="RelatedLink" />
+            <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+            <ScalarProperty Name="BlogListId" ColumnName="BlogListId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BlogListDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogListDTO"><MappingFragment StoreEntitySet="BlogLists">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="ShowOrdered" ColumnName="ShowOrdered" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BlogRollLinkDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogRollLinkDTO"><MappingFragment StoreEntitySet="BlogRollLinks">
+            <ScalarProperty Name="LinkName" ColumnName="LinkName" />
+            <ScalarProperty Name="Url" ColumnName="Url" />
+            <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+            <ScalarProperty Name="BlogRollLinkId" ColumnName="BlogRollLinkId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BlogDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogDTO"><MappingFragment StoreEntitySet="Blogs">
+            <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="SubFolder" ColumnName="SubFolder" />
+            <ScalarProperty Name="About" ColumnName="About" />
+            <ScalarProperty Name="WelcomeMessage" ColumnName="WelcomeMessage" />
+            <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+            <ScalarProperty Name="Theme" ColumnName="Theme" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BlogUserDTOs"><EntityTypeMapping TypeName="ABTestDbModel.BlogUserDTO"><MappingFragment StoreEntitySet="BlogUsers">
+            <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="BlogUserId" ColumnName="BlogUserId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="DbInfoDTOs"><EntityTypeMapping TypeName="ABTestDbModel.DbInfoDTO"><MappingFragment StoreEntitySet="DbInfo">
+            <ScalarProperty Name="Version" ColumnName="Version" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="EntryCommentDTOs"><EntityTypeMapping TypeName="ABTestDbModel.EntryCommentDTO"><MappingFragment StoreEntitySet="EntryComments">
+            <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+            <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+            <ScalarProperty Name="AuthorEmail" ColumnName="AuthorEmail" />
+            <ScalarProperty Name="RelatedComment" ColumnName="RelatedComment" />
+            <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+            <ScalarProperty Name="Comment" ColumnName="Comment" />
+            <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+            <ScalarProperty Name="Link" ColumnName="Link" />
+            <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ExtensionConfigurationDTOs"><EntityTypeMapping TypeName="ABTestDbModel.ExtensionConfigurationDTO"><MappingFragment StoreEntitySet="ExtensionConfiguration">
+            <ScalarProperty Name="ExtensionId" ColumnName="ExtensionId" />
+            <ScalarProperty Name="ConfigurationId" ColumnName="ConfigurationId" />
+            <ScalarProperty Name="ExtensionSettings" ColumnName="ExtensionSettings" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="RoleDTOs"><EntityTypeMapping TypeName="ABTestDbModel.RoleDTO"><MappingFragment StoreEntitySet="Roles">
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SiteInfoDTOs"><EntityTypeMapping TypeName="ABTestDbModel.SiteInfoDTO"><MappingFragment StoreEntitySet="SiteInfo">
+            <ScalarProperty Name="About" ColumnName="About" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Url" ColumnName="Url" />
+            <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+            <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+            <ScalarProperty Name="DefaultTheme" ColumnName="DefaultTheme" />
+            <ScalarProperty Name="SiteAnalyticsId" ColumnName="SiteAnalyticsId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="TagDTOs"><EntityTypeMapping TypeName="ABTestDbModel.TagDTO"><MappingFragment StoreEntitySet="Tags">
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserDTOs"><EntityTypeMapping TypeName="ABTestDbModel.UserDTO"><MappingFragment StoreEntitySet="Users">
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="ApprovedCommenter" ColumnName="ApprovedCommenter" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="IsSiteAdministrator" ColumnName="IsSiteAdministrator" />
+            <ScalarProperty Name="About" ColumnName="About" />
+            <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="AnotherBlogDataModel">
+        <EntityTypeShape EntityType="ABTestDbModel.BlogEntryDTO" Width="1.5" PointX="3" PointY="5.75" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.BlogEntryTagDTO" Width="1.5" PointX="5.25" PointY="14.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.BlogExtensionDTO" Width="1.5" PointX="0.75" PointY="0.75" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.BlogListItemDTO" Width="1.5" PointX="5.25" PointY="10.875" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.BlogListDTO" Width="1.5" PointX="3" PointY="10.875" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.BlogRollLinkDTO" Width="1.5" PointX="3" PointY="13.875" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.BlogDTO" Width="1.5" PointX="0.75" PointY="8.625" Height="3.7109993489583317" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.BlogUserDTO" Width="1.5" PointX="6" PointY="7.25" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.DbInfoDTO" Width="1.5" PointX="5.75" PointY="0.75" Height="1.2110807291666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.EntryCommentDTO" Width="1.5" PointX="8.25" PointY="7.375" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.ExtensionConfigurationDTO" Width="1.5" PointX="5.75" PointY="2.75" Height="1.5956835937500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.RoleDTO" Width="1.5" PointX="3.75" PointY="2.625" Height="1.5956835937500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.SiteInfoDTO" Width="1.5" PointX="7.75" PointY="0.75" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.TagDTO" Width="1.5" PointX="3" PointY="19.75" Height="1.9802864583333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="ABTestDbModel.UserDTO" Width="1.5" PointX="0.75" PointY="3.875" Height="3.1340950520833388" IsExpanded="true" />
+        <AssociationConnector Association="ABTestDbModel.FK_BlogEntries_Blogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="8.9468489583333337" />
+          <ConnectorPoint PointX="3" PointY="8.9468489583333337" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogEntries_Users" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="6.3795475260416694" />
+          <ConnectorPoint PointX="3" PointY="6.3795475260416694" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogEntryTags_BlogEntries" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="9.2686979166666674" />
+          <ConnectorPoint PointX="4.875" PointY="9.6436979166666674" />
+          <ConnectorPoint PointX="4.875" PointY="15.740143229166666" />
+          <ConnectorPoint PointX="5.25" PointY="15.740143229166666" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_EntryComments_BlogEntries" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.46875" />
+          <ConnectorPoint PointX="4.822916666666667" PointY="6.4687499999999991" />
+          <ConnectorPoint PointX="4.989583333333333" PointY="6.46875" />
+          <ConnectorPoint PointX="7.322916666666667" PointY="6.4687499999999991" />
+          <ConnectorPoint PointX="7.489583333333333" PointY="6.46875" />
+          <ConnectorPoint PointX="9" PointY="6.46875" />
+          <ConnectorPoint PointX="9" PointY="7.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogEntryTags_Tags" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="20.740143229166669" />
+          <ConnectorPoint PointX="6" PointY="20.740143229166669" />
+          <ConnectorPoint PointX="6" PointY="16.730286458333332" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogListItems_BlogList" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="11.9612939453125" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="11.9612939453125" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="11.9612939453125" />
+          <ConnectorPoint PointX="5.25" PointY="11.9612939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogList_Blogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="11.605499674479166" />
+          <ConnectorPoint PointX="3" PointY="11.605499674479166" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogLinks_Blogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="12.335999348958332" />
+          <ConnectorPoint PointX="1.5" PointY="14.865143229166666" />
+          <ConnectorPoint PointX="1.8229191666666667" PointY="14.865143229166666" />
+          <ConnectorPoint PointX="1.9895858333333332" PointY="14.865143229166666" />
+          <ConnectorPoint PointX="3" PointY="14.865143229166666" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogUsers_Blogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.4730436197916674" />
+          <ConnectorPoint PointX="4.621012369791667" PointY="9.4730436197916674" />
+          <ConnectorPoint PointX="4.787679036458333" PointY="9.4730436197916674" />
+          <ConnectorPoint PointX="6" PointY="9.4730436197916674" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_EntryComments_Blogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="10.189392903645834" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="10.189392903645834" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="10.189392903645834" />
+          <ConnectorPoint PointX="8.25" PointY="10.189392903645834" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_Tags_Blogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.9062525" PointY="12.335999348958332" />
+          <ConnectorPoint PointX="1.9062525" PointY="20.740143229166669" />
+          <ConnectorPoint PointX="3" PointY="20.740143229166669" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogUsers_Roles" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.90625" PointY="4.2206835937500031" />
+          <ConnectorPoint PointX="4.90625" PointY="9.3708682682291666" />
+          <ConnectorPoint PointX="6" PointY="9.3708682682291666" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABTestDbModel.FK_BlogUsers_Users" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="5.0478417968750016" />
+          <ConnectorPoint PointX="4.822916666666667" PointY="5.0478417968750007" />
+          <ConnectorPoint PointX="4.989583333333333" PointY="5.0478417968750016" />
+          <ConnectorPoint PointX="7.40625" PointY="5.0478417968750016" />
+          <ConnectorPoint PointX="7.40625" PointY="7.25" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
