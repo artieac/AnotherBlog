@@ -1,0 +1,23 @@
+﻿<div id="blogListsSection" ng-controller="ListController" ng-init="getBlogLists('@ViewBag.BlogSubFolder');">
+    <div class="contentSection" ng-repeat="blogList in blogLists">
+        <div class="contentSectionTitle">
+            <label>{{ blogList.Title }}</label>
+        </div> 
+        <div class="contentSectionBody" ng-switch on="blogList.showOrdered">
+            <div ng-switch-when="true">
+                <ol class="contentSectionList">
+                    <li class="listItem" ng-repeat="listItem in blogList.ListItems">
+                        <a href="{{ listItem.RelatedLink }}">{{ listItem.Name }}</a>
+                    </li>
+                </ol>
+            </div>
+            <div ng-switch-default>
+                <ul class="contentSectionList">
+                    <li class="listItem" ng-repeat="listItem in blogList.ListItems">
+                        <a href="{{ listItem.RelatedLink }}">{{ listItem.Name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@model AlwaysMoveForward.AnotherBlog.Web.Code.Extensions.TabElements
+@using System.Collections.Generic
+@if (Model.TabItems.Count > 0)
+{   
+    <div class="navbar navbar-inverse">
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            @for (int i = 0; i < Model.TabItems.Count; i++)
+            { 
+                <li @if (i == Model.SelectedTab){ <text>class='active'</text> }>
+                    <a href="@Model.TabItems[i].TargetUrl">@Model.TabItems[i].Title</a>
+                </li>
+            }
+            </ul>
+        </div>
+    </div>
+}

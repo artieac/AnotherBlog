@@ -1,0 +1,16 @@
+﻿@{
+    Layout = null;
+}
+<div class="contentSection">
+    <div class="contentSectionTitle">
+        <label>{{ pollElement.pollTitle }}</label>
+    </div>
+    <div class="contentSectionBody">
+        <label>{{ pollElement.QuestionText}}</label>
+        <ul class="contentSectionList">
+            <li class="pollOption" ng-repeat="pollItem in listElement.Options">
+                <input type="radio" value="{{ pollOption.Id }}">{{pollOption.OptionText}}
+            </li>
+        </ul>
+    </div>
+</div>

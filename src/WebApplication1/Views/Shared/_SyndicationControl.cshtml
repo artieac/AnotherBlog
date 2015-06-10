@@ -1,0 +1,24 @@
+﻿@model String
+<div class="contentSection">
+    <div class="contentSectionTitle">
+        <label>Syndication</label>
+    </div> 
+    <div class="contentSectionBody">
+        <ul>
+            <li>
+                @if (Model != "")
+                 {
+                    <a href="/@Model/RSS/Posts">
+                        <img src="/Content/images/feed-icon-14x14.png" alt="rss"/> Posts
+                    </a>
+                }
+                else
+                {
+                    <a href="/RSS/Posts">
+                        <img src="/Content/images/feed-icon-14x14.png" alt="rss"/> Posts
+                    </a>
+                }
+            </li>
+        </ul>
+    </div>
+</div>

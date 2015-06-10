@@ -1,0 +1,14 @@
+﻿<div id="blogTagsSection" ng-controller="BlogController">
+    <div class="contentSection" ng-init="getBlogTags('@ViewBag.BlogSubFolder');">
+        <div class="contentSectionTitle">
+            <label>Tags</label>
+        </div> 
+        <div class="contentSectionBody">
+            <br />
+             <span ng-repeat="tagItem in blogTags" ng-class>
+                <a class='tagCloudTag' href="/@ViewBag.BlogSubFolder/Tag/{{ tagItem.TagName}}">{{ tagItem.TagName}}</a>,
+            </span>
+            <br />
+        </div>  
+    </div>
+</div>        

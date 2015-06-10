@@ -1,0 +1,62 @@
+﻿@model AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models.ManageBlogModel
+@using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+@using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
+@using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions;
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_BlogLayout.cshtml";
+    ViewBag.Common = Model.Common;
+    ViewBag.CurrentAction = "ManagePosts";
+
+ }
+ @section headerPlugins
+ {
+    <script src="/Scripts/Admin/ManageBlogPosts.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("button[name=addButton]").click(function () {
+                document.location.href = "/Admin/ManageBlog/EditPost?blogSubFolder=@Model.Common.TargetBlog.SubFolder";
+            });
+        });
+     </script>
+ }
+<form id="changeBlogForm" action="/Admin/ManageBlog/ManagePosts/">
+</form>
+    <div class="bodyContent">
+        <div class="panel panel-default">
+            <div class="panel-header">Manage Blog Posts</div>
+            <br />
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary" id="addButton" name="addButton">Write new post</button>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="40%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=Title&sortAscending=@Model.Common.SortAscending">Title</a></th>
+                            <th width="20%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=Author&sortAscending=@Model.Common.SortAscending">Author</a></th>
+                            <th width="10%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=DateCreated&sortAscending=@Model.Common.SortAscending">Date Created</a></th>
+                            <th width="5%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=IsPublished&sortAscending=@Model.Common.SortAscending">Is Published</a></th>
+                            <th width="10%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=DatePosted&sortAscending=@Model.Common.SortAscending">Date Posted</a></th>
+                            <th width="5%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=TimesViewed&sortAscending=@Model.Common.SortAscending">Times Viewed</a></th>
+                            <th width="5%">Comments</th>
+                        </tr>
+                    </thead>
+                    @{
+                        foreach (BlogPostModel blogPost in Model.EntryList)
+                        {
+                            <tr>
+                                <td><a href="/Admin/ManageBlog/EditPost/@Model.Common.TargetBlog.SubFolder/@blogPost.Post.Id">@blogPost.Post.Title</a></td>
+                                <td>@blogPost.Author.GetDisplayName()</td>
+                                <td>@blogPost.Post.DateCreated</td>
+                                <td>@blogPost.Post.IsPublished</td>
+                                <td>@blogPost.Post.DatePosted</td>
+                                <td>@blogPost.Post.TimesViewed</td>
+                                <td>@blogPost.Post.CommentCount.ToString()</td>
+                            </tr>
+                        }
+                    }
+                </table>
+                <div class="pager">
+                    @Html.Pager(@Model.EntryList.PageSize, @Model.EntryList.PageNumber, @Model.EntryList.TotalItemCount, "ManagePosts", new { blogSubFolder = @Model.Common.TargetBlog.SubFolder, sortColumn = @Model.Common.SortColumn, sortAscending = @Model.Common.SortAscending })
+                </div>
+                <button type="button" class="btn btn-primary" id="addButton" name="addButton">Write new post</button>
+            </div>
+        </div>

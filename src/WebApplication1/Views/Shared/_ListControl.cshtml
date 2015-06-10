@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+<div class="contentSection">
+    <div class="contentSectionTitle">
+        <label>{{ listElement.listTitle }}</label>
+    </div> 
+    <div class="contentSectionBody" ng-switch on="listElement.showOrdered">
+        <div ng-switch-when="true">
+            <ol class="contentSectionList">
+                <li class="listItem" ng-repeat="listItem in listElement.Items | filter:listElement.showOrdered">
+                    <a href="{{ listItem.RelatedLink }}">{{ listItem.Name }}</a>
+                </li>
+            </ol>
+        </div>
+        <div ng-switch-default>
+            <ul class="contentSectionList">
+                <li class="listItem" ng-repeat="listItem in listElement.Items">
+                    <a href="{{ listItem.RelatedLink }}">{{ listItem.Name }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

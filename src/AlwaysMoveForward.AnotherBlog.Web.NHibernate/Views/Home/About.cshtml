@@ -1,0 +1,17 @@
+﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.Home.SiteModel
+@using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name;
+    ViewBag.Description = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.About;
+    ViewBag.Common = @Model.Common;
+}
+<div class="bodyContent">        
+    <div class="contentPageTitle">
+        <label>@Model.Common.ContentTitle</label>
+    </div> 
+    <div class="aboutContent">
+        @Html.Raw(@Model.SiteInfo.About)
+    </div>
+</div>

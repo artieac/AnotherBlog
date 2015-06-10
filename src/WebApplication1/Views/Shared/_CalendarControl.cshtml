@@ -1,0 +1,55 @@
+﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel
+@using AlwaysMoveForward.AnotherBlog.Web
+<div class="contentSection">
+    <div class="monthTitle">
+        <a class="changeMonth" href="@Model.GenerateUrlForMonth(-1)"> &lt; </a>
+        <a class="currentMonth" href="@Model.GenerateUrlForMonth(0)">@Model.TargetMonth.ToString("MMMM")</a>
+        <a class="changeMonth" href="@Model.GenerateUrlForMonth(1)"> &gt; </a>
+    </div>     
+    <table class="calendarDates">
+
+    @for (int weekIndex = 0; weekIndex < 6; weekIndex++)
+    {
+        <tr class=\"weekRow\">
+
+        @for(int i= 0; i < 7; i++)
+        {
+            string cellHtml = "<td class=\"weekDayCell";
+            
+            if (Model.TrackingDate.Month == ViewData.Model.TargetMonth.Month)
+            {
+                cellHtml += " weekDayCellThisMonth";
+            }
+            else
+            {
+                cellHtml += " weekdayCellOtherMonth";
+            }
+
+            if (Model.TrackingDate.Date == DateTime.Now.Date)
+            {
+                cellHtml += " weekDayCellCurrentDay";
+            }
+
+            if (ViewData.Model.CurrentMonthBlogDates.Contains(Model.TrackingDate, new AlwaysMoveForward.Common.Utilities.DateCompare()))
+            {
+                cellHtml += " weekdayCellSelected";
+                cellHtml += "\">";
+                cellHtml += "<a href=\"";
+                cellHtml += ViewData.Model.GenerateUrlForDay(Model.TrackingDate);
+                cellHtml += "\">";
+                cellHtml += Model.TrackingDate.Day.ToString();
+                cellHtml += "</a></td>";
+            }
+            else
+            {
+                cellHtml += "\">" + Model.TrackingDate.Day.ToString() + "</td>";
+            }
+
+            @Html.Raw(cellHtml);
+            Model.TrackingDate = Model.TrackingDate.AddDays(1);                    
+        }
+
+        </tr>
+    }
+   </table>
+</div>
