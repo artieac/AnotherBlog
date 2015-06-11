@@ -19,19 +19,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web
             string[] blogControllerNamespace = new string[] { "AlwaysMoveForward.AnotherBlog.Web.Controllers" };
 
             routes.MapRoute(
-                "HomeMonthIndex",
-                "Home/Month/{yearFilter}/{monthFilter}",
-                new { controller = "Home", action = "Month", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month },
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "HomeDayIndex",
-                "Home/Day/{yearFilter}/{monthFilter}/{dayFilter}",
-                new { controller = "Home", action = "Day", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month, dayFilter = DateTime.Now.Day },
-                blogControllerNamespace
-               );
-
-            routes.MapRoute(
                 "BlogTagSearch",
                 "{blogSubFolder}/Tag/{targetTag}",
                 new { blogSubFolder = string.Empty, controller = "Blog", action = "Tag", targetTag = string.Empty },   // Parameter defaults
@@ -51,18 +38,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web
                 "BlogSpecific",                                              // Route name
                 "{blogSubFolder}/{controller}/{action}",                           // URL with parameters
                 new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty },   // Parameter defaults
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "BlogMonthIndex",
-                "{blogSubFolder}/Month/{yearFilter}/{monthFilter}",
-                new { controller = "Blog", action = "Month", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month },
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "BlogDayIndex",
-                "{blogSubFolder}/Day/{yearFilter}/{monthFilter}/{dayFilter}",
-                new { controller = "Blog", action = "Day", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month, dayFilter = DateTime.Now.Day },
                 blogControllerNamespace);
 
             routes.MapRoute(

@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         public CalendarModel InitializeCalendarModel(Blog targetBlog, DateTime targetMonth)
         {
             CalendarModel retVal = new CalendarModel();
-            retVal.RouteInformation = "/" + targetBlog.SubFolder;
+            retVal.RouteInformation = "/" + targetBlog.SubFolder + "/BlogPost";
             retVal.TargetBlog = targetBlog;
             retVal.TargetMonth = targetMonth;
             retVal.CurrentMonthBlogDates = new List<DateTime>();
@@ -105,7 +105,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
-        public ActionResult Month(string blogSubFolder, int yearFilter, int monthFilter, int? page)
+     
+        [Route("{blogSubFolder}/BlogPost/{year}/{month}"), HttpGet()]
+        public ActionResult Month(string blogSubFolder, int year, int month, int? page)
         {
             BlogModel model = new BlogModel();
             model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
@@ -122,7 +124,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 if (model.BlogCommon.TargetBlog != null)
                 {
-                    DateTime filterDate = new DateTime(yearFilter, monthFilter, 1);
+                    DateTime filterDate = new DateTime(year, month, 1);
                     model.BlogCommon.Common.TargetMonth = filterDate;
 
                     foundPosts = Services.BlogEntryService.GetByMonth(model.BlogCommon.TargetBlog, filterDate, true);
@@ -140,7 +142,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("Index", model);
         }
 
-        public ActionResult Day(string blogSubFolder, int yearFilter, int monthFilter, int dayFilter, int? page)
+        [Route("{blogSubFolder}/BlogPost/{year}/{month}/{day}"), HttpGet()]
+        public ActionResult Day(string blogSubFolder, int year, int month, int day, int? page)
         {
             BlogModel model = new BlogModel();
             model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
@@ -157,7 +160,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 if (model.BlogCommon.TargetBlog != null)
                 {
-                    DateTime filterDate = new DateTime(yearFilter, monthFilter, dayFilter);
+                    DateTime filterDate = new DateTime(year, month, day);
                     model.BlogCommon.Common.TargetMonth = filterDate;
 
                     foundPosts = Services.BlogEntryService.GetByDate(model.BlogCommon.TargetBlog, filterDate, true);

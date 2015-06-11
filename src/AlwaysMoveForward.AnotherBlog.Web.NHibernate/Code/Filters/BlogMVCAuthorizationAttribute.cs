@@ -50,39 +50,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
         {
             bool isAuthorized = false;
 
+            SecurityPrincipal currentPrincipal = CookieAuthenticationParser.ParseCookie(filterContext.RequestContext.HttpContext.Request.Cookies);
+
             try
             {
-                if (System.Threading.Thread.CurrentPrincipal != null)
+                if (this.RequiredRoles != null)
                 {
-                    SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
-
-                    if (this.RequiredRoles != null)
-                    {
-                        if (this.RequiredRoles == string.Empty)
-                        {
-                            // no required roles allow everyone.  But since this is being flagged at all
-                            // we want to be sure that the useris at least logged in
-                            if (currentPrincipal != null)
-                            {
-                                if (currentPrincipal.IsAuthenticated == true)
-                                {
-                                    isAuthorized = true;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Blog targetBlog = this.GetTargetBlog(filterContext);
-
-                            // If no currentUser then they can't have the desired roles
-                            if (currentPrincipal != null)
-                            {
-                                string[] roleList = this.RequiredRoles.Split(',');
-                                isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
-                            }
-                        }
-                    }
-                    else
+                    if (this.RequiredRoles == string.Empty)
                     {
                         // no required roles allow everyone.  But since this is being flagged at all
                         // we want to be sure that the useris at least logged in
@@ -92,6 +66,29 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
                             {
                                 isAuthorized = true;
                             }
+                        }
+                    }
+                    else
+                    {
+                        Blog targetBlog = this.GetTargetBlog(filterContext);
+
+                        // If no currentUser then they can't have the desired roles
+                        if (currentPrincipal != null)
+                        {
+                            string[] roleList = this.RequiredRoles.Split(',');
+                            isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
+                        }
+                    }
+                }
+                else
+                {
+                    // no required roles allow everyone.  But since this is being flagged at all
+                    // we want to be sure that the useris at least logged in
+                    if (currentPrincipal != null)
+                    {
+                        if (currentPrincipal.IsAuthenticated == true)
+                        {
+                            isAuthorized = true;
                         }
                     }
                 }

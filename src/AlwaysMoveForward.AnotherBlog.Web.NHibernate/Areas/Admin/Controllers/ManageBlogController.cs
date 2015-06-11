@@ -333,47 +333,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
         #region Comment Management
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public JsonResult GetComments(string blogSubFolder, string id)
-        {
-            IList<CommentItemModel> model = new List<CommentItemModel>();
-
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (targetBlog != null)
-            {
-                IList<BlogPost> posts = this.Services.BlogEntryService.GetAllByBlog(targetBlog, true);
-
-                if (id == null || string.Compare(id, "All", true) == 0)
-                {
-                    foreach (BlogPost post in posts)
-                    {
-                        foreach(Comment comment in post.Comments)
-                        {
-                            CommentItemModel newItem = new CommentItemModel(comment);
-                            newItem.BlogPostId = post.Id;
-                            model.Add(newItem);
-                        }
-                    }
-                }
-                else
-                {
-                    Comment.CommentStatus targetStatus = (Comment.CommentStatus)Enum.Parse(typeof(Comment.CommentStatus), id);
-
-                    foreach (BlogPost post in posts)
-                    {
-                        foreach (Comment comment in post.FilteredComments(targetStatus))
-                        {
-                            CommentItemModel newItem = new CommentItemModel(comment);
-                            newItem.BlogPostId = post.Id;
-                            model.Add(newItem);
-                        }
-                    }
-                }
-            }
-
-            return this.Json(model, JsonRequestBehavior.AllowGet);
-        }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult ApproveComment(string blogSubFolder, int blogPostId, int filter)

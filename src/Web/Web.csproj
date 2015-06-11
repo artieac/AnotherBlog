@@ -414,6 +414,7 @@
   <ItemGroup>
     <Folder Include="Areas\API\Views\Shared\" />
     <Folder Include="Content\images\Carousel\" />
+    <Folder Include="Models\API\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Shared\_AdminToolLayout.cshtml" />

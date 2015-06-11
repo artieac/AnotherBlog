@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.API.Models
+namespace AlwaysMoveForward.AnotherBlog.Web.Models.API
 {
     public class ListControlModel
     {

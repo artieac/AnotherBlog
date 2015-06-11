@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -213,7 +216,6 @@
     <Content Include="Areas\Admin\Views\UserManagement\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\ManageBlogs.cshtml" />
     <Content Include="Areas\Admin\Views\Web.config" />
-    <Content Include="Areas\API\Views\Web.config" />
     <None Include="Properties\PublishProfiles\Blog.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -292,16 +294,11 @@
     <Compile Include="Areas\Admin\Models\ManagePollsModel.cs" />
     <Compile Include="Areas\Admin\Models\SiteModel.cs" />
     <Compile Include="Areas\Admin\Models\UserModel.cs" />
-    <Compile Include="Areas\API\APIAreaRegistration.cs" />
-    <Compile Include="Areas\API\Controllers\BlogAPIController.cs" />
-    <Compile Include="Areas\API\Controllers\DisplayListAPIController.cs" />
-    <Compile Include="Areas\API\Models\ListControlModel.cs" />
     <Compile Include="Code\Extensions\FilterExtension.cs" />
     <Compile Include="Code\Extensions\Pager.cs" />
     <Compile Include="Code\Extensions\PagerExtensions.cs" />
     <Compile Include="Code\Extensions\TabElements.cs" />
     <Compile Include="Code\Filters\AdminAuthorizationFilter.cs" />
-    <Compile Include="Code\Filters\AdminFilterProperty.cs" />
     <Compile Include="Code\Filters\CookieAuthenticationParser.cs" />
     <Compile Include="Code\Filters\BlogMVCAuthorizationAttribute.cs" />
     <Compile Include="Code\Filters\WebAPIAuthorizationAttribute.cs" />
@@ -311,6 +308,9 @@
     <Compile Include="Code\Utilities\XmlResult.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\BlogPostController.cs" />
+    <Compile Include="Controllers\API\CommentController.cs" />
+    <Compile Include="Controllers\API\ListsController.cs" />
+    <Compile Include="Controllers\API\TagController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -322,6 +322,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
+    <Compile Include="Models\API\CommentModel.cs" />
+    <Compile Include="Models\API\GetCommentModel.cs" />
+    <Compile Include="Models\API\ListControlModel.cs" />
     <Compile Include="Models\BlogModels\BlogModel.cs" />
     <Compile Include="Models\BlogModels\BlogPostModel.cs" />
     <Compile Include="Models\BlogModels\BlogSelectionModel.cs" />
@@ -348,7 +351,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\API\Views\Shared\" />
     <Folder Include="Content\images\Carousel\" />
   </ItemGroup>
   <ItemGroup>
