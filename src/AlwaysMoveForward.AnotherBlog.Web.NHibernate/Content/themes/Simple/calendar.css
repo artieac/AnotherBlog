@@ -1,0 +1,76 @@
+﻿.monthTitle
+{
+	text-align:center;
+	width:100%;
+	background-color: #5493E0;
+	color: #FFFFFF;
+	padding:0px 0px 0px 0px;
+	margin:0px 0px 0px 0px;
+}
+
+.currentMonth
+{
+	text-decoration:none;
+	color:White;
+}
+	
+.changeMonth
+{
+	text-decoration:none;
+	color:White;
+	padding:0px 0px 0px 0px;
+	margin:0px 0px 0px 0px;
+}
+
+.calendarDates
+{
+	border-collapse:collapse;
+	border-spacing:0;
+	width:100%;
+}
+
+.weekRow
+{
+	width:100%;
+}
+
+.weekDayTitle
+{
+	font-size:medium;
+}
+
+.weekDayCell
+{
+	border:solid 1px #CCCCCC;
+	color: #5493E0;
+	text-align:center;
+}
+
+.weekDayCellThisMonth
+{
+	background-color:White;	
+}
+
+.weekdayCellOtherMonth
+{
+	background-color:#CCCCCC;
+	color:Gray;
+}
+
+.weekdayCellSelected
+{
+	background-color:#5493E0;
+	color:White;	
+}
+
+.weekdayCellSelected a
+{
+	text-decoration:none;
+	background-color:#5493E0;
+	color:White;		
+}
+
+.weekDayCellCurrentDay
+{
+	border:solid 1px Black;
+}

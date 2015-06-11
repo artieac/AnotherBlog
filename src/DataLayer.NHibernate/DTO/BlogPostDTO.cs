@@ -60,7 +60,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual IList<TagDTO> Tags { get; set; }
 
         [NHibernate.Mapping.Attributes.Bag(0, Table = "EntryComments", Cascade = "All-Delete-Orphan", Inverse = true)]
-        [NHibernate.Mapping.Attributes.Key(1, Column = "Id")]
+        [NHibernate.Mapping.Attributes.Key(1, Column = "EntryId")]
         [NHibernate.Mapping.Attributes.OneToMany(2, ClassType = typeof(EntryCommentsDTO))]
         public virtual IList<EntryCommentsDTO> Comments { get; set; }
     }
