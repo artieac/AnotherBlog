@@ -89,7 +89,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return retVal;
         }
 
-        [Route("User/Login"), HttpGet()]
+        [Route("User/Login")]
         public void Login(string blogSubFolder)
         {
             EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
@@ -107,7 +107,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             } 
         }
 
-        [Route("User/Logout"), HttpGet()]
+        [Route("User/Logout")]
         public void Logout()
         {
             this.EliminateUserCookie();
