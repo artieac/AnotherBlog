@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         public CalendarModel InitializeCalendarModel(Blog targetBlog, DateTime targetMonth)
         {
             CalendarModel retVal = new CalendarModel();
-            retVal.RouteInformation = "/" + targetBlog.SubFolder + "/BlogPost";
+            retVal.RouteInformation = "/Blog/" + targetBlog.SubFolder + "/BlogPost";
             retVal.TargetBlog = targetBlog;
             retVal.TargetMonth = targetMonth;
             retVal.CurrentMonthBlogDates = new List<DateTime>();
