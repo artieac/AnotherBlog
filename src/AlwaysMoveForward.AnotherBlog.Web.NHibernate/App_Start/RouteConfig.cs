@@ -16,8 +16,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web
 
             routes.MapMvcAttributeRoutes(); 
 
-            string[] blogControllerNamespace = new string[] { "AlwaysMoveForward.AnotherBlog.Web.Controllers" };
-
             routes.MapRoute(
                 "root",
                 string.Empty,

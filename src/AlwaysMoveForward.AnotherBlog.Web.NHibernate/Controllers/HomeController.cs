@@ -46,6 +46,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
+        [Route("~/", Name = "default")]
         [Route("Home/Index"), HttpGet()]
         public ActionResult Index()
         {
