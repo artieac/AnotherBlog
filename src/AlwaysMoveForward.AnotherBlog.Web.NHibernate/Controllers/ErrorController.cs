@@ -20,7 +20,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 {
     public class ErrorController : Controller
     {
-        // GET: /Error/
+        [Route("Error"), HttpGet()]
         public ActionResult Unknown()
         {
             Response.StatusCode = (int)HttpStatusCode.InternalServerError; 

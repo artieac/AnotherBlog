@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models.API
             this.Title = source.Title;
             this.AuthorName = source.Author.GetDisplayName();
             this.DatePosted = source.DatePosted;
-            this.BlogPostUrl = AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(source.Blog.SubFolder, source, false);
+            this.BlogPostUrl = AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(source.Blog.SubFolder, source);
             this.ShortEntryText = source.ShortEntryText;
         }
 

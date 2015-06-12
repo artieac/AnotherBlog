@@ -19,8 +19,17 @@
         <div>
             <div class="blogTitleSection">
                 <div class="blogTitle">
-                    <label>@Model.Post.Title</label>
+                    <span>
+                        <label>@Model.Post.Title </label> 
+                    </span>
                     <div class="blogSubTitle">by @Model.Author.GetDisplayName() on @Model.Post.DatePosted.ToShortDateString()</div>
+                    <div class="blogSubTitle">
+                        <span>
+                            Share on 
+                            <a href="https://twitter.com/intent/tweet?url=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Request.Url.Authority)&text=@Model.Post.Title">Twitter</a>
+                            or <a href="https://facebook.com/sharer.php?u=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Request.Url.Authority)">Facebook</a>
+                        </span>
+                    </div>
                 </div>
             </div>
 <!--
@@ -43,13 +52,13 @@
         <div style="float:left;width:49%;">
         @if (Model.PreviousEntry != null)
         { 
-            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.PreviousEntry, false)">@Model.PreviousEntry.Title</a>
+            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.PreviousEntry)">@Model.PreviousEntry.Title</a>
         }
         </div> 
         <div style="float:right;text-align:right;">
         @if(Model.NextEntry != null)
         { 
-            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.NextEntry, false)">@Model.NextEntry.Title</a>
+            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.NextEntry)">@Model.NextEntry.Title</a>
         } 
         </div>
         <br /><br />

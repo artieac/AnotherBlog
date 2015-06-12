@@ -38,6 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             throw new NotImplementedException();
         }
 
+        [Route("Rss/Posts"), HttpGet()]
         public ActionResult Posts(string blogSubFolder)
         {
             RSSModel model = this.InitializeRSSModel(blogSubFolder);
@@ -65,6 +66,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
+        [Route("Rss/Atom"), HttpGet()]
         public ActionResult Atom(string blogSubFolder)
         {
             RSSModel model = this.InitializeRSSModel(blogSubFolder);

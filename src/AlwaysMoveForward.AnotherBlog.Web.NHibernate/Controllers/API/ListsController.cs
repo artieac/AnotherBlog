@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             {
                 BlogListItem newItem = new BlogListItem();
                 newItem.Name = postList[i].Title;
-                newItem.RelatedLink = AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i], false);
+                newItem.RelatedLink = AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i]);
                 retVal.ListItems.Add(newItem);
             }
 
@@ -139,7 +139,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
 
             if (targetBlog != null)
             {
-                urlRoot = targetBlog.SubFolder + "/";
+                urlRoot = "Blog/" + targetBlog.SubFolder + "/";
             }
 
             urlRoot += "BlogPost/";

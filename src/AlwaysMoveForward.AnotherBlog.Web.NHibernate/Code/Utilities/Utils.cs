@@ -22,19 +22,29 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 {
     public class Utils
     {
-        public static string GenerateBlogEntryLink(string blogSubFolder, BlogPost blogEntry, bool generateEditLink)
+        public static string GenerateBlogEntryLink(string blogSubFolder, BlogPost blogPost)
+        {
+            return Utils.GenerateBlogEntryLink(blogSubFolder, blogPost, string.Empty);
+        }
+
+        public static string GenerateBlogEntryLink(string blogSubFolder, BlogPost blogPost, string authority)
         {
             string retVal = string.Empty;
 
-            if (blogEntry != null)
+            if (blogPost != null)
             {
-                retVal += "/" + blogSubFolder;
-                retVal += "/Blog/Post/";
+                if(!string.IsNullOrEmpty(authority))
+                {
+                    retVal = "http://" + authority;
+                }
 
-                retVal += blogEntry.DatePosted.Year + "/";
-                retVal += blogEntry.DatePosted.Month + "/";
-                retVal += blogEntry.DatePosted.Day + "/";
-                retVal += HttpUtility.UrlEncode(blogEntry.Title.Replace(" ", "_"));
+                retVal += "/Blog/" + blogSubFolder;
+                retVal += "/BlogPost/";
+
+                retVal += blogPost.DatePosted.Year + "/";
+                retVal += blogPost.DatePosted.Month + "/";
+                retVal += blogPost.DatePosted.Day + "/";
+                retVal += HttpUtility.UrlEncode(blogPost.Title.Replace(" ", "_"));
             }
 
             return retVal;
@@ -57,7 +67,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 
             if (!string.IsNullOrEmpty(blogSubFolder))
             {
-                retVal += "/" + blogSubFolder;
+                retVal += "/Blog/" + blogSubFolder;
             }
 
             if (!targetUrl.StartsWith("/"))
@@ -74,7 +84,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 
             if (!string.IsNullOrEmpty(blogSubFolder))
             {
-                retVal += "/" + blogSubFolder;
+                retVal += "/Blog/" + blogSubFolder;
             }
 
             if (!targetUrl.StartsWith("/"))
@@ -100,23 +110,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
                 retVal.Add(themes[i].Name);
             }
 
-            return retVal;
-        }
-
-        public static string GetTinyUrl(BlogPost blogEntry, string siteAuthority)
-        {
-            string retVal = GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry, false);
-
-            try
-            {
-                retVal = XDocument.Load(string.Format("http://api.bit.ly/shorten?format=xml&version=2.0.1&longUrl={0}&login={1}&apiKey={2}", HttpUtility.UrlEncode(GetInSecureURL(string.Empty, GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry, false), siteAuthority)), "artieac", "R_0a7032095b2bbc15c909c87436cde198")).Descendants("nodeKeyVal").Select<XElement, string>(delegate(XElement result)
-                {
-                    return result.Element("shortUrl").Value;
-                }).Single<string>();
-            }
-            catch (Exception)
-            {
-            }
             return retVal;
         }
 
