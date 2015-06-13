@@ -8,6 +8,25 @@
     ViewBag.Description = Model.Post.ShortEntryText;
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
+    ViewBag.Description = Model.Post.ShortEntryText;
+    ViewBag.Author = Model.Post.Author.GetDisplayName();
+
+    String tagsAsString = "";
+
+    if (Model.Post != null)
+    {
+        if (Model.Post.Tags.Count > 0)
+        {
+            tagsAsString = Model.Post.Tags[0].Name;
+        }
+
+        for (int i = 1; i < Model.Post.Tags.Count; i++)
+        {
+            tagsAsString += "," + Model.Post.Tags[i].Name;
+        }
+
+    }
+    ViewBag.Keywords = tagsAsString; 
 }
 
 @section headerPlugins
@@ -45,7 +64,7 @@
             <label>tags: </label>
             @foreach (Tag tag in Model.Tags)
             {
-                <a href="/@Model.BlogCommon.TargetBlog.SubFolder/Blog/Index/tag/@tag.Name">@tag.Name</a><text>,</text>
+                <a href="/Blog/@Model.BlogCommon.TargetBlog.SubFolder/BlogPosts/Tag/@tag.Name">@tag.Name</a><text>,</text>
             }
         </div>
         <br />

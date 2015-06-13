@@ -48,6 +48,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         internal static void ConfigureAutoMapper()
         {
+            BlogDataMap.ConfigureAutoMapper();
             UserDataMap.ConfigureAutoMapper();
             TagDataMap.ConfigureAutoMapper();
 

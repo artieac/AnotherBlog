@@ -28,5 +28,9 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public string DefaultTheme { get; set; }
         
         public string SiteAnalyticsId { get; set; }
+
+        public string DefaultAuthor { get; set; }
+
+        public string DefaultKeywords { get; set; }
     }
 }

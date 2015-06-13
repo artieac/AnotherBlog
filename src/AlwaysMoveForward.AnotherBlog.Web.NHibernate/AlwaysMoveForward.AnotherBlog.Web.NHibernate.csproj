@@ -175,6 +175,7 @@
     <Content Include="Content\themes\Simple\Pager.css" />
     <Content Include="Content\themes\Simple\Plugins\TwitterFeed.css" />
     <Content Include="Global.asax" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\Admin\AdminCommon.js" />
     <Content Include="Scripts\Admin\ManageBlogPosts.js" />
     <Content Include="Scripts\Admin\ManageUsers.js" />

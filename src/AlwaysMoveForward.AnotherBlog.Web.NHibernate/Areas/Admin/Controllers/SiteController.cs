@@ -38,7 +38,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
-        public ActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId)
+        public ActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId, string defaultAuthor, string defaultKeywords)
         {
             if (string.IsNullOrEmpty(siteName))
             {
@@ -56,7 +56,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 {
                     try
                     {
-                        MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
+                        MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId, defaultAuthor, defaultKeywords);
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                     catch (Exception e)

@@ -1,0 +1,5 @@
+﻿User-agent: *
+Disallow: /Areas/
+Disallow: /Content/
+Disallow: /Scripts/
+Disallow: /fonts/
