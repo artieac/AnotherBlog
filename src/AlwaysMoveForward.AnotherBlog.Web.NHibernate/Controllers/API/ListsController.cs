@@ -110,22 +110,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             return this.GetMostViewed(blogSubFolder, 5);
         }
 
-        [Route("api/Blog/{blogSubFolder}/Lists/Tags"), HttpGet()]
-        public System.Collections.IList GetTags(string blogSubFolder)
-        {
-            System.Collections.IList model = new System.Collections.ArrayList();
-
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (targetBlog != null)
-            {
-                model = this.Services.TagService.GetAllWithCount(targetBlog);
-            }
-
-            return model;
-        }
-
-
         [Route("api/Blog/{blogSubFolder}/Lists/ArchiveDates"), HttpGet()]
         public ListControlModel GetArchiveDates(string blogSubFolder)
         {

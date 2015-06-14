@@ -44,10 +44,19 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
                 retVal += blogPost.DatePosted.Year + "/";
                 retVal += blogPost.DatePosted.Month + "/";
                 retVal += blogPost.DatePosted.Day + "/";
-                retVal += HttpUtility.UrlEncode(blogPost.Title.Replace(" ", "_"));
+                retVal += AlwaysMoveForward.Common.Utilities.Utils.EncodeForUrl(blogPost.Title);
             }
 
             return retVal;
+        }
+
+        public static string GenerateTagLink(string blogSubFolder, string tag)
+        {
+            string retVal = "/Blog/";
+            retVal += blogSubFolder;
+            retVal += "/BlogPosts/Tag/";
+            retVal += AlwaysMoveForward.Common.Utilities.Utils.EncodeForUrl(tag);
+            return retVal;  
         }
 
         public static string GetSecureURL(string blogSubFolder, string targetUrl, string siteAuthority)

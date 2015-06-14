@@ -5,24 +5,31 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
 {
     public class TagController : BaseApiController
     {
         [Route("api/Blog/{blogSubFolder}/Tags")]
-        public System.Collections.IList Get(string blogSubFolder)
+        public IList<TagCountModel> Get(string blogSubFolder)
         {
-            System.Collections.IList model = new System.Collections.ArrayList();
+            IList<TagCountModel> retVal = new List<TagCountModel>();
 
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
 
             if (targetBlog != null)
             {
-                model = this.Services.TagService.GetAllWithCount(targetBlog);
+                System.Collections.IList tagCounts = new System.Collections.ArrayList();
+                tagCounts = this.Services.TagService.GetAllWithCount(targetBlog);
+
+                foreach(TagCount tagCount in tagCounts)
+                {
+                    retVal.Add(new TagCountModel(blogSubFolder, tagCount));
+                }
             }
 
-            return model;
+            return retVal;
         }
     }
 }

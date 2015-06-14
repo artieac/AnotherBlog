@@ -198,6 +198,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 if (model.BlogCommon.TargetBlog != null)
                 {
+                    targetTag = AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(targetTag);
                     foundPosts = Services.BlogEntryService.GetByTag(model.BlogCommon.TargetBlog, targetTag, true);
                     model.BlogCommon.Common.ContentTitle = "Blog entries for " + targetTag;
                 }
@@ -225,7 +226,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             if (model.BlogCommon.TargetBlog != null)
             {
                 DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
-                model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, HttpUtility.UrlDecode(title.Replace("_", " ")));
+                model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
 
                 using (this.Services.UnitOfWork.BeginTransaction())
                 {

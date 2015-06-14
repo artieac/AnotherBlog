@@ -64,7 +64,7 @@
             <label>tags: </label>
             @foreach (Tag tag in Model.Tags)
             {
-                <a href="/Blog/@Model.BlogCommon.TargetBlog.SubFolder/BlogPosts/Tag/@tag.Name">@tag.Name</a><text>,</text>
+                <a href="@Utils.GenerateTagLink(Model.BlogCommon.TargetBlog.SubFolder,tag.Name)">@tag.Name</a><text>,</text>
             }
         </div>
         <br />
