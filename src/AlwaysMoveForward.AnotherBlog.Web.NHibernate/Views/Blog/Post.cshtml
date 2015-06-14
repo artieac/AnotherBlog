@@ -5,10 +5,9 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name + " - " + Model.Post.Title;
-    ViewBag.Description = Model.Post.ShortEntryText;
+    ViewBag.Description = Model.Post.Title;
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
-    ViewBag.Description = Model.Post.ShortEntryText;
     ViewBag.Author = Model.Post.Author.GetDisplayName();
 
     String tagsAsString = "";
