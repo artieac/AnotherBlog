@@ -160,6 +160,35 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             return model;
         }
 
+        // PUT api/<controller>/5
+        [Route("api/Blog/{blogSubFolder}/Comments/{newState}"), HttpPut()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+        public void Put(string blogSubFolder, string newState, [FromBody] IDictionary<int, int> input)
+        {
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            CommentStatus parsedState = (CommentStatus)Enum.Parse(typeof(CommentStatus), newState);
+
+            IDictionary<int, BlogPost> blogPosts = new Dictionary<int, BlogPost>();
+
+            foreach (int key in input.Keys)
+            {
+                if(!blogPosts.ContainsKey(input[key]))
+                {
+                    blogPosts[input[key]] = Services.BlogEntryService.GetById(targetBlog, input[key]);
+                }
+
+                if (blogPosts[input[key]] != null)
+                {
+                    blogPosts[input[key]].UpdateCommentStatus(key, parsedState);
+                }
+            }
+
+            foreach(int blogPostId in blogPosts.Keys)
+            {
+                this.Services.BlogEntryService.Save(blogPosts[blogPostId]);
+            }
+        }
+
         // DELETE api/<controller>/5
         [Route("api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}"), HttpDelete()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
