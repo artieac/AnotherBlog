@@ -95,6 +95,7 @@
     <Compile Include="DomainModel\AnotherBlogUser.cs" />
     <Compile Include="DomainModel\BlogList.cs" />
     <Compile Include="DomainModel\BlogListItem.cs" />
+    <Compile Include="DomainModel\CommentStatus.cs" />
     <Compile Include="DomainModel\RoleType.cs" />
     <Compile Include="DataLayer\Map\DataMapper.cs" />
     <Compile Include="DomainModel\Blog.cs" />

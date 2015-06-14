@@ -20,17 +20,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
     public class Comment 
     {
-        /// <summary>
-        /// What are the allowed comment statuses?  
-        /// </summary>
-        public enum CommentStatus
-        {
-            Unapproved = 0,
-            Approved = 1,
-            Deleted = 2,
-            None = 99
-        }
-
         public Comment()
         {
             this.Id = -1;

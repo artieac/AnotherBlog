@@ -41,7 +41,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AlwaysMoveForward.Common">
+    <Reference Include="AlwaysMoveForward.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\AlwaysMoveForward.Common.dll</HintPath>
     </Reference>
     <Reference Include="AlwaysMoveForward.Common.DataLayer.NHibernate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -88,6 +89,7 @@
   <ItemGroup>
     <Compile Include="DataMapper\BlogDataMap.cs" />
     <Compile Include="DataMapper\BlogPostDataMap.cs" />
+    <Compile Include="DataMapper\CommentDTOListResolver.cs" />
     <Compile Include="DataMapper\DbInfoMapper.cs" />
     <Compile Include="DataMapper\ListDataMap.cs" />
     <Compile Include="DataMapper\PollQuestionDataMap.cs" />

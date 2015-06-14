@@ -45,8 +45,8 @@
                     <td width="10%">{{ blogComment.DefaultDateStringFormat  }}</td>
                     <td width="15%">{{ blogComment.StatusText }}</td>
                     <td width="15%">
-                        <a href="/Admin/ManageBlog/ApproveComment/@Model.Common.TargetBlog.SubFolder/{{blogComment.BlogPostId}}/{{ blogComment.CommentId }}"><img src="/Content/images/action_check.png" class="approveComment" alt="" /></a>
-                        <a href="/Admin/ManageBlog/DeleteComment/@Model.Common.TargetBlog.SubFolder/{{blogComment.BlogPostId}}/{{ blogComment.CommentId }}"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a>
+                        <a href="" ng-click="approveComment('@Model.Common.TargetBlog.SubFolder', blogComment.BlogPostId, blogComment.Id)"><img src="/Content/images/action_check.png" class="approveComment" alt="" /></a>
+                        <a href="" ng-click="deleteComment('@Model.Common.TargetBlog.SubFolder', blogComment.BlogPostId, blogComment.Id)"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a>
                     </td>
                 </tr>
             </tbody>

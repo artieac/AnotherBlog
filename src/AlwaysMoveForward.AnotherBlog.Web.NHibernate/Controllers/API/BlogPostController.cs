@@ -19,7 +19,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             return this.Services.BlogEntryService.GetAll();
         }
 
-        [Route("api/BlogPosts/{amountToGet}"), HttpGet()]
+        [Route("api/BlogPosts/{amountToGet:int}"), HttpGet()]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IEnumerable<ExternalBlogPostModel> Get(int amountToGet)
         {
@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // GET api/<blogSubFolder>/<controller>/5
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{id}"), HttpGet()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{id:int}"), HttpGet()]
         public BlogPost Get(string blogSubFolder, int id)
         {
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -66,7 +66,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // GET api/<blogSubFolder>/<controller>/1999/1
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{year}/{month}"), HttpGet()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{year:int}/{month:int}"), HttpGet()]
         public IList<BlogPost> Get(string blogSubFolder, int year, int month)
         {
             DateTime targetDate = new DateTime(year, month, 1);
@@ -75,7 +75,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // GET api/<blogSubFolder>/<controller>/1999/1/1
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}"), HttpGet()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{year:int}/{month:int}/{day:int}"), HttpGet()]
         public IList<BlogPost> Get(string blogSubFolder, int year, int month, int day)
         {
             DateTime targetDate = new DateTime(year, month, day);
@@ -84,7 +84,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // GET api/<blogSubFolder>/<controller>/1999/1/1/title
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}/{title}"), HttpGet()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{year:int}/{month:int}/{day:int}/{title}"), HttpGet()]
         public BlogPost Get(string blogSubfolder, int year, int month, int day, string title)
         {
             DateTime targetDate = new DateTime(year, month, day);
@@ -100,14 +100,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // PUT api/<blogSubFolder>/<controller>/5
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{id}"), HttpPut()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{id:int}"), HttpPut()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE api/<blogSubFolder>/<controller>/5
-        [Route("api/{blogSubFolder}/BlogPost/{id}"), HttpDelete()]
+        [Route("api/{blogSubFolder}/BlogPost/{id:int}"), HttpDelete()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public void Delete(int id)
         {
