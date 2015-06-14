@@ -29,6 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 {
     public class HomeController : PublicController
     {
+        [Route("Home/About"), HttpGet()]
         public ActionResult About(string blogSubFolder)
         {
             SiteModel model = new SiteModel();
@@ -45,7 +46,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
-
+        [Route("~/", Name = "default")]
+        [Route("Home/Index"), HttpGet()]
         public ActionResult Index()
         {
             IndexModel model = new IndexModel();
@@ -60,7 +62,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
-        [Route("BlogPost/{year}/{month}"), HttpGet()]
+        [Route("BlogPosts/{year}/{month}"), HttpGet()]
         public ActionResult Get(int year, int month)
         {
             IndexModel model = new IndexModel();
@@ -80,7 +82,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("Index", model);
         }
 
-        [Route("BlogPost/{year}/{month}/{day}"), HttpGet()]
+        [Route("BlogPosts/{year}/{month}/{day}"), HttpGet()]
         public ActionResult Get(int year, int month, int day)
         {
             IndexModel model = new IndexModel();

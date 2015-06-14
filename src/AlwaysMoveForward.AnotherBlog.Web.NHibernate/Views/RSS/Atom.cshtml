@@ -13,15 +13,15 @@
     @foreach (Blog blogItem in Model.BlogEntries.Keys)
     {
         <title>@MvcApplication.SiteInfo.Name - @blogItem.SubFolder Feed</title>
-        <link href="http://@Request.Url.Authority/@blogItem.SubFolder/Blog/Index"/>
+        <link href="http://@Request.Url.Authority/Blog/@blogItem.SubFolder/BlogPosts"/>
         <updated>@Model.MostRecentPosts[blogItem].ToShortDateString() @Model.MostRecentPosts[blogItem].ToShortTimeString()</updated>
         <id>urn:@Request.Url.Authority/@blogItem.SubFolder</id>
         @foreach (BlogPost blogEntry in Model.BlogEntries[blogItem])
          {   
             <entry>
             <title>@blogEntry.Title</title>
-            <link href="@Request.Url.Scheme://@Request.Url.Authority@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry, false)"/>
-            <id>urn:@Request.Url.Scheme://@Request.Url.Authority@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry, false)</id>
+            <link href="@Request.Url.Scheme://@Request.Url.Authority@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry)"/>
+            <id>urn:@Request.Url.Scheme://@Request.Url.Authority@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry)</id>
             <author>
                 <name>@blogEntry.Author.UserName</name>
             </author>

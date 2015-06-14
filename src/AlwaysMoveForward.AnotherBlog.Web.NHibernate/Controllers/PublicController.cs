@@ -81,7 +81,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         {
             CalendarModel retVal = new CalendarModel();
             retVal.TargetBlog = null;
-            retVal.RouteInformation = "/BlogPost";
+            retVal.RouteInformation = "/BlogPosts";
             retVal.TargetMonth = targetMonth;
             retVal.CurrentMonthBlogDates = new List<DateTime>();
 

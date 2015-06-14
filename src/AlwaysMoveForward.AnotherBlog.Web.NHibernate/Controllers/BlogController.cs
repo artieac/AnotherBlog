@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         public CalendarModel InitializeCalendarModel(Blog targetBlog, DateTime targetMonth)
         {
             CalendarModel retVal = new CalendarModel();
-            retVal.RouteInformation = "/" + targetBlog.SubFolder + "/BlogPost";
+            retVal.RouteInformation = "/Blog/" + targetBlog.SubFolder + "/BlogPost";
             retVal.TargetBlog = targetBlog;
             retVal.TargetMonth = targetMonth;
             retVal.CurrentMonthBlogDates = new List<DateTime>();
@@ -55,6 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return retVal;
         }
 
+        [Route("Blog/{blogSubFolder}/About"), HttpGet()]
         public ActionResult About(string blogSubFolder)
         {
             BlogModel model = new BlogModel();
@@ -74,7 +75,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
-        public ActionResult Index(string blogSubFolder, string filterType, string filterValue, int? page)
+        [Route("Blog/{blogSubFolder}/BlogPosts"), HttpGet()]
+        public ActionResult Index(string blogSubFolder, int? page)
         {
             BlogModel model = new BlogModel();
             model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
@@ -106,7 +108,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         }
 
      
-        [Route("{blogSubFolder}/BlogPost/{year}/{month}"), HttpGet()]
+        [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}"), HttpGet()]
         public ActionResult Month(string blogSubFolder, int year, int month, int? page)
         {
             BlogModel model = new BlogModel();
@@ -142,7 +144,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("Index", model);
         }
 
-        [Route("{blogSubFolder}/BlogPost/{year}/{month}/{day}"), HttpGet()]
+        [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}"), HttpGet()]
         public ActionResult Day(string blogSubFolder, int year, int month, int day, int? page)
         {
             BlogModel model = new BlogModel();
@@ -178,6 +180,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("Index", model);
         }
 
+        [Route("Blog/{blogSubFolder}/BlogPosts/Tag/{targetTag}"), HttpGet()]
         public ActionResult Tag(string blogSubFolder, string targetTag, int? page)
         {
             BlogModel model = new BlogModel();
@@ -195,6 +198,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 if (model.BlogCommon.TargetBlog != null)
                 {
+                    targetTag = AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(targetTag);
                     foundPosts = Services.BlogEntryService.GetByTag(model.BlogCommon.TargetBlog, targetTag, true);
                     model.BlogCommon.Common.ContentTitle = "Blog entries for " + targetTag;
                 }
@@ -210,54 +214,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("Index", model);
         }
 
-        public JsonResult SaveComment(string blogSubFolder, string entryId, string authorName, string authorEmail, string commentText, string commentLink)
-        {
-            IList<Comment> model = new List<Comment>();
-            Blog targetBlog = this.GetTargetBlog(blogSubFolder);
-            BlogPost targetEntry = Services.BlogEntryService.GetById(targetBlog, int.Parse(entryId));
-
-            if (string.IsNullOrEmpty(authorName))
-            {
-                ViewData.ModelState.AddModelError("authorName", "Please enter your name.");
-            }
-
-            if (string.IsNullOrEmpty(authorEmail))
-            {
-                ViewData.ModelState.AddModelError("authorEmail", "Please enter your email.");
-            }
-
-            if (string.IsNullOrEmpty(commentText))
-            {
-                ViewData.ModelState.AddModelError("commentText", "Please enter a comment.");
-            }
-
-            if (targetEntry != null)
-            {
-                model = targetEntry.Comments.Where(comment => comment.Status == Comment.CommentStatus.Approved).ToList();
-
-                if (ViewData.ModelState.IsValid)
-                {
-                    using (this.Services.UnitOfWork.BeginTransaction())
-                    {
-                        try
-                        {
-                            Comment newComment = targetEntry.AddComment(authorName, authorEmail, commentText, commentLink, this.CurrentPrincipal.CurrentUser);
-                            this.Services.BlogEntryService.Save(targetEntry);
-                            model.Add(newComment);
-                            this.Services.UnitOfWork.EndTransaction(true);
-                        }
-                        catch (Exception e)
-                        {
-                            LogManager.GetLogger().Error(e);
-                            this.Services.UnitOfWork.EndTransaction(false);
-                        }
-                    }
-                }
-            }
-
-            return this.Json(model, JsonRequestBehavior.AllowGet);
-        }
-
+        [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}/{title}"), HttpGet()]
         public ActionResult Post(string blogSubFolder, string year, string month, string day, string title)
         {
             BlogPostModel model = new BlogPostModel();
@@ -269,7 +226,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             if (model.BlogCommon.TargetBlog != null)
             {
                 DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
-                model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, HttpUtility.UrlDecode(title.Replace("_", " ")));
+                model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
 
                 using (this.Services.UnitOfWork.BeginTransaction())
                 {

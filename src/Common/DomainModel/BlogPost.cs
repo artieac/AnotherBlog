@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public IList<Comment> Comments { get; set; }
         public IList<Tag> Tags { get; set; }
         
-        public IList<Comment> FilteredComments(Comment.CommentStatus targetStatus)
+        public IList<Comment> FilteredComments(CommentStatus targetStatus)
         {
             return this.Comments.Where(comment => comment.Status == targetStatus).ToList();
         }
@@ -55,25 +55,25 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             retVal.AuthorEmail = authorEmail;
             retVal.DatePosted = DateTime.Now;
             retVal.Link = commentLink;
-            retVal.Status = Comment.CommentStatus.Unapproved;
+            retVal.Status = CommentStatus.Unapproved;
             retVal.Text = commentText;
 
             if(currentUser != null && currentUser.ApprovedCommenter == true)
             {
-                retVal.Status = Comment.CommentStatus.Approved;
+                retVal.Status = CommentStatus.Approved;
             }
 
             this.Comments.Add(retVal);
             return retVal;
         }
 
-        public Comment UpdateCommentStatus(int commentId, Comment.CommentStatus commentStatus)
+        public Comment UpdateCommentStatus(int commentId, CommentStatus commentStatus)
         {
             Comment targetComment = this.Comments.Where(comment => comment.Id == commentId).First();
 
             if(targetComment != null)
             {
-                if(commentStatus == Comment.CommentStatus.Deleted && targetComment.Status == Comment.CommentStatus.Deleted)
+                if(commentStatus == CommentStatus.Deleted && targetComment.Status == CommentStatus.Deleted)
                 {
                     this.Comments.Remove(targetComment);
                 }

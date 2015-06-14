@@ -6,7 +6,7 @@
         <div class="contentSectionBody">
             <br />
              <span ng-repeat="tagItem in blogTags" ng-class>
-                 <a class='tagCloudTag' href="/@ViewBag.BlogSubFolder/Tag/{{ tagItem.TagName | encodeURIComponent}}">{{ tagItem.TagName}}</a>,
+                 <a class='tagCloudTag' href="{{ tagItem.TagUrl}}">{{ tagItem.TagName}}</a>,
             </span>
             <br />
         </div>  

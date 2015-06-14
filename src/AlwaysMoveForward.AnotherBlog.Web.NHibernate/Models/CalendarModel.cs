@@ -89,7 +89,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
         {
             string retVal = string.Empty;
 
-            retVal += this.RouteInformation + trackingDate.Year + "/" + trackingDate.Month + "/" + trackingDate.Day;
+            retVal += this.RouteInformation + "/" + trackingDate.Year + "/" + trackingDate.Month + "/" + trackingDate.Day;
 
             return retVal;
         }

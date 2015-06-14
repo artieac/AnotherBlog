@@ -32,7 +32,7 @@
 	        @Html.Partial("_CalendarControl", (AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.BlogCommon.Common.Calendar)
         </div>
 	    <div id="mostViewed">
-            @Html.Partial("_ListControl", (AlwaysMoveForward.AnotherBlog.Web.Models.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts)
+            @Html.Partial("_ListControl", (AlwaysMoveForward.AnotherBlog.Web.Models.API.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts)
         </div>                     
         <div id="blogTagsSection">
 		    @Html.Partial("_TagControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)

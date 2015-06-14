@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AlwaysMoveForward.AnotherBlog.DataLayer</RootNamespace>
     <AssemblyName>AlwaysMoveForward.AnotherBlog.DataLayer</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,9 +38,11 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AlwaysMoveForward.Common">
+    <Reference Include="AlwaysMoveForward.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\AlwaysMoveForward.Common.dll</HintPath>
     </Reference>
     <Reference Include="AlwaysMoveForward.Common.DataLayer.NHibernate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -86,6 +89,7 @@
   <ItemGroup>
     <Compile Include="DataMapper\BlogDataMap.cs" />
     <Compile Include="DataMapper\BlogPostDataMap.cs" />
+    <Compile Include="DataMapper\CommentDTOListResolver.cs" />
     <Compile Include="DataMapper\DbInfoMapper.cs" />
     <Compile Include="DataMapper\ListDataMap.cs" />
     <Compile Include="DataMapper\PollQuestionDataMap.cs" />

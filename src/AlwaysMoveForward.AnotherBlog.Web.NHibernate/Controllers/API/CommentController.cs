@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
                 }
                 else
                 {
-                    Comment.CommentStatus targetStatus = (Comment.CommentStatus)Enum.Parse(typeof(Comment.CommentStatus), status);
+                    CommentStatus targetStatus = (CommentStatus)Enum.Parse(typeof(CommentStatus), status);
 
                     foreach (BlogPost post in posts)
                     {
@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // GET api/<controller>
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId}/Comments"), HttpGet()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comments"), HttpGet()]
         public IList<Comment> Get(string blogSubFolder, int postId)
         {
             IList<Comment> model = new List<Comment>();
@@ -71,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
 
                 if (targetEntry != null)
                 {
-                    model = targetEntry.Comments.Where(comment => comment.Status == Comment.CommentStatus.Approved).ToList();
+                    model = targetEntry.Comments.Where(comment => comment.Status == CommentStatus.Approved).ToList();
                 }
             }
 
@@ -79,14 +79,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // GET api/<controller>/5
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId}/Comment/{commentId}"), HttpGet()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}"), HttpGet()]
         public string Get(int commentId)
         {
             return "value";
         }
 
         // POST api/<controller>
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId}/Comment"), HttpPost()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment"), HttpPost()]
         public IList<Comment> Post(string blogSubFolder, int postId, [FromBody]CommentModel input)
         {
             IList<Comment> model = new List<Comment>();
@@ -98,7 +98,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
                 !string.IsNullOrEmpty(input.CommentText) &&
                 targetEntry != null)
             {
-                model = targetEntry.Comments.Where(comment => comment.Status == Comment.CommentStatus.Approved).ToList();
+                model = targetEntry.Comments.Where(comment => comment.Status == CommentStatus.Approved).ToList();
 
                 using (this.Services.UnitOfWork.BeginTransaction())
                 {
@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // PUT api/<controller>/5
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId}/Comment/{commentId}"), HttpPut()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}"), HttpPut()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public IList<Comment> Put(string blogSubFolder, int postId, int commentId, [FromBody]CommentModel input)
         {
@@ -139,11 +139,73 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             return model;
         }
 
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}/{newState}"), HttpPut()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+        public Comment Put(string blogSubFolder, int postId, int commentId, string newState)
+        {
+            Comment model = null;
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            BlogPost blogPost = Services.BlogEntryService.GetById(targetBlog, postId);
+
+            if (blogPost != null)
+            {
+                if (blogPost != null)
+                {
+                    CommentStatus parsedState = (CommentStatus)Enum.Parse(typeof(CommentStatus), newState);
+                    model = blogPost.UpdateCommentStatus(commentId, parsedState);
+                    this.Services.BlogEntryService.Save(blogPost);
+                }
+            }
+
+            return model;
+        }
+
+        // PUT api/<controller>/5
+        [Route("api/Blog/{blogSubFolder}/Comments/{newState}"), HttpPut()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+        public void Put(string blogSubFolder, string newState, [FromBody] IDictionary<int, int> input)
+        {
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            CommentStatus parsedState = (CommentStatus)Enum.Parse(typeof(CommentStatus), newState);
+
+            IDictionary<int, BlogPost> blogPosts = new Dictionary<int, BlogPost>();
+
+            foreach (int key in input.Keys)
+            {
+                if(!blogPosts.ContainsKey(input[key]))
+                {
+                    blogPosts[input[key]] = Services.BlogEntryService.GetById(targetBlog, input[key]);
+                }
+
+                if (blogPosts[input[key]] != null)
+                {
+                    blogPosts[input[key]].UpdateCommentStatus(key, parsedState);
+                }
+            }
+
+            foreach(int blogPostId in blogPosts.Keys)
+            {
+                this.Services.BlogEntryService.Save(blogPosts[blogPostId]);
+            }
+        }
+
         // DELETE api/<controller>/5
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId}/Comment/{commentId}"), HttpDelete()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}"), HttpDelete()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public void Delete(string blogSubFolder, int postId, int commentId)
         {
+            IList<Comment> model = new List<Comment>();
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            BlogPost blogPost = Services.BlogEntryService.GetById(targetBlog, postId);
+
+            if (blogPost != null)
+            {
+                if (blogPost != null)
+                {
+                    blogPost.UpdateCommentStatus(commentId, CommentStatus.Deleted);
+                    this.Services.BlogEntryService.Save(blogPost);
+                }
+            }
         }
     }
 }

@@ -11,36 +11,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 {
     public class BlogPostDataMap : DataMapBase<BlogPost, BlogPostDTO>
     {
-        private class CommentDTOListResolver : MappedListResolver<Comment, EntryCommentsDTO>
-        {
-            protected override IList<EntryCommentsDTO> GetDestinationList(ResolutionResult source)
-            {
-                return ((BlogPostDTO)source.Context.DestinationValue).Comments;
-            }
-
-            protected override IList<Comment> GetSourceList(ResolutionResult source)
-            {
-                IList<Comment> retVal = null;
-
-                if (source.Value != null)
-                {
-                    retVal = ((BlogPost)source.Value).Comments;
-                }
-
-                return retVal;
-            }
-
-            protected override EntryCommentsDTO FindItemInList(IList<EntryCommentsDTO> destinationList, Comment searchTarget)
-            {
-                return destinationList.FirstOrDefault(t => t.Id == searchTarget.Id);
-            }
-
-            protected override Comment FindItemInList(IList<Comment> sourceList, EntryCommentsDTO searchTarget)
-            {
-                return sourceList.FirstOrDefault(t => t.Id == searchTarget.Id);
-            }
-        }
-
         static BlogPostDataMap()
         {
             BlogPostDataMap.ConfigureAutoMapper();
@@ -48,13 +18,16 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
         internal static void ConfigureAutoMapper()
         {
+            BlogDataMap.ConfigureAutoMapper();
             UserDataMap.ConfigureAutoMapper();
             TagDataMap.ConfigureAutoMapper();
 
             if (AutoMapper.Mapper.FindTypeMapFor<Comment, EntryCommentsDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<Comment, EntryCommentsDTO>()
-                    .ForMember(dest => dest.BlogPost, opt => opt.Ignore());
+                    .ForMember(dest => dest.BlogPost, opt => opt.Ignore())
+                    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (int)src.Status))
+                    .ForMember(dest => dest.Link, opt => opt.MapFrom(src => (int)src.Status));
             }
 
             if (AutoMapper.Mapper.FindTypeMapFor<EntryCommentsDTO, Comment>() == null)

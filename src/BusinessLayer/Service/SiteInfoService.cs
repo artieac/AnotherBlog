@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.SiteInfoRepository.GetSiteInfo();
         }
 
-        public SiteInfo Save(string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId)
+        public SiteInfo Save(string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId, string defaultAuthor, string defaultKeywords)
         {
             SiteInfo newItem = this.GetSiteInfo();
 
@@ -49,6 +49,8 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             newItem.ContactEmail = siteContact;
             newItem.DefaultTheme = defaultTheme;
             newItem.SiteAnalyticsId = siteAnalyticsId;
+            newItem.DefaultAuthor = defaultAuthor;
+            newItem.DefaultKeywords = defaultKeywords;
 
             return this.SiteInfoRepository.Save(newItem);
         }

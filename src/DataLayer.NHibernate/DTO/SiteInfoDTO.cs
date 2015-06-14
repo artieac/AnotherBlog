@@ -44,5 +44,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual string SiteAnalyticsId { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string DefaultAuthor { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
+        public virtual string DefaultKeywords { get; set; }
     }
 }

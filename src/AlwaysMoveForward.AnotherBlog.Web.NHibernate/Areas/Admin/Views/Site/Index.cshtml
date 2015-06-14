@@ -44,6 +44,16 @@
                         <td>@Html.ValidationMessage("siteAnalyticsId")</td>
                     </tr>
                     <tr>
+                        <th class="editItemLabel">default author:</th>
+                        <td><input type="text" id="defaultAuthor" name="defaultAuthor" value="@Model.SiteInfo.DefaultAuthor" maxlength="50" /></td>
+                        <td>@Html.ValidationMessage("defaultAuthor")</td>
+                    </tr>
+                    <tr>
+                        <th class="editItemLabel">default keywords:</th>
+                        <td><input type="text" id="defaultKeywords" name="defaultKeywords" value="@Model.SiteInfo.DefaultKeywords" maxlength="100" /></td>
+                        <td>@Html.ValidationMessage("defaultKeywords")</td>
+                    </tr>
+                    <tr>
                         <th  class="editItemLabel">theme:</th>
                         <td colspan="2">
                             <select id="defaultTheme" name="defaultTheme">

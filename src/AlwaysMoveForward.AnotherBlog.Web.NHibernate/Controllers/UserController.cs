@@ -53,7 +53,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 // I'm not sure I like having the cookie here, but I'm having a problem passing
                 // this user back to the view (even though it worked fine in my Edit method)
                 FormsAuthenticationTicket authTicket =
-                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.Id.ToString(), DateTime.Now, DateTime.Now.AddDays(1), false, string.Empty);
+                new FormsAuthenticationTicket(1, currentPrincipal.CurrentUser.Id.ToString(), DateTime.Now, DateTime.Now.AddYears(1), false, string.Empty);
 
                 string encTicket = FormsAuthentication.Encrypt(authTicket);
                 HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
@@ -89,6 +89,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return retVal;
         }
 
+        [Route("User/Login")]
         public void Login(string blogSubFolder)
         {
             EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
@@ -106,12 +107,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             } 
         }
 
+        [Route("User/Logout")]
         public void Logout()
         {
             this.EliminateUserCookie();
             this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
         }
 
+        [Route("User/Preferences"), HttpGet()]
         [BlogMVCAuthorization]
         public ActionResult Preferences(string blogSubFolder)
         {
@@ -121,6 +124,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
+        [Route("User/SavePreferences")]
         [BlogMVCAuthorization]
         public ActionResult SavePreferences(string blogSubFolder, string userAbout)
         {
@@ -134,12 +138,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("Preferences", model);
         }
 
+        [Route("User/BlogNavMenu"), HttpGet()]
         public ActionResult BlogNavMenu()
         {
             UserModel model = this.InitializeUserModel();
             return this.View(model);
         }
 
+        [Route("User/ViewUserSocial"), HttpGet()]
         [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
         public ActionResult ViewUserSocial(string blogSubFolder, string userId)
         {
@@ -151,6 +157,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
+        [Route("User/OAuthCallback"), HttpGet()]
         public ActionResult OAuthCallback(string oauth_token, string oauth_verifier)
         {
             string requestTokenString = Request[OAuth.Client.Constants.TokenParameter];
