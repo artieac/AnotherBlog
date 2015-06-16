@@ -281,56 +281,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public JsonResult AjaxPostSave(string blogSubFolder, string ajaxTitle, string ajaxEntryText, string ajaxEntryId, string ajaxTagInput, string ajaxIsPublished)
-        {
-            ManageBlogModel model = new ManageBlogModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
-
-            BlogPost currentPost = new BlogPost();
-
-            if (model.Common.TargetBlog != null)
-            {
-                int blogEntryId = 0;
-
-                if (!string.IsNullOrEmpty(ajaxEntryId))
-                {
-                    blogEntryId = int.Parse(ajaxEntryId);
-                }
-
-                bool isEntryPublished = false;
-
-                if (ajaxIsPublished != null)
-                {
-                    if (ajaxIsPublished == "true")
-                    {
-                        isEntryPublished = true;
-                    }
-                }
-
-                using (this.Services.UnitOfWork.BeginTransaction())
-                {
-                    try
-                    {
-                        currentPost = Services.BlogEntryService.Save(model.Common.TargetBlog, ajaxTitle, ajaxEntryText, blogEntryId, isEntryPublished, ajaxTagInput.Split(','));
-                        currentPost.Tags = currentPost.Tags;
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                        this.Services.UnitOfWork.EndTransaction(false);
-                    }
-                }
-            }
-
-            AjaxSaveModel retVal = new AjaxSaveModel();
-            retVal.EntryId = currentPost.Id;
-            retVal.BlogSubFolder = model.Common.TargetBlog.SubFolder;
-
-            return this.Json(retVal);
-        }
-
         #region Comment Management
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]

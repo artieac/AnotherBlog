@@ -336,10 +336,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
+    <Compile Include="Models\API\BlogPostInput.cs" />
     <Compile Include="Models\API\CommentModel.cs" />
+    <Compile Include="Models\API\ExternalBlogPostModel.cs" />
     <Compile Include="Models\API\GetCommentModel.cs" />
     <Compile Include="Models\API\ListControlModel.cs" />
-    <Compile Include="Models\API\ExternalBlogPostModel.cs" />
     <Compile Include="Models\API\TagCountModel.cs" />
     <Compile Include="Models\BlogModels\BlogModel.cs" />
     <Compile Include="Models\BlogModels\BlogPostModel.cs" />

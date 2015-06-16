@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
@@ -100,10 +101,36 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // PUT api/<blogSubFolder>/<controller>/5
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{id:int}"), HttpPut()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{id:int}"), HttpPost()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public void Put(int id, [FromBody]string value)
+        public BlogPost Put(string blogSubFolder, int id, [FromBody]BlogPostInput input)
         {
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            BlogPost retVal = new BlogPost();
+
+            if (targetBlog != null)
+            {                
+                using (this.Services.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        if(input.Tags == null)
+                        {
+                            input.Tags = string.Empty;
+                        }
+
+                        retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, id, input.IsPublished, input.Tags.Split(','));
+                        this.Services.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.Services.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         // DELETE api/<blogSubFolder>/<controller>/5
