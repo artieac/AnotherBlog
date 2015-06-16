@@ -22,7 +22,7 @@
             });
         });
 
-        setTimeout("ManageBlogPosts.ExecuteBlogEntryAutoSave()", 30000);
+        ManageBlogPosts.SetupAutoSaveTimer();
     </script>
 }
 <form id="changeBlogForm" action="/Admin/ManageBlog/EditPost/@Model.EntryList[0].Post.Id.ToString()">

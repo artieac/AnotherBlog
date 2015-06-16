@@ -19,6 +19,10 @@
 
     this.ProcessAutoSaveReturn = function (data) {
         jQuery("#entryId").val(data.Id);
+        this.SetupAutoSaveTimer();
+    };
+
+    this.SetupAutoSaveTimer = function(){
         setTimeout("ManageBlogPosts.ExecuteBlogEntryAutoSave()", 30000);
     };
 
