@@ -19,7 +19,7 @@
 
     this.ProcessAutoSaveReturn = function (data) {
         jQuery("#entryId").val(data.Id);
-        this.SetupAutoSaveTimer();
+        ManageBlogPosts.SetupAutoSaveTimer();
     };
 
     this.SetupAutoSaveTimer = function(){
