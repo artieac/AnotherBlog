@@ -38,7 +38,7 @@
 		    @Html.Partial("_TagControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
 		</div>        
         <div>
-            @Html.Partial("_SyndicationControl", String.Empty)
+            @Html.Partial("_SyndicationControl", ViewBag.BlogCommon.TargetBlog.SubFolder)
         </div>            
         @Html.Partial("_BlogListsControl")
         </div>

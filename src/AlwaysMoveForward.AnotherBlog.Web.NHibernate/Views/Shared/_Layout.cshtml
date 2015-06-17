@@ -51,7 +51,7 @@
         @Html.Partial("_ArchiveControl")
     }
     <div>
-        @Html.Partial("_SyndicationControl", String.Empty)
+        @Html.Partial("_SyndicationControl", ViewBag.BlogSubFolder==null ? string.Empty : (string)ViewBag.BlogSubFolder )
     </div>   
     <div>
         <div class="contentSection">
