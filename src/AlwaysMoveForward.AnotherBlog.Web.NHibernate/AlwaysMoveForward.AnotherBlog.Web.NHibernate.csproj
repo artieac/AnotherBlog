@@ -347,12 +347,12 @@
     <Compile Include="Models\BlogModels\BlogSelectionModel.cs" />
     <Compile Include="Models\BlogModels\CommonBlogModel.cs" />
     <Compile Include="Models\BlogModels\EntryCommentModel.cs" />
-    <Compile Include="Models\BlogModels\RSSModel.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\CommonModel.cs" />
     <Compile Include="Models\Home\IndexModel.cs" />
     <Compile Include="Models\Home\SiteModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\RSS\RSSModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
