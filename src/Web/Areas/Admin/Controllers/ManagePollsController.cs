@@ -17,7 +17,6 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 {
-    [RequestAuthenticationFilter]
     public class ManagePollsController : AdminBaseController
     {
         private const int PollPageSize = 25;

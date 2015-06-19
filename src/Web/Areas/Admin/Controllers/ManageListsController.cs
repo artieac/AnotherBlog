@@ -14,7 +14,7 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 {
-    [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
+    [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
     public class ManageListsController : AdminBaseController
     {
         public ActionResult Index(string id)

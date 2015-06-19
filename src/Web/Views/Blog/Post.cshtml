@@ -5,9 +5,27 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name + " - " + Model.Post.Title;
-    ViewBag.Description = Model.Post.ShortEntryText;
+    ViewBag.Description = Model.Post.Title;
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
+    ViewBag.Author = Model.Post.Author.GetDisplayName();
+
+    String tagsAsString = "";
+
+    if (Model.Post != null)
+    {
+        if (Model.Post.Tags.Count > 0)
+        {
+            tagsAsString = Model.Post.Tags[0].Name;
+        }
+
+        for (int i = 1; i < Model.Post.Tags.Count; i++)
+        {
+            tagsAsString += "," + Model.Post.Tags[i].Name;
+        }
+
+    }
+    ViewBag.Keywords = tagsAsString; 
 }
 
 @section headerPlugins
@@ -19,8 +37,17 @@
         <div>
             <div class="blogTitleSection">
                 <div class="blogTitle">
-                    <label>@Model.Post.Title</label>
+                    <span>
+                        <label>@Model.Post.Title </label> 
+                    </span>
                     <div class="blogSubTitle">by @Model.Author.GetDisplayName() on @Model.Post.DatePosted.ToShortDateString()</div>
+                    <div class="blogSubTitle">
+                        <span>
+                            Share on 
+                            <a href="https://twitter.com/intent/tweet?url=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Request.Url.Authority)&text=@Model.Post.Title">Twitter</a>
+                            or <a href="https://facebook.com/sharer.php?u=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Request.Url.Authority)">Facebook</a>
+                        </span>
+                    </div>
                 </div>
             </div>
 <!--
@@ -36,20 +63,20 @@
             <label>tags: </label>
             @foreach (Tag tag in Model.Tags)
             {
-                <a href="/@Model.BlogCommon.TargetBlog.SubFolder/Blog/Index/tag/@tag.Name">@tag.Name</a><text>,</text>
+                <a href="@Utils.GenerateTagLink(Model.BlogCommon.TargetBlog.SubFolder,tag.Name)">@tag.Name</a><text>,</text>
             }
         </div>
         <br />
         <div style="float:left;width:49%;">
         @if (Model.PreviousEntry != null)
         { 
-            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.PreviousEntry, false)">@Model.PreviousEntry.Title</a>
+            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.PreviousEntry)">@Model.PreviousEntry.Title</a>
         }
         </div> 
         <div style="float:right;text-align:right;">
         @if(Model.NextEntry != null)
         { 
-            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.NextEntry, false)">@Model.NextEntry.Title</a>
+            <a href="@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.NextEntry)">@Model.NextEntry.Title</a>
         } 
         </div>
         <br /><br />

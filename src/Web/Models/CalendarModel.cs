@@ -78,7 +78,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
 
         public string GenerateUrlForMonth(int monthOffset)
         {
-            string retVal = this.RouteInformation + "/Month";
+            string retVal = this.RouteInformation;
             DateTime targetMonth = this.TargetMonth.AddMonths(monthOffset);
             retVal += "/" + targetMonth.Year + "/" + targetMonth.Month;
 
@@ -89,7 +89,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
         {
             string retVal = string.Empty;
 
-            retVal += this.RouteInformation + "/Day/" + trackingDate.Year + "/" + trackingDate.Month + "/" + trackingDate.Day;
+            retVal += this.RouteInformation + "/" + trackingDate.Year + "/" + trackingDate.Month + "/" + trackingDate.Day;
 
             return retVal;
         }

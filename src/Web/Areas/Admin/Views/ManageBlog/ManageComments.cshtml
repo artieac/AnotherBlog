@@ -8,13 +8,14 @@
  @section headerPlugins
  {
     <script src="@Url.Content("~/Scripts/Controllers/ManageBlogController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Controllers/CommentController.js")" type="text/javascript"></script>
  }
 <form id="changeBlogForm" action="/Admin/ManageBlog/ManageComments/">
 </form>
 <form id="saveForm" action="/Admin/ManageBlog/ManageComments/">
     <input type="hidden" id="performSave" name="performSave" value="true" />
 </form>
-<div class="bodyContent" ng-controller="ManageBlogController">        
+<div class="bodyContent" ng-controller="CommentController">        
     <div class="contentPageTitle">
         <label>Manage Comments</label>
     </div> 
@@ -28,26 +29,25 @@
         <input type="button" value="refresh" ng-click="getComments();"/>
     </div>
     <div>
+        <input type="button" value="Approve" ng-click="approveComments('@Model.Common.TargetBlog.SubFolder');" />
+        <input type="button" value="Delete" ng-click="deleteComments('@Model.Common.TargetBlog.SubFolder');" />
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th width="15%"><input id="selectAll" name="selectAll" type=checkbox  ng-click="onSelectAll()" ng-checked="areAllSelected"/></th>
                     <th width="20%">comment</th>
                     <th width="20%">author</th>
                     <th width="10%">date</th>
                     <th width="15%">status</th>
-                    <th width="15%">action</th>
                 </tr>
             </thead>
             <tbody ng-init="getComments();">
                 <tr ng-repeat="blogComment in blogComments">
+                    <td width="15%"><input name="selected" type=checkbox value="{{blogComment.Id}}" ng-click="onSelectComment(blogComment.Id, blogComment.BlogPostId)" ng-checked="isCommentSelected(blogComment.Id, blogComment.BlogPostId)"/></td>
                     <td width="20%">{{ blogComment.Text }}</td>
                     <td width="20%">{{ blogComment.AuthorName - blogComment.AuthorEmail  }}</td>
                     <td width="10%">{{ blogComment.DefaultDateStringFormat  }}</td>
                     <td width="15%">{{ blogComment.StatusText }}</td>
-                    <td width="15%">
-                        <a href="/Admin/ManageBlog/ApproveComment/@Model.Common.TargetBlog.SubFolder/{{blogComment.BlogPostId}}/{{ blogComment.CommentId }}"><img src="/Content/images/action_check.png" class="approveComment" alt="" /></a>
-                        <a href="/Admin/ManageBlog/DeleteComment/@Model.Common.TargetBlog.SubFolder/{{blogComment.BlogPostId}}/{{ blogComment.CommentId }}"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a>
-                    </td>
                 </tr>
             </tbody>
         </table>

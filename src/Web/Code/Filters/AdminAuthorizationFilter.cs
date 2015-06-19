@@ -21,7 +21,7 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class AdminAuthorizationFilter : FilterAttribute, IAuthorizationFilter
+    public class AdminAuthorizationFilter : System.Web.Mvc.AuthorizeAttribute
     {
         public AdminAuthorizationFilter()
             : base()
@@ -63,16 +63,16 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 
         #region IAuthorizationFilter Members
 
-        public void OnAuthorization(AuthorizationContext filterContext)
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
             bool isAuthorized = false;
+            
+            SecurityPrincipal currentPrincipal = CookieAuthenticationParser.ParseCookie(filterContext.RequestContext.HttpContext.Request.Cookies);
 
             try
             {
-                if (System.Threading.Thread.CurrentPrincipal != null)
+                if (currentPrincipal != null)
                 {
-                    SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
-
                     if (string.IsNullOrEmpty(this.RequiredRoles))
                     {
                         // Admin section needs at least one role specified.

@@ -22,13 +22,14 @@
             });
         });
 
-        setTimeout("ManageBlogPosts.ExecuteBlogEntryAutoSave()", 300000);
+        ManageBlogPosts.SetupAutoSaveTimer();
     </script>
 }
 <form id="changeBlogForm" action="/Admin/ManageBlog/EditPost/@Model.EntryList[0].Post.Id.ToString()">
     <input type="hidden" id="performSave" name="performSave" value="true" />
 </form>
-
+<input type="hidden" id="entryId" name="entryId" value="@Model.EntryList[0].Post.Id" />
+<input type="hidden" id="autoSaveUrl" value="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost"/>
 <div class="bodyContent">
     <div class="panel panel-primary editAreaContainer">
         <div class="panel-header">
@@ -47,7 +48,7 @@
                 </div>
                 <div>
                     <label for="entryText" class="sr-only">Entry Text</label>
-                    <textarea id="entryText" name="entryText">@Model.EntryList[0].Post.EntryText</textarea>
+                    <textarea id="entryText" name="entryText" rows="25">@Model.EntryList[0].Post.EntryText</textarea>
                 </div>
                 @{
                     String tagsAsString = "";
@@ -72,12 +73,11 @@
                 <button type="button" class="btn btn-primary" id="saveButton" name="saveButton">Save</button>
             </form>
             <div style="display:none">
-                <form id="blogEntryAjaxForm" action="/Admin/ManageBlog/AjaxPostSave" method="post">
-                    <input type="hidden" id="ajaxIsPublished" name="ajaxIsPublished" value="@if(Model.EntryList[0].Post.IsPublished==true){<text>on</text>}else{<text>off</text>}" />
-                    <input type="hidden" id="ajaxEntryId" name="ajaxEntryId" value="@Model.EntryList[0].Post.Id.ToString()" />
-                    <input type="hidden" id="ajaxTitle" name="ajaxTitle" value="@Model.EntryList[0].Post.Title" />
-                    <input type="hidden" id="ajaxEntryText" name="ajaxEntryText" value="@Model.EntryList[0].Post.EntryText" />
-                    <input type="hidden" id="ajaxTagInput" name="ajaxTagInput" value="@tagsAsString" />
+                <form id="blogEntryAjaxForm" action="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost/@Model.EntryList[0].Post.Id" method="post">
+                    <input type="hidden" id="ajaxIsPublished" name="IsPublished" value="@if(Model.EntryList[0].Post.IsPublished==true){<text>on</text>}else{<text>off</text>}" />
+                    <input type="hidden" id="ajaxTitle" name="Title" value="@Model.EntryList[0].Post.Title" />
+                    <input type="hidden" id="ajaxEntryText" name="Text" value="@Model.EntryList[0].Post.EntryText" />
+                    <input type="hidden" id="ajaxTagInput" name="Tags" value="@tagsAsString" />
                 </form>
             </div>
             <div id="fileUploadSection">

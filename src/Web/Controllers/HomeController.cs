@@ -29,6 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 {
     public class HomeController : PublicController
     {
+        [Route("Home/About"), HttpGet()]
         public ActionResult About(string blogSubFolder)
         {
             SiteModel model = new SiteModel();
@@ -45,7 +46,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
-
+        [Route("~/", Name = "default")]
+        [Route("Home/Index"), HttpGet()]
         public ActionResult Index()
         {
             IndexModel model = new IndexModel();
@@ -60,7 +62,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View(model);
         }
 
-        public ActionResult Month(int yearFilter, int monthFilter)
+        [Route("BlogPosts/{year}/{month}"), HttpGet()]
+        public ActionResult Get(int year, int month)
         {
             IndexModel model = new IndexModel();
             model.Common = this.InitializeCommonModel();
@@ -68,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             IList<Blog> allBlogs = Services.BlogService.GetAll();
             IList<BlogPost> foundBlogEntries = null;
 
-            DateTime filterDate = new DateTime(yearFilter, monthFilter, 1);
+            DateTime filterDate = new DateTime(year, month, 1);
             foundBlogEntries = Services.BlogEntryService.GetByMonth(filterDate, true);
             model.Common.ContentTitle = "Blog entries for " + filterDate.ToString("MMMM") + " " + filterDate.ToString("yyyy");
             model.Common.TargetMonth = filterDate;
@@ -79,7 +82,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             return this.View("Index", model);
         }
 
-        public ActionResult Day(int yearFilter, int monthFilter, int dayFilter)
+        [Route("BlogPosts/{year}/{month}/{day}"), HttpGet()]
+        public ActionResult Get(int year, int month, int day)
         {
             IndexModel model = new IndexModel();
             model.Common = this.InitializeCommonModel();
@@ -87,7 +91,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             IList<Blog> allBlogs = Services.BlogService.GetAll();
             IList<BlogPost> foundBlogEntries = null;
 
-            DateTime filterDate = new DateTime(yearFilter, monthFilter, dayFilter);
+            DateTime filterDate = new DateTime(year, month, day);
             foundBlogEntries = Services.BlogEntryService.GetByDate(filterDate, true);
             model.Common.ContentTitle = "Blog entries for " + filterDate.ToString("D");
             model.Common.TargetMonth = filterDate;

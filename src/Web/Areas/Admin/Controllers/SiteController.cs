@@ -14,7 +14,6 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 {
-    [RequestAuthenticationFilter]
     public class SiteController : AdminBaseController
     {
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
@@ -24,7 +23,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
+        [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
         public ActionResult Index()
         {
             SiteModel model = new SiteModel();
@@ -38,8 +37,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
-        public ActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId)
+        [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
+        public ActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId, string defaultAuthor, string defaultKeywords)
         {
             if (string.IsNullOrEmpty(siteName))
             {
@@ -57,7 +56,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
                 {
                     try
                     {
-                        MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId);
+                        MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId, defaultAuthor, defaultKeywords);
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                     catch (Exception e)

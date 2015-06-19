@@ -15,7 +15,6 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 {
-    [RequestAuthenticationFilter]
     public class ManageBlogController : AdminBaseController
     {
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
@@ -33,7 +32,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
+        [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
         public ActionResult GetAll()
         {
             SiteModel model = new SiteModel();
@@ -42,7 +41,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [CustomAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
+        [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
         public ActionResult EditBlog(int id, string blogName, string blogAbout, string blogDescription, string targetSubFolder, string blogWelcome, string savingBlog, string blogTheme)
         {
             ManageBlogModel model = new ManageBlogModel();
@@ -282,165 +281,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public JsonResult AjaxPostSave(string blogSubFolder, string ajaxTitle, string ajaxEntryText, string ajaxEntryId, string ajaxTagInput, string ajaxIsPublished)
-        {
-            ManageBlogModel model = new ManageBlogModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
-
-            BlogPost currentPost = new BlogPost();
-
-            if (model.Common.TargetBlog != null)
-            {
-                int blogEntryId = 0;
-
-                if (!string.IsNullOrEmpty(ajaxEntryId))
-                {
-                    blogEntryId = int.Parse(ajaxEntryId);
-                }
-
-                bool isEntryPublished = false;
-
-                if (ajaxIsPublished != null)
-                {
-                    if (ajaxIsPublished == "true")
-                    {
-                        isEntryPublished = true;
-                    }
-                }
-
-                using (this.Services.UnitOfWork.BeginTransaction())
-                {
-                    try
-                    {
-                        currentPost = Services.BlogEntryService.Save(model.Common.TargetBlog, ajaxTitle, ajaxEntryText, blogEntryId, isEntryPublished, ajaxTagInput.Split(','));
-                        currentPost.Tags = currentPost.Tags;
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                        this.Services.UnitOfWork.EndTransaction(false);
-                    }
-                }
-            }
-
-            AjaxSaveModel retVal = new AjaxSaveModel();
-            retVal.EntryId = currentPost.Id;
-            retVal.BlogSubFolder = model.Common.TargetBlog.SubFolder;
-
-            return this.Json(retVal);
-        }
-
         #region Comment Management
-
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public JsonResult GetComments(string blogSubFolder, string id)
-        {
-            IList<CommentItemModel> model = new List<CommentItemModel>();
-
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (targetBlog != null)
-            {
-                IList<BlogPost> posts = this.Services.BlogEntryService.GetAllByBlog(targetBlog, true);
-
-                if (id == null || string.Compare(id, "All", true) == 0)
-                {
-                    foreach (BlogPost post in posts)
-                    {
-                        foreach(Comment comment in post.Comments)
-                        {
-                            CommentItemModel newItem = new CommentItemModel(comment);
-                            newItem.BlogPostId = post.Id;
-                            model.Add(newItem);
-                        }
-                    }
-                }
-                else
-                {
-                    Comment.CommentStatus targetStatus = (Comment.CommentStatus)Enum.Parse(typeof(Comment.CommentStatus), id);
-
-                    foreach (BlogPost post in posts)
-                    {
-                        foreach (Comment comment in post.FilteredComments(targetStatus))
-                        {
-                            CommentItemModel newItem = new CommentItemModel(comment);
-                            newItem.BlogPostId = post.Id;
-                            model.Add(newItem);
-                        }
-                    }
-                }
-            }
-
-            return this.Json(model, JsonRequestBehavior.AllowGet);
-        }
-
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public ActionResult ApproveComment(string blogSubFolder, int blogPostId, int filter)
-        {
-            ManageBlogModel model = new ManageBlogModel();
-            model.Common = this.InitializeCommonModel(blogSubFolder);
-
-            if (model.Common.TargetBlog != null)
-            {
-                using (this.Services.UnitOfWork.BeginTransaction())
-                {
-                    try
-                    {
-                        BlogPost blogPost = this.Services.BlogEntryService.GetById(model.Common.TargetBlog, blogPostId);
-
-                        if(blogPost!=null)
-                        {
-                            blogPost.UpdateCommentStatus(filter, Comment.CommentStatus.Approved);
-                            this.Services.BlogEntryService.Save(blogPost);
-                        }
-
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                        this.Services.UnitOfWork.EndTransaction(false);
-                    }
-                }
-            }
-
-            return this.RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
-        }
-
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public ActionResult DeleteComment(string blogSubFolder, int blogPostId, int filter)
-        {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    ManageBlogModel model = new ManageBlogModel();
-                    model.Common = this.InitializeCommonModel(blogSubFolder);
-
-                    if (model.Common.TargetBlog != null)
-                    {
-                        BlogPost blogPost = this.Services.BlogEntryService.GetById(model.Common.TargetBlog, blogPostId);
-
-                        if(blogPost != null)
-                        {
-                            blogPost.UpdateCommentStatus(filter, Comment.CommentStatus.Deleted);
-                            this.Services.BlogEntryService.Save(blogPost);
-                        }
-
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
-
-            return this.RedirectToAction("ManageComments", new { blogSubFolder = blogSubFolder });
-        }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public ActionResult ManageComments(string id, string commentFilter)

@@ -3,20 +3,27 @@
         var blogEntryAjaxForm = jQuery("#blogEntryAjaxForm");
         
         if (blogEntryAjaxForm != null) {
-            jQuery("#ajaxIsPublished").val(jq("#isPublished").attr('checked'));
-            jQuery("#ajaxEntryId").val(jq("#entryId").val());
-            jQuery("#ajaxTitle").val(jq("#title").val());
-            jQuery("#ajaxEntryText").val(jq("#entryText").val());
-            jQuery("#ajaxTagInput").val(jq("#tagInput").val());
+            var autoSaveUrl = jQuery("#autoSaveUrl").val();
+            autoSaveUrl = autoSaveUrl + "/" + jQuery("#entryId").val();
+            blogEntryAjaxForm.attr('action', autoSaveUrl);
 
-            var ajaxOptions = { success: ProcessAutoSaveReturn, dataType: 'json' };
+            jQuery("#ajaxIsPublished").val(jQuery("#isPublished").attr('checked'));
+            jQuery("#ajaxTitle").val(jQuery("#title").val());
+            jQuery("#ajaxEntryText").val(jQuery("#entryText").val());
+            jQuery("#ajaxTagInput").val(jQuery("#tagInput").val());
+
+            var ajaxOptions = { success: ManageBlogPosts.ProcessAutoSaveReturn, dataType: 'json' };
             blogEntryAjaxForm.ajaxSubmit(ajaxOptions);
         }
     };
 
     this.ProcessAutoSaveReturn = function (data) {
-        jQuery("#entryId").val(data.EntryId);
-        setTimeout("ExecuteBlogEntryAutoSave()", 300000);
+        jQuery("#entryId").val(data.Id);
+        ManageBlogPosts.SetupAutoSaveTimer();
+    };
+
+    this.SetupAutoSaveTimer = function(){
+        setTimeout("ManageBlogPosts.ExecuteBlogEntryAutoSave()", 30000);
     };
 
     this.SubmitFileUpload = function () {

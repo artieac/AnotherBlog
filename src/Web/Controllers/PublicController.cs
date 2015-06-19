@@ -18,7 +18,7 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 {
-    [RequestAuthenticationFilter]
+    [CookieAuthenticationParser]
     public class PublicController : BaseController
     {
         public PublicController()
@@ -81,7 +81,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         {
             CalendarModel retVal = new CalendarModel();
             retVal.TargetBlog = null;
-            retVal.RouteInformation = "/Home";
+            retVal.RouteInformation = "/BlogPosts";
             retVal.TargetMonth = targetMonth;
             retVal.CurrentMonthBlogDates = new List<DateTime>();
 

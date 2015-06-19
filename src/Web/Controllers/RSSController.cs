@@ -17,88 +17,27 @@ using System.Web.Mvc.Ajax;
 
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
+using AlwaysMoveForward.AnotherBlog.Web.Models.RSS;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 {
     public class RSSController : PublicController
     {
-        public RSSModel InitializeRSSModel(string blogSubFolder)
+        private RSSModel GetBlogPosts(Blog targetBlog, RSSModel rssModel)
         {
-            RSSModel retVal = new RSSModel();
-            retVal.BlogCommon = new CommonBlogModel();
-            retVal.BlogCommon.TargetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
-            retVal.BlogCommon.Common = this.InitializeCommonModel(retVal.BlogCommon.TargetBlog);
-            return retVal;
+            IList<Blog> blogList = new List<Blog>();
+            blogList.Add(targetBlog);
+            return this.GetBlogPosts(blogList, rssModel);
         }
 
-        public ActionResult Index()
+        private RSSModel GetBlogPosts(IList<Blog> targetBlogs, RSSModel rssModel)
         {
-            // Add action logic here
-            throw new NotImplementedException();
-        }
+            RSSModel retVal = rssModel;
 
-        public ActionResult Posts(string blogSubFolder)
-        {
-            RSSModel model = this.InitializeRSSModel(blogSubFolder);
-            model.BlogEntries = new Dictionary<Blog, IList<BlogPost>>();
-
-            model.Scheme = this.Request.Url.Scheme;
-            model.Authority = this.Request.Url.Authority;
-
-            Blog targetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (targetBlog == null)
+            for (int i = 0; i < targetBlogs.Count; i++)
             {
-                IList<Blog> allBlogs = this.Services.BlogService.GetAll();
-
-                for (int i = 0; i < allBlogs.Count; i++)
-                {
-                    model.BlogEntries[allBlogs[i]] = Services.BlogEntryService.GetAllByBlog(allBlogs[i], true, 10);
-                }
-            }
-            else
-            {
-                model.BlogEntries[targetBlog] = Services.BlogEntryService.GetAllByBlog(targetBlog, true, 10);
-            }
-
-            return this.View(model);
-        }
-
-        public ActionResult Atom(string blogSubFolder)
-        {
-            RSSModel model = this.InitializeRSSModel(blogSubFolder);
-            model.BlogEntries = new Dictionary<Blog, IList<BlogPost>>();
-            model.MostRecentPosts = new Dictionary<Blog, DateTime>();
-
-            Blog targetBlog = Services.BlogService.GetByName(blogSubFolder);
-
-            if (targetBlog == null)
-            {
-                IList<Blog> allBlogs = this.Services.BlogService.GetAll();
-
-                for (int i = 0; i < allBlogs.Count; i++)
-                {
-                    IList<BlogPost> blogEntries = Services.BlogEntryService.GetAllByBlog(allBlogs[i], true);
-                    model.BlogEntries[allBlogs[i]] = blogEntries;
-
-                    DateTime mostRecent = DateTime.MinValue;
-
-                    if (blogEntries != null)
-                    {
-                        if (blogEntries.Count > 0)
-                        {
-                            mostRecent = blogEntries[0].DatePosted;
-                        }
-                    }
-
-                    model.MostRecentPosts[allBlogs[i]] = mostRecent;
-                }
-            }
-            else
-            {
-                IList<BlogPost> blogEntries = Services.BlogEntryService.GetAllByBlog(targetBlog, true);
-                model.BlogEntries[targetBlog] = blogEntries;
+                IList<BlogPost> blogEntries = Services.BlogEntryService.GetAllByBlog(targetBlogs[i], true);
+                retVal.BlogEntries[targetBlogs[i]] = blogEntries;
 
                 DateTime mostRecent = DateTime.MinValue;
 
@@ -110,10 +49,86 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                     }
                 }
 
-                model.MostRecentPosts[targetBlog] = mostRecent;
+                retVal.MostRecentPosts[targetBlogs[i]] = mostRecent;
+            }
+
+            return retVal;
+        }
+
+        [Route("Rss/Posts"), HttpGet()]
+        public ActionResult Posts()
+        {
+            RSSModel model = new RSSModel();
+            model.BlogEntries = new Dictionary<Blog, IList<BlogPost>>();
+            model.MostRecentPosts = new Dictionary<Blog, DateTime>();
+
+            model.Scheme = this.Request.Url.Scheme;
+            model.Authority = this.Request.Url.Authority;
+
+            IList<Blog> allBlogs = this.Services.BlogService.GetAll();
+
+            model = this.GetBlogPosts(allBlogs, model);
+
+            return this.View(model);
+        }
+
+        [Route("Rss/Atom"), HttpGet()]
+        public ActionResult Atom()
+        {
+            RSSModel model = new RSSModel();
+            model.BlogEntries = new Dictionary<Blog, IList<BlogPost>>();
+            model.MostRecentPosts = new Dictionary<Blog, DateTime>();
+
+            model.Scheme = this.Request.Url.Scheme;
+            model.Authority = this.Request.Url.Authority;
+
+            IList<Blog> allBlogs = this.Services.BlogService.GetAll();
+            model = this.GetBlogPosts(allBlogs, model);
+
+            DateTime mostRecent = DateTime.MinValue;
+
+            for (int i = 0; i < allBlogs.Count; i++ )
+            {
+                if (model.BlogEntries[allBlogs[i]] != null)
+                {
+                    if (model.BlogEntries[allBlogs[i]].Count > 0)
+                    {
+                        mostRecent = model.BlogEntries[allBlogs[i]][0].DatePosted;
+                    }
+                }
+
+                model.MostRecentPosts[allBlogs[i]] = mostRecent;
             }
 
             return this.View(model);
+        }
+
+        [Route("Blog/{blogSubFolder}/Rss/Posts"), HttpGet()]
+        public ActionResult Posts(string blogSubFolder)
+        {
+            RSSModel model = new RSSModel();
+            model.BlogEntries = new Dictionary<Blog, IList<BlogPost>>();
+            model.MostRecentPosts = new Dictionary<Blog, DateTime>();
+
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            model.Scheme = this.Request.Url.Scheme;
+            model.Authority = this.Request.Url.Authority;
+            model = this.GetBlogPosts(targetBlog, model);
+            return this.View("Posts", model);
+        }
+
+        [Route("Blog/{blogSubFolder}/Rss/Atom"), HttpGet()]
+        public ActionResult Atom(string blogSubFolder)
+        {
+            RSSModel model = new RSSModel();
+            model.BlogEntries = new Dictionary<Blog, IList<BlogPost>>();
+            model.MostRecentPosts = new Dictionary<Blog, DateTime>();
+
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            model.MostRecentPosts = new Dictionary<Blog, DateTime>();
+            model = this.GetBlogPosts(targetBlog, model);
+
+            return this.View("Atom", model);
         }
     }
 }

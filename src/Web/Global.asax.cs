@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-
+using System.Web.Security;
+using System.Web.SessionState;
+using System.Web.Http;
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DomainModel;
@@ -15,10 +17,7 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 
 namespace AlwaysMoveForward.AnotherBlog.Web
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         private static SiteInfo siteInfo;
         private static WebSiteConfiguration siteConfig;
@@ -72,83 +71,12 @@ namespace AlwaysMoveForward.AnotherBlog.Web
             }
         }
 
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        void Application_Start(object sender, EventArgs e)
         {
-            filters.Add(new HandleErrorAttribute());
-        }
-
-        public static void RegisterRoutes(RouteCollection routes)
-        {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            string[] blogControllerNamespace = new string[] { "AlwaysMoveForward.AnotherBlog.Web.Controllers" };
-
-            routes.MapRoute(
-                "HomeMonthIndex",
-                "Home/Month/{yearFilter}/{monthFilter}",
-                new { controller = "Home", action = "Month", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month},
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "HomeDayIndex",
-                "Home/Day/{yearFilter}/{monthFilter}/{dayFilter}",
-                new { controller = "Home", action = "Day", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month, dayFilter = DateTime.Now.Day },
-                blogControllerNamespace
-               );
-
-            routes.MapRoute(
-                "BlogTagSearch",
-                "{blogSubFolder}/Tag/{targetTag}",
-                new { blogSubFolder = string.Empty, controller = "Blog", action = "Tag", targetTag = string.Empty },   // Parameter defaults
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "root",
-                string.Empty,
-                new { controller = "Home", action = "Index" });
-
-            routes.MapRoute(
-                "Default",
-                "{controller}/{action}",
-                new { controller = string.Empty, action = string.Empty });
-
-            routes.MapRoute(
-                "BlogSpecific",                                              // Route name
-                "{blogSubFolder}/{controller}/{action}",                           // URL with parameters
-                new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty },   // Parameter defaults
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "BlogMonthIndex",
-                "{blogSubFolder}/Month/{yearFilter}/{monthFilter}",
-                new { controller = "Blog", action = "Month", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month },
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "BlogDayIndex",
-                "{blogSubFolder}/Day/{yearFilter}/{monthFilter}/{dayFilter}",
-                new { controller = "Blog", action = "Day", yearFilter = DateTime.Now.Year, monthFilter = DateTime.Now.Month, dayFilter = DateTime.Now.Day },
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "BlogSpecificWithId",                                              // Route name
-                "{blogSubFolder}/{controller}/{action}/{id}",                           // URL with parameters
-                new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty, id = "0"},   // Parameter defaults
-                blogControllerNamespace);
-
-            routes.MapRoute(
-                "BlogEntry",                                              // Route name
-                "{blogSubFolder}/{controller}/{action}/{year}/{month}/{day}/{title}",                           // URL with parameters
-                new { blogSubFolder = string.Empty, controller = string.Empty, action = string.Empty, year = string.Empty, month = string.Empty, day = string.Empty, title = string.Empty },   // Parameter defaults
-                blogControllerNamespace);
-        }
-
-        protected void Application_Start()
-        {
+            // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
-
-            RegisterGlobalFilters(GlobalFilters.Filters);
-            RegisterRoutes(RouteTable.Routes);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }
     }
 }
