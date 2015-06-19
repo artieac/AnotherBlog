@@ -6,6 +6,10 @@
 }
 @section headerPlugins
 {
+@section headerPlugins
+ {
+    <script src="@Url.Content("~/Scripts/Controllers/BlogPostController.js")" type="text/javascript"></script>
+    
     <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
     <script>tinymce.init({
             plugins: "link",
@@ -30,25 +34,25 @@
 </form>
 <input type="hidden" id="entryId" name="entryId" value="@Model.EntryList[0].Post.Id" />
 <input type="hidden" id="autoSaveUrl" value="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost"/>
-<div class="bodyContent">
+<div class="bodyContent" ng-controller="BlogPostController">
     <div class="panel panel-primary editAreaContainer">
         <div class="panel-header">
             Edit Blog Post
         </div>
         <div>
             <br />
-            <form id="saveForm" action="/Admin/ManageBlog/EditPost/@Model.Common.TargetBlog.SubFolder/@Model.EntryList[0].Post.Id.ToString()" method="post">
-                <input type="hidden" id="performSave" name="performSave" value="true" />
+            <form id="saveForm" action="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost/@Model.EntryList[0].Post.Id.ToString()" method="post">
+                <input type="hidden" id="blogPostId" name="blogPostId" value="@Model.EntryList[0].Post.Id"/>
                 <div>
                     <label for="title" class="sr-only">Title</label>
-                    <input type="text" id="title" name="title" value="@Model.EntryList[0].Post.Title" maxlength="50" class="form-control" placeholder="Title" required autofocus />
+                    <input type="text" id="title" name="title" value="@Model.EntryList[0].Post.Title" maxlength="50" class="form-control" placeholder="Title" required autofocus ng-model="blogPostForm.Title" />
                 </div>
                 <div>
-                    <input id='isPublished' name='isPublished' type='checkbox' @if (Model.EntryList[0].Post.IsPublished) { <text> checked </text>      } /> Is Published
+                    <input id='isPublished' name='isPublished' type='checkbox' @if (Model.EntryList[0].Post.IsPublished) { <text> checked </text>        } ng-model="blogPostForm.IsPublished" /> Is Published
                 </div>
                 <div>
                     <label for="entryText" class="sr-only">Entry Text</label>
-                    <textarea id="entryText" name="entryText" rows="25">@Model.EntryList[0].Post.EntryText</textarea>
+                    <textarea id="entryText" name="entryText" rows="25" ng-modelblogpostformblogpostinput.text">@Model.EntryList[0].Post.EntryText</textarea>
                 </div>
                 @{
                     String tagsAsString = "";
@@ -68,9 +72,9 @@
                 }
                 <div>
                     <label for="tagInput" class="sr-only">Tags</label>
-                    <input type="text" id="tagInput" name="tagInput" value="@tagsAsString" class="form-control" placeholder="Tags" required />
+                    <input type="text" id="tagInput" name="tagInput" value="@tagsAsString" class="form-control" placeholder="Tags" required ng-model="blogPostForm.Tags" />
                 </div>
-                <button type="button" class="btn btn-primary" id="saveButton" name="saveButton">Save</button>
+                <button type="button" class="btn btn-primary" id="saveButton" name="saveButton" ng-click="saveBlogPost('@Model.Common.TargetBlog.SubFolder', '@Model.EntryList[0].Post.Id')">Save</button>
             </form>
             <div style="display:none">
                 <form id="blogEntryAjaxForm" action="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost/@Model.EntryList[0].Post.Id" method="post">
