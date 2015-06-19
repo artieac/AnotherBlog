@@ -7,7 +7,7 @@
     $scope.saveBlogPost = function (blogSubFolder) {
         var blogPostId = jQuery("#blogPostId").val();
 
-        $http.put('/api/Blog/' + blogSubFolder + '/BlogPost/' + blogPostId, $scope.blogPostForm)
+        $http.put('/api/Blog/' + blogSubFolder + '/BlogPost/' + blogPostId, $scope.blogPostInput)
             .success(function (data) {
                 jQuery("#blogPostId").val(data.Id);
             });

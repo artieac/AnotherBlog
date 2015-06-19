@@ -101,7 +101,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         // PUT api/<blogSubFolder>/<controller>/5
-        [Route("api/Blog/{blogSubFolder}/BlogPost/{id:int}"), HttpPost()]
+        [Route("api/Blog/{blogSubFolder}/BlogPost/{id:int}")]
+        [HttpPost]
+        [HttpPut]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public BlogPost Put(string blogSubFolder, int id, [FromBody]BlogPostInput input)
         {

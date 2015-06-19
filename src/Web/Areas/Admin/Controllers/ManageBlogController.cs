@@ -42,72 +42,16 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
-        public ActionResult EditBlog(int id, string blogName, string blogAbout, string blogDescription, string targetSubFolder, string blogWelcome, string savingBlog, string blogTheme)
+        public ActionResult EditBlog(int id)
         {
             ManageBlogModel model = new ManageBlogModel();
 
             model.Common.UserBlogs = this.Services.BlogService.GetByUserId(this.CurrentPrincipal.CurrentUser.Id);
+            model.Common.TargetBlog = Services.BlogService.GetById(id);
 
-            if (savingBlog != null)
+            if (model.Common.TargetBlog == null)
             {
-                if (string.IsNullOrEmpty(blogName))
-                {
-                    ViewData.ModelState.AddModelError("blogName", "Blog name is required.");
-                }
-
-                if (string.IsNullOrEmpty(targetSubFolder))
-                {
-                    ViewData.ModelState.AddModelError("targetSubFolder", "Sub folder is required.");
-                }
-
-                int targetBlogId = id;
-
-                if (ViewData.ModelState.IsValid)
-                {
-                    using (this.Services.UnitOfWork.BeginTransaction())
-                    {
-                        try
-                        {
-                            model.Common.TargetBlog = Services.BlogService.Save(targetBlogId, blogName, targetSubFolder, blogDescription, blogAbout, blogWelcome, blogTheme);
-                            this.Services.UnitOfWork.EndTransaction(true);
-                        }
-                        catch (Exception e)
-                        {
-                            model.Common.TargetBlog = Services.BlogService.Create();
-                            model.Common.TargetBlog.Name = blogName;
-                            model.Common.TargetBlog.About = blogAbout;
-                            model.Common.TargetBlog.Description = blogDescription;
-                            model.Common.TargetBlog.SubFolder = targetSubFolder;
-                            model.Common.TargetBlog.WelcomeMessage = blogWelcome;
-
-                            LogManager.GetLogger().Error(e);
-                            this.Services.UnitOfWork.EndTransaction(false);
-                        }
-                    }
-                }
-                else
-                {
-                    model.Common.TargetBlog = Services.BlogService.GetById(targetBlogId);
-
-                    if (model.Common.TargetBlog == null)
-                    {
-                        model.Common.TargetBlog = Services.BlogService.Create();
-                        model.Common.TargetBlog.Name = blogName;
-                        model.Common.TargetBlog.About = blogAbout;
-                        model.Common.TargetBlog.Description = blogDescription;
-                        model.Common.TargetBlog.SubFolder = targetSubFolder;
-                        model.Common.TargetBlog.WelcomeMessage = blogWelcome;
-                    }
-                }
-            }
-            else
-            {
-                model.Common.TargetBlog = Services.BlogService.GetById(id);
-
-                if(model.Common.TargetBlog == null)
-                {
-                    model.Common.TargetBlog = Services.BlogService.Create();
-                }
+                model.Common.TargetBlog = Services.BlogService.Create();
             }
 
             return this.View(model);
