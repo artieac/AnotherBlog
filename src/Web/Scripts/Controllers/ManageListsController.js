@@ -1,5 +1,5 @@
-﻿function ManageListsController($scope, $resource, $http) {
-    $scope.blogListElements = {selectedList: 0};
+﻿theApp.controller('ManageListsController', function ($scope, $resource, $http) {
+    $scope.blogListElements = { selectedList: 0 };
     $scope.blogListItemElements = { selectedListItem: 0 };
 
     $scope.getAll = function (blogSubFolder) {
@@ -9,28 +9,27 @@
 
     $scope.getListItems = function (listId) {
         jQuery.each($scope.blogLists, function (i, val) {
-            if (val.Id == listId)
-            {
+            if (val.Id == listId) {
                 $scope.currentList = val;
             }
         });
     }
 
     $scope.deleteList = function (listId, blogSubFolder) {
-         $http.put('/Admin/ManageLists/Delete?listId=' + listId + '&blogSubFolder=' + blogSubFolder, $scope.newComment)
-            .success(function (data) {
-            });
-     }
+        $http.put('/Admin/ManageLists/Delete?listId=' + listId + '&blogSubFolder=' + blogSubFolder, $scope.newComment)
+           .success(function (data) {
+           });
+    }
 
     $scope.addList = function (blogSubFolder) {
-         if ($scope.newList.showOrdered == null) {
-             $scope.newList.showOrdered = false;
-         }
+        if ($scope.newList.showOrdered == null) {
+            $scope.newList.showOrdered = false;
+        }
 
-         $http.put('/Admin/ManageLists/Add/' + blogSubFolder, $scope.newList)
-            .success(function (data) {
-                $scope.blogLists = data;
-            });
+        $http.put('/Admin/ManageLists/Add/' + blogSubFolder, $scope.newList)
+           .success(function (data) {
+               $scope.blogLists = data;
+           });
     }
 
     $scope.putItem = function (blogSubFolder, listId) {
@@ -49,4 +48,4 @@
                $scope.currentList = data;
            });
     }
-}
+});

@@ -6,50 +6,66 @@
 }
 @section headerPlugins
 {
+    <script src="/Scripts/Controllers/BlogPostController.js" type="text/javascript"></script>
     <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
     <script>tinymce.init({
             plugins: "link",
             selector: 'textarea',
             menubar: "format insert edit",
-            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link"
+            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link",
+            setup: function (editor) {
+                editor.on('blur', function (e) {
+                    tinyMCE.triggerSave();
+                    ManageBlogPosts.ToggleSaveState(true);
+                });
+            }
         });
     </script>
     <script src="/Scripts/Admin/ManageBlogPosts.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#saveButton").click(function () {
-                $("#saveForm").submit();
+        $(document).ready(function () {           
+            $("#title").change(function () {
+                ManageBlogPosts.ToggleSaveState(true);
+            });
+
+            $("#isPublished").change(function () {
+                ManageBlogPosts.ToggleSaveState(true);
+            });
+
+            $("#tagInput").change(function () {
+                ManageBlogPosts.ToggleSaveState(true);
             });
         });
-
-        ManageBlogPosts.SetupAutoSaveTimer();
     </script>
 }
-<form id="changeBlogForm" action="/Admin/ManageBlog/EditPost/@Model.EntryList[0].Post.Id.ToString()">
-    <input type="hidden" id="performSave" name="performSave" value="true" />
-</form>
-<input type="hidden" id="entryId" name="entryId" value="@Model.EntryList[0].Post.Id" />
-<input type="hidden" id="autoSaveUrl" value="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost"/>
-<div class="bodyContent">
+<div class="bodyContent" ng-controller="BlogPostController">
     <div class="panel panel-primary editAreaContainer">
         <div class="panel-header">
             Edit Blog Post
         </div>
         <div>
+            <input type="hidden" id="blogPostId" name="blogPostId" value="@Model.EntryList[0].Post.Id" />
+            <input type="hidden" id="blogSubFolder" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
             <br />
-            <form id="saveForm" action="/Admin/ManageBlog/EditPost/@Model.Common.TargetBlog.SubFolder/@Model.EntryList[0].Post.Id.ToString()" method="post">
-                <input type="hidden" id="performSave" name="performSave" value="true" />
-                <div>
-                    <label for="title" class="sr-only">Title</label>
-                    <input type="text" id="title" name="title" value="@Model.EntryList[0].Post.Title" maxlength="50" class="form-control" placeholder="Title" required autofocus />
+            <form id="saveBlogPostForm" action="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost/@Model.EntryList[0].Post.Id.ToString()" method="post">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="title" class="sr-only">Title</label>
+                        <input type="text" id="title" name="title" value="@Model.EntryList[0].Post.Title" maxlength="50" class="form-control" placeholder="Title" required autofocus />
+                    </div>
+                    <div class="col-md-2">
+                        <input id='isPublished' name='isPublished' type='checkbox' @if (Model.EntryList[0].Post.IsPublished) { <text> checked </text>          } /> Is Published
+                    </div>
+                    <div class="col-md-2">
+                        Saved <img id="blogPostSaveStateImage" src="/Content/Images/action_check.png" />
+                    </div>
                 </div>
+                <br />
                 <div>
-                    <input id='isPublished' name='isPublished' type='checkbox' @if (Model.EntryList[0].Post.IsPublished) { <text> checked </text>      } /> Is Published
+                    <label for="inputText" class="sr-only">Entry Text</label>
+                    <textarea id="inputText" name="inputText" rows="25">@Model.EntryList[0].Post.EntryText</textarea>
                 </div>
-                <div>
-                    <label for="entryText" class="sr-only">Entry Text</label>
-                    <textarea id="entryText" name="entryText" rows="25">@Model.EntryList[0].Post.EntryText</textarea>
-                </div>
+                <br/>
                 @{
                     String tagsAsString = "";
 
@@ -70,16 +86,8 @@
                     <label for="tagInput" class="sr-only">Tags</label>
                     <input type="text" id="tagInput" name="tagInput" value="@tagsAsString" class="form-control" placeholder="Tags" required />
                 </div>
-                <button type="button" class="btn btn-primary" id="saveButton" name="saveButton">Save</button>
+                <button type="button" class="btn btn-primary" id="saveButton" name="saveButton" ng-click="saveBlogPost()">Save</button>
             </form>
-            <div style="display:none">
-                <form id="blogEntryAjaxForm" action="/api/Blog/@Model.Common.TargetBlog.SubFolder/BlogPost/@Model.EntryList[0].Post.Id" method="post">
-                    <input type="hidden" id="ajaxIsPublished" name="IsPublished" value="@if(Model.EntryList[0].Post.IsPublished==true){<text>on</text>}else{<text>off</text>}" />
-                    <input type="hidden" id="ajaxTitle" name="Title" value="@Model.EntryList[0].Post.Title" />
-                    <input type="hidden" id="ajaxEntryText" name="Text" value="@Model.EntryList[0].Post.EntryText" />
-                    <input type="hidden" id="ajaxTagInput" name="Tags" value="@tagsAsString" />
-                </form>
-            </div>
             <div id="fileUploadSection">
                 @Html.Partial("_FileUploadControl", @Model.Common)
             </div>

@@ -1,4 +1,5 @@
-﻿function ManagePollsController($scope, $resource, $http) {
+﻿theApp.controller('ManagePollsController', function ($scope, $resource, $http) {
+
     $scope.pollElements = { selectedPoll: 0 };
     $scope.pollOptionElements = { selectedPollOption: 0 };
 
@@ -42,4 +43,4 @@
                $scope.selectedPoll = data;
            });
     }
-}
+});

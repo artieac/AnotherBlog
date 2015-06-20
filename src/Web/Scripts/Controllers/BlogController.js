@@ -1,4 +1,5 @@
-﻿function BlogController($scope, $resource, $http) {
+﻿theApp.controller('BlogController', function ($scope, $resource, $http) {
+
     $scope.getBlogTags = function (blogSubFolder) {
         var getTagsRequest = $resource('/api/Blog/:blogSubFolder/Tags');
         $scope.blogTags = getTagsRequest.query({ blogSubFolder: blogSubFolder });
@@ -19,5 +20,5 @@
             .success(function (data) {
                 $scope.blogPostComments = data;
             });
-        }
-}
+    }
+});
