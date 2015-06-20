@@ -1,4 +1,4 @@
-﻿function ListController($scope, $resource) {
+﻿theApp.controller('ListController', function ($scope, $resource, $http) {
     $scope.getAllPolls = function () {
         var allBlogsRequest = $resource('/API/blogAPI/getall');
         $scope.allBlogs = allBlogsRequest.get();
@@ -19,4 +19,4 @@
         var getBlogListsRequest = $resource('/:blogSubFolder/API/displaylistapi/getbloglists');
         $scope.blogLists = getBlogListsRequest.query({ blogSubFolder: blogSubFolder });
     }
-}
+});

@@ -29,19 +29,6 @@
         return retVal;
     };
 
-    this.ExecuteBlogEntrySave = function () {
-        var autoSaveUrl = ManageBlogPosts.CollectBlogPostData();
-        var blogEntryAjaxForm = jQuery("#blogEntryAjaxForm");
-        blogEntryAjaxForm.attr('action', autoSaveUrl);
-
-        var ajaxOptions = { success: ManageBlogPosts.ProcessSaveReturn, dataType: 'json' };
-        blogEntryAjaxForm.ajaxSubmit(ajaxOptions);
-    };
-
-    this.ProcessSaveReturn = function (data) {
-        jQuery("#blogPostId").val(data.Id);
-        ManageBlogPosts.ToggleSaveState(false);
-    };
 
     this.ExecuteBlogEntryAutoSave = function () {
         var autoSaveUrl = ManageBlogPosts.CollectBlogPostData();

@@ -1,4 +1,4 @@
-﻿function CommentController($scope, $resource, $http) {
+﻿theApp.controller('CommentController', function ($scope, $resource, $http) {
     $scope.areAllSelected = false;
 
     $scope.getComments = function () {
@@ -53,8 +53,8 @@
         return retVal;
     }
 
-    $scope.onSelectComment = function(commentId, blogPostId){
-        if(typeof $scope.selectedComments==='undefined' || $scope.selectedComments===null){
+    $scope.onSelectComment = function (commentId, blogPostId) {
+        if (typeof $scope.selectedComments === 'undefined' || $scope.selectedComments === null) {
             $scope.selectedComments = {};
         }
 
@@ -68,10 +68,10 @@
             });
     }
 
-    $scope.deleteComments = function (blogSubFolder) {       
+    $scope.deleteComments = function (blogSubFolder) {
         $http.put('/api/Blog/' + blogSubFolder + "/Comments/Deleted", $scope.selectedComments)
             .success(function (data) {
                 $scope.getComments();
             });
     }
-}
+});
