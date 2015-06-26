@@ -104,6 +104,33 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             return this.BlogRepository.GetBySubFolder(subFolder);
         }
+
+        /// <summary>
+        /// Save a blog instance and its configuration settings.
+        /// </summary>
+        /// <param name="blogId"></param>
+        /// <param name="name"></param>
+        /// <param name="subFolder"></param>
+        /// <param name="description"></param>
+        /// <param name="about"></param>
+        /// <param name="blogWelcome"></param>
+        /// <returns></returns>
+        public Blog Save(int blogId, string description, string about, string blogWelcome)
+        {
+            Blog itemToSave = null;
+
+            if (blogId <= 0)
+            {
+                itemToSave = this.Create();
+            }
+            else
+            {
+                itemToSave = this.BlogRepository.GetById(blogId);
+            }
+
+            return this.Save(itemToSave.Id, itemToSave.Name, itemToSave.SubFolder, description, about, blogWelcome, itemToSave.Theme);
+        }
+
         /// <summary>
         /// Save a blog instance and its configuration settings.
         /// </summary>
@@ -129,8 +156,26 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             itemToSave.Name = name;
             itemToSave.SubFolder = subFolder;
+
+            if(string.IsNullOrEmpty(description))
+            {
+                description = string.Empty;
+            }
+
             itemToSave.Description = description;
+
+            if(string.IsNullOrEmpty(about))
+            {
+                about = string.Empty;
+            }
+
             itemToSave.About = about;
+
+            if(string.IsNullOrEmpty(blogWelcome))
+            {
+                blogWelcome = string.Empty;
+            }
+
             itemToSave.WelcomeMessage = blogWelcome;
             itemToSave.Theme = blogTheme;
 

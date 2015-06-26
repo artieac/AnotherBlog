@@ -49,14 +49,30 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         // PUT api/<controller>/5
         [Route("api/Blog/{id:int}"), HttpPut()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public Blog Put(int postId, [FromBody]BlogInputModel input)
+        public Blog Put(int id, [FromBody]BlogInputModel input)
         {
             Blog retVal = null;
 
-            if (!string.IsNullOrEmpty(input.Name) &&
-                !string.IsNullOrEmpty(input.SubFolder))
+            if (this.CurrentPrincipal.CurrentUser.IsSiteAdministrator == true)
             {
-                retVal = this.Services.BlogService.Save(-1, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
+                if (!string.IsNullOrEmpty(input.Name) &&
+                    !string.IsNullOrEmpty(input.SubFolder))
+                {
+                    retVal = this.Services.BlogService.Save(id, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
+                }
+            }
+            else
+            {
+                Blog targetBlog = this.Services.BlogService.GetById(id);
+
+                if (targetBlog == null)
+                {
+                    if (this.CurrentPrincipal.IsInRole(RoleType.Names.Administrator, targetBlog.SubFolder) ||
+                        this.CurrentPrincipal.IsInRole(RoleType.Names.Blogger, targetBlog.SubFolder))
+                    {
+                        retVal = this.Services.BlogService.Save(id, input.Description, input.About, input.Welcome);
+                    }
+                }
             }
 
             return retVal;

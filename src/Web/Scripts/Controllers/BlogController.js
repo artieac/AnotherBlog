@@ -21,4 +21,25 @@
                 $scope.blogPostComments = data;
             });
     }
+
+    $scope.saveBlog = function () {
+        var saveBlogForm = jQuery("#saveBlogForm");
+
+        if (saveBlogForm != null) {
+            var blogId = jQuery("#blogId").val();
+
+            $scope.blogInput = {};
+            $scope.blogInput.Name = jQuery("#blogName").val();
+            $scope.blogInput.Theme = jQuery("#blogTheme").val();
+            $scope.blogInput.Welcome = jQuery("#blogWelcome").val();
+            $scope.blogInput.About = jQuery("#blogAbout").val();
+            $scope.blogInput.SubFolder = jQuery("#blogSubFolder").val();
+            $scope.blogInput.Description = jQuery("#blogDescription").val();
+
+            $http.put('/api/Blog/' + blogId, $scope.blogInput)
+                .success(function (data) {
+                    jQuery("#blogId").val(data.Id);
+                });
+        }
+    }
 });

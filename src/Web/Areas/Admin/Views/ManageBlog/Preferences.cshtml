@@ -10,30 +10,29 @@
 
 @section headerPlugins
 {
+    <script src="/Scripts/Controllers/BlogController.js" type="text/javascript"></script>
     <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
     <script>
         tinymce.init({
             plugins: "link",
             selector: 'textarea',
             menubar: "format insert edit",
-            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link"
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#saveButton").click(function () {
-                $("#saveForm").submit();
-            });
+            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link",
+            setup: function (editor) {
+                editor.on('blur', function (e) {
+                    tinyMCE.triggerSave();
+                });
+            }
         });
     </script>
 }
 <form id="changeBlogForm" action="/Admin/ManageBlog/Preferences/">
-    <input type="hidden" id="performSave" name="performSave" value="true" />
+
 </form>
 
-<div class="bodyContent">
-    <div class="panel panel-default editAreaContainer">
-        <div class="panel-header">Edit Blog Settings</div>
+<div class="bodyContent" ng-controller="BlogController">
+    <div class="panel panel-default">
+        <div class="panel-header">Edit Blog Settings: @Model.Common.TargetBlog.Name</div>
         <br />
         <div class="panel-body">
             @if (ViewData.ModelState.IsValid == false)
@@ -47,26 +46,24 @@
                     <br />
                 </div>
             }
-            <br />
-            <form id="saveForm" action="/Admin/ManageBlog/Preferences/" method="post">
-                <input type="hidden" id="performSave" name="performSave" value="true" />
-                <input type="hidden" id="defaultTheme" name="defaultTheme" value="<%= ViewData.Model.TargetBlog.Theme %>" />
+            <form id="saveBlogForm" class="form-vertical" action="/Admin/ManageBlog/Preferences/" method="post">
+                <input type="hidden" name="blogId" id="blogId" value="@Model.Common.TargetBlog.Id" />
+                <input type="hidden" name="blogName" id="blogName" value="@Model.Common.TargetBlog.Name" />
+                <input type="hidden" id="blogTheme" name="blogTheme" value="@Model.Common.TargetBlog.Theme" />
+                <input type="hidden" id="blogSubFolder" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
                 <div>
-                    <span class="label">@Model.Common.TargetBlog.Name</span>
+                    <label for="blogWelcome">Welcome Message:</label>
+                    <input type="text" name="blogWelcome" id="blogWelcome" value="@Model.Common.TargetBlog.WelcomeMessage" class="form-control" />
                 </div>
                 <div>
-                    <span class="label">welcome:</span>
-                    <input type="text" id="blogWelcome" name="blogWelcome" value="@Model.Common.TargetBlog.WelcomeMessage" />
+                    <label for="blogDescription">Description:</label>
+                    <input type="text" name="blogDescription" id="blogDescription" value="@Model.Common.TargetBlog.Description" class="form-control" />
                 </div>
                 <div>
-                    <span class="label">description:</span>
-                    <input type="text" id="description" name="description" value="@Model.Common.TargetBlog.Description" />
+                    <label for="blogAbout">About:</label>
+                    <textarea name="blogAbout" id="blogAbout" class="form-control">@Model.Common.TargetBlog.About</textarea>
                 </div>
-                <div>
-                    <span class="label">about:</span>
-                    <textarea id="about" name="about">@Model.Common.TargetBlog.About</textarea>
-                </div>
-                <button type="button" class="btn btn-primary" id="saveButton" name="saveButton">Save Changes</button>
+                <button type="button" class="btn btn-primary" id="saveButton" name="saveButton" ng-click="saveBlog()">Save Changes</button>
             </form>
         </div>
     </div>

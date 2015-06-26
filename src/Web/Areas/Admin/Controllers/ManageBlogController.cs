@@ -58,42 +58,12 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator, IsBlogSpecific = true)]
-        public ActionResult Preferences(string id, string description, string about, string blogWelcome, bool? performSave, string blogTheme)
+        public ActionResult Preferences(string id)
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel(id);
 
-            if (model.Common.TargetBlog != null)
-            {
-                if (performSave.HasValue)
-                {
-                    if (performSave.Value == true)
-                    {
-                        if (string.IsNullOrEmpty(description))
-                        {
-                            ViewData.ModelState.AddModelError("description", "Please enter a description.");
-                        }
-
-                        if (ViewData.ModelState.IsValid)
-                        {
-                            using (this.Services.UnitOfWork.BeginTransaction())
-                            {
-                                try
-                                {
-                                    model.Common.TargetBlog = Services.BlogService.Save(model.Common.TargetBlog.Id, model.Common.TargetBlog.Name, model.Common.TargetBlog.SubFolder, description, about, blogWelcome, blogTheme);
-                                    this.Services.UnitOfWork.EndTransaction(true);
-                                }
-                                catch (Exception e)
-                                {
-                                    LogManager.GetLogger().Error(e);
-                                    this.Services.UnitOfWork.EndTransaction(false);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
+            if (model.Common.TargetBlog == null)
             {
                 model.Common.TargetBlog = model.Common.UserBlogs[0];
             }
@@ -159,61 +129,27 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public ActionResult EditPost(string blogSubFolder, bool? performSave, int? id, string title, string entryText, string tagInput, string isPublished)
+        public ActionResult EditPost(string blogSubFolder, int id)
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel(blogSubFolder);
 
             if (model.Common.TargetBlog != null)
-            {
-                int blogEntryId = 0;
-
-                if (id.HasValue)
-                {
-                    blogEntryId = id.Value;
-                }
-
+            {                
                 BlogPostModel blogPost = new BlogPostModel();
                 blogPost.Author = this.CurrentPrincipal.CurrentUser;
-                blogPost.Post = Services.BlogEntryService.GetById(model.Common.TargetBlog, blogEntryId);
+                blogPost.Post = Services.BlogEntryService.GetById(model.Common.TargetBlog, id);
 
                 if (blogPost.Post == null)
                 {
                     blogPost.Post = new BlogPost();
+                    blogPost.Tags = new List<Tag>();
                 }
-
-                if (performSave.HasValue)
+                else
                 {
-                    if (performSave.Value == true)
-                    {
-                        bool isEntryPublished = false;
-
-                        if (isPublished != null)
-                        {
-                            if (isPublished == "on")
-                            {
-                                isEntryPublished = true;
-                            }
-                        }
-
-                        using (this.Services.UnitOfWork.BeginTransaction())
-                        {
-                            try
-                            {
-                                blogPost.Post = Services.BlogEntryService.Save(model.Common.TargetBlog, title, entryText, blogEntryId, isEntryPublished, tagInput.Split(','));
-                                blogPost.Tags = blogPost.Post.Tags;
-                                this.Services.UnitOfWork.EndTransaction(true);
-                            }
-                            catch (Exception e)
-                            {
-                                LogManager.GetLogger().Error(e);
-                                this.Services.UnitOfWork.EndTransaction(false);
-                            }
-                        }
-                    }
+                    blogPost.Tags = blogPost.Post.Tags;
                 }
 
-                blogPost.Tags = blogPost.Post.Tags;
                 model.EntryList = new PagedList<BlogPostModel>();
                 model.EntryList.Add(blogPost);
             }

@@ -1103,6 +1103,7 @@
     <Compile Include="Code\Utilities\WebConfiguration.cs" />
     <Compile Include="Code\Utilities\XmlResult.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
+    <Compile Include="Controllers\API\BlogController.cs" />
     <Compile Include="Controllers\API\BlogPostController.cs" />
     <Compile Include="Controllers\API\CommentController.cs" />
     <Compile Include="Controllers\API\ListsController.cs" />
@@ -1118,6 +1119,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AjaxLoginModel.cs" />
+    <Compile Include="Models\API\BlogInputModel.cs" />
     <Compile Include="Models\API\BlogPostInput.cs" />
     <Compile Include="Models\API\CommentModel.cs" />
     <Compile Include="Models\API\ExternalBlogPostModel.cs" />
