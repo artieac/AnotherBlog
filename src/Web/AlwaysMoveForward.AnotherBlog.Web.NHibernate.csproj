@@ -1133,9 +1133,7 @@
     <Compile Include="Models\API\TagCountModel.cs" />
     <Compile Include="Models\BlogModels\BlogModel.cs" />
     <Compile Include="Models\BlogModels\BlogPostModel.cs" />
-    <Compile Include="Models\BlogModels\BlogSelectionModel.cs" />
     <Compile Include="Models\BlogModels\CommonBlogModel.cs" />
-    <Compile Include="Models\BlogModels\EntryCommentModel.cs" />
     <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\CommonModel.cs" />
     <Compile Include="Models\Home\IndexModel.cs" />
