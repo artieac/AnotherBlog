@@ -129,16 +129,23 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
         }
 
         [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public ActionResult EditPost(string blogSubFolder, int id)
+        public ActionResult EditPost(string blogSubFolder, int? id)
         {
             ManageBlogModel model = new ManageBlogModel();
             model.Common = this.InitializeCommonModel(blogSubFolder);
+
+            int blogPostId = -1;
+
+            if(id.HasValue)
+            {
+                blogPostId = id.Value;
+            }
 
             if (model.Common.TargetBlog != null)
             {                
                 BlogPostModel blogPost = new BlogPostModel();
                 blogPost.Author = this.CurrentPrincipal.CurrentUser;
-                blogPost.Post = Services.BlogEntryService.GetById(model.Common.TargetBlog, id);
+                blogPost.Post = Services.BlogEntryService.GetById(model.Common.TargetBlog, blogPostId);
 
                 if (blogPost.Post == null)
                 {

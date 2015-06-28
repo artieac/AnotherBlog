@@ -6,7 +6,7 @@
 
     $scope.getMostViewedPosts = function (blogSubFolder) {
         if (blogSubFolder != null && blogSubFolder != '') {
-            var mostViewedPostsRequestForBlog = $resource('/api/Blog/:blogSubFolder/Lists/MostViewed');
+            var mostViewedPostsRequestForBlog = $resource('/api/Lists/Blog/:blogSubFolder/MostViewed');
             $scope.mostViewedPosts = mostViewedPostsRequestForBlog.get({ blogSubFolder: blogSubFolder });
         }
         else {
@@ -16,7 +16,7 @@
     }
 
     $scope.getBlogLists = function (blogSubFolder) {
-        var getBlogListsRequest = $resource('/api/Blog/:blogSubFolder/Lists');
+        var getBlogListsRequest = $resource('/api/Lists/Blog/:blogSubFolder');
         $scope.blogLists = getBlogListsRequest.query({ blogSubFolder: blogSubFolder });
     }
 });

@@ -53,11 +53,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.BlogListRepository.GetByBlog(targetBlog.Id);
         }
 
-        public bool DeleteBlogList(BlogList targetBlogList)
-        {
-            return this.BlogListRepository.Delete(targetBlogList);
-        }
-
         public BlogList GetByName(Blog targetBlog, string listName)
         {
             BlogList retVal = null;
@@ -105,7 +100,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             itemToSave.Name = name;
             itemToSave.ShowOrdered = showOrdered;
-            itemToSave.Id = targetBlog.Id;
+            itemToSave.BlogId = targetBlog.Id;
 
             return this.Save(itemToSave);
         }

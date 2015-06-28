@@ -6,7 +6,7 @@
     }
 
     $scope.getArchiveDates = function (blogSubFolder) {
-        var getArchiveDatesRequest = $resource('/api/Blog/:blogSubFolder/Lists/ArchiveDates');
+        var getArchiveDatesRequest = $resource('/api/Lists/Blog/:blogSubFolder/ArchiveDates');
         $scope.archiveDates = getArchiveDatesRequest.get({ blogSubFolder: blogSubFolder });
     }
 

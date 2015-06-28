@@ -9,7 +9,7 @@ using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
 {
-    public class ListsController : BaseApiController
+    public class ListsControlController : BaseApiController
     {
         private ListControlModel GetMostViewed(string blogSubFolder, int numberToGet)
         {
@@ -71,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             return this.GetMostViewed(string.Empty, 5);
         }
 
-        [Route("api/Blog/{blogSubFolder}/Lists")]
+        [Route("api/Lists/Blog/{blogSubFolder}")]
         [HttpGet]
         public IList<ListControlModel> Get(string blogSubFolder)
         {
@@ -103,14 +103,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
 
-        [Route("api/Blog/{blogSubFolder}/Lists/MostViewed")]
+        [Route("api/Lists/Blog/{blogSubFolder}/MostViewed")]
         [HttpGet]
         public ListControlModel MostViewed(string blogSubFolder)
         {
             return this.GetMostViewed(blogSubFolder, 5);
         }
 
-        [Route("api/Blog/{blogSubFolder}/Lists/ArchiveDates"), HttpGet()]
+        [Route("api/Lists/Blog/{blogSubFolder}/ArchiveDates"), HttpGet()]
         public ListControlModel GetArchiveDates(string blogSubFolder)
         {
             ListControlModel model = new ListControlModel();

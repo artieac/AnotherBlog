@@ -39,13 +39,13 @@
 		<tbody ng-init="getAll('@Model.Common.TargetBlog.SubFolder');">
 			<tr ng-repeat="blogList in blogLists">
 				<td><input type="radio" name="selectedList" value="{{blogList.Id}}" ng-change="getListItems('{{ blogList.Id }}');" ng-model="blogListElements.selectedList"/></td>
-				<td><input type="text" name="blogListName" value="{{ blogList.Name }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>
-				<td><input type="checkbox" name="showOrdered" value="{{ blogList.ShowOrdered }}" ng-disabled="blogListElements.selectedList!=blogList.Id"/></td>
+				<td><input type="text" name="blogListName" value="{{ blogList.Name }}" ng-disabled="blogListElements.selectedList!=blogList.Id" ng-model="blogList.Name"/></td>
+				<td><input type="checkbox" name="showOrdered" value="{{ blogList.ShowOrdered }}" ng-disabled="blogListElements.selectedList!=blogList.Id" ng-model="blogList.ShowOrdered"/></td>
 				<td>
 					<a ng-click="deleteList(blogList.Id, '@Model.Common.TargetBlog.SubFolder');">
 						<img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
 					</a>
-					<button class="btn btn-primary" ng-click="saveList();" ng-show="blogListElements.selectedList==blogList.Id">Save</button>
+					<button class="btn btn-primary" ng-click="updateList('@Model.Common.TargetBlog.SubFolder', blogList.Id);" ng-show="blogListElements.selectedList==blogList.Id">Save</button>
 				</td>
 			</tr>
 			<tr ng-form="newListForm">
@@ -74,24 +74,24 @@
 				<tbody>
 					<tr ng-repeat="listItem in currentList.Items">
 						<td><input type="radio" name="selectedListItem" value="{{listItem.Id}}" ng-model="blogListItemElements.selectedListItem" /></td>
-						<td><input type="text" name="listItemName" class="readonly" value="{{ listItem.Name }}" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
-						<td><input type="text" name="relatedLink" class="readonly" value="{{listItem.RelatedLink}}" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
-						<td><input type="text" name="displayOrder" class="readonly" value="{{listItem.DisplayOrder}}" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
+						<td><input type="text" name="listItemName" class="readonly" value="{{ listItem.Name }}" ng-model="listItem.Name" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
+						<td><input type="text" name="relatedLink" class="readonly" value="{{listItem.RelatedLink}}" ng-model="listItem.RelatedLink" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
+						<td><input type="text" name="displayOrder" class="readonly" value="{{listItem.DisplayOrder}}" ng-model="listItem.DisplayOrder" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
 						<td>
 							<a ng-click="deleteListItem('@Model.Common.TargetBlog.SubFolder', currentList.Id, listItem.Id);">
 								<img src="/Content/images/action_delete.png" class="deleteList" alt="" />
 							</a>
-							<button type="button" class="btn btn-primary" ng-click="saveListItem();" ng-show="blogListItemElements.selectedListItem==listItem.Id">Save</button>
+							<button type="button" class="btn btn-primary" ng-click="updateListItem('@Model.Common.TargetBlog.SubFolder', currentList.Id, listItem.Id);" ng-show="blogListItemElements.selectedListItem==listItem.Id">Save</button>
 						</td>
 					</tr>
 					<tr ng-form="newListItemForm">
 						<td></td>
 						<td>
-							<input type="text" name="listItemName" ng-model="newListItem.listItemName" required />
+							<input type="text" name="listItemName" ng-model="newListItem.name" required />
 						</td>
 						<td><input type="text" name="relatedLink" ng-model="newListItem.relatedLink" required /></td>
 						<td><input type="text" name="displayOrder" ng-model="newListItem.displayOrder" /></td>
-						<td><button type="button" class="btn btn-primary" id="saveListItemButton" ng-click="putItem('@Model.Common.TargetBlog.SubFolder', currentList.Id);">Add Item</button></td>
+						<td><button type="button" class="btn btn-primary" id="saveListItemButton" ng-click="addListItem('@Model.Common.TargetBlog.SubFolder', currentList.Id);">Add Item</button></td>
 					</tr>
 				</tbody>
 			</table>

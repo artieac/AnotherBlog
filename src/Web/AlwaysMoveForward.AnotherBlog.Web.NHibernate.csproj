@@ -1043,7 +1043,9 @@
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\Modules\FactoryModule.js" />
     <Content Include="Scripts\Modules\ServiceDefinitionModule.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Blog\_ArchiveControl.cshtml" />
     <Content Include="Views\Blog\_BlogLayout.cshtml" />
@@ -1106,7 +1108,8 @@
     <Compile Include="Controllers\API\BlogController.cs" />
     <Compile Include="Controllers\API\BlogPostController.cs" />
     <Compile Include="Controllers\API\CommentController.cs" />
-    <Compile Include="Controllers\API\ListsController.cs" />
+    <Compile Include="Controllers\API\ListController.cs" />
+    <Compile Include="Controllers\API\ListsControlController.cs" />
     <Compile Include="Controllers\API\TagController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
@@ -1125,6 +1128,8 @@
     <Compile Include="Models\API\ExternalBlogPostModel.cs" />
     <Compile Include="Models\API\GetCommentModel.cs" />
     <Compile Include="Models\API\ListControlModel.cs" />
+    <Compile Include="Models\API\ListInputModel.cs" />
+    <Compile Include="Models\API\ListItemInputModel.cs" />
     <Compile Include="Models\API\TagCountModel.cs" />
     <Compile Include="Models\BlogModels\BlogModel.cs" />
     <Compile Include="Models\BlogModels\BlogPostModel.cs" />

@@ -183,7 +183,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 if (amfUser == null)
                 {               
-                    this.EliminateUserCookie();
                     this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
                     ViewData.ModelState.AddModelError("loginError", "Invalid login.");
                 }
