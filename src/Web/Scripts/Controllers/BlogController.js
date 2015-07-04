@@ -1,4 +1,8 @@
 ﻿theApp.controller('BlogController', function ($scope, $resource, $http) {
+    $scope.getAllBlogs = function () {
+        var allBlogsRequest = $resource('/api/Blogs');
+        $scope.allBlogs = allBlogsRequest.query();
+    }
 
     $scope.getBlogTags = function (blogSubFolder) {
         var getTagsRequest = $resource('/api/Blog/:blogSubFolder/Tags');

@@ -16,7 +16,7 @@
         var saveBlogPostForm = jQuery("#saveBlogPostForm");
 
         if (saveBlogPostForm != null) {
-            var blogPostId = jQuery("#blogPostId").val();
+            var blogPostId = parseInt(jQuery("#blogPostId").val());
             var blogSubFolder = jQuery("#blogSubFolder").val();
 
             $scope.blogPostInput = {};
@@ -25,10 +25,33 @@
             $scope.blogPostInput.Text = jQuery("#inputText").val();
             $scope.blogPostInput.Tags = jQuery("#tagInput").val();
 
-            $http.put('/api/Blog/' + blogSubFolder + '/BlogPost/' + blogPostId, $scope.blogPostInput)
-                .success(function (data) {
-                    jQuery("#blogPostId").val(data.Id);
-                });
+            if (blogPostId < 0) {
+                $scope.addBlogPost(blogSubFolder, $scope.blogPostInput);
+            }
+            else {
+                $scope.updateBlogPost(blogSubFolder, blogPostId, $scope.blogPostInput);
+            }
         }
+    }
+
+    $scope.addBlogPost = function (blogSubFolder, blogPostInput) {
+        var addBlogPostRequest = $resource('/api/Blog/:blogSubFolder/BlogPost',
+            { blogSubFolder: blogSubFolder });
+
+        addBlogPostRequest.save(blogPostInput, function (data) {
+            jQuery("#blogPostId").val(data.Id);
+        });
+    }
+
+    $scope.updateBlogPost = function (blogSubFolder, blogPostId, blogPostInput) {
+        var updateBlogPostRequest = $resource('/api/Blog/:blogSubFolder/BlogPost/:blogPostId',
+            { blogSubFolder: blogSubFolder, blogPostId: blogPostId }, {
+                update: { method: 'PUT' }
+            }
+        );
+
+        updateBlogPostRequest.update(blogPostInput, function (data) {
+            jQuery("#blogPostId").val(data.Id);
+        });            
     }
 });

@@ -96,13 +96,38 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         // POST api/<blogSubFolder>/<controller>
         [Route("api/Blog/{blogSubFolder}/BlogPost"), HttpPost()]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public void Post([FromBody]string value)
+        public BlogPost Post(string blogSubFolder, [FromBody]BlogPostInput input)
         {
+            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+            BlogPost retVal = new BlogPost();
+
+            if (targetBlog != null)
+            {
+                using (this.Services.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        if (input.Tags == null)
+                        {
+                            input.Tags = string.Empty;
+                        }
+
+                        retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, -1, input.IsPublished, input.Tags.Split(','));
+                        this.Services.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.Services.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         // PUT api/<blogSubFolder>/<controller>/5
         [Route("api/Blog/{blogSubFolder}/BlogPost/{id:int}")]
-        [HttpPost]
         [HttpPut]
         [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public BlogPost Put(string blogSubFolder, int id, [FromBody]BlogPostInput input)
