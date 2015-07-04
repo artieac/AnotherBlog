@@ -21,7 +21,6 @@
 
             $scope.blogPostInput = {};
             $scope.blogPostInput.IsPublished = jQuery("#isPublished").is(':checked');
-            alert($scope.blogPostInput.IsPublished);
             $scope.blogPostInput.Title = jQuery("#title").val();
             $scope.blogPostInput.Text = jQuery("#inputText").val();
             $scope.blogPostInput.Tags = jQuery("#tagInput").val();
