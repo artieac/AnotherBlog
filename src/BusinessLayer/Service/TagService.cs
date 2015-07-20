@@ -33,13 +33,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         protected ITagRepository TagRepository { get; private set; }
 
-        public Tag Create()
-        {
-            Tag retVal = new Tag();
-            retVal.Id = -1;
-            return retVal;
-        }
-
         public IList<Tag> GetAll(Blog targetBlog)
         {
             return this.TagRepository.GetAll(targetBlog.Id);

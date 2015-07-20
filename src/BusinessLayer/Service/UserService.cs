@@ -25,14 +25,13 @@ using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     public class UserService
     {
-        private const string GuestUserName = "guest";
-        private static AnotherBlogUser guestUser = null;
-
+ 
         public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IOAuthRepository oauthRepository) : base()
         {
             this.UnitOfWork = unitOfWork;
@@ -96,19 +95,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                     this.UnitOfWork.EndTransaction(true);
                 }
             }
-        }
-
-        public AnotherBlogUser GetDefaultUser()
-        {
-            if (UserService.guestUser == null)
-            {
-                UserService.guestUser = new AnotherBlogUser();
-                guestUser.ApprovedCommenter = false;
-                guestUser.IsSiteAdministrator = false;
-                guestUser.Roles = new Dictionary<int, RoleType.Id>();
-            }
-
-            return UserService.guestUser;
         }
 
         public IList<AnotherBlogUser> GetAll()
@@ -194,12 +180,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
                 if (retVal == null)
                 {
-                    retVal = new AnotherBlogUser();
-                    retVal.OAuthServiceUserId = amfUser.Id;
-                    retVal.FirstName = amfUser.FirstName;
-                    retVal.LastName = amfUser.LastName;
-                    retVal.IsSiteAdministrator = false;
-                    retVal.ApprovedCommenter = false;
+                    retVal = UserFactory.Create(amfUser);
                 }
 
                 retVal.AccessToken = accessToken.Token;

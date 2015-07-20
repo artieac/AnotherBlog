@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 
@@ -50,13 +51,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public Comment AddComment(string authorName, string authorEmail, string commentText, string commentLink, AnotherBlogUser currentUser)
         {
-            Comment retVal = new Comment();
-            retVal.AuthorName = authorName;
-            retVal.AuthorEmail = authorEmail;
-            retVal.DatePosted = DateTime.Now;
-            retVal.Link = commentLink;
-            retVal.Status = CommentStatus.Unapproved;
-            retVal.Text = commentText;
+            Comment retVal = BlogPostFactory.CreateComment(authorName, authorEmail, commentLink, commentText);
 
             if(currentUser != null && currentUser.ApprovedCommenter == true)
             {

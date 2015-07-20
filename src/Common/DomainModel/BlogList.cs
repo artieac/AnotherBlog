@@ -20,6 +20,11 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public bool ShowOrdered { get; set; }
         public IList<BlogListItem> Items { get; set; }
 
+        public void InitializeItems()
+        {
+            this.Items = new List<BlogListItem>();
+        }
+
         public BlogListItem AddItem(int listItemId, string itemName, string relatedLink, int displayOrder)
         {
             BlogListItem targetItem = this.Items.FirstOrDefault(t => t.Id == listItemId);

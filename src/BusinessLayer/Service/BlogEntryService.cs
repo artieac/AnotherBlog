@@ -23,6 +23,7 @@ using AlwaysMoveForward.Common.Business;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
@@ -46,21 +47,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         protected ITagRepository TagRepository { get; private set; }
 
         /// <summary>
-        /// Instantiate and initialize a BlogEntry instance.
-        /// </summary>
-        /// <param name="targetBlog"></param>
-        /// <returns></returns>
-        public BlogPost Create(Blog targetBlog)
-        {
-            BlogPost retVal = new BlogPost();
-            retVal.DateCreated = DateTime.Now;
-            retVal.Author = ((SecurityPrincipal)System.Threading.Thread.CurrentPrincipal).CurrentUser;
-            retVal.Blog = targetBlog;
-            
-            return retVal;
-        }
-
-        /// <summary>
         /// Save a blog entry to the database.
         /// </summary>
         /// <param name="targetBlog"></param>
@@ -77,7 +63,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (entryId <= 0)
             {
-                itemToSave = this.Create(targetBlog);
+                itemToSave = BlogPostFactory.Create(targetBlog, ((SecurityPrincipal)System.Threading.Thread.CurrentPrincipal).CurrentUser);
                 itemToSave.SetPublishState(isPublished);
             }
             else

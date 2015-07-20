@@ -7,6 +7,7 @@ using System.Web.Mvc.Ajax;
 using System.IO;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
 using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
@@ -51,7 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
 
             if (model.Common.TargetBlog == null)
             {
-                model.Common.TargetBlog = Services.BlogService.Create();
+                model.Common.TargetBlog = BlogFactory.CreateBlog();
             }
 
             return this.View(model);

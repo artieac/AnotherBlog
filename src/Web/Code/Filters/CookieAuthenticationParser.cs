@@ -7,9 +7,9 @@ using System.Web.Routing;
 using System.Web.Security;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 {
@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
 
                         if (currentUser == null)
                         {
-                            retVal = new SecurityPrincipal(serviceManager.UserService.GetDefaultUser(), false);
+                            retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
                         }
                         else
                         {
@@ -49,13 +49,13 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
                     }
                     catch (Exception e)
                     {
-                        retVal = new SecurityPrincipal(serviceManager.UserService.GetDefaultUser(), false);
+                        retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
                     }
                 }
             }
             else
             {
-                retVal = new SecurityPrincipal(serviceManager.UserService.GetDefaultUser(), false);
+                retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
             }
 
             System.Threading.Thread.CurrentPrincipal = retVal;

@@ -16,9 +16,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Security.Permissions;
-
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Models;
@@ -38,7 +38,14 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             {
                 if (this.serviceManager == null)
                 {
-                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    try
+                    {
+                        this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    }
+                    catch(Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                    }
                 }
 
                 return this.serviceManager;
@@ -55,7 +62,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
                 {
                     try
                     {
-                        retVal = new SecurityPrincipal(this.Services.UserService.GetDefaultUser());
+                        retVal = new SecurityPrincipal(UserFactory.CreateGuestUser());
                         System.Threading.Thread.CurrentPrincipal = retVal;
                     }
                     catch (Exception e)

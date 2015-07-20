@@ -28,6 +28,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         [Route("api/Blog/{blogSubFolder}/List"), HttpPost()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public BlogList Post(string blogSubFolder, [FromBody]ListInputModel input)
         {
             BlogList retVal = new BlogList();
@@ -54,6 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         [Route("api/Blog/{blogSubFolder}/List/{id:int}"), HttpPut()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public BlogList Put(string blogSubFolder, int id, [FromBody]ListInputModel input)
         {
             BlogList retVal = null;
@@ -80,6 +82,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         [Route("api/Blog/{blogSubFolder}/List/{id:int}/Item"), HttpPost()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public BlogList Post(string blogSubFolder, int id, [FromBody]ListItemInputModel input)
         {
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -106,6 +109,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         [Route("api/Blog/{blogSubFolder}/List/{id:int}/Item/{itemId:int}"), HttpPut()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public BlogList Put(string blogSubFolder, int id, int itemId, [FromBody]ListItemInputModel input)
         {
             Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -132,6 +136,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         [Route("api/Blog/{blogSubFolder}/List/{id:int}"), HttpDelete()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public bool Delete(string blogSubFolder, int id)
         {
             bool retVal = false;
@@ -158,6 +163,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
         }
 
         [Route("api/Blog/{blogSubFolder}/List/{id:int}/Item/{itemId:int}"), HttpDelete()]
+        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
         public BlogList Delete(string blogSubFolder, int id, int itemId)
         {
             BlogList retVal = null;

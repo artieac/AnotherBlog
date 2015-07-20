@@ -11,9 +11,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
@@ -27,21 +27,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         }
 
         protected IBlogListRepository BlogListRepository { get; private set; }
-
-        public BlogList Create(Blog targetBlog)
-        {
-            BlogList retVal = new BlogList();
-            retVal.BlogId = targetBlog.Id;
-
-            return retVal;
-        }
-
-        public BlogListItem CreateListItem(BlogList blogList)
-        {
-            BlogListItem retVal = new BlogListItem();
-            retVal.Id = -1;
-            return retVal;
-        }
 
         public BlogList GetById(int blogListId)
         {
@@ -91,7 +76,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (blogListId <= 0)
             {
-                itemToSave = this.Create(targetBlog);
+                itemToSave = BlogListFactory.Create(targetBlog);
             }
             else
             {

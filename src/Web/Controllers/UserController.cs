@@ -21,6 +21,7 @@ using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Models;
@@ -111,7 +112,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         public void Logout()
         {
             this.EliminateUserCookie();
-            this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
+            this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
         }
 
         [Route("User/Preferences"), HttpGet()]
@@ -183,7 +184,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 if (amfUser == null)
                 {               
-                    this.CurrentPrincipal = new SecurityPrincipal(Services.UserService.GetDefaultUser());
+                    this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
                     ViewData.ModelState.AddModelError("loginError", "Invalid login.");
                 }
                 else

@@ -10,9 +10,9 @@
  */
 using System.Collections.Generic;
 using System.Linq;
-
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
@@ -30,15 +30,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         protected IBlogRepository BlogRepository { get; private set; }
 
-        /// <summary>
-        /// Initialize and instantiate a Blog object instance.
-        /// </summary>
-        /// <returns></returns>
-        public Blog Create()
-        {
-            Blog retVal = new Blog();
-            return retVal;
-        }
         /// <summary>
         /// Get the default blog for the site (the first one created)
         /// </summary>
@@ -121,7 +112,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (blogId <= 0)
             {
-                itemToSave = this.Create();
+                itemToSave = BlogFactory.CreateBlog();
             }
             else
             {
@@ -147,7 +138,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (blogId <= 0)
             {
-                itemToSave = this.Create();
+                itemToSave = BlogFactory.CreateBlog();
             }
             else
             {
