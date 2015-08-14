@@ -37,9 +37,9 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             {
                 try
                 {
-                    LogManager.GetLogger().Info("Creating Service Manager");
+                    LogManager.GetLogger().Info("Creating Service Manager for BaseAPIController");
                     this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                    LogManager.GetLogger().Info("Creating Service Manager Complete");
+                    LogManager.GetLogger().Info("Creating Service Manager Complete for BaseAPIController");
                 }
                 catch (Exception e)
                 {

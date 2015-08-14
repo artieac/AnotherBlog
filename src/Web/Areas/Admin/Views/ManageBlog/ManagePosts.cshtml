@@ -30,12 +30,15 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th width="40%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=Title&sortAscending=@Model.Common.SortAscending">Title</a></th>
-                            <th width="20%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=Author&sortAscending=@Model.Common.SortAscending">Author</a></th>
-                            <th width="10%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=DateCreated&sortAscending=@Model.Common.SortAscending">Date Created</a></th>
-                            <th width="5%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=IsPublished&sortAscending=@Model.Common.SortAscending">Is Published</a></th>
-                            <th width="10%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=DatePosted&sortAscending=@Model.Common.SortAscending">Date Posted</a></th>
-                            <th width="5%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder&sortColumn=TimesViewed&sortAscending=@Model.Common.SortAscending">Times Viewed</a></th>
+                            @{
+                                bool sortAscending = !Model.Common.SortAscending;
+                            }
+                            <th width="40%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=Title&sortAscending=@sortAscending.ToString()">Title</a></th>
+                            <th width="20%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=Author&sortAscending=@sortAscending.ToString()">Author</a></th>
+                            <th width="10%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=DateCreated&sortAscending=@sortAscending.ToString()">Date Created</a></th>
+                            <th width="5%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=IsPublished&sortAscending=@sortAscending.ToString()">Is Published</a></th>
+                            <th width="10%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=DatePosted&sortAscending=@sortAscending.ToString()">Date Posted</a></th>
+                            <th width="5%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=TimesViewed&sortAscending=@sortAscending.ToString()">Times Viewed</a></th>
                             <th width="5%">Comments</th>
                         </tr>
                     </thead>
