@@ -53,11 +53,19 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             IndexModel model = new IndexModel();
             model.Common = this.InitializeCommonModel();
 
-            IList<Blog> allBlogs = Services.BlogService.GetAll();
-            IList<BlogPost> foundBlogEntries = Services.BlogEntryService.GetMostRecent(10);
+            try
+            {
+                LogManager.GetLogger().Info("Index getting blogs");
+                IList<Blog> allBlogs = Services.BlogService.GetAll();
+                IList<BlogPost> foundBlogEntries = Services.BlogEntryService.GetMostRecent(10);
 
-            model.BlogEntries = this.PopulateBlogPostInfo(foundBlogEntries);
-            model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
+                model.BlogEntries = this.PopulateBlogPostInfo(foundBlogEntries);
+                model.Common.Calendar = this.InitializeCalendarModel(model.Common.TargetMonth);
+            }
+            catch(Exception e)
+            {
+                LogManager.GetLogger().Error(e);
+            }
 
             return this.View(model);
         }

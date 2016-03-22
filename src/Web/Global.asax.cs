@@ -15,6 +15,8 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+
 namespace AlwaysMoveForward.AnotherBlog.Web
 {
     public class MvcApplication : HttpApplication

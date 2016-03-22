@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DataLayer;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer
@@ -12,16 +13,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
     /// </summary>
     public class UnitOfWork : AlwaysMoveForward.Common.DataLayer.NHibernate.UnitOfWork, IUnitOfWork, IDisposable
     {
-        private static System.Object initializationLock = new System.Object();
-        private static bool mappingsInitialized = false;
-
         /// <summary>
         /// The default constructor
         /// </summary>
         public UnitOfWork()
             : base()
         {
-            this.InitializeNHibernateMappings();
+
         }
 
         /// <summary>
@@ -31,32 +29,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         public UnitOfWork(string connectionString)
             : base(connectionString)
         {
-            this.InitializeNHibernateMappings();
+
         }
 
-        /// <summary>
-        /// Initialize nhibernate with teh dto elements found in this assembly.
-        /// </summary>
-        private void InitializeNHibernateMappings()
+        protected override void StartSession()
         {
-            // Not initialized yet
-            if (UnitOfWork.mappingsInitialized == false)
-            {
-                // Enter a lock zone
-                lock (initializationLock)
-                {
-                    // Make one more check that the mappings are initialized in case anything blocked and made it through to here as a result
-                    if (UnitOfWork.mappingsInitialized == false)
-                    {
-                        UnitOfWork.mappingsInitialized = true;
-
-                        // Enable validation (optional)
-                        // Here, we serialize all decorated classes (but you can also do it class by class)
-                        NHibernate.Mapping.Attributes.HbmSerializer.Default.Validate = true;
-                        this.NHibernateConfiguration.AddInputStream(NHibernate.Mapping.Attributes.HbmSerializer.Default.Serialize(System.Reflection.Assembly.GetExecutingAssembly()));
-                    }
-                }
-            }
+            this.CurrentSession = AlwaysMoveForward.Common.DataLayer.NHibernate.NHibernateSessionFactory.BuildSessionFactory(this.NHibernateConfiguration, System.Reflection.Assembly.GetExecutingAssembly()).OpenSession(); ;
         }
     }
 }

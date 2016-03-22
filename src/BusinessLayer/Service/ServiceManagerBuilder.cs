@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.OAuth.Client;
 using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
@@ -37,21 +38,33 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public ServiceManager CreateServiceManager()
         {
-            DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
+            ServiceManager retVal = null;
 
-            UnitOfWork unitOfWork = null;
-
-            if(databaseConfiguration.EncryptionMethod == AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
+            try
             {
-                unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString(DefaultEncryptionKey, DefaultSalt));
+                DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.GetInstance();
+
+                UnitOfWork unitOfWork = null;
+
+                if (databaseConfiguration.EncryptionMethod == AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
+                {
+                    unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString(DefaultEncryptionKey, DefaultSalt));
+                }
+                else
+                {
+                    unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString());
+                }
+
+                IAnotherBlogRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
+
+                retVal = new ServiceManager(unitOfWork, repositoryManager, this.CreateOAuthClient());
             }
-            else
+            catch(Exception e)
             {
-                unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString());
+                LogManager.GetLogger().Error(e);
             }
 
-            IAnotherBlogRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
-            return new ServiceManager(unitOfWork, repositoryManager, this.CreateOAuthClient());
+            return retVal;
         }
 
         protected virtual UnitOfWork CreateUnitOfWork(string connectionString)
