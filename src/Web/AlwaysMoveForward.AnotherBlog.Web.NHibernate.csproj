@@ -22,6 +22,8 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,20 +43,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AlwaysMoveForward.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\AlwaysMoveForward.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="AlwaysMoveForward.Common.DataLayer.NHibernate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\AlwaysMoveForward.Common.DataLayer.NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="AlwaysMoveForward.OAuth.Client">
-      <HintPath>..\..\Lib\AlwaysMoveForward.OAuth.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="AlwaysMoveForward.OAuth.Client.RestSharp">
-      <HintPath>..\..\Lib\AlwaysMoveForward.OAuth.Client.RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -67,6 +55,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes, Version=3.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Mapping.Attributes.3.2.0.0\lib\NHibernate.Mapping.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
@@ -1159,6 +1150,22 @@
     <Folder Include="Content\images\Carousel\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
+      <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\OAuth\Client.RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj">
+      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client.RestSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\OAuth\Client\AlwaysMoveForward.OAuth.Client.csproj">
+      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
+      <Name>AlwaysMoveForward.OAuth.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj">
       <Project>{378a5d90-9d1e-4317-8722-3549a4b85507}</Project>
       <Name>AlwaysMoveForward.AnotherBlog.BusinessLayer</Name>

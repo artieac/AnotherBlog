@@ -41,14 +41,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AlwaysMoveForward.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\AlwaysMoveForward.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="AlwaysMoveForward.Common.DataLayer.NHibernate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\AlwaysMoveForward.Common.DataLayer.NHibernate.dll</HintPath>
-    </Reference>
     <Reference Include="AlwaysMoveForward.OAuth.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\AlwaysMoveForward.OAuth.Client.dll</HintPath>
@@ -112,6 +104,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>AlwaysMoveForward.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj">
+      <Project>{f9803443-3ed7-4fb4-b758-5d3419983163}</Project>
+      <Name>AlwaysMoveForward.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\AlwaysMoveForward.AnotherBlog.Common.csproj">
       <Project>{ee543152-b86a-43f0-974f-aa97dd094bff}</Project>
       <Name>AlwaysMoveForward.AnotherBlog.Common</Name>
