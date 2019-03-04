@@ -9,6 +9,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
 {
     public class AdminCommon
     {
+        public AdminCommon()
+        {
+            this.SortAscending = true;
+        }
+
         public Blog TargetBlog { get; set; }
         public bool SortAscending { get; set; }
         public IList<Blog> UserBlogs { get; set; }

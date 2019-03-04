@@ -8,9 +8,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 {
     public class ServiceManagerBuilder : AlwaysMoveForward.AnotherBlog.BusinessLayer.Service.ServiceManagerBuilder
     {
-        protected override AlwaysMoveForward.Common.DataLayer.IUnitOfWork CreateUnitOfWork()
+        protected override UnitOfWork CreateUnitOfWork(string connectionString)
         {
-            return new UnitOfWork(true);
+            return new UnitOfWork(connectionString);
         }
     }
 }

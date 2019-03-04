@@ -17,13 +17,13 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public bool IsSiteAdministrator { get; set; }
         public string About { get; set; }
 
-        public IDictionary<int, RoleType.Id> Roles { get; set; }
+        public IDictionary<long, RoleType.Id> Roles { get; set; }
 
-        public void AddRole(int blogId, RoleType.Id roleId)
+        public void AddRole(long blogId, RoleType.Id roleId)
         {
             if(this.Roles == null)
             {
-                this.Roles = new Dictionary<int, RoleType.Id>();
+                this.Roles = new Dictionary<long, RoleType.Id>();
             }
 
             if (this.Roles.ContainsKey(blogId))
@@ -36,11 +36,11 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             }
         }
 
-        public void RemoveRole(int blogId)
+        public void RemoveRole(long blogId)
         {
             if (this.Roles == null)
             {
-                this.Roles = new Dictionary<int, RoleType.Id>();
+                this.Roles = new Dictionary<long, RoleType.Id>();
             }
 
             if (this.Roles.ContainsKey(blogId))

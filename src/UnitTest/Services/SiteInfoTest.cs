@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 
             Assert.NotNull(newSite);
 
-            newSite = Services.SiteInfoService.Save("TestSite", "", "", "", "");
+            newSite = Services.SiteInfoService.Save("TestSite", "", "", "default", "", "", "");
 
             Assert.NotNull(newSite);
 

@@ -14,15 +14,13 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
     {
         Mock<IBlogEntryRepository> blogEntryRepository;
         Mock<IBlogRepository> blogRepository;
-        Mock<IBlogUserRepository> blogUserRepository;
         Mock<IDbInfoRepository> dbInfoRepository;
-        Mock<IRoleRepository> roleRepository;
         Mock<ISiteInfoRepository> siteInfoRepository;
         Mock<ITagRepository> tagRepository;
         Mock<IUserRepository> userRepository;
         Mock<IBlogListRepository> blogLists;
         Mock<IPollRepository> pollRepository;
-
+        
         public MOQRepositoryManager()
         {
             
@@ -58,19 +56,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
             }
         }
 
-        public IBlogUserRepository BlogUsers
-        {
-            get
-            {
-                if (this.blogUserRepository == null)
-                {
-                    this.blogUserRepository = new Mock<IBlogUserRepository>();
-                }
-
-                return this.blogUserRepository.Object;
-            }
-        }
-
         public IDbInfoRepository DbInfo
         {
             get
@@ -81,19 +66,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
                 }
 
                 return this.dbInfoRepository.Object;
-            }
-        }
-
-        public IRoleRepository Roles
-        {
-            get
-            {
-                if (this.roleRepository == null)
-                {
-                    this.roleRepository = new Mock<IRoleRepository>();
-                }
-
-                return this.roleRepository.Object;
             }
         }
 
@@ -166,5 +138,17 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
             }
         }
 
+        public IUserRepository UserRepository
+        {
+            get
+            {
+                if (this.userRepository == null)
+                {
+                    this.userRepository = new Mock<IUserRepository>();
+                }
+
+                return this.userRepository.Object;
+            }
+        }
     }
 }

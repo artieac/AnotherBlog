@@ -16,6 +16,7 @@ using NUnit.Framework;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 {
@@ -25,7 +26,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetAllTest()
         {
-            IList<User> foundQuestions = this.RepositoryManager.Users.GetAll();
+            IList<AnotherBlogUser> foundQuestions = this.RepositoryManager.UserRepository.GetAll();
 
             Assert.IsNotNull(foundQuestions);
             Assert.IsTrue(foundQuestions.Count > 0);
@@ -34,28 +35,26 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_SaveTest()
         {
-            User testItem = this.RepositoryManager.Users.GetByUserName("test");
+            AnotherBlogUser testItem = this.RepositoryManager.UserRepository.GetByUserName("test");
 
             if (testItem == null)
             {
-                testItem = new User();
-                testItem.UserName = "test";
-                testItem.Password = "test";
-                testItem.Email = "test";
+                testItem = new AnotherBlogUser();
+                testItem.FirstName = "test";
 
-                testItem = this.RepositoryManager.Users.Save(testItem);
+                testItem = this.RepositoryManager.UserRepository.Save(testItem);
             }
 
             Assert.IsNotNull(testItem);
-            Assert.IsTrue(testItem.UserId > 0);
+            Assert.IsTrue(testItem.Id > 0);
         }
 
         [Test]
         public void UserRepository_UpdateTest()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }
@@ -63,9 +62,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_Delete()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }
@@ -73,9 +72,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetAllByProperty()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }
@@ -83,9 +82,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetBlogWriters()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }
@@ -93,9 +92,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetByEmail()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }
@@ -103,9 +102,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetByProperty()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            User targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            User savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }
@@ -113,9 +112,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetByUserName()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }
@@ -123,9 +122,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetByUserNameAndPassword()
         {
-            User targetItem = this.RepositoryManager.Users.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
-            User savedItem = this.RepositoryManager.Users.Save(targetItem);
+            AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
             Assert.IsNotNull(savedItem);
         }

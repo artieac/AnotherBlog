@@ -60,17 +60,17 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
             }
         }
 
-        public User TestUser
+        public AnotherBlogUser TestUser
         {
             get
             {
-                User retVal = Services.UserService.GetByUserName("TestUser");
+                AnotherBlogUser retVal = Services.UserService.GetById(1);
 
                 if (retVal == null)
                 {
                     using (this.Services.UnitOfWork.BeginTransaction())
                     {
-                        retVal = Services.UserService.Save("TestUser", "Password", "testuser@alwaysmoveforward.com", -1, false, false, true, "", "");
+                        retVal = Services.UserService.Save(1, false, true, "");
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                 }

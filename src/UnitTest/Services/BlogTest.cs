@@ -32,7 +32,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             using(this.Services.UnitOfWork.BeginTransaction())
             {
-                Services.BlogUserService.Save(this.TestUser.UserId, this.TestBlog.BlogId, Services.RoleService.GetDefaultRole().RoleId);
+                Services.UserService.AddBlogRole(this.TestUser.Id, this.TestBlog.Id, RoleType.Id.Blogger);
                 this.Services.UnitOfWork.EndTransaction(true);
             }
         }
@@ -40,7 +40,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         [Test]
         public void BlogService_Create()
         {
-            Blog test = Services.BlogService.Create();
+            Blog test = new Blog();
+            Services.BlogService.Save(-1, "Test", "Test", "", "", "", "default");
             Assert.IsNotNull(test);
         }
 
@@ -57,7 +58,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             Assert.IsNotNull(this.TestUser);
 
-            IList<Blog> test = Services.BlogService.GetByUserId(this.TestUser.UserId);
+            IList<Blog> test = Services.BlogService.GetByUserId(this.TestUser.Id);
             Assert.IsNotNull(test);
         }
 
@@ -66,9 +67,9 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             Assert.IsNotNull(this.TestBlog);
 
-            Blog test = Services.BlogService.GetById(this.TestBlog.BlogId);
+            Blog test = Services.BlogService.GetById(this.TestBlog.Id);
             Assert.IsNotNull(test);
-            Assert.AreEqual(test.BlogId, this.TestBlog.BlogId);
+            Assert.AreEqual(test.Id, this.TestBlog.Id);
         }
 
         [Test]

@@ -41,13 +41,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         }
 
         [Test]
-        public void RoleService_GetDefaultRole()
-        {
-            Role testRole = Services.RoleService.GetDefaultRole();
-            Assert.IsNotNull(testRole);
-        }
-
-        [Test]
         public void RoleService_GetAll()
         {
             IList<Role> testRoles = Services.RoleService.GetAll();

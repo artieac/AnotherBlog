@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.DataLayer.ActiveRecord;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
 
 namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
@@ -18,7 +17,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
             {
                 if(unitOfWork==null)
                 {
-                    unitOfWork = new UnitOfWork(true);
+                    unitOfWork = new UnitOfWork();
                 }
 
                 return unitOfWork;

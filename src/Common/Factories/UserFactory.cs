@@ -16,7 +16,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.Factories
             AnotherBlogUser retVal = new AnotherBlogUser();
             retVal.ApprovedCommenter = false;
             retVal.IsSiteAdministrator = false;
-            retVal.Roles = new Dictionary<int, RoleType.Id>();
+            retVal.Roles = new Dictionary<long, RoleType.Id>();
 
             return retVal;
         }

@@ -15,11 +15,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             public ResolutionResult Resolve(ResolutionResult source)
             {
-                IDictionary<int, RoleType.Id> destinationList = ((AnotherBlogUser)source.Context.DestinationValue).Roles;
+                IDictionary<long, RoleType.Id> destinationList = ((AnotherBlogUser)source.Context.DestinationValue).Roles;
 
                 if (destinationList == null)
                 {
-                    destinationList = new Dictionary<int, RoleType.Id>();
+                    destinationList = new Dictionary<long, RoleType.Id>();
                 }
 
                 if (source.Value != null)
@@ -29,7 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                     if (sourceList != null)
                     {
                         // go through and remove any items that were removed in the domain and need to be removed in the dto
-                        foreach (int blogId in destinationList.Keys)
+                        foreach (long blogId in destinationList.Keys)
                         {
                             BlogUserDTO destinationItem = sourceList.FirstOrDefault(t => t.BlogId == blogId);
 
@@ -71,7 +71,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 
                 if (source.Value != null)
                 {
-                    IDictionary<int, RoleType.Id> sourceList = ((AnotherBlogUser)source.Value).Roles;
+                    IDictionary<long, RoleType.Id> sourceList = ((AnotherBlogUser)source.Value).Roles;
 
                     if (sourceList != null)
                     {
