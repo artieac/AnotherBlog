@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.DataLayer.DTO;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
+namespace PucksAndProgramming.AnotherBlog.DataLayer.DataMapper
 {
     public class SiteInfoDataMap : DataMapBase<SiteInfo, SiteInfoDTO>
     {

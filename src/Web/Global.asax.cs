@@ -7,17 +7,17 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
-using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
+using PucksAndProgramming.Common.Configuration;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
-namespace AlwaysMoveForward.AnotherBlog.Web
+namespace PucksAndProgramming.AnotherBlog.Web
 {
     public class MvcApplication : HttpApplication
     {

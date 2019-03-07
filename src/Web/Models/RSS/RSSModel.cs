@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models.RSS
+namespace PucksAndProgramming.AnotherBlog.Web.Models.RSS
 {
     public class RSSModel
     {

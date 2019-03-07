@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Web.Models.BlogModels;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models.Home
+namespace PucksAndProgramming.AnotherBlog.Web.Models.Home
 {
     public class IndexModel : ModelBase
     {

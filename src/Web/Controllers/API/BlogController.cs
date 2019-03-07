@@ -5,12 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
-using AlwaysMoveForward.AnotherBlog.Web.Models.API;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Web.Code.Filters;
+using PucksAndProgramming.AnotherBlog.Web.Models.API;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers.API
 {
     public class BlogController : BaseApiController
     {

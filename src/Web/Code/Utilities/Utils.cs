@@ -15,10 +15,10 @@ using System.Web;
 using System.IO;
 using System.Xml.Linq;
 
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
+namespace PucksAndProgramming.AnotherBlog.Web.Code.Utilities
 {
     public class Utils
     {
@@ -44,7 +44,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
                 retVal += blogPost.DatePosted.Year + "/";
                 retVal += blogPost.DatePosted.Month + "/";
                 retVal += blogPost.DatePosted.Day + "/";
-                retVal += AlwaysMoveForward.Common.Utilities.Utils.EncodeForUrl(blogPost.Title);
+                retVal += PucksAndProgramming.Common.Utilities.Utils.EncodeForUrl(blogPost.Title);
             }
 
             return retVal;
@@ -55,7 +55,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             string retVal = "/Blog/";
             retVal += blogSubFolder;
             retVal += "/BlogPosts/Tag/";
-            retVal += AlwaysMoveForward.Common.Utilities.Utils.EncodeForUrl(tag);
+            retVal += PucksAndProgramming.Common.Utilities.Utils.EncodeForUrl(tag);
             return retVal;  
         }
 
@@ -126,7 +126,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
         {
             bool retVal = false;
 
-            AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal currentPrincipal = contextUser as AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal;
+            PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal currentPrincipal = contextUser as PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal;
 
             if (currentPrincipal != null)
             {
@@ -140,7 +140,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
         {
             bool retVal = false;
 
-            AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal currentPrincipal = contextUser as AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal;
+            PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal currentPrincipal = contextUser as PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal;
 
             if (currentPrincipal != null)
             {

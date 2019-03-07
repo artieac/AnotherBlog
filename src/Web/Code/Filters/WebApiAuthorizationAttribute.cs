@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
+namespace PucksAndProgramming.AnotherBlog.Web.Code.Filters
 {
     public class WebAPIAuthorizationAttribute: System.Web.Http.AuthorizeAttribute
     {

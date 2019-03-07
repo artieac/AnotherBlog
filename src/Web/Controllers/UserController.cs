@@ -16,18 +16,20 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Security.Principal;
 using System.Web.Security;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.OAuth.Client;
-using AlwaysMoveForward.OAuth.Client.Configuration;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.Factories;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.OAuth.Client.Configuration;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.Factories;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.AnotherBlog.Web.Models;
+using PucksAndProgramming.AnotherBlog.Web.Code.Filters;
+using PucksAndProgramming.OAuth.Client;
+using Auth0.AuthenticationApi.Models;
+using Auth0.AuthenticationApi;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers
 {
     public class UserController : PublicController
     {
@@ -85,27 +87,15 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         private Realm GenerateRealm()
         {
             Realm retVal = new Realm();
-            retVal.Area = "AlwaysMoveForward";
+            retVal.Area = "PucksAndProgramming";
             retVal.Service = "Blog";
             return retVal;
         }
 
         [Route("User/Login")]
+        [Authorize]
         public void Login(string blogSubFolder)
         {
-            EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
-            OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
-
-            IOAuthToken requestToken = this.Services.OAuthClient.GetRequestToken(this.GenerateRealm(), this.Request.Url.Scheme + "://" + this.Request.Url.Authority + "/User/OAuthCallback");
-
-            if(requestToken != null)
-            {
-                Session[requestToken.Token] = requestToken;
-
-                string authorizationUrl = this.Services.OAuthClient.GetUserAuthorizationUrl(requestToken);
-
-                this.Response.Redirect(authorizationUrl, false);
-            } 
         }
 
         [Route("User/Logout")]
@@ -161,8 +151,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
         [Route("User/OAuthCallback"), HttpGet()]
         public ActionResult OAuthCallback(string oauth_token, string oauth_verifier)
         {
-            string requestTokenString = Request[OAuth.Client.Constants.TokenParameter];
-            string verifier = Request[OAuth.Client.Constants.VerifierCodeParameter];
+            string requestTokenString = Request[PucksAndProgramming.OAuth.Client.Constants.TokenParameter];
+            string verifier = Request[PucksAndProgramming.OAuth.Client.Constants.VerifierCodeParameter];
 
             IOAuthToken storedRequestToken = (IOAuthToken)Session[requestTokenString];
 

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
+namespace PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Models
 {
     public class UserModel 
     {

@@ -1,10 +1,10 @@
-﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.BlogPostModel
+﻿@model PucksAndProgramming.AnotherBlog.Web.Models.BlogModels.BlogPostModel
            
-@using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
+@using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+@using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name + " - " + Model.Post.Title;
+    ViewBag.Title = PucksAndProgramming.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name + " - " + Model.Post.Title;
     ViewBag.Description = Model.Post.Title;
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
@@ -91,7 +91,7 @@
                     String authorName = "";
                     String authorEmail = "";
                 
-                    AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal;
+                    PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal currentPrincipal = System.Threading.Thread.CurrentPrincipal as PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal;
 
                     if (currentPrincipal != null)
                     {

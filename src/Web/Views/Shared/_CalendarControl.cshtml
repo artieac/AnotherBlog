@@ -1,5 +1,5 @@
-﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel
-@using AlwaysMoveForward.AnotherBlog.Web
+﻿@model PucksAndProgramming.AnotherBlog.Web.Models.CalendarModel
+@using PucksAndProgramming.AnotherBlog.Web
 <div class="contentSection">
     <div class="monthTitle">
         <a class="changeMonth" href="@Model.GenerateUrlForMonth(-1)"> &lt; </a>
@@ -30,7 +30,7 @@
                 cellHtml += " weekDayCellCurrentDay";
             }
 
-            if (ViewData.Model.CurrentMonthBlogDates.Contains(Model.TrackingDate, new AlwaysMoveForward.Common.Utilities.DateCompare()))
+            if (ViewData.Model.CurrentMonthBlogDates.Contains(Model.TrackingDate, new PucksAndProgramming.Common.Utilities.DateCompare()))
             {
                 cellHtml += " weekdayCellSelected";
                 cellHtml += "\">";

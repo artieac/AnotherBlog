@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models.API
+namespace PucksAndProgramming.AnotherBlog.Web.Models.API
 {
     public class ListItemInputModel
     {

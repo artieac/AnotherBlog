@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DomainModel.Poll;
-using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DomainModel.Poll;
+using PucksAndProgramming.AnotherBlog.DataLayer.DTO;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
+namespace PucksAndProgramming.AnotherBlog.DataLayer.DataMapper
 {
     public class PollQuestionDataMap : DataMapBase<PollQuestion, PollQuestionDTO>
     {

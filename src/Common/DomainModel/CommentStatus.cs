@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
+namespace PucksAndProgramming.AnotherBlog.Common.DomainModel
 {
     /// <summary>
     /// What are the allowed comment statuses?  

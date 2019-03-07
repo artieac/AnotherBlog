@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.Utilities
+namespace PucksAndProgramming.AnotherBlog.DataLayer.Utilities
 {
     public interface IDomainCollection<T> : INotifyCollectionChanged, IList<T>
     {

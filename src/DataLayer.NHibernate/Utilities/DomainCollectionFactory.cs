@@ -16,7 +16,7 @@ using NHibernate.Engine;
 using NHibernate.Persister.Collection;
 using NHibernate.UserTypes;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.Utilities
+namespace PucksAndProgramming.AnotherBlog.DataLayer.Utilities
 {
     public class DomainCollectionFactory<T> :IUserCollectionType where T : class
     {    

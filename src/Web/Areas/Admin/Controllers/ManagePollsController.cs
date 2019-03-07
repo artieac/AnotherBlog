@@ -6,16 +6,16 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.IO;
 
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel.Poll;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
-using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DomainModel.Poll;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Web.Models.BlogModels;
+using PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Models;
+using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
+using PucksAndProgramming.AnotherBlog.Web.Code.Filters;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Controllers
 {
     public class ManagePollsController : AdminBaseController
     {

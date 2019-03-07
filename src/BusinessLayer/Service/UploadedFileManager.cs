@@ -14,13 +14,13 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.Common.Business;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.Common.Business;
+using PucksAndProgramming.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
 {
     public class UploadedFileManager : AnotherBlogService
     {

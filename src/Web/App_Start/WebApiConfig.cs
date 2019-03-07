@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 
-namespace AlwaysMoveForward.AnotherBlog.Web
+namespace PucksAndProgramming.AnotherBlog.Web
 {
     public static class WebApiConfig
     {

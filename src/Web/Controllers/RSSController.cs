@@ -15,11 +15,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.Web.Models.RSS;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Web.Models.RSS;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers
 {
     public class RSSController : PublicController
     {

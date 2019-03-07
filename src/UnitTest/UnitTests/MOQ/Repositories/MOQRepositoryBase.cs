@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.NHibernate;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DataLayer.NHibernate;
+using PucksAndProgramming.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.DataLayer;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest.MOQ.Repositories
+namespace PucksAndProgramming.AnotherBlog.UnitTest.MOQ.Repositories
 {
     public abstract class MOQRepositoryBase<DomainType, DTOType, TIDType> : NHibernateRepository<DomainType, DTOType, TIDType>,
                                                           IRepository<DomainType, TIDType>
         where DomainType : class, new() where DTOType : class, DomainType, new()
     {
-        public MOQRepositoryBase(AlwaysMoveForward.Common.DataLayer.NHibernate.UnitOfWork _unitOfWork)
+        public MOQRepositoryBase(PucksAndProgramming.Common.DataLayer.NHibernate.UnitOfWork _unitOfWork)
             : base(_unitOfWork) {}
 
         public override DomainType GetByProperty(string idPropertyName, object idValue)

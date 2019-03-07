@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.OAuth.Client;
-using AlwaysMoveForward.OAuth.Client.Configuration;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.Common.Configuration;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.OAuth.Client;
+using PucksAndProgramming.OAuth.Client.Configuration;
+using PucksAndProgramming.AnotherBlog.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
 {
     public class ServiceManagerBuilder
     {
@@ -46,7 +46,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
                 UnitOfWork unitOfWork = null;
 
-                if (databaseConfiguration.EncryptionMethod == AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
+                if (databaseConfiguration.EncryptionMethod == PucksAndProgramming.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
                 {
                     unitOfWork = this.CreateUnitOfWork(databaseConfiguration.GetDecryptedConnectionString(DefaultEncryptionKey, DefaultSalt));
                 }
@@ -81,7 +81,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             OAuthKeyConfiguration keyConfiguration =  OAuthKeyConfiguration.GetInstance();
             EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
-            return new AlwaysMoveForward.OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
+            return new PucksAndProgramming.OAuth.Client.RestSharp.OAuthClient(oauthEndpoints.ServiceUri, keyConfiguration.ConsumerKey, keyConfiguration.ConsumerSecret, oauthEndpoints);
         }
     }
 }

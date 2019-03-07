@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DataLayer;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DataLayer;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer
+namespace PucksAndProgramming.AnotherBlog.DataLayer
 {
     /// <summary>
     /// A unit of work implementation to co locate the NHibernate configuration with the DTOs
     /// </summary>
-    public class UnitOfWork : AlwaysMoveForward.Common.DataLayer.NHibernate.UnitOfWork, IUnitOfWork, IDisposable
+    public class UnitOfWork : PucksAndProgramming.Common.DataLayer.NHibernate.UnitOfWork, IUnitOfWork, IDisposable
     {
         /// <summary>
         /// The default constructor
@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         protected override void StartSession()
         {
-            this.CurrentSession = AlwaysMoveForward.Common.DataLayer.NHibernate.NHibernateSessionFactory.BuildSessionFactory(this.NHibernateConfiguration, System.Reflection.Assembly.GetExecutingAssembly()).OpenSession(); ;
+            this.CurrentSession = PucksAndProgramming.Common.DataLayer.NHibernate.NHibernateSessionFactory.BuildSessionFactory(this.NHibernateConfiguration, System.Reflection.Assembly.GetExecutingAssembly()).OpenSession(); ;
         }
     }
 }

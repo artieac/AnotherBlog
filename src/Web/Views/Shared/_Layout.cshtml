@@ -1,8 +1,8 @@
-﻿@using AlwaysMoveForward.AnotherBlog.Web
-@using AlwaysMoveForward.AnotherBlog.Web.Models
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
-@using AlwaysMoveForward.AnotherBlog.Common.DomainModel
+﻿@using PucksAndProgramming.AnotherBlog.Web
+@using PucksAndProgramming.AnotherBlog.Web.Models
+@using PucksAndProgramming.AnotherBlog.Web.Code.Utilities
+@using PucksAndProgramming.AnotherBlog.Web.Code.Extensions
+@using PucksAndProgramming.AnotherBlog.Common.DomainModel
 
 @{
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
@@ -28,7 +28,7 @@
 <div class="metaContentPanel">   
     @Html.Partial("_BlogSelectionControl")
     <div id="blogCalendarSection">
-	    @Html.Partial("_CalendarControl", (AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.Common.Calendar)
+	    @Html.Partial("_CalendarControl", (PucksAndProgramming.AnotherBlog.Web.Models.CalendarModel)ViewBag.Common.Calendar)
     </div>
 	<div id="mostViewed" ng-controller="ListController">
         <div class="contentSection" ng-init="getMostViewedPosts('@ViewBag.BlogSubFolder');">

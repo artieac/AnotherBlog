@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-namespace AlwaysMoveForward.Common.DataLayer.Map
+namespace PucksAndProgramming.Common.DataLayer.Map
 {
     public class DataMapper<DomainClass, DTOClass, CommonInterface> where DomainClass : class, CommonInterface, new() where DTOClass : class, CommonInterface, new()
     {

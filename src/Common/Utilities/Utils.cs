@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.Utilities
+namespace PucksAndProgramming.AnotherBlog.Common.Utilities
 {
     public class Utils
     {

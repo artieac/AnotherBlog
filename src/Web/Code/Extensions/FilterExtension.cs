@@ -16,7 +16,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
+namespace PucksAndProgramming.AnotherBlog.Web.Code.Extensions
 {
     public static class FilterExtension
     {

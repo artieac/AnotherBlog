@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest.Controllers
+namespace PucksAndProgramming.AnotherBlog.UnitTest.Controllers
 {
     [TestFixture]
     public class HomeTest

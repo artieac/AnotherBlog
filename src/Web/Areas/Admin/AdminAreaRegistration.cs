@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin
+namespace PucksAndProgramming.AnotherBlog.Web.Areas.Admin
 {
     public class AdminAreaRegistration : AreaRegistration
     {
@@ -15,19 +15,19 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Admin_default",
+                "DefaultAdmin",
                 "Admin/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
 
             context.MapRoute(
-                "AdminBlogSubFolder",
+                "Admin_BlogSubFolder",
                 "Admin/{controller}/{action}/{blogSubFolder}/{id}",
                 new { id = UrlParameter.Optional }
             );
 
             context.MapRoute(
-                "PostSpecific",
+                "Admin_PostSpecific",
                 "Admin/{controller}/{action}/{blogSubFolder}/{blogPostId}/{filter}",
                 new { filter = UrlParameter.Optional }
 );

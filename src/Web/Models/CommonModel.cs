@@ -14,10 +14,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models
+namespace PucksAndProgramming.AnotherBlog.Web.Models
 {
     public class CommonModel
     {

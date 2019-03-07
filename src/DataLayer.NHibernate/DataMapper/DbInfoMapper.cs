@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.Common.DomainModel.DataMap;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.Common.DomainModel.DataMap;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Map;
+using PucksAndProgramming.AnotherBlog.DataLayer.DTO;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
+namespace PucksAndProgramming.AnotherBlog.DataLayer.DataMapper
 {
     public class DbInfoMapper : DataMapBase<DbInfo, DbInfoDTO>
     {

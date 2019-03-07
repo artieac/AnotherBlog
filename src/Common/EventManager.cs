@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.AnotherBlog.Common
+namespace PucksAndProgramming.AnotherBlog.Common
 {
     public class EventManager
     {

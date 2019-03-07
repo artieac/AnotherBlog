@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.Business;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.Business;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
 {
     public class AnotherBlogService
     {

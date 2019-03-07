@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map
+namespace PucksAndProgramming.AnotherBlog.Common.DataLayer.Map
 {
     public interface IComment
     {

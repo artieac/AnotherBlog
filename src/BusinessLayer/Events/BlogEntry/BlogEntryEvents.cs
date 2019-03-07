@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Events.BlogEntry
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Events.BlogEntry
 {
     public class BlogEntryEvents
     {

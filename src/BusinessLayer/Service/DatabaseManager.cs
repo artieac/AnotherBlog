@@ -13,10 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer
 {
     public class DatabaseManager
     {

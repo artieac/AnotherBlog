@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Web.Models.API;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Web.Models.API;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers.API
 {
     public class ListsControlController : BaseApiController
     {
@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
             {
                 BlogListItem newItem = new BlogListItem();
                 newItem.Name = postList[i].Title;
-                newItem.RelatedLink = AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i]);
+                newItem.RelatedLink = PucksAndProgramming.AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i]);
                 retVal.ListItems.Add(newItem);
             }
 

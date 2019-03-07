@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.Utilities
+namespace PucksAndProgramming.AnotherBlog.Common.Utilities
 {
     public class ServiceResponse<ReturnClass> where ReturnClass : class
     {

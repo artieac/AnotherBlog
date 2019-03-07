@@ -12,10 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models
+namespace PucksAndProgramming.AnotherBlog.Web.Models
 {
     public class UserModel : ModelBase
     {

@@ -13,7 +13,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
+namespace PucksAndProgramming.AnotherBlog.Web.Code.Extensions
 {
     public class Pager
     {

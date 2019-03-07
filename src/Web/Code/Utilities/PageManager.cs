@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
+namespace PucksAndProgramming.AnotherBlog.Web.Code.Utilities
 {
     public class PageManager
     {
@@ -44,7 +44,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static string GetCurrentTheme(AlwaysMoveForward.AnotherBlog.Web.Models.CommonModel commonModel)
+        public static string GetCurrentTheme(PucksAndProgramming.AnotherBlog.Web.Models.CommonModel commonModel)
         {
             string retVal = "default";
 

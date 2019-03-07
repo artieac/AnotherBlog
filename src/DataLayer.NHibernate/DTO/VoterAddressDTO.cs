@@ -13,10 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Map;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
+namespace PucksAndProgramming.AnotherBlog.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table = "VoterAddresses")]
     public class VoterAddressDTO

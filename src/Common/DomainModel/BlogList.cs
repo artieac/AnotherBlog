@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Map;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
+namespace PucksAndProgramming.AnotherBlog.Common.DomainModel
 {
     public class BlogList 
     {

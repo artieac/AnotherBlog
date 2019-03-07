@@ -16,7 +16,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Net;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers
 {
     public class ErrorController : Controller
     {

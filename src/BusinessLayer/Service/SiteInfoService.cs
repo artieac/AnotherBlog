@@ -12,12 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
 {
     public class SiteInfoService
     {

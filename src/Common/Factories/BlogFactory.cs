@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.Factories
+namespace PucksAndProgramming.AnotherBlog.Common.Factories
 {
     public class BlogFactory
     {

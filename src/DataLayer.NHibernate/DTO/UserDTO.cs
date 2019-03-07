@@ -13,11 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Security.Principal;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Map;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
+namespace PucksAndProgramming.AnotherBlog.DataLayer.DTO
 {
     [NHibernate.Mapping.Attributes.Class(Table = "Users")]
     public class UserDTO 

@@ -12,11 +12,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Web.Models;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Web.Models;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels
+namespace PucksAndProgramming.AnotherBlog.Web.Models.BlogModels
 {
     public class BlogModel 
     {

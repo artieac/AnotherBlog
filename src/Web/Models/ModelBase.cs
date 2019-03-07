@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models
+namespace PucksAndProgramming.AnotherBlog.Web.Models
 {
     public class ModelBase 
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map
+namespace PucksAndProgramming.AnotherBlog.Common.DataLayer.Map
 {
     public interface IExtensionConfiguration
     {

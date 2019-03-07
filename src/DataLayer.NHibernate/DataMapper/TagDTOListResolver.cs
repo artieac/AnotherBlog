@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.DataLayer.DTO;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
+namespace PucksAndProgramming.AnotherBlog.DataLayer.DataMapper
 {
     public class TagDTOListResolver : MappedListResolver<Tag, TagDTO>
     {

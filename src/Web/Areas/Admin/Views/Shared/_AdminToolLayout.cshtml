@@ -1,8 +1,8 @@
-﻿@using AlwaysMoveForward.AnotherBlog.Web
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
+﻿@using PucksAndProgramming.AnotherBlog.Web
+@using PucksAndProgramming.AnotherBlog.Web.Code.Extensions
 @using System.Collections.Generic
-@using AlwaysMoveForward.AnotherBlog.Common.DomainModel
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
+@using PucksAndProgramming.AnotherBlog.Common.DomainModel
+@using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ng="http://angularjs.org" ng-app="theApp">
@@ -59,7 +59,7 @@
                 }
                 tabElements.Add("Manage A Blog", "/Admin/ManageBlog/Index", "");
                 tabElements.SetSelectedTab(this.Request.Url);
-                Html.RenderPartial("_TabControl", (AlwaysMoveForward.AnotherBlog.Web.Code.Extensions.TabElements)tabElements);
+                Html.RenderPartial("_TabControl", (PucksAndProgramming.AnotherBlog.Web.Code.Extensions.TabElements)tabElements);
             }
             <div class="contentPanel">
                 @RenderBody()

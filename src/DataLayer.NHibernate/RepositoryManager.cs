@@ -15,18 +15,18 @@ using System.Text;
 using System.Reflection;
 using System.Configuration;
 using System.Data;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.Common.DataLayer.NHibernate;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.Common.DataLayer.NHibernate;
+using PucksAndProgramming.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Map;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.DataLayer.DTO;
+using PucksAndProgramming.AnotherBlog.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer
+namespace PucksAndProgramming.AnotherBlog.DataLayer
 {
     public class RepositoryManager : IAnotherBlogRepositoryManager
     {

@@ -13,11 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using AlwaysMoveForward.Common.DomainModel.Poll;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.Common.DomainModel.Poll;
+using PucksAndProgramming.AnotherBlog.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
+namespace PucksAndProgramming.AnotherBlog.UnitTest.IntegrationTests.Repository
 {
     [TestFixture]
     public class PollRepositoryTest : RepositoryTestBase

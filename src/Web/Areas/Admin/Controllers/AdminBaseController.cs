@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.Web.Controllers;
-using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Web.Controllers;
+using PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Models;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Controllers
 {
     public class AdminBaseController : BaseController
     {

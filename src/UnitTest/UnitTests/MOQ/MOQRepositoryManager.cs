@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.UnitTest.MOQ.Repositories;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.UnitTest.MOQ.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest
+namespace PucksAndProgramming.AnotherBlog.UnitTest
 {
     public class MOQRepositoryManager : IAnotherBlogRepositoryManager
     {

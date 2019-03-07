@@ -15,18 +15,18 @@ using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.Linq;
 
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.Business;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.Factories;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.Business;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.Factories;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
 {
     /// <summary>
     /// This class controlls the business rules realted to a blog entry, and controls the data access to the 

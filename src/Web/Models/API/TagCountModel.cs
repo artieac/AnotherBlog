@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Models.API
+namespace PucksAndProgramming.AnotherBlog.Web.Models.API
 {
     public class TagCountModel
     {
@@ -12,7 +12,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models.API
         {
             this.TagName = tagCount.TagName;
             this.TagCount = tagCount.Count;
-            this.TagUrl = AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Utils.GenerateTagLink(blogSubFolder, this.TagName);
+            this.TagUrl = PucksAndProgramming.AnotherBlog.Web.Code.Utilities.Utils.GenerateTagLink(blogSubFolder, this.TagName);
         }
 
         public string TagName { get; private set; }

@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
+namespace PucksAndProgramming.AnotherBlog.Web.Code.Utilities
 {
     public class WebSiteConfiguration : ConfigurationSection
     {

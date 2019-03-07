@@ -1,15 +1,15 @@
-﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.BlogModel
+﻿@model PucksAndProgramming.AnotherBlog.Web.Models.BlogModels.BlogModel
            
-@using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
-@using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions;
+@using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+@using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
+@using PucksAndProgramming.AnotherBlog.Web.Models.BlogModels;
+@using PucksAndProgramming.AnotherBlog.Web.Code.Extensions;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name;
+    ViewBag.Title = PucksAndProgramming.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name;
     ViewBag.Description = Model.BlogCommon.TargetBlog.Description;
-    ViewBag.Author = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultAuthor;
-    ViewBag.Keywords = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultKeywords; 
+    ViewBag.Author = PucksAndProgramming.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultAuthor;
+    ViewBag.Keywords = PucksAndProgramming.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultKeywords; 
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
 }

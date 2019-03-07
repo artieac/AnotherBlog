@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Web.Models.API;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Web.Models.API;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers.API
 {
     public class TagController : BaseApiController
     {

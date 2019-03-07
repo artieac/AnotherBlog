@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Models;
+using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
+using PucksAndProgramming.AnotherBlog.Web.Code.Filters;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Controllers
 {
     [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
     public class UserManagementController : AdminBaseController

@@ -11,7 +11,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.Utilities
+namespace PucksAndProgramming.AnotherBlog.DataLayer.Utilities
 {
     public class TransientDomainCollection<T> : List<T>, IDomainCollection<T>
     {

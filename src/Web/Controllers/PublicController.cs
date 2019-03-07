@@ -7,16 +7,16 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Security.Permissions;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
-using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
+using PucksAndProgramming.AnotherBlog.Web.Models;
+using PucksAndProgramming.AnotherBlog.Web.Models.BlogModels;
+using PucksAndProgramming.AnotherBlog.Web.Code.Filters;
+using PucksAndProgramming.AnotherBlog.Web.Code.Extensions;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers
 {
     [CookieAuthenticationParser]
     public class PublicController : BaseController

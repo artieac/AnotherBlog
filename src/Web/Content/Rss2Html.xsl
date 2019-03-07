@@ -15,7 +15,7 @@
         </xsl:element>
         <xsl:element name="link">
           <xsl:attribute name="rel">stylesheet</xsl:attribute>
-          <xsl:attribute name="href">http://www.alwaysmoveforward.com/Content/Rss.css</xsl:attribute>
+          <xsl:attribute name="href">http://www.PucksAndProgramming.com/Content/Rss.css</xsl:attribute>
           <xsl:attribute name="type">text/css</xsl:attribute>
         </xsl:element>
         <link rel="alternate" type="application/rss+xml">

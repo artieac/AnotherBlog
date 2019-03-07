@@ -15,7 +15,7 @@ using System;
  using System.Web.Mvc; 
  using System.Xml.Serialization; 
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
+namespace PucksAndProgramming.AnotherBlog.Web.Code.Utilities
 {
     public class XmlResult : ActionResult
     {

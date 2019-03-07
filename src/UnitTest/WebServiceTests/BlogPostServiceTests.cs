@@ -13,12 +13,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-using AlwaysMoveForward.AnotherBlog.UnitTest.BlogPostReference;
+using PucksAndProgramming.AnotherBlog.UnitTest.BlogPostReference;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest.WebServiceTests
+namespace PucksAndProgramming.AnotherBlog.UnitTest.WebServiceTests
 {
     [TestFixture]
     public class BlogPostServiceTests
@@ -42,7 +42,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.WebServiceTests
         {
             GetBlogsRequest request = new GetBlogsRequest();
 
-            IList<AlwaysMoveForward.AnotherBlog.UnitTest.BlogPostReference.BlogElement> foundBlogs = testClient.GetBlogs(request).Blogs;
+            IList<PucksAndProgramming.AnotherBlog.UnitTest.BlogPostReference.BlogElement> foundBlogs = testClient.GetBlogs(request).Blogs;
 
             Assert.IsNotNull(foundBlogs);
         }
@@ -51,7 +51,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.WebServiceTests
         public void GetBlogEntriesTest()
         {
             GetBlogsRequest blogRequest = new GetBlogsRequest();
-            IList<AlwaysMoveForward.AnotherBlog.UnitTest.BlogPostReference.BlogElement> foundBlogs = testClient.GetBlogs(blogRequest).Blogs;
+            IList<PucksAndProgramming.AnotherBlog.UnitTest.BlogPostReference.BlogElement> foundBlogs = testClient.GetBlogs(blogRequest).Blogs;
 
             bool foundEntries = false;
 
@@ -62,7 +62,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.WebServiceTests
                     GetAllBlogEntriesByBlogRequest entryRequest = new GetAllBlogEntriesByBlogRequest();
                     entryRequest.BlogId = foundBlogs[i].BlogId;
 
-                    IList<AlwaysMoveForward.AnotherBlog.UnitTest.BlogPostReference.BlogPostElement> entryList = testClient.GetAllBlogEntriesByBlog(entryRequest).BlogEntries;
+                    IList<PucksAndProgramming.AnotherBlog.UnitTest.BlogPostReference.BlogPostElement> entryList = testClient.GetAllBlogEntriesByBlog(entryRequest).BlogEntries;
 
                     if (entryList.Count > 0)
                     {

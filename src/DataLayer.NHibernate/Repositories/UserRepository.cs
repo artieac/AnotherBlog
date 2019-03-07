@@ -14,16 +14,16 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.NHibernate;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.DataLayer.DTO;
-using AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DataLayer.NHibernate;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.DataLayer.DTO;
+using PucksAndProgramming.AnotherBlog.DataLayer.DataMapper;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
+namespace PucksAndProgramming.AnotherBlog.DataLayer.Repositories
 {
     /// <summary>
     /// This class contains all the code to extract AnotherBlogUser data from the repository using LINQ

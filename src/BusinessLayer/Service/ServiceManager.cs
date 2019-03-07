@@ -12,16 +12,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.Business;
-using AlwaysMoveForward.OAuth.Client;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
+using PucksAndProgramming.Common.Configuration;
+using PucksAndProgramming.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.Business;
+using PucksAndProgramming.OAuth.Client;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.AnotherBlog.DataLayer;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
 {
     public class ServiceManager
     {

@@ -15,14 +15,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.Web.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Web.Models;
+using PucksAndProgramming.AnotherBlog.Web.Models.BlogModels;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers
 {
     public class BlogController : PublicController
     {
@@ -198,7 +198,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
 
                 if (model.BlogCommon.TargetBlog != null)
                 {
-                    targetTag = AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(targetTag);
+                    targetTag = PucksAndProgramming.Common.Utilities.Utils.DecodeFromUrl(targetTag);
                     foundPosts = Services.BlogEntryService.GetByTag(model.BlogCommon.TargetBlog, targetTag, true);
                     model.BlogCommon.Common.ContentTitle = "Blog entries for " + targetTag;
                 }
@@ -226,7 +226,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
             if (model.BlogCommon.TargetBlog != null)
             {
                 DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
-                model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
+                model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, PucksAndProgramming.Common.Utilities.Utils.DecodeFromUrl(title));
 
                 using (this.Services.UnitOfWork.BeginTransaction())
                 {

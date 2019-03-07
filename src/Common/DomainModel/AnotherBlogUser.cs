@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.Common.DomainModel;
+using PucksAndProgramming.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
+namespace PucksAndProgramming.AnotherBlog.Common.DomainModel
 {
     public class AnotherBlogUser : RemoteOAuthUser
     {

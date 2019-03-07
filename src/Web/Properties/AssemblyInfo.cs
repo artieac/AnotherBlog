@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AlwaysMoveForward.AnotherBlog.Web.NHibernate")]
+[assembly: AssemblyTitle("PucksAndProgramming.AnotherBlog.Web.NHibernate")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Hewlett-Packard")]
-[assembly: AssemblyProduct("AlwaysMoveForward.AnotherBlog.Web.NHibernate")]
+[assembly: AssemblyProduct("PucksAndProgramming.AnotherBlog.Web.NHibernate")]
 [assembly: AssemblyCopyright("Copyright © Hewlett-Packard 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

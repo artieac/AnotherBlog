@@ -17,15 +17,15 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Security.Permissions;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.Factories;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.Factories;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.AnotherBlog.Web.Models;
+using PucksAndProgramming.AnotherBlog.Web.Models.BlogModels;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace PucksAndProgramming.AnotherBlog.Web.Controllers.API
 {
     public abstract class BaseApiController : ApiController
     {

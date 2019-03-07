@@ -14,7 +14,7 @@ using System.Collections.Specialized;
 using NHibernate.Collection.Generic;
 using NHibernate.Engine;
 
-namespace AlwaysMoveForward.AnotherBlog.DataLayer.Utilities
+namespace PucksAndProgramming.AnotherBlog.DataLayer.Utilities
 {
     public class PersistentDomainCollection<T>:PersistentGenericBag<T>, IDomainCollection<T> where T : class
     {    

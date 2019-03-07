@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
+using PucksAndProgramming.AnotherBlog.DataLayer;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
+namespace PucksAndProgramming.AnotherBlog.UnitTest.Services
 {
-    public class ServiceManagerBuilder : AlwaysMoveForward.AnotherBlog.BusinessLayer.Service.ServiceManagerBuilder
+    public class ServiceManagerBuilder : PucksAndProgramming.AnotherBlog.BusinessLayer.Service.ServiceManagerBuilder
     {
         protected override UnitOfWork CreateUnitOfWork(string connectionString)
         {

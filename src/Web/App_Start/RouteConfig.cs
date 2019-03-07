@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace AlwaysMoveForward.AnotherBlog.Web
+namespace PucksAndProgramming.AnotherBlog.Web
 {
     public class RouteConfig
     {

@@ -13,11 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.DataLayer.Repositories;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
+namespace PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories
 {
     public interface IAnotherBlogRepositoryManager
     {

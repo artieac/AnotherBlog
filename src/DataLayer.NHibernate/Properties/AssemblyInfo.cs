@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AlwaysMoveForward.AnotherBlog.DataLayer.NHibernate")]
+[assembly: AssemblyTitle("PucksAndProgramming.AnotherBlog.DataLayer.NHibernate")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Intuit")]
-[assembly: AssemblyProduct("AlwaysMoveForward.AnotherBlog.DataLayer.NHibernate")]
+[assembly: AssemblyProduct("PucksAndProgramming.AnotherBlog.DataLayer.NHibernate")]
 [assembly: AssemblyCopyright("Copyright © Intuit 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
+using PucksAndProgramming.AnotherBlog.DataLayer;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
+namespace PucksAndProgramming.AnotherBlog.UnitTest.IntegrationTests.Repository
 {
     public class RepositoryTestBase
     {

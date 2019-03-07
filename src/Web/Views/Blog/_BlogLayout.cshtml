@@ -1,8 +1,8 @@
-@using AlwaysMoveForward.AnotherBlog.Web
-@using AlwaysMoveForward.AnotherBlog.Web.Models
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
-@using AlwaysMoveForward.AnotherBlog.Common.DomainModel
+@using PucksAndProgramming.AnotherBlog.Web
+@using PucksAndProgramming.AnotherBlog.Web.Models
+@using PucksAndProgramming.AnotherBlog.Web.Code.Utilities
+@using PucksAndProgramming.AnotherBlog.Web.Code.Extensions
+@using PucksAndProgramming.AnotherBlog.Common.DomainModel
 
 @{
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
@@ -25,17 +25,17 @@
 </div>
     <div class="metaContentPanel">   
         <div id="blogListSection">
-	        @Html.Partial("../Blog/BlogSelectionControl", ViewBag.BlogCommon.Common.BlogList as IDictionary<int, AlwaysMoveForward.AnotherBlog.Common.DomainModel.Blog>)
+	        @Html.Partial("../Blog/BlogSelectionControl", ViewBag.BlogCommon.Common.BlogList as IDictionary<int, PucksAndProgramming.AnotherBlog.Common.DomainModel.Blog>)
 	    </div>
         <div id="blogCalendarSection">
 	        @{ViewBag.BlogCommon.Common.Calendar.RouteInformation = "/Home/Index";}
-	        @Html.Partial("_CalendarControl", (AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.BlogCommon.Common.Calendar)
+	        @Html.Partial("_CalendarControl", (PucksAndProgramming.AnotherBlog.Web.Models.CalendarModel)ViewBag.BlogCommon.Common.Calendar)
         </div>
 	    <div id="mostViewed">
-            @Html.Partial("_ListControl", (AlwaysMoveForward.AnotherBlog.Web.Models.API.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts)
+            @Html.Partial("_ListControl", (PucksAndProgramming.AnotherBlog.Web.Models.API.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts)
         </div>                     
         <div id="blogTagsSection">
-		    @Html.Partial("_TagControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
+		    @Html.Partial("_TagControl", (PucksAndProgramming.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
 		</div>        
         <div>
             @Html.Partial("_SyndicationControl", ViewBag.BlogCommon.TargetBlog.SubFolder)
@@ -43,7 +43,7 @@
         @Html.Partial("_BlogListsControl")
         </div>
 		<div id="blogArchiveSection">
-            @Html.Partial("_ArchiveControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
+            @Html.Partial("_ArchiveControl", (PucksAndProgramming.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
 		</div>      
 		<div id="googlePluginSection">
 		    @{

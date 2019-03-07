@@ -15,19 +15,19 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.Common.Configuration;
-using AlwaysMoveForward.Common.Business;
-using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.OAuth.Client;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.Factories;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.Common.Configuration;
+using PucksAndProgramming.Common.Business;
+using PucksAndProgramming.Common.DataLayer;
+using PucksAndProgramming.Common.DataLayer.Repositories;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.OAuth.Client;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.Factories;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
 {
     public class UserService
     {
@@ -172,7 +172,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             AnotherBlogUser retVal = null;
 
-            AlwaysMoveForward.Common.DomainModel.User amfUser = this.GetAMFUserInfo(accessToken);
+            PucksAndProgramming.Common.DomainModel.User amfUser = this.GetAMFUserInfo(accessToken);
 
             if (amfUser != null)
             {

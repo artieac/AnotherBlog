@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel.Poll;
+using PucksAndProgramming.Common.Utilities;
+using PucksAndProgramming.Common.DomainModel.Poll;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
+namespace PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Models
 {
     public class ManagePollsModel
     {

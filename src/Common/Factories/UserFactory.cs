@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.Factories
+namespace PucksAndProgramming.AnotherBlog.Common.Factories
 {
     public class UserFactory
     {
@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.Factories
             return retVal;
         }
 
-        public static AnotherBlogUser Create(AlwaysMoveForward.Common.DomainModel.User oauthUser)
+        public static AnotherBlogUser Create(PucksAndProgramming.Common.DomainModel.User oauthUser)
         {
             AnotherBlogUser retVal = new AnotherBlogUser();
             retVal.OAuthServiceUserId = oauthUser.Id;

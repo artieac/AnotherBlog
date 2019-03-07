@@ -14,11 +14,11 @@ using System.Linq;
 using System.Text;
 using System.Security.Principal;
 
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
+namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
 {
     public class SecurityPrincipal : IPrincipal, IIdentity
     {

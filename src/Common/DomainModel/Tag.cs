@@ -12,10 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlwaysMoveForward.AnotherBlog.Common.Utilities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
+using PucksAndProgramming.AnotherBlog.Common.Utilities;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Map;
 
-namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
+namespace PucksAndProgramming.AnotherBlog.Common.DomainModel
 {
     public class Tag 
     {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using AlwaysMoveForward.Common.Utilities;
+using PucksAndProgramming.Common.Utilities;
 
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Web.Models.BlogModels;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models
+namespace PucksAndProgramming.AnotherBlog.Web.Areas.Admin.Models
 {
     public class ManageBlogModel 
     {

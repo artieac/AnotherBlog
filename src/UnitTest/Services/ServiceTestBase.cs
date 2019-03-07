@@ -13,12 +13,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
+using PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
+namespace PucksAndProgramming.AnotherBlog.UnitTest.Services
 {
     public class ServiceTestBase
     {
@@ -34,7 +34,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
             {
                 if (services == null)
                 {
-                    this.services = AlwaysMoveForward.AnotherBlog.UnitTest.Services.ServiceManagerBuilder.BuildServiceManager();
+                    this.services = PucksAndProgramming.AnotherBlog.UnitTest.Services.ServiceManagerBuilder.BuildServiceManager();
                 }
 
                 return services;
@@ -75,7 +75,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
                     }
                 }
 
-                System.Threading.Thread.CurrentPrincipal = new AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal(retVal, true);
+                System.Threading.Thread.CurrentPrincipal = new PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal(retVal, true);
 
                 return retVal;
             }
