@@ -17,6 +17,7 @@ namespace PucksAndProgramming.AnotherBlog.Common.DomainModel
         public bool IsSiteAdministrator { get; set; }
         public string About { get; set; }
 
+        public string Email { get; set;}
         public IDictionary<long, RoleType.Id> Roles { get; set; }
 
         public void AddRole(long blogId, RoleType.Id roleId)

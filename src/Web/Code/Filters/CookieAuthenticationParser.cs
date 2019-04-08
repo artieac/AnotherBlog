@@ -10,61 +10,80 @@ using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 using PucksAndProgramming.AnotherBlog.Common.Factories;
 using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
 using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using PucksAndProgramming.Common.Utilities;
+using System.Security.Claims;
 
 namespace PucksAndProgramming.AnotherBlog.Web.Code.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class CookieAuthenticationParser : FilterAttribute, IAuthorizationFilter
+    public class CookieAuthenticationParser : FilterAttribute, System.Web.Mvc.IAuthorizationFilter
     {
-        public static SecurityPrincipal ParseCookie(HttpCookieCollection cookies)
+        public static HttpCookie GetFormsAuthenticationCookie(HttpCookieCollection cookies)
         {
-            // Get the authentication cookie
-            string cookieName = FormsAuthentication.FormsCookieName;
-            HttpCookie authCookie = cookies[cookieName];
-            SecurityPrincipal retVal = new SecurityPrincipal(null, false);
+            return GetCookie(cookies, FormsAuthentication.FormsCookieName);
+        }
+        public static HttpCookie GetRemoteOAuthCookie(HttpCookieCollection cookies)
+        {
+            return GetCookie(cookies, SecurityPrincipal.OAuthCookieName);
+        }
 
-            ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+        public static HttpCookie GetCookie(HttpCookieCollection cookies, string cookieName)
+        {
+            // Get the authentication cookie0
+            HttpCookie retVal = cookies[cookieName];
 
-            if (authCookie != null)
+            if (retVal != null)
             {
-                if (authCookie.Value != string.Empty)
+                if (retVal.Value == string.Empty)
                 {
-                    try
-                    {
-                        // Get the authentication ticket 
-                        // and rebuild the principal & identity
-                        FormsAuthenticationTicket authTicket =
-                        FormsAuthentication.Decrypt(authCookie.Value);
-
-                        AnotherBlogUser currentUser = serviceManager.UserService.GetById(int.Parse(authTicket.Name));
-
-                        if (currentUser == null)
-                        {
-                            retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
-                        }
-                        else
-                        {
-                            retVal = new SecurityPrincipal(currentUser, true);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
-                    }
+                    retVal = null;
                 }
             }
-            else
-            {
-                retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
-            }
-
-            System.Threading.Thread.CurrentPrincipal = retVal;
-            HttpContext.Current.User = retVal;
 
             return retVal;
         }
+        public static SecurityPrincipal ParseCookie(HttpCookieCollection cookies)
+        {
+            SecurityPrincipal retVal = null;
+            
+            ClaimsIdentity claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
 
-        public virtual void OnAuthorization(AuthorizationContext filterContext)
+            if(claimsIdentity != null)
+            {
+                ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                AnotherBlogUser anotherBlogUser = null;
+
+                string anotherBlogId = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.AnotherBlogUserId)?.Value;
+
+                if(!String.IsNullOrEmpty(anotherBlogId))
+                {
+                    anotherBlogUser = serviceManager.UserService.GetById(long.Parse(anotherBlogId));
+                }
+                else
+                {
+                    string remoteId = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.OAuthUserId)?.Value;
+
+                    if (!String.IsNullOrEmpty(remoteId))
+                    {
+                        remoteId = remoteId.Split('|')[1];
+                    }
+
+                    anotherBlogUser = serviceManager.UserService.GetByOAuthServiceUserId(remoteId);
+                }
+
+                if(anotherBlogUser != null)
+                {
+                    retVal = new SecurityPrincipal(anotherBlogUser, claimsIdentity);
+                    System.Threading.Thread.CurrentPrincipal = retVal;
+                    HttpContext.Current.User = retVal;
+                }
+
+            }
+ 
+            return retVal;
+        }
+        
+        public virtual void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
             CookieAuthenticationParser.ParseCookie(filterContext.RequestContext.HttpContext.Request.Cookies);
         }

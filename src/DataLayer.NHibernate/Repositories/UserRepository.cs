@@ -67,11 +67,19 @@ namespace PucksAndProgramming.AnotherBlog.DataLayer.Repositories
             return this.GetDataMapper().Map(criteria.List<UserDTO>());
         }
 
-        public AnotherBlogUser GetByOAuthServiceUserId(long userId)
+        public AnotherBlogUser GetByOAuthServiceUserId(string userId)
         {
             ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
             criteria.Add(Expression.Eq("OAuthServiceUserId", userId));
             return this.GetDataMapper().Map(criteria.UniqueResult<UserDTO>());
         }
+
+        public AnotherBlogUser GetByEmail(string email)
+        {
+            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<UserDTO>();
+            criteria.Add(Expression.Eq("Email", email));
+            return this.GetDataMapper().Map(criteria.UniqueResult<UserDTO>());
+        }
+
     }
 }

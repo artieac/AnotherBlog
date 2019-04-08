@@ -168,15 +168,20 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public AnotherBlogUser GetFromAMFUser(IOAuthToken accessToken)
+        public AnotherBlogUser GetByOAuthServiceUserId(string userId)
+        {
+            return this.UserRepository.GetByOAuthServiceUserId(userId);
+        }
+
+        public AnotherBlogUser GetByOAuthToken(IOAuthToken accessToken)
         {
             AnotherBlogUser retVal = null;
 
-            PucksAndProgramming.Common.DomainModel.User amfUser = this.GetAMFUserInfo(accessToken);
+            PucksAndProgramming.Common.DomainModel.User amfUser = this.GetFromOAuthService(accessToken);
 
             if (amfUser != null)
             {
-                retVal = this.UserRepository.GetByOAuthServiceUserId(amfUser.Id);
+                retVal = this.UserRepository.GetByOAuthServiceUserId(amfUser.Id.ToString());
 
                 if (retVal == null)
                 {
@@ -191,9 +196,14 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public User GetAMFUserInfo(IOAuthToken oauthToken)
+        public User GetFromOAuthService(IOAuthToken oauthToken)
         {
             return this.OAuthRepository.GetUserInfo(oauthToken);
+        }
+
+        public AnotherBlogUser GetByEmail(string email)
+        {
+            return this.UserRepository.GetByEmail(email);
         }
     }
 }

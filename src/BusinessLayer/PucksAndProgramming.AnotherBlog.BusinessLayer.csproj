@@ -41,27 +41,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AlwaysMoveForward.OAuth.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\AlwaysMoveForward.OAuth.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="AlwaysMoveForward.OAuth.Client.RestSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\AlwaysMoveForward.OAuth.Client.RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PucksAndProgramming.Framework.Common">
-      <HintPath>..\..\Lib\PucksAndProgramming.Framework.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="PucksAndProgramming.Framework.Common.DataLayer.NHibernate">
-      <HintPath>..\..\Lib\PucksAndProgramming.Framework.Common.DataLayer.NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="PucksAndProgramming.OAuth.Client">
-      <HintPath>..\..\Lib\PucksAndProgramming.OAuth.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="PucksAndProgramming.OAuth.Client.RestSharp">
-      <HintPath>..\..\Lib\PucksAndProgramming.OAuth.Client.RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -116,6 +96,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\src\Framework\DataLayer.NHibernate\PucksAndProgramming.Framework.Common.DataLayer.NHibernate.csproj">
+      <Project>{ebc885f9-1659-4eb0-9aa1-3ae4dd9b27ec}</Project>
+      <Name>PucksAndProgramming.Framework.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\src\Framework\OAuth.Client.RestSharp\PucksAndProgramming.OAuth.Client.RestSharp.csproj">
+      <Project>{28e86e9b-61ae-4720-ae00-aeae7f739971}</Project>
+      <Name>PucksAndProgramming.OAuth.Client.RestSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\src\Framework\OAuth.Client\PucksAndProgramming.OAuth.Client.csproj">
+      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
+      <Name>PucksAndProgramming.OAuth.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\src\Framework\PucksAndProgramming.Common\PucksAndProgramming.Framework.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>PucksAndProgramming.Framework.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\PucksAndProgramming.AnotherBlog.Common.csproj">
       <Project>{ee543152-b86a-43f0-974f-aa97dd094bff}</Project>
       <Name>PucksAndProgramming.AnotherBlog.Common</Name>

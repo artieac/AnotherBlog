@@ -32,6 +32,9 @@ namespace PucksAndProgramming.AnotherBlog.DataLayer.DTO
         public virtual long Id { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
+        public virtual string Email { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
         public virtual bool ApprovedCommenter { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
@@ -41,7 +44,7 @@ namespace PucksAndProgramming.AnotherBlog.DataLayer.DTO
         public virtual string About { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
-        public virtual long OAuthServiceUserId { get; set; }
+        public virtual string OAuthServiceUserId { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
         public virtual string FirstName { get; set; }

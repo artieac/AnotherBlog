@@ -9,7 +9,7 @@ namespace PucksAndProgramming.AnotherBlog.Common.Factories
 {
     public class UserFactory
     {
-        private const string GuestUserName = "guest";
+        public const string GuestUserName = "guest";
 
         public static AnotherBlogUser CreateGuestUser()
         {
@@ -24,7 +24,7 @@ namespace PucksAndProgramming.AnotherBlog.Common.Factories
         public static AnotherBlogUser Create(PucksAndProgramming.Common.DomainModel.User oauthUser)
         {
             AnotherBlogUser retVal = new AnotherBlogUser();
-            retVal.OAuthServiceUserId = oauthUser.Id;
+            retVal.OAuthServiceUserId = oauthUser.Id.ToString();
             retVal.FirstName = oauthUser.FirstName;
             retVal.LastName = oauthUser.LastName;
             retVal.IsSiteAdministrator = false;

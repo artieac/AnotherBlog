@@ -50,20 +50,14 @@
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Mapping.Attributes, Version=3.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.Mapping.Attributes.3.2.0.0\lib\NHibernate.Mapping.Attributes.dll</HintPath>
-    </Reference>
-    <Reference Include="PucksAndProgramming.Framework.Common">
-      <HintPath>..\..\Lib\PucksAndProgramming.Framework.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="PucksAndProgramming.Framework.Common.DataLayer.NHibernate">
-      <HintPath>..\..\Lib\PucksAndProgramming.Framework.Common.DataLayer.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -126,8 +120,15 @@
     <Compile Include="Utilities\PersistentDomainCollection.cs" />
     <Compile Include="Utilities\TransientDomainCollection.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\src\Framework\DataLayer.NHibernate\PucksAndProgramming.Framework.Common.DataLayer.NHibernate.csproj">
+      <Project>{ebc885f9-1659-4eb0-9aa1-3ae4dd9b27ec}</Project>
+      <Name>PucksAndProgramming.Framework.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\src\Framework\PucksAndProgramming.Common\PucksAndProgramming.Framework.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>PucksAndProgramming.Framework.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\PucksAndProgramming.AnotherBlog.Common.csproj">
       <Project>{ee543152-b86a-43f0-974f-aa97dd094bff}</Project>
       <Name>PucksAndProgramming.AnotherBlog.Common</Name>

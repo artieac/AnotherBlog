@@ -69,29 +69,23 @@
       <HintPath>..\..\Lib\DebugPartialTrustAllowed\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
     <Reference Include="nunit.core">
-      <HintPath>..\..\packages\NUnitTestAdapter.1.0\lib\nunit.core.dll</HintPath>
+      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\nunit.core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.core.interfaces">
-      <HintPath>..\..\packages\NUnitTestAdapter.1.0\lib\nunit.core.interfaces.dll</HintPath>
+      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\nunit.core.interfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="nunit.util">
-      <HintPath>..\..\packages\NUnitTestAdapter.1.0\lib\nunit.util.dll</HintPath>
+      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\nunit.util.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="NUnit.VisualStudio.TestAdapter">
-      <HintPath>..\..\packages\NUnitTestAdapter.1.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
+      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="PucksAndProgramming.Framework.Common">
-      <HintPath>..\..\Lib\PucksAndProgramming.Framework.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="PucksAndProgramming.Framework.Common.DataLayer.NHibernate">
-      <HintPath>..\..\Lib\PucksAndProgramming.Framework.Common.DataLayer.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -226,6 +220,18 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\src\Framework\DataLayer.NHibernate\PucksAndProgramming.Framework.Common.DataLayer.NHibernate.csproj">
+      <Project>{ebc885f9-1659-4eb0-9aa1-3ae4dd9b27ec}</Project>
+      <Name>PucksAndProgramming.Framework.Common.DataLayer.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\src\Framework\OAuth.Client\PucksAndProgramming.OAuth.Client.csproj">
+      <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
+      <Name>PucksAndProgramming.OAuth.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\src\Framework\PucksAndProgramming.Common\PucksAndProgramming.Framework.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>PucksAndProgramming.Framework.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BusinessLayer\PucksAndProgramming.AnotherBlog.BusinessLayer.csproj">
       <Project>{378a5d90-9d1e-4317-8722-3549a4b85507}</Project>
       <Name>PucksAndProgramming.AnotherBlog.BusinessLayer</Name>

@@ -17,22 +17,36 @@ using System.Security.Principal;
 using PucksAndProgramming.Common.DomainModel;
 using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using System.Security.Claims;
 
 namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
 {
-    public class SecurityPrincipal : IPrincipal, IIdentity
+    public class SecurityPrincipal : IPrincipal
     {
+        public const string OAuthCookieName = "OAuthTokenCookie";
+
+        public class ClaimNames
+        {
+            public const string AnotherBlogUserId = "anotherBlogId";
+            public const string IdToken = "id_token";
+            public const string AccessToken = "access_token";
+            public const string OAuthUserId = "https://www.pucksandprogramming.com/userId";
+            public const string Email = "https://www.pucksandprogramming.com/email";
+        }
+
         private ServiceManager serviceManager = null;
 
-        public SecurityPrincipal(AnotherBlogUser currentUser) : this(currentUser, false) { }
+        public SecurityPrincipal(AnotherBlogUser currentUser) : this(currentUser, null) { }
 
-        public SecurityPrincipal(AnotherBlogUser currentUser, bool isAuthenticated)
+        public SecurityPrincipal(AnotherBlogUser currentUser, ClaimsIdentity claimsIdentity)
         {
-            this.IsAuthenticated = isAuthenticated;
+            this.ClaimsIdentity = claimsIdentity;
             this.CurrentUser = currentUser;
         }
 
         public AnotherBlogUser CurrentUser { get; private set; }
+
+        public ClaimsIdentity ClaimsIdentity { get; private set; }
 
         private ServiceManager ServiceManager
         {
@@ -48,34 +62,6 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
         }
 
         /// <summary>
-        /// Implement the IIDentity interface so that it can be used with built in .Net security methods
-        /// </summary>
-        #region IIdentity
-
-        public bool IsAuthenticated { get; set; }
-
-        public string AuthenticationType
-        {
-            get { return string.Empty; }
-        }
-
-        public string Name
-        {
-            get 
-            {
-                string retVal = string.Empty;
-                
-                if (this.CurrentUser != null)
-                {
-                    retVal = this.CurrentUser.GetDisplayName();
-                }
-
-                return retVal;
-            }
-        }
-
-        #endregion
-        /// <summary>
         /// Implement the IPrincipal interface so that the current user can be thrown onto the current Threads
         /// principal placeholder and passed around cleanly.
         /// </summary>
@@ -83,7 +69,15 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
 
         public IIdentity Identity
         {
-            get { return this; }
+            get
+            {
+                if (this.ClaimsIdentity == null)
+                {
+                    this.ClaimsIdentity = new ClaimsIdentity();
+                }
+
+                return this.ClaimsIdentity;
+            }
         }
         /// <summary>
         /// Is in role is not really used.  Originally I wanted to use the built in .Net security features (so it was used)
@@ -104,7 +98,7 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
 
                 if (retVal == false)
                 {
-                    foreach(int blogId in this.CurrentUser.Roles.Keys)
+                    foreach (int blogId in this.CurrentUser.Roles.Keys)
                     {
                         if (this.CurrentUser.Roles[blogId].ToString() == targetRole)
                         {
@@ -144,7 +138,7 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
                 {
                     Blog targetBlog = this.ServiceManager.BlogService.GetBySubFolder(blogSubFolder);
 
-                    if(targetBlog != null)
+                    if (targetBlog != null)
                     {
                         if (this.CurrentUser.Roles.ContainsKey(targetBlog.Id))
                         {
@@ -194,7 +188,7 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
                                 retVal = true;
                             }
                         }
-                     
+
                     }
                 }
             }

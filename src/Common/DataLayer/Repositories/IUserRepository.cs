@@ -21,6 +21,8 @@ namespace PucksAndProgramming.AnotherBlog.Common.DataLayer.Repositories
     {
         IList<AnotherBlogUser> GetBlogWriters(int blogId);
 
-        AnotherBlogUser GetByOAuthServiceUserId(long userId);
+        AnotherBlogUser GetByOAuthServiceUserId(string userId);
+
+        AnotherBlogUser GetByEmail(string email);
     }
 }

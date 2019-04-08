@@ -28,6 +28,9 @@ using PucksAndProgramming.AnotherBlog.Web.Code.Filters;
 using PucksAndProgramming.OAuth.Client;
 using Auth0.AuthenticationApi.Models;
 using Auth0.AuthenticationApi;
+using Microsoft.Owin.Security;
+using System.Security.Claims;
+using PucksAndProgramming.AnotherBlog.Web.Code;
 
 namespace PucksAndProgramming.AnotherBlog.Web.Controllers
 {
@@ -62,15 +65,19 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers
                 HttpCookie authenticationCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
                 this.HttpContext.Response.Cookies.Add(authenticationCookie);
 
-                this.CurrentPrincipal = currentPrincipal;
+                this.CurrentPrincipal = currentPrincipal;                
             }
         }
 
         private void EliminateUserCookie()
         {
+            this.EliminateUserCookie(FormsAuthentication.FormsCookieName);
+        }
+
+        private void EliminateUserCookie(string cookieName)
+        {
             try
             {
-                string cookieName = FormsAuthentication.FormsCookieName;
                 HttpCookie authCookie = this.Response.Cookies[cookieName];
 
                 if (authCookie != null)
@@ -93,15 +100,22 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers
         }
 
         [Route("User/Login")]
-        [Authorize]
-        public void Login(string blogSubFolder)
+        public ActionResult Login(string blogSubFolder)
         {
+            string redirectUrl = this.Request.Url.Scheme + "://" + this.Request.Url.Host + ":" + this.Request.Url.Port + "/User/OAuthCallback";
+
+            HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties
+                {
+                    RedirectUri = redirectUrl
+                },
+                "Auth0");
+            return new HttpUnauthorizedResult();
         }
 
         [Route("User/Logout")]
         public void Logout()
         {
-            this.EliminateUserCookie();
+            this.EliminateUserCookie(SecurityPrincipal.OAuthCookieName);
             this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
         }
 
@@ -149,44 +163,42 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers
         }
 
         [Route("User/OAuthCallback"), HttpGet()]
-        public ActionResult OAuthCallback(string oauth_token, string oauth_verifier)
+        public ActionResult OAuthCallback()
         {
-            string requestTokenString = Request[PucksAndProgramming.OAuth.Client.Constants.TokenParameter];
-            string verifier = Request[PucksAndProgramming.OAuth.Client.Constants.VerifierCodeParameter];
 
-            IOAuthToken storedRequestToken = (IOAuthToken)Session[requestTokenString];
+            var claimsIdentity = User.Identity as ClaimsIdentity;
 
-            OAuthKeyConfiguration oauthConfiguration = OAuthKeyConfiguration.GetInstance();
-            EndpointConfiguration endpointConfiguration = EndpointConfiguration.GetInstance();
-
-            if (string.IsNullOrEmpty(verifier))
+            // Extract tokens
+            string accessTokenA = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.AccessToken)?.Value;
+            string email = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.Email)?.Value;
+            string auth0Id = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.OAuthUserId)?.Value;
+            
+            if(auth0Id != null)
             {
-                throw new Exception("Expected a non-empty verifier value");
+                auth0Id = auth0Id.Split('|')[1];
             }
 
-            IOAuthToken accessToken;
+            AnotherBlogUser amfUser = this.Services.UserService.GetByOAuthServiceUserId(auth0Id);
 
-            try
+            if (amfUser == null)
             {
-                accessToken = this.Services.OAuthClient.ExchangeRequestTokenForAccessToken(storedRequestToken, verifier);
-
-                AnotherBlogUser amfUser = this.Services.UserService.GetFromAMFUser(accessToken);
-
-                if (amfUser == null)
-                {               
-                    this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
-                    ViewData.ModelState.AddModelError("loginError", "Invalid login.");
-                }
-                else
-                {
-                    this.CurrentPrincipal = new SecurityPrincipal(amfUser, true);
-                    this.EstablishCurrentUserCookie(this.CurrentPrincipal);
-                }
+                amfUser = this.Services.UserService.GetByEmail(email);
             }
-            catch (Exception authEx)
+
+            if(amfUser == null)
             {
-                LogManager.GetLogger().Error(authEx);
-                Response.Redirect("AccessDenied.aspx");
+                this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
+                ViewData.ModelState.AddModelError("loginError", "Invalid login.");
+            }
+            else
+            { 
+                amfUser.OAuthServiceUserId = auth0Id;
+                amfUser.Email = email;
+                this.Services.UserService.Save(amfUser);
+                this.CurrentPrincipal = new SecurityPrincipal(amfUser, claimsIdentity);
+                this.CurrentPrincipal.ClaimsIdentity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.AnotherBlogUserId, amfUser.Id.ToString()));
+
+                this.EstablishCurrentUserCookie(this.CurrentPrincipal);
             }
 
             return this.RedirectToAction("Index", "Home");

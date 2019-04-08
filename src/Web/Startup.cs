@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Owin.Security;
+using System.Security.Claims;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
 
 namespace PucksAndProgramming.AnotherBlog.Web
 {
@@ -36,7 +38,8 @@ namespace PucksAndProgramming.AnotherBlog.Web
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = CookieAuthenticationDefaults.AuthenticationType,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString("/Account/Login"),
+                CookieName = SecurityPrincipal.OAuthCookieName
             });
 
             // Configure Auth0 authentication
@@ -52,7 +55,7 @@ namespace PucksAndProgramming.AnotherBlog.Web
                 RedirectUri = "http://localhost:57679/User/OAuthCallback",
                 PostLogoutRedirectUri = "http://localhost:57679",
 
-                ResponseType = OpenIdConnectResponseType.CodeIdToken,
+                ResponseType = OpenIdConnectResponseType.CodeIdTokenToken,
                 Scope = "openid profile",
 
                 TokenValidationParameters = new TokenValidationParameters
@@ -62,22 +65,32 @@ namespace PucksAndProgramming.AnotherBlog.Web
 
                 Notifications = new OpenIdConnectAuthenticationNotifications
                 {
+                    SecurityTokenValidated = notification =>
+                    {
+                        notification.AuthenticationTicket.Identity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.IdToken, notification.ProtocolMessage.IdToken));
+                        notification.AuthenticationTicket.Identity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.AccessToken, notification.ProtocolMessage.AccessToken));
+
+                        return Task.FromResult(0);
+                    },
                     RedirectToIdentityProvider = notification =>
                     {
                         if (notification.ProtocolMessage.RequestType == OpenIdConnectRequestType.Logout)
                         {
                             var logoutUri = oauthEndpoints.ServiceUri + "/v2/logout?client_id=" + keyConfiguration.ConsumerSecret;
 
-                            var postLogoutUri = notification.ProtocolMessage.PostLogoutRedirectUri;
-                            if (!string.IsNullOrEmpty(postLogoutUri))
+                            if(notification.ProtocolMessage != null)
                             {
-                                if (postLogoutUri.StartsWith("/"))
+                                var postLogoutUri = notification.ProtocolMessage.PostLogoutRedirectUri;
+                                if (!string.IsNullOrEmpty(postLogoutUri))
                                 {
-                                    // transform to absolute
-                                    var request = notification.Request;
-                                    postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
+                                    if (postLogoutUri.StartsWith("/"))
+                                    {
+                                        // transform to absolute
+                                        var request = notification.Request;
+                                        postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
+                                    }
+                                    logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
                                 }
-                                logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
                             }
 
                             notification.Response.Redirect(logoutUri);

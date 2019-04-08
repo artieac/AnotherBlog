@@ -73,7 +73,6 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers
             set
             {
                 System.Threading.Thread.CurrentPrincipal = value;
-                this.HttpContext.User = value;
             }
         }
 

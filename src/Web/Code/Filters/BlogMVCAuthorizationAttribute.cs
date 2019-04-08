@@ -62,7 +62,7 @@ namespace PucksAndProgramming.AnotherBlog.Web.Code.Filters
                         // we want to be sure that the useris at least logged in
                         if (currentPrincipal != null)
                         {
-                            if (currentPrincipal.IsAuthenticated == true)
+                            if (currentPrincipal.Identity.IsAuthenticated == true)
                             {
                                 isAuthorized = true;
                             }
@@ -86,7 +86,7 @@ namespace PucksAndProgramming.AnotherBlog.Web.Code.Filters
                     // we want to be sure that the useris at least logged in
                     if (currentPrincipal != null)
                     {
-                        if (currentPrincipal.IsAuthenticated == true)
+                        if (currentPrincipal.Identity.IsAuthenticated == true)
                         {
                             isAuthorized = true;
                         }

@@ -620,7 +620,6 @@
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageBlogController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageListsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ManagePollsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagementController.cs" />
     <Compile Include="Areas\Admin\Models\AdminCommon.cs" />
@@ -699,17 +698,17 @@
     <Folder Include="Content\images\Carousel\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\src\Framework\Common\PucksAndProgramming.Framework.Common.csproj">
-      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
-      <Name>PucksAndProgramming.Framework.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Common\src\Framework\DataLayer.NHibernate\PucksAndProgramming.Framework.Common.DataLayer.NHibernate.csproj">
       <Project>{ebc885f9-1659-4eb0-9aa1-3ae4dd9b27ec}</Project>
       <Name>PucksAndProgramming.Framework.Common.DataLayer.NHibernate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Common\src\Framework\OAuth\Client\PucksAndProgramming.OAuth.Client.csproj">
+    <ProjectReference Include="..\..\..\Common\src\Framework\OAuth.Client\PucksAndProgramming.OAuth.Client.csproj">
       <Project>{a05cd4fe-f0c1-4f5d-8002-37f2fdb49538}</Project>
       <Name>PucksAndProgramming.OAuth.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\src\Framework\PucksAndProgramming.Common\PucksAndProgramming.Framework.Common.csproj">
+      <Project>{600387a0-6903-47fd-aa6c-9adf4cfe491e}</Project>
+      <Name>PucksAndProgramming.Framework.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\BusinessLayer\PucksAndProgramming.AnotherBlog.BusinessLayer.csproj">
       <Project>{378a5d90-9d1e-4317-8722-3549a4b85507}</Project>
