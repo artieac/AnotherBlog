@@ -22,6 +22,30 @@ namespace PucksAndProgramming.AnotherBlog.Web.Code.Utilities
         public const string EnableSSLSetting = "EnableSSL";
         public const string DefaultSiteNameSetting = "DefaultSiteName";
 
+        /// <summary>
+        /// The default app.config configuration section
+        /// </summary>
+        private static readonly string DefaultSection = "AnotherBlog/WebSiteConfiguration";
+
+        /// <summary>
+        /// Gets the instance of the configuration, based on a default section
+        /// </summary>
+        /// <returns>OAuthConfiguration Configuration</returns>
+        public static WebSiteConfiguration GetInstance()
+        {
+            return WebSiteConfiguration.GetInstance(DefaultSection);
+        }
+
+        /// <summary>
+        /// Gets the instance of the configuration, based on a config section parameter
+        /// </summary>
+        /// <param name="configurationSection">The configuration section</param>
+        /// <returns>OAuthConfiguration Configuration</returns>
+        public static WebSiteConfiguration GetInstance(string configurationSection)
+        {
+            return (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection(configurationSection);
+        }
+
         public WebSiteConfiguration() { }
         public WebSiteConfiguration(bool updateDb)
         {

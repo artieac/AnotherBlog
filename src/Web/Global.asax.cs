@@ -26,7 +26,7 @@ namespace PucksAndProgramming.AnotherBlog.Web
 
         static MvcApplication()
         {
-            MvcApplication.siteConfig = (WebSiteConfiguration)System.Configuration.ConfigurationManager.GetSection("AnotherBlog/WebSiteConfiguration");
+            MvcApplication.siteConfig = WebSiteConfiguration.GetInstance();
         }
 
         public static string Version

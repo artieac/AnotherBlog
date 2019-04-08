@@ -292,6 +292,7 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_ee-gh.js" />
     <Content Include="Scripts\i18n\angular-locale_ee-tg.js" />
@@ -641,7 +642,7 @@
     <Compile Include="Code\Filters\WebAPIAuthorizationAttribute.cs" />
     <Compile Include="Code\Utilities\PageManager.cs" />
     <Compile Include="Code\Utilities\Utils.cs" />
-    <Compile Include="Code\Utilities\WebConfiguration.cs" />
+    <Compile Include="Code\Utilities\WebSiteConfiguration.cs" />
     <Compile Include="Code\Utilities\XmlResult.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\BlogController.cs" />

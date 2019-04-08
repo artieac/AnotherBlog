@@ -13,6 +13,8 @@ using System.Web;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
 using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
+using System.Web.Hosting;
+using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
 
 namespace PucksAndProgramming.AnotherBlog.Web
 {
@@ -23,12 +25,24 @@ namespace PucksAndProgramming.AnotherBlog.Web
             ConfigureAuth(app);
         }
 
+        public HostingEnvironment HostingEnvironment { get; }
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure Auth0 parameters
             EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
             OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
+            WebSiteConfiguration webSiteConfiguration = WebSiteConfiguration.GetInstance();
+
+            string siteUrl = "http";
+
+            if(webSiteConfiguration.EnableSSL==true)
+            {
+                siteUrl += "s";
+            }
+
+            siteUrl += "://" + oauthEndpoints.CallbackUriRoot;
 
             // Enable the Cookie saver middleware to work around a bug in the OWIN implementation
             app.UseKentorOwinCookieSaver();
@@ -52,11 +66,13 @@ namespace PucksAndProgramming.AnotherBlog.Web
                 ClientId = keyConfiguration.ConsumerKey,
                 ClientSecret = keyConfiguration.ConsumerSecret,
 
-                RedirectUri = "http://localhost:57679/User/OAuthCallback",
-                PostLogoutRedirectUri = "http://localhost:57679",
+                RedirectUri = siteUrl + "/User/OAuthCallback",
+                PostLogoutRedirectUri = siteUrl + "/",
 
                 ResponseType = OpenIdConnectResponseType.CodeIdTokenToken,
                 Scope = "openid profile",
+
+                RequireHttpsMetadata = false,
 
                 TokenValidationParameters = new TokenValidationParameters
                 {
