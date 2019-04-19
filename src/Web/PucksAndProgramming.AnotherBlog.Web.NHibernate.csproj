@@ -152,39 +152,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Code\less\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Code\less\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Code\less\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Code\less\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Code\less\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Code\less\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Code\less\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Code\less\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Code\less\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Code\less\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Code\less\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Code\less\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Code\less\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Code\less\base\jquery.ui.accordion.css" />
-    <Content Include="Code\less\base\jquery.ui.all.css" />
-    <Content Include="Code\less\base\jquery.ui.autocomplete.css" />
-    <Content Include="Code\less\base\jquery.ui.base.css" />
-    <Content Include="Code\less\base\jquery.ui.button.css" />
-    <Content Include="Code\less\base\jquery.ui.core.css" />
-    <Content Include="Code\less\base\jquery.ui.datepicker.css" />
-    <Content Include="Code\less\base\jquery.ui.dialog.css" />
-    <Content Include="Code\less\base\jquery.ui.progressbar.css" />
-    <Content Include="Code\less\base\jquery.ui.resizable.css" />
-    <Content Include="Code\less\base\jquery.ui.selectable.css" />
-    <Content Include="Code\less\base\jquery.ui.slider.css" />
-    <Content Include="Code\less\base\jquery.ui.tabs.css" />
-    <Content Include="Code\less\base\jquery.ui.theme.css" />
-    <Content Include="Code\less\Box\Pager.css" />
-    <Content Include="Code\less\default\Pager.css" />
-    <Content Include="Code\less\Simple\Admin.css" />
-    <Content Include="Code\less\Simple\calendar.css" />
-    <Content Include="Code\less\Simple\Pager.css" />
-    <Content Include="Code\less\Simple\Plugins\TwitterFeed.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -215,21 +182,6 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
-    <Content Include="Content\themes\base\jquery.ui.all.css" />
-    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
-    <Content Include="Content\themes\base\jquery.ui.base.css" />
-    <Content Include="Content\themes\base\jquery.ui.button.css" />
-    <Content Include="Content\themes\base\jquery.ui.core.css" />
-    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
-    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
-    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
-    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
-    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
-    <Content Include="Content\themes\base\jquery.ui.slider.css" />
-    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
-    <Content Include="Content\themes\base\jquery.ui.theme.css" />
-    <Content Include="webpack.config.js" />
     <Content Include="Code\less\Box\Admin.less" />
     <Content Include="Code\less\Box\calendar.less" />
     <Content Include="Code\less\Box\Site.less" />
@@ -243,13 +195,25 @@
     <Content Include="Code\less\Simple\Site.less" />
     <Content Include="Code\less\Simple\TabControl.less" />
     <Content Include="Code\less\Simple\ThemeDefaults.less" />
-    <None Include="Content\themes\Box\Admin.less" />
+    <Content Include="Content\themes\Box\Admin.css" />
+    <Content Include="Content\themes\Box\calendar.css" />
     <Content Include="Content\themes\Box\Pager.css" />
+    <Content Include="Content\themes\Box\Site.css" />
+    <Content Include="Content\themes\Box\TabControl.css" />
+    <Content Include="Content\themes\Box\ThemeDefaults.css" />
+    <Content Include="Content\themes\default\Admin.css" />
+    <Content Include="Content\themes\default\calendar.css" />
     <Content Include="Content\themes\default\Pager.css" />
+    <Content Include="Content\themes\default\Site.css" />
+    <Content Include="Content\themes\default\TabControl.css" />
+    <Content Include="Content\themes\default\ThemeDefaults.css" />
     <Content Include="Content\themes\Simple\Admin.css" />
     <Content Include="Content\themes\Simple\calendar.css" />
     <Content Include="Content\themes\Simple\Pager.css" />
-    <Content Include="Content\themes\Simple\Plugins\TwitterFeed.css" />
+    <Content Include="Content\themes\Simple\Site.css" />
+    <Content Include="Content\themes\Simple\TabControl.css" />
+    <Content Include="Content\themes\Simple\ThemeDefaults.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\Admin\AdminCommon.js" />
@@ -295,18 +259,6 @@
     <Content Include="Scripts\Controllers\PollController.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\themes\Box\calendar.less" />
-    <Content Include="Content\themes\Box\Site.less" />
-    <Content Include="Content\themes\Box\TabControl.less" />
-    <Content Include="Content\themes\Box\ThemeDefaults.less" />
-    <Content Include="Content\themes\default\Admin.less" />
-    <Content Include="Content\themes\default\calendar.less" />
-    <Content Include="Content\themes\default\Site.less" />
-    <Content Include="Content\themes\default\TabControl.less" />
-    <Content Include="Content\themes\default\ThemeDefaults.less" />
-    <Content Include="Content\themes\Simple\Site.less" />
-    <Content Include="Content\themes\Simple\TabControl.less" />
-    <Content Include="Content\themes\Simple\ThemeDefaults.less" />
     <Content Include="Areas\Admin\Views\ManageBlog\_FileUploadControl.cshtml" />
     <Content Include="Areas\Admin\Views\ManageBlog\EditBlog.cshtml" />
     <Content Include="Areas\Admin\Views\ManageBlog\EditPost.cshtml" />
@@ -325,7 +277,6 @@
     <Content Include="Areas\Admin\Views\UserManagement\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\ManageBlogs.cshtml" />
     <Content Include="Areas\Admin\Views\Web.config" />
-    <Content Include="package.json" />
     <Content Include="GenerateCSS.ps1" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\Blog.pubxml" />
@@ -745,6 +696,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Code\less\base\" />
     <Folder Include="Content\images\Carousel\" />
   </ItemGroup>
   <ItemGroup>
