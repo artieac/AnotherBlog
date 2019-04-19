@@ -32,8 +32,35 @@ namespace PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities
             public const string AccessToken = "access_token";
             public const string OAuthUserId = "https://www.pucksandprogramming.com/userId";
             public const string Email = "https://www.pucksandprogramming.com/email";
+            public const string GivenName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname";
+            public const string Surname = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname";
         }
 
+        public static string GetRemoteUserId(ClaimsIdentity claimsIdentity)
+        {
+            string retVal = "";
+
+            if (claimsIdentity != null)
+            {
+                retVal = claimsIdentity.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.OAuthUserId)?.Value;
+
+                if (!String.IsNullOrEmpty(retVal))
+                {
+                    string[] remoteUserIdItems = retVal.Split('|');
+
+                    if (remoteUserIdItems.Length > 1)
+                    {
+                        retVal = remoteUserIdItems[1];
+                    }
+                    else
+                    {
+                        retVal = remoteUserIdItems[0];
+                    }
+                }
+            }
+
+            return retVal;
+        }
         private ServiceManager serviceManager = null;
 
         public SecurityPrincipal(AnotherBlogUser currentUser) : this(currentUser, null) { }

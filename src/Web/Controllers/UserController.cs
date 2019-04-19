@@ -169,38 +169,61 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers
             var claimsIdentity = User.Identity as ClaimsIdentity;
 
             // Extract tokens
+            string anotherBlogUserId = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.AnotherBlogUserId)?.Value;
             string accessTokenA = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.AccessToken)?.Value;
-            string email = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.Email)?.Value;
-            string auth0Id = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.OAuthUserId)?.Value;
+            string auth0Id = SecurityPrincipal.GetRemoteUserId(claimsIdentity);
+
+            AnotherBlogUser amfUser = null;
+            long amfUserId = 0;
+
+            if (!String.IsNullOrEmpty(anotherBlogUserId))
+            {
+                if (!long.TryParse(anotherBlogUserId, out amfUserId))
+                {
+                    LogManager.GetLogger().Error("Error parsing anotherBlogUserId");
+                }
+            }
             
-            if(auth0Id != null)
-            {
-                auth0Id = auth0Id.Split('|')[1];
-            }
+            amfUser = this.Services.UserService.GetById(amfUserId);
 
-            AnotherBlogUser amfUser = this.Services.UserService.GetByOAuthServiceUserId(auth0Id);
-
-            if (amfUser == null)
+            if(amfUser != null)
             {
-                amfUser = this.Services.UserService.GetByEmail(email);
-            }
+                amfUser.OAuthServiceUserId = auth0Id;
+                amfUser.AccessToken = accessTokenA;
+                amfUser = this.Services.UserService.Save(amfUser);
+                this.CurrentPrincipal = new SecurityPrincipal(amfUser, claimsIdentity);
+                this.EstablishCurrentUserCookie(this.CurrentPrincipal);
 
-            if(amfUser == null)
-            {
-                this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
-                ViewData.ModelState.AddModelError("loginError", "Invalid login.");
             }
             else
-            { 
-                amfUser.OAuthServiceUserId = auth0Id;
-                amfUser.Email = email;
-                this.Services.UserService.Save(amfUser);
-                this.CurrentPrincipal = new SecurityPrincipal(amfUser, claimsIdentity);
-                this.CurrentPrincipal.ClaimsIdentity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.AnotherBlogUserId, amfUser.Id.ToString()));
+            {
+                string email = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.Email)?.Value;
 
-                this.EstablishCurrentUserCookie(this.CurrentPrincipal);
+                if(!String.IsNullOrEmpty(accessTokenA) && !String.IsNullOrEmpty(email) && !String.IsNullOrEmpty(auth0Id))
+                {
+                    String firstName = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.GivenName)?.Value;
+                    String lastName = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.Surname)?.Value;
+
+                    amfUser = new AnotherBlogUser();
+                    amfUser.IsSiteAdministrator = false;
+                    amfUser.AccessToken = accessTokenA;
+                    amfUser.AccessTokenSecret = "";
+                    amfUser.OAuthServiceUserId = auth0Id;
+                    amfUser.AccessToken = accessTokenA;
+                    amfUser.ApprovedCommenter = false;
+                    amfUser.Email = email;
+                    amfUser.FirstName = firstName;
+                    amfUser.LastName = lastName;
+                    amfUser = this.Services.UserService.Save(amfUser);
+                    this.CurrentPrincipal = new SecurityPrincipal(amfUser, claimsIdentity);
+                    this.EstablishCurrentUserCookie(this.CurrentPrincipal);
+                }
+                else
+                {
+                    this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
+                    ViewData.ModelState.AddModelError("loginError", "Invalid login.");
+                }
             }
-
             return this.RedirectToAction("Index", "Home");
         }
     }

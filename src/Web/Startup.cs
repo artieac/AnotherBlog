@@ -15,6 +15,8 @@ using System.Security.Claims;
 using PucksAndProgramming.AnotherBlog.BusinessLayer.Utilities;
 using System.Web.Hosting;
 using PucksAndProgramming.AnotherBlog.Web.Code.Utilities;
+using PucksAndProgramming.AnotherBlog.BusinessLayer.Service;
+using PucksAndProgramming.AnotherBlog.Common.DomainModel;
 
 namespace PucksAndProgramming.AnotherBlog.Web
 {
@@ -85,6 +87,23 @@ namespace PucksAndProgramming.AnotherBlog.Web
                     {
                         notification.AuthenticationTicket.Identity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.IdToken, notification.ProtocolMessage.IdToken));
                         notification.AuthenticationTicket.Identity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.AccessToken, notification.ProtocolMessage.AccessToken));
+
+                        notification.AuthenticationTicket.Identity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.IdToken, notification.ProtocolMessage.IdToken));
+                        string auth0Id = SecurityPrincipal.GetRemoteUserId(notification.AuthenticationTicket.Identity);
+
+                        ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                        AnotherBlogUser targetUser = serviceManager.UserService.GetByOAuthServiceUserId(auth0Id);
+
+                        if(targetUser==null)
+                        {
+                            string email = notification.AuthenticationTicket.Identity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.Email)?.Value;
+                            targetUser = serviceManager.UserService.GetByEmail(email);
+                        }
+
+                        if(targetUser!=null)
+                        {
+                            notification.AuthenticationTicket.Identity.AddClaim(new Claim(SecurityPrincipal.ClaimNames.AnotherBlogUserId, targetUser.Id.ToString()));
+                        }
 
                         return Task.FromResult(0);
                     },

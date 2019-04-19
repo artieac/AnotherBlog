@@ -61,13 +61,7 @@ namespace PucksAndProgramming.AnotherBlog.Web.Code.Filters
                 }
                 else
                 {
-                    string remoteId = claimsIdentity?.FindFirst(c => c.Type == SecurityPrincipal.ClaimNames.OAuthUserId)?.Value;
-
-                    if (!String.IsNullOrEmpty(remoteId))
-                    {
-                        remoteId = remoteId.Split('|')[1];
-                    }
-
+                    string remoteId = SecurityPrincipal.GetRemoteUserId(claimsIdentity);
                     anotherBlogUser = serviceManager.UserService.GetByOAuthServiceUserId(remoteId);
                 }
 
