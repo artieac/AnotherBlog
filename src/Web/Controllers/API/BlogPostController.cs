@@ -15,9 +15,21 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers.API
     public class BlogPostController : BaseApiController
     {
         [Route("api/BlogPosts"), HttpGet()]
-        public IEnumerable<BlogPost> Get()
+        public IEnumerable<ExternalBlogPostModel> Get()
         {
-            return this.Services.BlogEntryService.GetAll();
+            IList<ExternalBlogPostModel> retVal = new List<ExternalBlogPostModel>();
+
+            IList<BlogPost> foundPosts = this.Services.BlogEntryService.GetAll();
+
+            String urlScheme = System.Web.HttpContext.Current.Request.Url.Scheme;
+            String urlAuthority = System.Web.HttpContext.Current.Request.Url.Authority;
+
+            foreach (BlogPost blogPost in foundPosts)
+            {
+                retVal.Add(new ExternalBlogPostModel(blogPost, urlAuthority));
+            }
+
+            return retVal;
         }
 
         [Route("api/BlogPosts/{amountToGet:int}"), HttpGet()]
@@ -28,9 +40,12 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers.API
 
             IList<BlogPost> foundPosts = this.Services.BlogEntryService.GetMostRecent(amountToGet);
 
-            foreach(BlogPost blogPost in foundPosts)
+            String urlScheme = System.Web.HttpContext.Current.Request.Url.Scheme;
+            String urlAuthority = System.Web.HttpContext.Current.Request.Url.Authority;
+
+            foreach (BlogPost blogPost in foundPosts)
             {
-                retVal.Add(new ExternalBlogPostModel(blogPost));
+                retVal.Add(new ExternalBlogPostModel(blogPost, urlAuthority));
             }
 
             return retVal;
@@ -43,9 +58,12 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers.API
             ExternalBlogPostModel retVal = null;
             IList<BlogPost> foundPosts = this.Services.BlogEntryService.GetMostRecent(1);
 
-            if(foundPosts != null && foundPosts.Count > 0)
+            String urlScheme = System.Web.HttpContext.Current.Request.Url.Scheme;
+            String urlAuthority = System.Web.HttpContext.Current.Request.Url.Authority;
+
+            if (foundPosts != null && foundPosts.Count > 0)
             {
-                retVal = new ExternalBlogPostModel(foundPosts[0]);
+                retVal = new ExternalBlogPostModel(foundPosts[0], urlAuthority);
             }
 
             return retVal;

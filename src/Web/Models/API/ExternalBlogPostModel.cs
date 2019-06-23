@@ -8,12 +8,12 @@ namespace PucksAndProgramming.AnotherBlog.Web.Models.API
 {
     public class ExternalBlogPostModel
     {
-        public ExternalBlogPostModel(BlogPost source)
+        public ExternalBlogPostModel(BlogPost source, string urlRoot)
         {
             this.Title = source.Title;
             this.AuthorName = source.Author.GetDisplayName();
             this.DatePosted = source.DatePosted;
-            this.BlogPostUrl = AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(source.Blog.SubFolder, source);
+            this.BlogPostUrl = AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(source.Blog.SubFolder, source, urlRoot);
             this.ShortEntryText = source.ShortEntryText;
         }
 

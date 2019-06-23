@@ -25,7 +25,7 @@ namespace PucksAndProgramming.AnotherBlog.DataLayer
         /// <summary>
         /// A constructor that takes database connection strings to vistaprint.  These need to go away long term.
         /// </summary>
-        /// <param name="vistaprintConnectionString">The connection string for the vistaprint database</param>
+        /// <param name="connectionString">The connection string for the  database</param>
         public UnitOfWork(string connectionString)
             : base(connectionString)
         {
@@ -34,7 +34,7 @@ namespace PucksAndProgramming.AnotherBlog.DataLayer
 
         protected override void StartSession()
         {
-            this.CurrentSession = PucksAndProgramming.Common.DataLayer.NHibernate.NHibernateSessionFactory.BuildSessionFactory(this.NHibernateConfiguration, System.Reflection.Assembly.GetExecutingAssembly()).OpenSession(); ;
+            this.CurrentSession = PucksAndProgramming.Common.DataLayer.NHibernate.NHibernateSessionFactory.BuildSessionFactory(this.NHibernateConfiguration, System.Reflection.Assembly.GetExecutingAssembly()).OpenSession();
         }
     }
 }
