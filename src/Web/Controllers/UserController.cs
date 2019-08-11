@@ -102,7 +102,9 @@ namespace PucksAndProgramming.AnotherBlog.Web.Controllers
         [Route("User/Login")]
         public ActionResult Login(string blogSubFolder)
         {
-            string redirectUrl = this.Request.Url.Scheme + "://" + this.Request.Url.Host + ":" + this.Request.Url.Port + "/User/OAuthCallback";
+            EndpointConfiguration endpointConfiguration = EndpointConfiguration.GetInstance();
+
+            string redirectUrl = this.Request.Url.Scheme + "://" + endpointConfiguration.CallbackUriRoot + "/User/OAuthCallback";
 
             HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties
                 {
