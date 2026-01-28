@@ -32,8 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj" />
     <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj" />
-    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\OAuth\Client.RestSharp\AlwaysMoveForward.OAuth.Client.RestSharp.csproj" />
-    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\OAuth\Client\AlwaysMoveForward.OAuth.Client.csproj" />
     <ProjectReference Include="..\BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj" />
     <ProjectReference Include="..\Common\AlwaysMoveForward.AnotherBlog.Common.csproj" />
     <ProjectReference Include="..\DataLayer.NHibernate\AlwaysMoveForward.AnotherBlog.DataLayer.NHibernate.csproj" />

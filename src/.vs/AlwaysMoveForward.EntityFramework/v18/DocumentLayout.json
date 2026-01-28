@@ -71,12 +71,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AlwaysMoveForward.AnotherBlog.UnitTest",
+              "Title": "AlwaysMoveForward.AnotherBlog.UnitTest.csproj",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\UnitTest\\AlwaysMoveForward.AnotherBlog.UnitTest.csproj",
               "RelativeDocumentMoniker": "UnitTest\\AlwaysMoveForward.AnotherBlog.UnitTest.csproj",
               "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\UnitTest\\AlwaysMoveForward.AnotherBlog.UnitTest.csproj",
               "RelativeToolTip": "UnitTest\\AlwaysMoveForward.AnotherBlog.UnitTest.csproj",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-01-28T05:05:21.581Z",
               "EditorCaption": ""
@@ -91,8 +91,7 @@
               "RelativeToolTip": "Web\\Code\\Filters\\AdminAuthorizationFilter.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.027Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.027Z"
             },
             {
               "$type": "Document",
@@ -104,8 +103,7 @@
               "RelativeToolTip": "DataLayer.EntityFramework\\Repositories\\EntityFrameworkRepository.cs",
               "ViewState": "AgIAANAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.035Z"
             },
             {
               "$type": "Document",
@@ -117,8 +115,7 @@
               "RelativeToolTip": "DataLayer.EntityFramework\\Repositories\\BlogEntryTagRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.038Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.038Z"
             },
             {
               "$type": "Document",
@@ -130,8 +127,7 @@
               "RelativeToolTip": "Common\\DataLayer\\Repositories\\IBlogListRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.042Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.042Z"
             },
             {
               "$type": "Document",
@@ -143,8 +139,7 @@
               "RelativeToolTip": "DataLayer.EntityFramework\\Repositories\\BlogUserRepository.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.045Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.045Z"
             },
             {
               "$type": "Document",
@@ -156,8 +151,7 @@
               "RelativeToolTip": "Common\\DataLayer\\Map\\DataMapper.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.048Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.048Z"
             },
             {
               "$type": "Document",
@@ -169,8 +163,7 @@
               "RelativeToolTip": "BusinessLayer\\Service\\ServiceManagerBuilder.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAAAD8AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.03Z"
             },
             {
               "$type": "Document",
@@ -182,8 +175,7 @@
               "RelativeToolTip": "DataLayer.EntityFramework\\RepositoryManager.cs",
               "ViewState": "AgIAAD4AAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.032Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.032Z"
             },
             {
               "$type": "Document",
@@ -195,8 +187,7 @@
               "RelativeToolTip": "DataLayer.EntityFramework\\Repositories\\BlogEntryRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.052Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.052Z"
             },
             {
               "$type": "Document",
@@ -208,8 +199,7 @@
               "RelativeToolTip": "DataLayer.EntityFramework\\UnitOfWork.cs",
               "ViewState": "AgIAADAAAAAAAAAAAAAAADMAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.055Z"
             },
             {
               "$type": "Document",
@@ -221,8 +211,7 @@
               "RelativeToolTip": "Common\\DataLayer\\Repositories\\IBlogEntryRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T03:29:59.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T03:29:59.637Z"
             },
             {
               "$type": "Document",
@@ -234,8 +223,7 @@
               "RelativeToolTip": "BusinessLayer\\Utilities\\SecurityPrincipal.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T04:57:34.06Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T04:57:34.06Z"
             }
           ]
         }
