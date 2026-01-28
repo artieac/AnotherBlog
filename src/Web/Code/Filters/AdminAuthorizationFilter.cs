@@ -1,4 +1,4 @@
-﻿ /* Copyright (c) 2009 Arthur Correa.
+/* Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,118 +7,104 @@
  * Contributors:
  *    Arthur Correa – initial contribution
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
+namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+public class AdminAuthorizationFilter : Attribute, IAuthorizationFilter
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class AdminAuthorizationFilter : System.Web.Mvc.AuthorizeAttribute
+    public AdminAuthorizationFilter()
     {
-        public AdminAuthorizationFilter()
-            : base()
+        this.RequiredRoles = string.Empty;
+        this.IsBlogSpecific = true;
+    }
+
+    public string RequiredRoles { get; set; }
+    public bool IsBlogSpecific { get; set; }
+
+    protected Blog GetTargetBlog(AuthorizationFilterContext filterContext)
+    {
+        Blog retVal = null;
+
+        try
         {
-            this.RequiredRoles = string.Empty;
-            this.IsBlogSpecific = true;
-        }
+            string blogSubFolder = string.Empty;
+            var request = filterContext.HttpContext.Request;
 
-        public string RequiredRoles { get; set; }
-        public bool IsBlogSpecific { get; set; }
-
-        protected Blog GetTargetBlog(AuthorizationContext filterContext)
-        {
-            Blog retVal = null;
-
-            try
+            if (request.HasFormContentType && request.Form.ContainsKey("blogSubFolder"))
             {
-                string blogSubFolder = string.Empty;
-
-                if (filterContext.RequestContext.HttpContext.Request.Form["blogSubFolder"] != null)
-                {
-                    blogSubFolder = filterContext.RequestContext.HttpContext.Request.Form["blogSubFolder"];
-                }
-                else if (filterContext.RequestContext.HttpContext.Request.QueryString["blogSubFolder"] != null)
-                {
-                    blogSubFolder = filterContext.RequestContext.HttpContext.Request.QueryString["blogSubFolder"];
-                }
-
-                ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                retVal = serviceManager.BlogService.GetByName(blogSubFolder);
+                blogSubFolder = request.Form["blogSubFolder"];
             }
-            catch (Exception e)
+            else if (request.Query.ContainsKey("blogSubFolder"))
             {
-                LogManager.GetLogger().Error(e);
+                blogSubFolder = request.Query["blogSubFolder"];
             }
 
-            return retVal;
+            ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
+            retVal = serviceManager.BlogService.GetByName(blogSubFolder);
+        }
+        catch (Exception e)
+        {
+            LogManager.GetLogger().Error(e);
         }
 
-        #region IAuthorizationFilter Members
+        return retVal;
+    }
 
-        public override void OnAuthorization(AuthorizationContext filterContext)
+    public void OnAuthorization(AuthorizationFilterContext filterContext)
+    {
+        bool isAuthorized = false;
+
+        SecurityPrincipal currentPrincipal = filterContext.HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
+
+        try
         {
-            bool isAuthorized = false;
-            
-            SecurityPrincipal currentPrincipal = CookieAuthenticationParser.ParseCookie(filterContext.RequestContext.HttpContext.Request.Cookies);
-
-            try
+            if (currentPrincipal != null)
             {
-                if (currentPrincipal != null)
+                if (string.IsNullOrEmpty(this.RequiredRoles))
                 {
-                    if (string.IsNullOrEmpty(this.RequiredRoles))
+                    isAuthorized = false;
+                }
+                else
+                {
+                    string[] roleList = this.RequiredRoles.Split(',');
+
+                    if (this.IsBlogSpecific == false)
                     {
-                        // Admin section needs at least one role specified.
-                        isAuthorized = false;
+                        for (int i = 0; i < roleList.Length; i++)
+                        {
+                            if (currentPrincipal.IsInRole(roleList[i]))
+                            {
+                                isAuthorized = true;
+                                break;
+                            }
+                        }
                     }
                     else
                     {
-                        string[] roleList = this.RequiredRoles.Split(',');
-
-                        if (this.IsBlogSpecific == false)
-                        {
-                            for (int i = 0; i < roleList.Count(); i++)
-                            {
-                                if (currentPrincipal.IsInRole(roleList[i]))
-                                {
-                                    isAuthorized = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Blog targetBlog = this.GetTargetBlog(filterContext);
-
-                            // If no currentUser then they can't have the desired roles
-                            if (currentPrincipal != null)
-                            {
-                                isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
-                            }
-                        }
+                        Blog targetBlog = this.GetTargetBlog(filterContext);
+                        isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
                     }
                 }
             }
-            catch (Exception e)
-            {
-                LogManager.GetLogger().Error(e);
-            }
-
-            if (isAuthorized == false)
-            {
-                // not allowed to proceed
-                filterContext.Result = new RedirectResult("http://" + HttpContext.Current.Request.Url.Authority);
-            }
+        }
+        catch (Exception e)
+        {
+            LogManager.GetLogger().Error(e);
         }
 
-        #endregion    
-
+        if (isAuthorized == false)
+        {
+            var request = filterContext.HttpContext.Request;
+            var scheme = request.Scheme;
+            var host = request.Host.Value;
+            filterContext.Result = new RedirectResult($"{scheme}://{host}");
+        }
     }
 }

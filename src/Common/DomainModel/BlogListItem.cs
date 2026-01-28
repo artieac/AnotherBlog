@@ -15,6 +15,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         }
 
         public int Id { get; set; }
+        public int BlogListId { get; set; }
+        public BlogList BlogList { get; set; }
         public string Name { get; set; }
         public string RelatedLink { get; set; }
         public int DisplayOrder { get; set; }

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -11,90 +11,60 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data.Objects;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    /// <summary>
-    /// This class contains all the code to extract User data from the repository using LINQ
-    /// </summary>
-    /// <param name="dataContext"></param>
-    public class UserRepository : EntityFrameworkRepository<User, User>, IUserRepository
+    public class UserRepository : EntityFrameworkRepository<AnotherBlogUser, long>, IUserRepository
     {
         internal UserRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
             : base(unitOfWork, repositoryManager)
         {
-
         }
 
         public override string IdPropertyName
         {
-            get { return "UserId"; }
+            get { return "Id"; }
         }
 
-        /// <summary>
-        /// Get a specific by their user name.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public User GetByUserName(string userName)
+        public IList<AnotherBlogUser> GetBlogWriters(int blogId)
         {
-            User retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users where foundItem.UserName == userName select foundItem).Single();
-            return retVal;
+            // Query Users table and map to AnotherBlogUser
+            var users = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                        join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers on foundItem.Id equals userBlog.User.Id
+                        join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.Roles on userBlog.Role.Id equals userRoles.Id
+                        where (userRoles.Name == "Administrator" || userRoles.Name == "Blogger") &&
+                            userBlog.Blog.Id == blogId &&
+                            userBlog.Role.Id == userRoles.Id
+                        select foundItem;
+
+            // Map User to AnotherBlogUser
+            return users.ToList().Select(u => MapUserToAnotherBlogUser(u)).ToList();
         }
-        /// <summary>
-        /// This method is used by the login.  If no match is found then something doesn't jibe in the login attempt.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public User GetByUserNameAndPassword(string userName, string password)
+
+        public AnotherBlogUser GetByOAuthServiceUserId(long userId)
         {
-            User retVal = null;
-            
-            IQueryable<User> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users 
-                                        where foundItem.UserName == userName && foundItem.Password == password 
-                                        select foundItem;
-            
-            if(dtoList!=null && dtoList.Count() > 0)
+            var user = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                        where foundItem.Id == userId
+                        select foundItem).SingleOrDefault();
+
+            return user != null ? MapUserToAnotherBlogUser(user) : null;
+        }
+
+        private AnotherBlogUser MapUserToAnotherBlogUser(User user)
+        {
+            if (user == null) return null;
+
+            return new AnotherBlogUser
             {
-                retVal = dtoList.Single();
-            }
-
-            return retVal;
-        }
-        /// <summary>
-        /// Get a specific user by email
-        /// </summary>
-        /// <param name="userEmail"></param>
-        /// <returns></returns>
-        public User GetByEmail(string userEmail)
-        {
-            return this.GetByProperty("Email", userEmail);
-        }
-        /// <summary>
-        /// Get all users that have the Administrator or Blogger role for the specific blog.
-        /// </summary>
-        /// <param name="blogId"></param>
-        /// <returns></returns>
-        public IList<User> GetBlogWriters(int blogId)
-        {
-            IQueryable<User> retVal = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
-                                       join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers on foundItem.UserId equals userBlog.User.UserId
-                                       join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.Roles on userBlog.Role.RoleId equals userRoles.RoleId
-                                        where (userRoles.Name == "Administrator" || userRoles.Name == "Blogger") &&
-                                          userBlog.Blog.BlogId == blogId && 
-                                          userBlog.Role.RoleId == userRoles.RoleId
-                                        select foundItem;
-            return retVal.ToList();
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
         }
     }
 }

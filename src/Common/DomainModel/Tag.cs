@@ -17,7 +17,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
-    public class Tag 
+    public class Tag
     {
         public Tag()
         {
@@ -28,6 +28,10 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public int BlogId { get; set; }
 
+        public Blog Blog { get; set; }
+
         public string Name { get; set; }
+
+        public IList<BlogPost> BlogEntries { get; set; }
     }
 }

@@ -1,153 +1,148 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
+
+[Route("api/[controller]")]
+public class ListsControlController : BaseApiController
 {
-    public class ListsControlController : BaseApiController
+    private ListControlModel GetMostViewed(string blogSubFolder, int numberToGet)
     {
-        private ListControlModel GetMostViewed(string blogSubFolder, int numberToGet)
+        ListControlModel retVal = new ListControlModel();
+        IList<BlogPost> postList = new List<BlogPost>();
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+
+        if (targetBlog == null)
         {
-            ListControlModel retVal = new ListControlModel();
-            IList<BlogPost> postList = new List<BlogPost>();
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (targetBlog == null)
-            {
-                postList = Services.BlogEntryService.GetMostRead(numberToGet);
-            }
-            else
-            {
-                postList = Services.BlogEntryService.GetMostRead(targetBlog.Id, numberToGet);
-            }
-
-            retVal.OpenLinkInNewWindow = false;
-            retVal.Title = "Most Viewed";
-            retVal.ShowOrdered = true;
-            retVal.ListItems = new List<BlogListItem>();
-
-            for (int i = 0; i < postList.Count; i++)
-            {
-                BlogListItem newItem = new BlogListItem();
-                newItem.Name = postList[i].Title;
-                newItem.RelatedLink = AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i]);
-                retVal.ListItems.Add(newItem);
-            }
-
-            return retVal;
+            postList = Services.BlogEntryService.GetMostRead(numberToGet);
+        }
+        else
+        {
+            postList = Services.BlogEntryService.GetMostRead(targetBlog.Id, numberToGet);
         }
 
-        [Route("api/Lists/Blogs/All")]
-        [HttpGet]
-        public ListControlModel Blogs()
+        retVal.OpenLinkInNewWindow = false;
+        retVal.Title = "Most Viewed";
+        retVal.ShowOrdered = true;
+        retVal.ListItems = new List<BlogListItem>();
+
+        for (int i = 0; i < postList.Count; i++)
         {
-            ListControlModel model = new ListControlModel();
-            model.Title = "Blogs";
-            model.ListItems = new List<BlogListItem>();
+            BlogListItem newItem = new BlogListItem();
+            newItem.Name = postList[i].Title;
+            newItem.RelatedLink = AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i]);
+            retVal.ListItems.Add(newItem);
+        }
 
-            IList<Blog> allBlogs = this.Services.BlogService.GetAll();
+        return retVal;
+    }
 
-            for (int i = 0; i < allBlogs.Count; i++)
+    [Route("/api/Lists/Blogs/All")]
+    [HttpGet]
+    public ListControlModel Blogs()
+    {
+        ListControlModel model = new ListControlModel();
+        model.Title = "Blogs";
+        model.ListItems = new List<BlogListItem>();
+
+        IList<Blog> allBlogs = this.Services.BlogService.GetAll();
+
+        for (int i = 0; i < allBlogs.Count; i++)
+        {
+            BlogListItem newItem = new BlogListItem();
+            newItem.Id = allBlogs[i].Id;
+            newItem.Name = allBlogs[i].Name;
+            newItem.RelatedLink = allBlogs[i].SubFolder;
+            model.ListItems.Add(newItem);
+        }
+
+        return model;
+    }
+
+    [Route("/api/Lists/BlogPosts/MostViewed")]
+    [HttpGet]
+    public ListControlModel MostViewed()
+    {
+        return this.GetMostViewed(string.Empty, 5);
+    }
+
+    [Route("/api/Lists/Blog/{blogSubFolder}")]
+    [HttpGet]
+    public IList<ListControlModel> Get(string blogSubFolder)
+    {
+        IList<ListControlModel> model = new List<ListControlModel>();
+
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+        IList<BlogList> blogLists = this.Services.BlogListService.GetByBlog(targetBlog);
+
+        for (int i = 0; i < blogLists.Count; i++)
+        {
+            ListControlModel newList = new ListControlModel();
+            newList.Title = blogLists[i].Name;
+            newList.ShowOrdered = blogLists[i].ShowOrdered;
+            newList.OpenLinkInNewWindow = true;
+            newList.ListItems = new List<BlogListItem>();
+
+            for (int j = 0; j < blogLists[i].Items.Count; j++)
             {
-                BlogListItem newItem = new BlogListItem();
-                newItem.Id = allBlogs[i].Id;
-                newItem.Name = allBlogs[i].Name;
-                newItem.RelatedLink = allBlogs[i].SubFolder;
-                model.ListItems.Add(newItem);
+                BlogListItem newListItem = new BlogListItem();
+                newListItem.RelatedLink = blogLists[i].Items[j].RelatedLink;
+                newListItem.Name = blogLists[i].Items[j].Name;
+                newList.ListItems.Add(newListItem);
             }
 
-            return model;
+            model.Add(newList);
         }
 
-        [Route("api/Lists/BlogPosts/MostViewed")]
-        [HttpGet]
-        public ListControlModel MostViewed()
+        return model;
+    }
+
+    [Route("/api/Lists/Blog/{blogSubFolder}/MostViewed")]
+    [HttpGet]
+    public ListControlModel MostViewedByBlog(string blogSubFolder)
+    {
+        return this.GetMostViewed(blogSubFolder, 5);
+    }
+
+    [Route("/api/Lists/Blog/{blogSubFolder}/ArchiveDates")]
+    [HttpGet]
+    public ListControlModel GetArchiveDates(string blogSubFolder)
+    {
+        ListControlModel model = new ListControlModel();
+        model.Title = "Archive Dates";
+        model.ListItems = new List<BlogListItem>();
+
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+
+        string urlRoot = "/";
+
+        if (targetBlog != null)
         {
-            return this.GetMostViewed(string.Empty, 5);
+            urlRoot = "Blog/" + targetBlog.SubFolder + "/";
         }
 
-        [Route("api/Lists/Blog/{blogSubFolder}")]
-        [HttpGet]
-        public IList<ListControlModel> Get(string blogSubFolder)
+        urlRoot += "BlogPost/";
+
+        System.Collections.IList foundItems = this.Services.BlogEntryService.GetArchiveDates(targetBlog);
+        model.ListItems = new List<BlogListItem>();
+
+        if (foundItems != null)
         {
-            IList<ListControlModel> model = new List<ListControlModel>();
-
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-            IList<BlogList> blogLists = this.Services.BlogListService.GetByBlog(targetBlog);
-
-            for (int i = 0; i < blogLists.Count; i++)
+            for (int i = 0; i < foundItems.Count; i++)
             {
-                ListControlModel newList = new ListControlModel();
-                newList.Title = blogLists[i].Name;
-                newList.ShowOrdered = blogLists[i].ShowOrdered;
-                newList.OpenLinkInNewWindow = true;
-                newList.ListItems = new List<BlogListItem>();
+                BlogPostCount currentItem = foundItems[i] as BlogPostCount;
 
-                for (int j = 0; j < blogLists[i].Items.Count; j++)
+                if (currentItem != null)
                 {
-                    BlogListItem newListItem = new BlogListItem();
-                    newListItem.RelatedLink = blogLists[i].Items[j].RelatedLink;
-                    newListItem.Name = blogLists[i].Items[j].Name;
-                    newList.ListItems.Add(newListItem);
-                }
-
-                model.Add(newList);
-            }
-
-            return model;
-        }
-
-
-        [Route("api/Lists/Blog/{blogSubFolder}/MostViewed")]
-        [HttpGet]
-        public ListControlModel MostViewed(string blogSubFolder)
-        {
-            return this.GetMostViewed(blogSubFolder, 5);
-        }
-
-        [Route("api/Lists/Blog/{blogSubFolder}/ArchiveDates"), HttpGet()]
-        public ListControlModel GetArchiveDates(string blogSubFolder)
-        {
-            ListControlModel model = new ListControlModel();
-            model.Title = "Archive Dates";
-            model.ListItems = new List<BlogListItem>();
-
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            string urlRoot = "/";
-
-            if (targetBlog != null)
-            {
-                urlRoot = "Blog/" + targetBlog.SubFolder + "/";
-            }
-
-            urlRoot += "BlogPost/";
-
-            System.Collections.IList foundItems = this.Services.BlogEntryService.GetArchiveDates(targetBlog);
-            model.ListItems = new List<BlogListItem>();
-
-            if (foundItems != null)
-            {
-                for (int i = 0; i < foundItems.Count; i++)
-                {
-                    BlogPostCount currentItem = foundItems[i] as BlogPostCount;
-
-                    if (currentItem != null)
-                    {
-                        BlogListItem newItem = new BlogListItem();
-                        newItem.Name = currentItem.MaxDate.ToString("MMMM") + " " + currentItem.MaxDate.ToString("yyyy");
-                        newItem.RelatedLink = urlRoot + "/" + currentItem.MaxDate.ToString("yyyy") + "/" + currentItem.MaxDate.ToString("MM");
-                        model.ListItems.Add(newItem);
-                    }
+                    BlogListItem newItem = new BlogListItem();
+                    newItem.Name = currentItem.MaxDate.ToString("MMMM") + " " + currentItem.MaxDate.ToString("yyyy");
+                    newItem.RelatedLink = urlRoot + "/" + currentItem.MaxDate.ToString("yyyy") + "/" + currentItem.MaxDate.ToString("MM");
+                    model.ListItems.Add(newItem);
                 }
             }
-
-            return model;
         }
+
+        return model;
     }
 }

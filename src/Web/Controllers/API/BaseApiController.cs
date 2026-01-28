@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -8,73 +8,63 @@
  * Contributors:
  *    Arthur Correa – initial contribution
  */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-using System.Security.Permissions;
+using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
+
+[ApiController]
+public abstract class BaseApiController : ControllerBase
 {
-    public abstract class BaseApiController : ApiController
-    {
-        private ServiceManager serviceManager;
+    private ServiceManager _serviceManager;
 
-        public ServiceManager Services
+    public ServiceManager Services
+    {
+        get
         {
-            get
+            try
+            {
+                LogManager.GetLogger().Info("Creating Service Manager for BaseAPIController");
+                _serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                LogManager.GetLogger().Info("Creating Service Manager Complete for BaseAPIController");
+            }
+            catch (Exception e)
+            {
+                LogManager.GetLogger().Error(e);
+            }
+
+            return _serviceManager;
+        }
+    }
+
+    public SecurityPrincipal CurrentPrincipal
+    {
+        get
+        {
+            SecurityPrincipal retVal = HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
+
+            if (retVal == null)
             {
                 try
                 {
-                    LogManager.GetLogger().Info("Creating Service Manager for BaseAPIController");
-                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                    LogManager.GetLogger().Info("Creating Service Manager Complete for BaseAPIController");
+                    retVal = new SecurityPrincipal(UserFactory.CreateGuestUser());
+                    HttpContext.Items["CurrentPrincipal"] = retVal;
                 }
                 catch (Exception e)
                 {
                     LogManager.GetLogger().Error(e);
                 }
-
-                return this.serviceManager;
             }
+
+            return retVal;
         }
-
-        public SecurityPrincipal CurrentPrincipal
+        set
         {
-            get 
-            {
-                SecurityPrincipal retVal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
-
-                if (retVal == null)
-                {
-                    try
-                    {
-                        retVal = new SecurityPrincipal(UserFactory.CreateGuestUser());
-                        System.Threading.Thread.CurrentPrincipal = retVal;
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                    }
-                }
-
-                return retVal;
-            }
-            set
-            {
-                System.Threading.Thread.CurrentPrincipal = value;
-            }
+            HttpContext.Items["CurrentPrincipal"] = value;
         }
     }
 }

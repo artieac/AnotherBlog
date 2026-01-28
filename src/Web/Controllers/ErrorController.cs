@@ -6,25 +6,20 @@
  * http://www.opensource.org/licenses/cpl1.0.php
  *
  * Contributors:
- *    Arthur Correa – initial contribution
+ *    Arthur Correa â€“ initial contribution
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
+namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
+
+public class ErrorController : Controller
 {
-    public class ErrorController : Controller
+    [Route("Error")]
+    [HttpGet]
+    public IActionResult Index()
     {
-        [Route("Error"), HttpGet()]
-        public ActionResult Unknown()
-        {
-            Response.StatusCode = (int)HttpStatusCode.InternalServerError; 
-            return this.View();
-        }
+        Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        return this.View();
     }
 }

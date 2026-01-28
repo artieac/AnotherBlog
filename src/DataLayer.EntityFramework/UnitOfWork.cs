@@ -1,14 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Data;
 using System.Transactions;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer
@@ -24,6 +20,16 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         AnotherBlogDataContextCF dataContext;
         TransactionScope currentTransaction;
+        private readonly string _connectionString;
+
+        public UnitOfWork()
+        {
+        }
+
+        public UnitOfWork(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
 
         #region IUnitOfWork Members
 
@@ -90,7 +96,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         public void Flush()
         {
-
         }
 
         public AnotherBlogDataContextCF DataContext
@@ -99,7 +104,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.dataContext == null)
                 {
-                    this.dataContext = new AnotherBlogDataContextCF(System.Configuration.ConfigurationManager.ConnectionStrings[UnitOfWork.dbConfiguration.ConnectionString].ConnectionString);
+                    string connString = !string.IsNullOrEmpty(_connectionString)
+                        ? _connectionString
+                        : System.Configuration.ConfigurationManager.ConnectionStrings[UnitOfWork.dbConfiguration.ConnectionString].ConnectionString;
+                    this.dataContext = new AnotherBlogDataContextCF(connString);
                 }
 
                 return this.dataContext;
@@ -113,7 +121,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         public void Dispose()
         {
-
+            if (this.dataContext != null)
+            {
+                this.dataContext.Dispose();
+                this.dataContext = null;
+            }
         }
 
         #endregion

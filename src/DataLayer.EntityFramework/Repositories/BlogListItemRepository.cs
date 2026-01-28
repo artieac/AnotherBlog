@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -9,28 +9,19 @@
  *    Arthur Correa – initial contribution
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogListItemRepository : EntityFrameworkRepository<BlogListItem, BlogListItem>, IBlogListItemRepository
+    public class BlogListItemRepository : EntityFrameworkRepository<BlogListItem, int>
     {
         internal BlogListItemRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
             : base(unitOfWork, repositoryManager)
         {
-
         }
 
         public override string IdPropertyName
@@ -41,9 +32,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public IList<BlogListItem> GetByBlogList(int blogListId)
         {
             IQueryable<BlogListItem> retVal = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogListItems
-                                      where foundItem.BlogList.Id == blogListId
-                                      select foundItem;
-            return retVal.ToList<BlogListItem>();
+                                              where foundItem.BlogList.Id == blogListId
+                                              select foundItem;
+            return retVal.ToList();
         }
     }
 }

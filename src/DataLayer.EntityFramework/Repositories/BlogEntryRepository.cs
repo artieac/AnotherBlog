@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -12,36 +12,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data.Objects;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogEntryRepository : EntityFrameworkRepository<BlogPost, BlogPost>, IBlogEntryRepository
+    public class BlogEntryRepository : EntityFrameworkRepository<BlogPost, int>, IBlogEntryRepository
     {
         internal BlogEntryRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
             : base(unitOfWork, repositoryManager)
         {
-
         }
 
         public override string IdPropertyName
         {
-            get { return "EntryId"; }
+            get { return "Id"; }
         }
 
         public override string TableName
         {
-            get{ return "BlogEntries";}
+            get { return "BlogEntries"; }
         }
 
         public IList<BlogPost> GetAll(bool publishedOnly, int maxResults)
@@ -64,10 +56,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             if (maxResults > 0)
             {
-                //                dtoList.M
+                return dtoList.Take(maxResults).ToList();
             }
 
-            return dtoList.ToList<BlogPost>();
+            return dtoList.ToList();
         }
 
         public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
@@ -78,19 +70,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             {
                 dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
                           where foundItem.IsPublished == true &&
-                          foundItem.Blog.BlogId == blogId
+                          foundItem.Blog.Id == blogId
                           select foundItem;
             }
             else
             {
                 dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                          where foundItem.Blog.BlogId == blogId
+                          where foundItem.Blog.Id == blogId
                           select foundItem;
             }
 
             if (sortAscending == true)
             {
-                dtoList = this.ApplyOrder(dtoList, sortColumn, "OrderByAscending");
+                dtoList = this.ApplyOrder(dtoList, sortColumn, "OrderBy");
             }
             else
             {
@@ -99,7 +91,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             if (maxResults > 0)
             {
-                //                dtoList.M
+                return dtoList.Take(maxResults).ToList();
             }
 
             return dtoList.ToList();
@@ -107,47 +99,33 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public IList<BlogPost> GetMostRead(int maxResults)
         {
-            IList<BlogPost> retVal = null;
-
             IQueryable<BlogPost> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                                           where foundItem.IsPublished==true
+                                           where foundItem.IsPublished == true
+                                           orderby foundItem.TimesViewed descending
                                            select foundItem;
-
-//            dtoList = this.ApplyOrder(dtoList, "TimesViewed", "OrderByAscending");
 
             if (maxResults > 0)
             {
-                retVal = dtoList.ToList<BlogPost>().Take(maxResults).ToList<BlogPost>();
-            }
-            else
-            {
-                retVal = dtoList.ToList<BlogPost>();
+                return dtoList.Take(maxResults).ToList();
             }
 
-            return retVal;
+            return dtoList.ToList();
         }
 
         public IList<BlogPost> GetMostRead(int blogId, int maxResults)
         {
-            IList<BlogPost> retVal = null;
-       
             IQueryable<BlogPost> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
                                            where foundItem.IsPublished == true &&
-                                           foundItem.Blog.BlogId == blogId
+                                           foundItem.Blog.Id == blogId
+                                           orderby foundItem.TimesViewed descending
                                            select foundItem;
-
-//            dtoList = this.ApplyOrder(dtoList, "TimesViewed", "OrderByAscending");
 
             if (maxResults > 0)
             {
-                retVal = dtoList.ToList<BlogPost>().Take(maxResults).ToList<BlogPost>();
-            }
-            else
-            {
-                retVal = dtoList.ToList<BlogPost>();
+                return dtoList.Take(maxResults).ToList();
             }
 
-            return retVal;
+            return dtoList.ToList();
         }
 
         public BlogPost GetByTitle(string blogTitle, int blogId)
@@ -158,13 +136,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId)
         {
             BlogPost retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                                  where foundItem.Blog.BlogId == blogId && 
-                                  foundItem.IsPublished == true && 
-                                  foundItem.Title == blogTitle && 
-                                  foundItem.DatePosted.Year == postDate.Year && 
-                                  foundItem.DatePosted.Month == postDate.Month &&
-                                  foundItem.DatePosted.Day == postDate.Day
-                                  orderby foundItem.DatePosted descending select foundItem).First();
+                               where foundItem.Blog.Id == blogId &&
+                               foundItem.IsPublished == true &&
+                               foundItem.Title == blogTitle &&
+                               foundItem.DatePosted.Year == postDate.Year &&
+                               foundItem.DatePosted.Month == postDate.Month &&
+                               foundItem.DatePosted.Day == postDate.Day
+                               orderby foundItem.DatePosted descending
+                               select foundItem).FirstOrDefault();
 
             return retVal;
         }
@@ -183,9 +162,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 if (publishedOnly == true)
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.EntryId equals entryTag.Post.EntryId
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
                               join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Blog.BlogId == blogId.Value &&
+                              where tagItem.Blog.Id == blogId.Value &&
                               foundItem.IsPublished == true &&
                               tagItem.Id == tagId
                               orderby foundItem.DatePosted descending
@@ -194,9 +173,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 else
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.EntryId equals entryTag.Post.EntryId
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
                               join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Blog.BlogId == blogId.Value &&
+                              where tagItem.Blog.Id == blogId.Value &&
                               tagItem.Id == tagId
                               orderby foundItem.DatePosted descending
                               select foundItem;
@@ -207,18 +186,17 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 if (publishedOnly == true)
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.EntryId equals entryTag.Post.EntryId
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
                               join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
                               where foundItem.IsPublished == true &&
                               tagItem.Id == tagId
                               orderby foundItem.DatePosted descending
                               select foundItem;
-
                 }
                 else
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.EntryId equals entryTag.Post.EntryId
+                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
                               join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
                               where tagItem.Id == tagId
                               orderby foundItem.DatePosted descending
@@ -226,7 +204,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 }
             }
 
-            return dtoList.ToList<BlogPost>();
+            return dtoList.ToList();
         }
 
         public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
@@ -237,22 +215,22 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public IList<BlogPost> GetByMonth(DateTime blogDate, int? blogId, bool publishedOnly)
         {
             IQueryable<BlogPost> dtoList = null;
-            
-            if(blogId.HasValue)
+
+            if (blogId.HasValue)
             {
-                if(publishedOnly==true)
+                if (publishedOnly == true)
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              where foundItem.Blog.BlogId == blogId.Value && 
-                              foundItem.IsPublished == true && 
-                              foundItem.DatePosted.Month == blogDate.Month && 
-                              foundItem.DatePosted.Year == blogDate.Year 
+                              where foundItem.Blog.Id == blogId.Value &&
+                              foundItem.IsPublished == true &&
+                              foundItem.DatePosted.Month == blogDate.Month &&
+                              foundItem.DatePosted.Year == blogDate.Year
                               select foundItem;
                 }
                 else
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              where foundItem.Blog.BlogId == blogId.Value &&
+                              where foundItem.Blog.Id == blogId.Value &&
                               foundItem.DatePosted.Month == blogDate.Month &&
                               foundItem.DatePosted.Year == blogDate.Year
                               select foundItem;
@@ -260,7 +238,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             }
             else
             {
-                if(publishedOnly==true)
+                if (publishedOnly == true)
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
                               where foundItem.IsPublished == true &&
@@ -277,7 +255,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 }
             }
 
-            return dtoList.ToList<BlogPost>();
+            return dtoList.ToList();
         }
 
         public IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly)
@@ -294,7 +272,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 if (publishedOnly == true)
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              where foundItem.Blog.BlogId == blogId.Value &&
+                              where foundItem.Blog.Id == blogId.Value &&
                               foundItem.IsPublished == true &&
                               foundItem.DatePosted.Date == blogDate.Date
                               select foundItem;
@@ -302,7 +280,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 else
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              where foundItem.Blog.BlogId == blogId.Value &&
+                              where foundItem.Blog.Id == blogId.Value &&
                               foundItem.DatePosted.Date == blogDate.Date
                               select foundItem;
                 }
@@ -319,20 +297,20 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 else
                 {
                     dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              where foundItem.DatePosted.Month == blogDate.Month &&
-                              foundItem.DatePosted.Date == blogDate.Date
+                              where foundItem.DatePosted.Date == blogDate.Date
                               select foundItem;
                 }
             }
 
-            return dtoList.ToList<BlogPost>();
+            return dtoList.ToList();
         }
 
         public BlogPost GetMostRecent(int blogId, bool published)
         {
-            BlogPost retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts 
-                          where foundItem.Blog.BlogId == blogId && foundItem.IsPublished == true 
-                          orderby foundItem.DatePosted descending select foundItem).First();
+            BlogPost retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
+                               where foundItem.Blog.Id == blogId && foundItem.IsPublished == true
+                               orderby foundItem.DatePosted descending
+                               select foundItem).FirstOrDefault();
 
             return retVal;
         }
@@ -341,20 +319,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             BlogPost retVal = null;
 
-            BlogPost currentPost = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts 
-                                        where foundItem.Blog.BlogId == blogId && 
-                                        foundItem.EntryId == currentPostId
-                                        select foundItem).First();
+            BlogPost currentPost = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
+                                    where foundItem.Blog.Id == blogId &&
+                                    foundItem.Id == currentPostId
+                                    select foundItem).FirstOrDefault();
 
-            IQueryable<BlogPost> previousItems = from previousItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                                                    where previousItem.Blog.BlogId == blogId && 
-                                                    previousItem.IsPublished == true && 
-                                                    previousItem.DatePosted < currentPost.DatePosted 
-                                                    orderby previousItem.DatePosted descending select previousItem;
-
-            if (previousItems != null && previousItems.Count() > 0)
+            if (currentPost != null)
             {
-                retVal = previousItems.First();
+                retVal = (from previousItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
+                          where previousItem.Blog.Id == blogId &&
+                          previousItem.IsPublished == true &&
+                          previousItem.DatePosted < currentPost.DatePosted
+                          orderby previousItem.DatePosted descending
+                          select previousItem).FirstOrDefault();
             }
 
             return retVal;
@@ -365,20 +342,18 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             BlogPost retVal = null;
 
             BlogPost currentPost = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                                        where foundItem.Blog.BlogId == blogId &&
-                                        foundItem.EntryId == currentPostId
-                                        select foundItem).First();
+                                    where foundItem.Blog.Id == blogId &&
+                                    foundItem.Id == currentPostId
+                                    select foundItem).FirstOrDefault();
 
-            IQueryable<BlogPost> followingItems = from previousItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                                                        where previousItem.Blog.BlogId == blogId &&
-                                                        previousItem.IsPublished == true &&
-                                                        previousItem.DatePosted > currentPost.DatePosted
-                                                        orderby previousItem.DatePosted ascending
-                                                        select previousItem;
-
-            if (followingItems.Count() > 0)
+            if (currentPost != null)
             {
-                retVal = followingItems.First();
+                retVal = (from followingItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
+                          where followingItem.Blog.Id == blogId &&
+                          followingItem.IsPublished == true &&
+                          followingItem.DatePosted > currentPost.DatePosted
+                          orderby followingItem.DatePosted ascending
+                          select followingItem).FirstOrDefault();
             }
 
             return retVal;
@@ -386,22 +361,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate)
         {
-            string queryString = "SELECT  DatePosted";
-            queryString += " FROM BlogEntries";
-            queryString += " WHERE (IsPublished = 1)";
-            queryString += " AND (YEAR(DatePosted) = " + blogDate.Year + ")";
-            queryString += " AND (MONTH(DatePosted ) = " + blogDate.Month + ")";
-            queryString += " ORDER BY DatePosted";
-
             IList<DateTime> retVal = new List<DateTime>();
 
             IEnumerable<BlogPost> foundPosts = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                                                     where foundItem.IsPublished == true &&
-                                                     foundItem.DatePosted.Year == blogDate.Year &&
-                                                     foundItem.DatePosted.Month == blogDate.Month
-                                                     orderby foundItem.DatePosted
-                                                     select foundItem;
-
+                                               where foundItem.IsPublished == true &&
+                                               foundItem.DatePosted.Year == blogDate.Year &&
+                                               foundItem.DatePosted.Month == blogDate.Month
+                                               orderby foundItem.DatePosted
+                                               select foundItem;
 
             foreach (BlogPost foundPost in foundPosts)
             {
@@ -409,35 +376,16 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             }
 
             return retVal;
-//            DetachedCriteria criteria = DetachedCriteria.For<NHBlogPost>();
-//            ProjectionList projections = Projections.ProjectionList();
-//            criteria.SetProjection(Projections.Distinct(Projections.Alias(Projections.Property("DatePosted"), "DatePosted")));
-//            criteria.SetResultTransformer(new NHibernate.Transform.AliasToBeanResultTransformer(typeof(NHBlogPost)));
-
-//            IList<BlogPost> foundDates = Castle.ActiveRecord.ActiveRecordMediator<NHBlogPost>.FindAll(criteria);
-
-//            IList<DateTime> retVal = new List<DateTime>();
-
-//            for (int i = 0; i < foundDates.Count; i++)
-//            {
-//                retVal.Add(foundDates[i].DatePosted);
-//            }
-
-//            return retVal;
         }
 
         public IList GetArchiveDates(int? blogId)
         {
-            string queryString = "SELECT  COUNT(*) AS PostCount, Max(DatePosted) AS MaxDate";
-            queryString += " FROM BlogEntries";
-            queryString += " WHERE (IsPublished = 1)";
-
             IQueryable<IEnumerable<BlogPost>> foundPosts = null;
 
             if (blogId.HasValue)
             {
                 foundPosts = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                             where foundItem.Blog.BlogId == blogId.Value
+                             where foundItem.Blog.Id == blogId.Value
                              group foundItem by new { foundItem.DatePosted.Year, foundItem.DatePosted.Month } into dateGroup
                              let maxDate = dateGroup.Max(x => x.DatePosted)
                              select dateGroup.Where(x => x.DatePosted == maxDate);
@@ -445,7 +393,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             else
             {
                 foundPosts = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                             group foundItem by new{ foundItem.DatePosted.Year, foundItem.DatePosted.Month } into dateGroup
+                             group foundItem by new { foundItem.DatePosted.Year, foundItem.DatePosted.Month } into dateGroup
                              let maxDate = dateGroup.Max(x => x.DatePosted)
                              select dateGroup.Where(x => x.DatePosted == maxDate);
             }
@@ -455,10 +403,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             foreach (IEnumerable<BlogPost> foundPost in foundPosts)
             {
                 BlogPostCount newItem = new BlogPostCount();
-
                 newItem.PostCount = foundPost.Count();
                 newItem.MaxDate = foundPost.ElementAt(0).DatePosted;
-
                 retVal.Add(newItem);
             }
 
@@ -470,8 +416,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             BlogPost retVal = null;
 
             Comment targetComment = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Comments
-                                    where foundItem.CommentId == commentId
-                                    select foundItem).First();
+                                     where foundItem.Id == commentId
+                                     select foundItem).FirstOrDefault();
 
             if (targetComment != null)
             {
@@ -481,20 +427,20 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal;
         }
 
-        public IList<BlogPost> GetByTag(int blogId, String tagName, bool publishedOnly)
+        public IList<BlogPost> GetByTag(int blogId, string tagName, bool publishedOnly)
         {
             IList<BlogPost> retVal = new List<BlogPost>();
 
             Tag targetTag = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags
-                                     where foundItem.Blog.BlogId == blogId &&
-                                     foundItem.Name==tagName
-                                     select foundItem).First();
+                             where foundItem.Blog.Id == blogId &&
+                             foundItem.Name == tagName
+                             select foundItem).FirstOrDefault();
 
             if (targetTag != null)
             {
                 if (publishedOnly == true)
                 {
-                    retVal = targetTag.BlogEntries.Where(tag => tag.IsPublished == true).ToList();
+                    retVal = targetTag.BlogEntries.Where(post => post.IsPublished == true).ToList();
                 }
                 else
                 {
@@ -504,6 +450,5 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             return retVal;
         }
-
     }
 }

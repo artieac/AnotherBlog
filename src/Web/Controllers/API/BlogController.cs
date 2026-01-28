@@ -1,81 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Cors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
+
+[Route("api/[controller]")]
+public class BlogController : BaseApiController
 {
-    public class BlogController : BaseApiController
+    [Route("/api/Blogs")]
+    [HttpGet]
+    public IEnumerable<Blog> Get()
     {
-        [Route("api/Blogs"), HttpGet()]
-        public IEnumerable<Blog> Get()
+        return this.Services.BlogService.GetAll();
+    }
+
+    [Route("/api/Blog/{id:int}")]
+    [HttpGet]
+    public Blog GetById(int id)
+    {
+        return this.Services.BlogService.GetById(id);
+    }
+
+    [Route("/api/Blog/{blogSubFolder}")]
+    [HttpGet]
+    public Blog GetBySubFolder(string blogSubFolder)
+    {
+        return this.Services.BlogService.GetBySubFolder(blogSubFolder);
+    }
+
+    [Route("/api/Blog")]
+    [HttpPost]
+    public Blog Post([FromBody] BlogInputModel input)
+    {
+        Blog retVal = null;
+
+        if (!string.IsNullOrEmpty(input.Name) &&
+            !string.IsNullOrEmpty(input.SubFolder))
         {
-            return this.Services.BlogService.GetAll();
+            retVal = this.Services.BlogService.Save(-1, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
         }
 
-        [Route("api/Blog/{id:int}"), HttpGet()]
-        public Blog Get(int id)
-        {
-            return this.Services.BlogService.GetById(id);
-        }
+        return retVal;
+    }
 
-        [Route("api/Blog/{blogSubFolder}"), HttpGet()]
-        public Blog Get(string blogSubFolder)
-        {
-            return this.Services.BlogService.GetBySubFolder(blogSubFolder);
-        }
+    [Route("/api/Blog/{id:int}")]
+    [HttpPut]
+    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    public Blog Put(int id, [FromBody] BlogInputModel input)
+    {
+        Blog retVal = null;
 
-        [Route("api/Blog"), HttpPost()]
-        public Blog Post([FromBody]BlogInputModel input)
+        if (this.CurrentPrincipal.CurrentUser.IsSiteAdministrator == true)
         {
-            Blog retVal = null;
-
             if (!string.IsNullOrEmpty(input.Name) &&
                 !string.IsNullOrEmpty(input.SubFolder))
             {
-                retVal = this.Services.BlogService.Save(-1, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
+                retVal = this.Services.BlogService.Save(id, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
             }
-
-            return retVal;
         }
-
-        // PUT api/<controller>/5
-        [Route("api/Blog/{id:int}"), HttpPut()]
-        [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
-        public Blog Put(int id, [FromBody]BlogInputModel input)
+        else
         {
-            Blog retVal = null;
+            Blog targetBlog = this.Services.BlogService.GetById(id);
 
-            if (this.CurrentPrincipal.CurrentUser.IsSiteAdministrator == true)
+            if (targetBlog == null)
             {
-                if (!string.IsNullOrEmpty(input.Name) &&
-                    !string.IsNullOrEmpty(input.SubFolder))
+                if (this.CurrentPrincipal.IsInRole(RoleType.Names.Administrator, targetBlog.SubFolder) ||
+                    this.CurrentPrincipal.IsInRole(RoleType.Names.Blogger, targetBlog.SubFolder))
                 {
-                    retVal = this.Services.BlogService.Save(id, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
+                    retVal = this.Services.BlogService.Save(id, input.Description, input.About, input.Welcome);
                 }
             }
-            else
-            {
-                Blog targetBlog = this.Services.BlogService.GetById(id);
-
-                if (targetBlog == null)
-                {
-                    if (this.CurrentPrincipal.IsInRole(RoleType.Names.Administrator, targetBlog.SubFolder) ||
-                        this.CurrentPrincipal.IsInRole(RoleType.Names.Blogger, targetBlog.SubFolder))
-                    {
-                        retVal = this.Services.BlogService.Save(id, input.Description, input.About, input.Welcome);
-                    }
-                }
-            }
-
-            return retVal;
         }
+
+        return retVal;
     }
 }
