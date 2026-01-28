@@ -43,6 +43,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddDataProtection();
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.PageManager>();
 
 // Register application configuration
 builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("AnotherBlog"));

@@ -19,8 +19,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class RoleRepository : EntityFrameworkRepository<Role, int>
     {
-        internal RoleRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal RoleRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

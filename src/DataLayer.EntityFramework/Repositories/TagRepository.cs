@@ -21,8 +21,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class TagRepository : EntityFrameworkRepository<Tag, int>, ITagRepository
     {
-        internal TagRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal TagRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

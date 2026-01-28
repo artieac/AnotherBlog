@@ -1,7 +1,6 @@
 ﻿@model AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models.ManageBlogModel
 @using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 @using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions;
 @{
     Layout = "~/Areas/Admin/Views/Shared/_BlogLayout.cshtml";
     ViewBag.Common = Model.Common;
@@ -58,7 +57,7 @@
                     }
                 </table>
                 <div class="pager">
-                    @Html.Pager(@Model.EntryList.PageSize, @Model.EntryList.PageNumber, @Model.EntryList.TotalItemCount, "ManagePosts", new { blogSubFolder = @Model.Common.TargetBlog.SubFolder, sortColumn = @Model.Common.SortColumn, sortAscending = @Model.Common.SortAscending })
+                    @Html.PagedListPager(Model.EntryList, page => Url.Action("ManagePosts", new { id = Model.Common.TargetBlog.SubFolder, sortColumn = Model.Common.SortColumn, sortAscending = Model.Common.SortAscending, page }))
                 </div>
                 <button type="button" class="btn btn-primary" id="addButton" name="addButton">Write new post</button>
             </div>

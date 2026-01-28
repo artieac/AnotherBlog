@@ -69,7 +69,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.dbInfoRepository == null)
                 {
-                    this.dbInfoRepository = new DbInfoRepository(this.UnitOfWork, this);
+                    this.dbInfoRepository = new DbInfoRepository(this.UnitOfWork);
                 }
                 return this.dbInfoRepository;
             }
@@ -81,7 +81,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.siteInfoRepository == null)
                 {
-                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork, this);
+                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
                 }
                 return this.siteInfoRepository;
             }
@@ -93,7 +93,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogEntryRepository == null)
                 {
-                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork, this);
+                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork);
                 }
                 return this.blogEntryRepository;
             }
@@ -105,7 +105,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogRepository == null)
                 {
-                    this.blogRepository = new BlogRepository(this.UnitOfWork, this);
+                    this.blogRepository = new BlogRepository(this.UnitOfWork);
                 }
                 return this.blogRepository;
             }
@@ -117,7 +117,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.tagRepository == null)
                 {
-                    this.tagRepository = new TagRepository(this.UnitOfWork, this);
+                    this.tagRepository = new TagRepository(this.UnitOfWork);
                 }
                 return this.tagRepository;
             }
@@ -129,7 +129,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogListRepository == null)
                 {
-                    this.blogListRepository = new BlogListRepository(this.UnitOfWork, this);
+                    this.blogListRepository = new BlogListRepository(this.UnitOfWork);
                 }
                 return this.blogListRepository;
             }
@@ -149,7 +149,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.userRepository == null)
                 {
-                    this.userRepository = new UserRepository(this.UnitOfWork, this);
+                    this.userRepository = new UserRepository(this.UnitOfWork);
                 }
                 return this.userRepository;
             }
@@ -162,7 +162,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogEntryTagRepository == null)
                 {
-                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork, this);
+                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork);
                 }
                 return this.blogEntryTagRepository;
             }
@@ -174,7 +174,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogExtensionRepository == null)
                 {
-                    this.blogExtensionRepository = new BlogExtensionRepository(this.UnitOfWork, this);
+                    this.blogExtensionRepository = new BlogExtensionRepository(this.UnitOfWork);
                 }
                 return this.blogExtensionRepository;
             }
@@ -186,7 +186,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogListItemRepository == null)
                 {
-                    this.blogListItemRepository = new BlogListItemRepository(this.UnitOfWork, this);
+                    this.blogListItemRepository = new BlogListItemRepository(this.UnitOfWork);
                 }
                 return this.blogListItemRepository;
             }
@@ -198,7 +198,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogUserRepository == null)
                 {
-                    this.blogUserRepository = new BlogUserRepository(this.UnitOfWork, this);
+                    this.blogUserRepository = new BlogUserRepository(this.UnitOfWork);
                 }
                 return this.blogUserRepository;
             }
@@ -210,7 +210,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.entryCommentRepository == null)
                 {
-                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork, this);
+                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork);
                 }
                 return this.entryCommentRepository;
             }
@@ -222,7 +222,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.extensionConfigurationRepository == null)
                 {
-                    this.extensionConfigurationRepository = new ExtensionConfigurationRepository(this.UnitOfWork, this);
+                    this.extensionConfigurationRepository = new ExtensionConfigurationRepository(this.UnitOfWork);
                 }
                 return this.extensionConfigurationRepository;
             }
@@ -234,7 +234,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.roleRepository == null)
                 {
-                    this.roleRepository = new RoleRepository(this.UnitOfWork, this);
+                    this.roleRepository = new RoleRepository(this.UnitOfWork);
                 }
                 return this.roleRepository;
             }

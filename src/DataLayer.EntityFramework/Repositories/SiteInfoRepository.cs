@@ -20,8 +20,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class SiteInfoRepository : EntityFrameworkRepository<SiteInfo, int>, ISiteInfoRepository
     {
-        internal SiteInfoRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal SiteInfoRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

@@ -21,8 +21,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class BlogEntryRepository : EntityFrameworkRepository<BlogPost, int>, IBlogEntryRepository
     {
-        internal BlogEntryRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal BlogEntryRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

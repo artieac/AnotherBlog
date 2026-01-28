@@ -4,7 +4,7 @@
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name + " - " + Model.Post.Title;
+    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name + " - " + Model.Post.Title;
     ViewBag.Description = Model.Post.Title;
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
@@ -44,8 +44,8 @@
                     <div class="blogSubTitle">
                         <span>
                             Share on 
-                            <a href="https://twitter.com/intent/tweet?url=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Request.Url.Authority)&text=@Model.Post.Title">Twitter</a>
-                            or <a href="https://facebook.com/sharer.php?u=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Request.Url.Authority)">Facebook</a>
+                            <a href="https://twitter.com/intent/tweet?url=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Context.Request.Host.Value)&text=@Model.Post.Title">Twitter</a>
+                            or <a href="https://facebook.com/sharer.php?u=@Utils.GenerateBlogEntryLink(Model.BlogCommon.TargetBlog.SubFolder, Model.Post, Context.Request.Host.Value)">Facebook</a>
                         </span>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
         </div>
         <br /><br />
         <div style="padding-left:10px;width:90%" id="commentSection" name="commentSection" ng-controller="BlogController">                    
-            @Html.Partial("ViewComments", Model.Post.Id)
+            <partial name="ViewComments" model="Model.Post.Id"/>
             <br /> 
             <form id="submitCommentForm" name="submitCommentForm" action='/@Model.BlogCommon.TargetBlog.SubFolder/Blog/SaveComment' method="post" novalidate >
                 <label>Leave a comment</label>

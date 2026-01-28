@@ -9,6 +9,7 @@
  *    Arthur Correa – initial contribution
  */
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -94,7 +95,7 @@ public class BlogController : PublicController
         }
         else
         {
-            foundPosts = new PagedList<BlogPost>();
+            foundPosts = new List<BlogPost>();
             model.BlogCommon.Common.ContentTitle = string.Empty;
         }
 
@@ -131,7 +132,7 @@ public class BlogController : PublicController
         }
         else
         {
-            foundPosts = new PagedList<BlogPost>();
+            foundPosts = new List<BlogPost>();
             model.BlogCommon.Common.ContentTitle = string.Empty;
         }
 
@@ -203,7 +204,7 @@ public class BlogController : PublicController
         }
         else
         {
-            foundPosts = new PagedList<BlogPost>();
+            foundPosts = new List<BlogPost>();
             model.BlogCommon.Common.ContentTitle = string.Empty;
         }
 
@@ -250,7 +251,7 @@ public class BlogController : PublicController
         {
             model.Post = new BlogPost();
             model.Tags = new List<Tag>();
-            model.Comments = new PagedList<Comment>();
+            model.Comments = new List<Comment>();
         }
 
         return this.View(model);

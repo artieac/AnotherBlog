@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using AlwaysMoveForward.Common.Utilities;
+﻿using X.PagedList;
 using AlwaysMoveForward.Common.DomainModel.Poll;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models

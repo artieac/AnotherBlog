@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel.Poll;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
 using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
@@ -27,7 +29,7 @@ public class ManagePollsController : AdminBaseController
 
         ManagePollsModel model = new ManagePollsModel();
         model.Common = this.InitializeCommonModel();
-        model.Polls = Pagination.ToPagedList(this.Services.PollService.GetAll(), currentPageIndex, PollPageSize);
+        model.Polls = X.PagedList.Extensions.PagedListExtensions.ToPagedList(this.Services.PollService.GetAll(), currentPageIndex + 1, PollPageSize);
         return this.View(model);
     }
 
@@ -41,7 +43,7 @@ public class ManagePollsController : AdminBaseController
             currentPageIndex = page.Value - 1;
         }
 
-        IPagedList<PollQuestion> retVal = Pagination.ToPagedList(this.Services.PollService.GetAll(), currentPageIndex, PollPageSize);
+        X.PagedList.IPagedList<PollQuestion> retVal = X.PagedList.Extensions.PagedListExtensions.ToPagedList(this.Services.PollService.GetAll(), currentPageIndex + 1, PollPageSize);
         return this.Json(retVal);
     }
 

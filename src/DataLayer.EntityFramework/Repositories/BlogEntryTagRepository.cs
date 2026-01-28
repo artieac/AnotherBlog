@@ -20,8 +20,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class BlogEntryTagRepository : EntityFrameworkRepository<PostTag, int>
     {
-        internal BlogEntryTagRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal BlogEntryTagRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

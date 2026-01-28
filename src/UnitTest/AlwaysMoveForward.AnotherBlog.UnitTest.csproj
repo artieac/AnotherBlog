@@ -31,10 +31,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj" />
-    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\DataLayer.NHibernate\AlwaysMoveForward.Common.DataLayer.NHibernate.csproj" />
+    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\DataLayer.EntityFramework\AlwaysMoveForward.Common.DataLayer.EntityFramework.csproj" />
     <ProjectReference Include="..\BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj" />
     <ProjectReference Include="..\Common\AlwaysMoveForward.AnotherBlog.Common.csproj" />
-    <ProjectReference Include="..\DataLayer.NHibernate\AlwaysMoveForward.AnotherBlog.DataLayer.NHibernate.csproj" />
+    <ProjectReference Include="..\DataLayer.EntityFramework\AlwaysMoveForward.AnotherBlog.DataLayer.EntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

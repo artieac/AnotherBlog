@@ -21,8 +21,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class DbInfoRepository : EntityFrameworkRepository<DbInfo, int>, IDbInfoRepository
     {
-        internal DbInfoRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal DbInfoRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

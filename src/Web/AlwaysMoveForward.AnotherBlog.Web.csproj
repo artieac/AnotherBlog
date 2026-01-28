@@ -10,11 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.9" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\AlwaysMoveForward\src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj" />
-    <ProjectReference Include="..\..\..\AlwaysMoveForward\src\OAuth\Client\AlwaysMoveForward.OAuth.Client.csproj" />
     <ProjectReference Include="..\BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj" />
     <ProjectReference Include="..\Common\AlwaysMoveForward.AnotherBlog.Common.csproj" />
     <ProjectReference Include="..\DataLayer.EntityFramework\AlwaysMoveForward.AnotherBlog.DataLayer.EntityFramework.csproj" />
@@ -22,6 +22,10 @@
 
   <ItemGroup>
     <Content Update="wwwroot\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Properties\Resources.resx" />
   </ItemGroup>
 
 </Project>

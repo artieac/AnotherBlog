@@ -2,7 +2,8 @@
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
 @using System.Collections.Generic
 @using AlwaysMoveForward.AnotherBlog.Common.DomainModel
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
+@using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
+@inject PageManager PageManager
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ng="http://angularjs.org" ng-app="theApp">
@@ -39,11 +40,11 @@
         <div class="subBody">
             <div class="header">
                 <div id="loginSection">
-                    @Html.Partial("_UserLoginControl", String.Empty)
+                    <partial name="_UserLoginControl" model="String.Empty"/>
                 </div>
                 <div class="headerImageSection">
                     <div class="siteTitleSection">
-    		            <a href="http://@HttpContext.Current.Request.Url.Authority" class="siteTitle"><h1>@MvcApplication.SiteInfo.Name</h1></a>        
+    		            <a href="http://@Context.Request.Host" class="siteTitle"><h1>@WebApplicationState.SiteInfo.Name</h1></a>        
                     </div>
                 </div>
             </div>
@@ -58,7 +59,7 @@
                     tabElements.Add("Manage Polls", "/Admin/ManagePolls/Index", "");
                 }
                 tabElements.Add("Manage A Blog", "/Admin/ManageBlog/Index", "");
-                tabElements.SetSelectedTab(this.Request.Url);
+                tabElements.SetSelectedTab(new Uri($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}"));
                 Html.RenderPartial("_TabControl", (AlwaysMoveForward.AnotherBlog.Web.Code.Extensions.TabElements)tabElements);
             }
             <div class="contentPanel">

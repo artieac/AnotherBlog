@@ -19,8 +19,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class EntryCommentRepository : EntityFrameworkRepository<Comment, int>
     {
-        internal EntryCommentRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal EntryCommentRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

@@ -24,12 +24,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         where TDomainType : class, new()
     {
         protected IUnitOfWork UnitOfWork { get; private set; }
-        protected RepositoryManager RepositoryManager { get; private set; }
 
-        public EntityFrameworkRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
+        public EntityFrameworkRepository(IUnitOfWork unitOfWork)
         {
             this.UnitOfWork = unitOfWork;
-            this.RepositoryManager = repositoryManager;
         }
 
         public abstract string IdPropertyName { get; }

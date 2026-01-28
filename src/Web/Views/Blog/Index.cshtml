@@ -1,15 +1,14 @@
 ﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.BlogModel
-           
+
 @using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 @using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
-@using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name;
+    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.Name + " - " + Model.BlogCommon.TargetBlog.Name;
     ViewBag.Description = Model.BlogCommon.TargetBlog.Description;
-    ViewBag.Author = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultAuthor;
-    ViewBag.Keywords = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultKeywords; 
+    ViewBag.Author = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.DefaultAuthor;
+    ViewBag.Keywords = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.DefaultKeywords;
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
 }
@@ -39,7 +38,7 @@
                 }
                 <br />
                 <div class="pager">
-                    @Html.Pager(Model.BlogEntries.PageSize, Model.BlogEntries.PageNumber, Model.BlogEntries.TotalItemCount, "Index", null)
+                    @Html.PagedListPager(Model.BlogEntries, page => Url.Action("Index", new { page }))
                 </div>
             }
             else

@@ -2,6 +2,7 @@
 @using AlwaysMoveForward.Common.DomainModel;           
 @using AlwaysMoveForward.AnotherBlog.Common.DomainModel
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
+@inject IWebHostEnvironment _Environment;
 @{
     Layout = "~/Areas/Admin/Views/Shared/_AdminToolLayout.cshtml";
 }
@@ -57,9 +58,9 @@
                         <th  class="editItemLabel">theme:</th>
                         <td colspan="2">
                             <select id="defaultTheme" name="defaultTheme">
-                                @foreach(string themeDirectory in Utils.GetThemeDirectories())
+                                @foreach(string themeDirectory in Utils.GetThemeDirectories(_Environment.WebRootPath))
                                 {
-                                    <option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @if (themeDirectory == Model.SiteInfo.DefaultTheme) {<text> selected </text>}>@themeDirectory</option>
+                                    <!option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @(themeDirectory == Model.SiteInfo.DefaultTheme ? "selected" : "")>@themeDirectory</!option>
                                 }
                             </select> 
                         </td>

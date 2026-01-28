@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
 using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
@@ -117,7 +119,7 @@ public class ManageBlogController : AdminBaseController
         }
         else
         {
-            foundPosts = new PagedList<BlogPost>();
+            foundPosts = new List<BlogPost>();
         }
 
         model.EntryList = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
@@ -153,8 +155,7 @@ public class ManageBlogController : AdminBaseController
                 blogPost.Tags = blogPost.Post.Tags;
             }
 
-            model.EntryList = new PagedList<BlogPostModel>();
-            model.EntryList.Add(blogPost);
+            model.EntryList = X.PagedList.Extensions.PagedListExtensions.ToPagedList(new List<BlogPostModel> { blogPost }, 1, 1);
         }
         else
         {

@@ -3,7 +3,7 @@
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
 @using AlwaysMoveForward.AnotherBlog.Common.DomainModel
-
+@inject IHtmlHelper _Html;
 @{
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
@@ -19,41 +19,41 @@
 	<br />
     <div class="footer">
     	<br />
-	    <div class="footerCopyright">Copyright &copy; @DateTime.Now.Year.ToString() @MvcApplication.SiteInfo.Name v @MvcApplication.Version</div>
-	    <div class="footerAbout"><a href='/@ViewBag.BlogCommon.TargetBlog.SubFolder/Home/About'>About @MvcApplication.SiteInfo.Name</a></div>
+        <div class="footerCopyright">Copyright &copy; @DateTime.Now.Year.ToString() @WebApplicationState.SiteInfo.Name v @WebApplicationState.Version</div>
+        <div class="footerAbout"><a href='/@ViewBag.BlogCommon.TargetBlog.SubFolder/Home/About'>About @WebApplicationState.SiteInfo.Name</a></div>
 	</div>
 </div>
-    <div class="metaContentPanel">   
-        <div id="blogListSection">
-	        @Html.Partial("../Blog/BlogSelectionControl", ViewBag.BlogCommon.Common.BlogList as IDictionary<int, AlwaysMoveForward.AnotherBlog.Common.DomainModel.Blog>)
-	    </div>
-        <div id="blogCalendarSection">
-	        @{ViewBag.BlogCommon.Common.Calendar.RouteInformation = "/Home/Index";}
-	        @Html.Partial("_CalendarControl", (AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.BlogCommon.Common.Calendar)
-        </div>
-	    <div id="mostViewed">
-            @Html.Partial("_ListControl", (AlwaysMoveForward.AnotherBlog.Web.Models.API.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts)
-        </div>                     
-        <div id="blogTagsSection">
-		    @Html.Partial("_TagControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
-		</div>        
-        <div>
-            @Html.Partial("_SyndicationControl", ViewBag.BlogCommon.TargetBlog.SubFolder)
-        </div>            
-        @Html.Partial("_BlogListsControl")
-        </div>
-		<div id="blogArchiveSection">
-            @Html.Partial("_ArchiveControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
-		</div>      
-		<div id="googlePluginSection">
-		    @{
-                IDictionary<string, string> googleAdParams= new Dictionary<string, string>();
-                googleAdParams.Add("adClient", "pub-3066200824463272");
-                googleAdParams.Add("adSlot", "5638996162");
-                googleAdParams.Add("adWidth", "120");
-                googleAdParams.Add("adHeight", "600");
-                Html.RenderPartial("../Plugins/GoogleAdControl", (IDictionary<string, string>)googleAdParams);     
-            } 
-		</div>   
+<div class="metaContentPanel">   
+    <div id="blogListSection">
+        <partial name="../Blog/BlogSelectionControl" model="ViewBag.BlogCommon.Common.BlogList as IDictionary<int, AlwaysMoveForward.AnotherBlog.Common.DomainModel.Blog>" />
+	</div>
+    <div id="blogCalendarSection">
+	    @{ViewBag.BlogCommon.Common.Calendar.RouteInformation = "/Home/Index";}
+        <partial name="_CalendarControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.BlogCommon.Common.Calendar" />
     </div>
-</div>    
+	<div id="mostViewed">
+        <partial name="_ListControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.API.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts"/>
+    </div>                     
+    <div id="blogTagsSection">
+        <partial name="_TagControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon"/>
+	</div>        
+    <div>
+        <partial name="_SyndicationControl" model="ViewBag.BlogCommon.TargetBlog.SubFolder" />
+    </div>  
+    <div>
+        <partial name="_BlogListsControl"/>
+    </div>
+	<div id="blogArchiveSection">
+        _Html.Partial("_ArchiveControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
+	</div>      
+	<div id="googlePluginSection">
+		@{
+            IDictionary<string, string> googleAdParams= new Dictionary<string, string>();
+            googleAdParams.Add("adClient", "pub-3066200824463272");
+            googleAdParams.Add("adSlot", "5638996162");
+            googleAdParams.Add("adWidth", "120");
+            googleAdParams.Add("adHeight", "600");
+            _Html.RenderPartial("../Plugins/GoogleAdControl", (IDictionary<string, string>)googleAdParams);     
+        } 
+	</div>   
+</div>   

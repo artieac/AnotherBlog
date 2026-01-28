@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
@@ -24,7 +26,7 @@ public class UserManagementController : AdminBaseController
             currentPageIndex = page.Value - 1;
         }
 
-        model.Users = Pagination.ToPagedList(Services.UserService.GetAll(), currentPageIndex, UserPageSize);
+        model.Users = X.PagedList.Extensions.PagedListExtensions.ToPagedList(Services.UserService.GetAll(), currentPageIndex + 1, UserPageSize);
 
         return this.View(model);
     }

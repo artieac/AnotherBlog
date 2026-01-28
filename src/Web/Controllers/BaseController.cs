@@ -10,6 +10,7 @@
  */
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using X.PagedList;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
@@ -68,9 +69,10 @@ public abstract class BaseController : Controller
         }
     }
 
-    public IPagedList<BlogPostModel> PopulateBlogPostInfo(IList<BlogPost> blogPosts, int currentPageIndex)
+    public X.PagedList.IPagedList<BlogPostModel> PopulateBlogPostInfo(IList<BlogPost> blogPosts, int currentPageIndex)
     {
-        return new PagedList<BlogPostModel>(this.PopulateBlogPostInfo(blogPosts), currentPageIndex, Constants.PageSize);
+        // X.PagedList uses 1-based page numbers, so add 1 to the 0-based index
+        return X.PagedList.Extensions.PagedListExtensions.ToPagedList(this.PopulateBlogPostInfo(blogPosts), currentPageIndex + 1, Constants.PageSize);
     }
 
     public IList<BlogPostModel> PopulateBlogPostInfo(IList<BlogPost> blogPosts)

@@ -19,8 +19,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class ExtensionConfigurationRepository : EntityFrameworkRepository<ExtensionConfiguration, int>
     {
-        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        public ExtensionConfigurationRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

@@ -16,7 +16,7 @@
         else
         { 
             <form id='logoutForm' action="/User/Logout" method='post'>   
-                <span class="loginLabel">Hello</span>&nbsp;<a href='@Utils.GetInSecureURL(ViewBag.BlogSubFolder, "User/Preferences", HttpContext.Current.Request.Url.Authority)'>@this.Context.User.Identity.Name</a>
+                <span class="loginLabel">Hello</span>&nbsp;<a href='@Utils.GetInSecureURL(ViewBag.BlogSubFolder, "User/Preferences", Context.Request.Host.Value)'>@this.Context.User.Identity.Name</a>
                 <button type="button" class="btn btn-sm btn-info" id="submitLogoutButton" onclick="SiteLogin.SubmitLogout();">log out</button>
             </form>
         } 

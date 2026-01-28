@@ -35,7 +35,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_SaveTest()
         {
-            AnotherBlogUser testItem = this.RepositoryManager.UserRepository.GetByUserName("test");
+            AnotherBlogUser testItem = this.RepositoryManager.UserRepository.GetById(1);
 
             if (testItem == null)
             {
@@ -102,7 +102,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         [Test]
         public void UserRepository_GetByProperty()
         {
-            User targetItem = this.RepositoryManager.UserRepository.GetById(1);
+            AnotherBlogUser targetItem = this.RepositoryManager.UserRepository.GetById(1);
 
             User savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 

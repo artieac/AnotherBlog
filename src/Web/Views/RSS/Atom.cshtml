@@ -1,4 +1,5 @@
 ﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.RSS.RSSModel
+@inject IHttpContextAccessor _HttpContext
 @{
     Layout = null;
 }
@@ -12,18 +13,18 @@
 
     @foreach (Blog blogItem in Model.BlogEntries.Keys)
     {
-        <title>@MvcApplication.SiteInfo.Name - @blogItem.SubFolder Feed</title>
+        <title>@WebApplicationState.SiteInfo.Name - @blogItem.SubFolder Feed</title>
         @Html.Raw("<link>" + Model.Scheme + "://" + Model.Authority + "/Blog/" + @blogItem.SubFolder + "/BlogPosts</link>")
         <updated>@Model.MostRecentPosts[blogItem].ToShortDateString() @Model.MostRecentPosts[blogItem].ToShortTimeString()</updated>
-        <id>urn:@Request.Url.Authority/@blogItem.SubFolder</id>
+        <id>urn:_HttpContext.Request.Host/@blogItem.SubFolder</id>
         @foreach (BlogPost blogEntry in Model.BlogEntries[blogItem])
          {   
             <entry>
             <title>@blogEntry.Title</title>
-            @Html.Raw("<link>" + Model.Scheme + "://" + Model.Authority + @Utils.GenerateBlogEntryLink(blogItem.SubFolder, blogPost) + "</link>")
-            <id>urn:@Request.Url.Scheme://@Request.Url.Authority@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry)</id>
+            @Html.Raw("<link>" + Model.Scheme + "://" + Model.Authority + @Utils.GenerateBlogEntryLink(blogItem.SubFolder, blogEntry) + "</link>")
+                <id>urn:_HttpContext.Request.Scheme://_HttpContext.Request.Host@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry)</id>
             <author>
-                <name>@blogEntry.Author.UserName</name>
+                <name>@blogEntry.Author.GetDisplayName()</name>
             </author>
             <updated>@blogEntry.DatePosted</updated>
             <summary>@blogEntry.ShortEntryText</summary>

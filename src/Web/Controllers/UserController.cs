@@ -11,9 +11,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.DataProtection;
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DomainModel;
-using AlwaysMoveForward.OAuth.Client;
-using AlwaysMoveForward.OAuth.Client.Configuration;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
@@ -81,30 +78,10 @@ public class UserController : PublicController
         }
     }
 
-    private Realm GenerateRealm()
-    {
-        Realm retVal = new Realm();
-        retVal.Area = "AlwaysMoveForward";
-        retVal.Service = "Blog";
-        return retVal;
-    }
-
     [Route("User/Login")]
     public void Login(string blogSubFolder)
     {
-        EndpointConfiguration oauthEndpoints = EndpointConfiguration.GetInstance();
-        OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
 
-        IOAuthToken requestToken = this.Services.OAuthClient.GetRequestToken(this.GenerateRealm(), this.Request.Scheme + "://" + this.Request.Host.Value + "/User/OAuthCallback");
-
-        if (requestToken != null)
-        {
-            HttpContext.Session.SetString(requestToken.Token, System.Text.Json.JsonSerializer.Serialize(requestToken));
-
-            string authorizationUrl = this.Services.OAuthClient.GetUserAuthorizationUrl(requestToken);
-
-            this.Response.Redirect(authorizationUrl);
-        }
     }
 
     [Route("User/Logout")]
@@ -164,55 +141,6 @@ public class UserController : PublicController
     [HttpGet]
     public IActionResult OAuthCallback(string oauth_token, string oauth_verifier)
     {
-        string requestTokenString = Request.Query[OAuth.Client.Constants.TokenParameter];
-        string verifier = Request.Query[OAuth.Client.Constants.VerifierCodeParameter];
-
-        var storedTokenJson = HttpContext.Session.GetString(requestTokenString);
-        IOAuthToken storedRequestToken = null;
-        if (!string.IsNullOrEmpty(storedTokenJson))
-        {
-            storedRequestToken = System.Text.Json.JsonSerializer.Deserialize<OAuthToken>(storedTokenJson);
-        }
-
-        OAuthKeyConfiguration oauthConfiguration = OAuthKeyConfiguration.GetInstance();
-        EndpointConfiguration endpointConfiguration = EndpointConfiguration.GetInstance();
-
-        if (string.IsNullOrEmpty(verifier))
-        {
-            throw new Exception("Expected a non-empty verifier value");
-        }
-
-        IOAuthToken accessToken;
-
-        try
-        {
-            accessToken = this.Services.OAuthClient.ExchangeRequestTokenForAccessToken(storedRequestToken, verifier);
-
-            AnotherBlogUser amfUser = this.Services.UserService.GetFromAMFUser(accessToken);
-
-            if (amfUser == null)
-            {
-                this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
-                ModelState.AddModelError("loginError", "Invalid login.");
-            }
-            else
-            {
-                this.CurrentPrincipal = new SecurityPrincipal(amfUser, true);
-                this.EstablishCurrentUserCookie(this.CurrentPrincipal);
-            }
-        }
-        catch (Exception authEx)
-        {
-            LogManager.GetLogger().Error(authEx);
-            return Redirect("AccessDenied.aspx");
-        }
-
         return this.RedirectToAction("Index", "Home");
     }
-}
-
-public class OAuthToken : IOAuthToken
-{
-    public string Token { get; set; }
-    public string TokenSecret { get; set; }
 }
