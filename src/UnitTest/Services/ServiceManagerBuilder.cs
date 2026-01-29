@@ -8,6 +8,11 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 {
     public class ServiceManagerBuilder : AlwaysMoveForward.AnotherBlog.BusinessLayer.Service.ServiceManagerBuilder
     {
+        public ServiceManagerBuilder(string connectionString)
+            : base(connectionString)
+        {
+        }
+
         protected override UnitOfWork CreateUnitOfWork(string connectionString)
         {
             return new UnitOfWork(connectionString);

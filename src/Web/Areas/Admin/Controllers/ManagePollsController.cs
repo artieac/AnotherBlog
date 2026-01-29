@@ -17,7 +17,12 @@ public class ManagePollsController : AdminBaseController
 {
     private const int PollPageSize = 25;
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
+    public ManagePollsController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, false)]
     public IActionResult Index(int? page)
     {
         int currentPageIndex = 0;
@@ -33,7 +38,7 @@ public class ManagePollsController : AdminBaseController
         return this.View(model);
     }
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, false)]
     public IActionResult GetAll(int? page)
     {
         int currentPageIndex = 0;
@@ -47,14 +52,14 @@ public class ManagePollsController : AdminBaseController
         return this.Json(retVal);
     }
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, false)]
     public IActionResult GetById(int pollQuestionId)
     {
         PollQuestion retVal = this.Services.PollService.GetById(pollQuestionId);
         return this.Json(retVal);
     }
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, false)]
     public IActionResult Add(string title, string question)
     {
         IList<PollQuestion> retVal = new List<PollQuestion>();
@@ -89,7 +94,7 @@ public class ManagePollsController : AdminBaseController
         return this.Json(this.Services.PollService.GetAll());
     }
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, false)]
     public IActionResult PutOption(int pollQuestionId, string optionText)
     {
         PollQuestion retVal = null;

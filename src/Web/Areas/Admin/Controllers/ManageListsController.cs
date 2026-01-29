@@ -10,9 +10,14 @@ using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
+[BlogMVCAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
 public class ManageListsController : AdminBaseController
 {
+    public ManageListsController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     public IActionResult Index(string id)
     {
         BlogListModel model = new BlogListModel();

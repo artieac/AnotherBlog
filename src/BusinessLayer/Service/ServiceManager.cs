@@ -27,19 +27,15 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     {
         public ServiceManager(
             UnitOfWork unitOfWork, 
-            IAnotherBlogRepositoryManager repositoryManager, 
-            OAuthClientBase oauthClient)
+            IAnotherBlogRepositoryManager repositoryManager)
         {
             this.UnitOfWork = unitOfWork;
             this.RepositoryManager = repositoryManager;
-            this.OAuthClient = oauthClient;
         }
 
         public UnitOfWork UnitOfWork { get; set; }
 
         public IAnotherBlogRepositoryManager RepositoryManager { get; set; }
-
-        public OAuthClientBase OAuthClient { get; private set; }
 
         private SiteInfoService siteInfo;
         public SiteInfoService SiteInfoService
@@ -132,7 +128,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository,  new OAuthRepository(this.OAuthClient));
+                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository);
                 }
 
                 return this.userService;

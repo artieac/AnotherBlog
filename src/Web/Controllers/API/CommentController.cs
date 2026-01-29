@@ -4,14 +4,21 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
 
 [Route("api/[controller]")]
 public class CommentController : BaseApiController
 {
+    public CommentController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     [Route("/api/Blog/{blogSubFolder}/Comments/{status}")]
     [HttpGet]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public IList<GetCommentModel> Get(string blogSubFolder, string status)
     {
         IList<GetCommentModel> model = new List<GetCommentModel>();
@@ -118,7 +125,7 @@ public class CommentController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}")]
     [HttpPut]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public IList<Comment> Put(string blogSubFolder, int postId, int commentId, [FromBody] CommentModel input)
     {
         IList<Comment> model = new List<Comment>();
@@ -137,7 +144,7 @@ public class CommentController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}/{newState}")]
     [HttpPut]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public Comment UpdateState(string blogSubFolder, int postId, int commentId, string newState)
     {
         Comment model = null;
@@ -159,7 +166,7 @@ public class CommentController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/Comments/{newState}")]
     [HttpPut]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public void UpdateBulkState(string blogSubFolder, string newState, [FromBody] IDictionary<int, int> input)
     {
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -188,7 +195,7 @@ public class CommentController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/BlogPost/{postId:int}/Comment/{commentId:int}")]
     [HttpDelete]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public void Delete(string blogSubFolder, int postId, int commentId)
     {
         IList<Comment> model = new List<Comment>();

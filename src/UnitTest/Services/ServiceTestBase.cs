@@ -22,36 +22,24 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 {
     public class ServiceTestBase
     {
-        ServiceManager services;
+        ServiceManager Services { get; set; }
 
-        public ServiceTestBase()
+        public ServiceTestBase(ServiceManager serviceManager)
         {
-        }
-
-        public ServiceManager Services
-        {
-            get
-            {
-                if (services == null)
-                {
-                    this.services = AlwaysMoveForward.AnotherBlog.UnitTest.Services.ServiceManagerBuilder.BuildServiceManager();
-                }
-
-                return services;
-            }
+            this.Services = serviceManager;
         }
 
         public Blog TestBlog
         {
             get
             {
-                Blog retVal = Services.BlogService.GetBySubFolder("TestBlog");
+                Blog retVal = this.Services.BlogService.GetBySubFolder("TestBlog");
 
                 if (retVal == null)
                 {
                     using(this.Services.UnitOfWork.BeginTransaction())
                     {
-                        retVal = Services.BlogService.Save(-1, "TestBlog", "TestBlog", "TestBlog", "", "TestBlog", "");
+                        retVal = this.Services.BlogService.Save(-1, "TestBlog", "TestBlog", "TestBlog", "", "TestBlog", "");
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                 }
@@ -64,18 +52,18 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             get
             {
-                AnotherBlogUser retVal = Services.UserService.GetById(1);
+                AnotherBlogUser retVal = this.Services.UserService.GetById(1);
 
                 if (retVal == null)
                 {
                     using (this.Services.UnitOfWork.BeginTransaction())
                     {
-                        retVal = Services.UserService.Save(1, false, true, "");
+                        retVal = this.Services.UserService.Save(1, false, true, "");
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                 }
 
-                System.Threading.Thread.CurrentPrincipal = new AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal(retVal, true);
+                System.Threading.Thread.CurrentPrincipal = new AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal(this.Services, retVal, true);
 
                 return retVal;
             }

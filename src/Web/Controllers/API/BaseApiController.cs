@@ -20,21 +20,30 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
 [ApiController]
 public abstract class BaseApiController : ControllerBase
 {
+    private readonly ServiceManagerBuilder _serviceManagerBuilder;
     private ServiceManager _serviceManager;
+
+    protected BaseApiController(ServiceManagerBuilder serviceManagerBuilder)
+    {
+        _serviceManagerBuilder = serviceManagerBuilder;
+    }
 
     public ServiceManager Services
     {
         get
         {
-            try
+            if (_serviceManager == null)
             {
-                LogManager.GetLogger().Info("Creating Service Manager for BaseAPIController");
-                _serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                LogManager.GetLogger().Info("Creating Service Manager Complete for BaseAPIController");
-            }
-            catch (Exception e)
-            {
-                LogManager.GetLogger().Error(e);
+                try
+                {
+                    LogManager.GetLogger().Info("Creating Service Manager for BaseAPIController");
+                    _serviceManager = _serviceManagerBuilder.CreateServiceManager();
+                    LogManager.GetLogger().Info("Creating Service Manager Complete for BaseAPIController");
+                }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                }
             }
 
             return _serviceManager;
@@ -51,7 +60,7 @@ public abstract class BaseApiController : ControllerBase
             {
                 try
                 {
-                    retVal = new SecurityPrincipal(UserFactory.CreateGuestUser());
+                    retVal = new SecurityPrincipal(Services, UserFactory.CreateGuestUser());
                     HttpContext.Items["CurrentPrincipal"] = retVal;
                 }
                 catch (Exception e)

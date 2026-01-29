@@ -13,8 +13,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
 
 public class PublicController : BaseController
 {
-    public PublicController()
-        : base()
+    public PublicController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
     {
     }
 

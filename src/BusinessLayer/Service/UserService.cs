@@ -32,11 +32,9 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     public class UserService
     {
  
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IOAuthRepository oauthRepository) : base()
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository) : base()
         {
             this.UnitOfWork = unitOfWork;
-            this.UserRepository = userRepository;
-            this.OAuthRepository = oauthRepository;
         }
 
         protected IUnitOfWork UnitOfWork { get; private set; }

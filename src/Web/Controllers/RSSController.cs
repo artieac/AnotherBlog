@@ -17,6 +17,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
 
 public class RSSController : PublicController
 {
+    public RSSController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     private RSSModel GetBlogPosts(Blog targetBlog, RSSModel rssModel)
     {
         IList<Blog> blogList = new List<Blog>();

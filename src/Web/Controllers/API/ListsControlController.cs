@@ -2,11 +2,18 @@ using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
 
 [Route("api/[controller]")]
 public class ListsControlController : BaseApiController
 {
+    public ListsControlController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     private ListControlModel GetMostViewed(string blogSubFolder, int numberToGet)
     {
         ListControlModel retVal = new ListControlModel();

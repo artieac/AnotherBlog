@@ -9,6 +9,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers;
 [Area("Admin")]
 public class AdminBaseController : BaseController
 {
+    public AdminBaseController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     public AdminCommon InitializeCommonModel()
     {
         return this.InitializeCommonModel(string.Empty);

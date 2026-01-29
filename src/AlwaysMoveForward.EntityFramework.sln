@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11415.280 d18.0
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", "..\..\AlwaysMoveForward\src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj", "{42F14647-C78F-7CA4-04E7-7223E34C8BAC}"
 EndProject
@@ -14,8 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.BusinessLayer", "BusinessLayer\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj", "{D71FF22F-6AE8-63E5-5E75-F73050829466}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.Web", "Web\AlwaysMoveForward.AnotherBlog.Web.csproj", "{5C74067B-56FA-7253-62FE-C3D036F79F61}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.UnitTest", "UnitTest\AlwaysMoveForward.AnotherBlog.UnitTest.csproj", "{2D57C1B4-73B1-4664-B396-64A50FA28E8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,18 +97,6 @@ Global
 		{5C74067B-56FA-7253-62FE-C3D036F79F61}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5C74067B-56FA-7253-62FE-C3D036F79F61}.Release|x86.ActiveCfg = Release|Any CPU
 		{5C74067B-56FA-7253-62FE-C3D036F79F61}.Release|x86.Build.0 = Release|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Debug|x86.Build.0 = Debug|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|x86.ActiveCfg = Release|Any CPU
-		{2D57C1B4-73B1-4664-B396-64A50FA28E8E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

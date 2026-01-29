@@ -5,11 +5,18 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
 
 [Route("api/[controller]")]
 public class BlogPostController : BaseApiController
 {
+    public BlogPostController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     [Route("/api/BlogPosts")]
     [HttpGet]
     public IEnumerable<BlogPost> Get()
@@ -95,7 +102,7 @@ public class BlogPostController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/BlogPost")]
     [HttpPost]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogPost Post(string blogSubFolder, [FromBody] BlogPostInput input)
     {
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -128,7 +135,7 @@ public class BlogPostController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/BlogPost/{id:int}")]
     [HttpPut]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogPost Put(string blogSubFolder, int id, [FromBody] BlogPostInput input)
     {
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -161,7 +168,7 @@ public class BlogPostController : BaseApiController
 
     [Route("/api/{blogSubFolder}/BlogPost/{id:int}")]
     [HttpDelete]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public void Delete(int id)
     {
     }

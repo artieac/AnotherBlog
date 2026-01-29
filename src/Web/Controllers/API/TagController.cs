@@ -2,11 +2,18 @@ using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
 
 [Route("api/[controller]")]
 public class TagController : BaseApiController
 {
+    public TagController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     [Route("/api/Blog/{blogSubFolder}/Tags")]
     [HttpGet]
     public IList<TagCountModel> Get(string blogSubFolder)

@@ -5,11 +5,18 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
 
 [Route("api/[controller]")]
 public class BlogController : BaseApiController
 {
+    public BlogController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     [Route("/api/Blogs")]
     [HttpGet]
     public IEnumerable<Blog> Get()
@@ -48,7 +55,7 @@ public class BlogController : BaseApiController
 
     [Route("/api/Blog/{id:int}")]
     [HttpPut]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public Blog Put(int id, [FromBody] BlogInputModel input)
     {
         Blog retVal = null;

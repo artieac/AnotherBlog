@@ -25,7 +25,8 @@ public class UserController : PublicController
     private const string AuthCookieName = ".ASPXAUTH";
     private readonly IDataProtectionProvider _dataProtectionProvider;
 
-    public UserController(IDataProtectionProvider dataProtectionProvider)
+    public UserController(ServiceManagerBuilder serviceManagerBuilder, IDataProtectionProvider dataProtectionProvider)
+        : base(serviceManagerBuilder)
     {
         _dataProtectionProvider = dataProtectionProvider;
     }
@@ -88,12 +89,12 @@ public class UserController : PublicController
     public void Logout()
     {
         this.EliminateUserCookie();
-        this.CurrentPrincipal = new SecurityPrincipal(UserFactory.CreateGuestUser());
+        this.CurrentPrincipal = new SecurityPrincipal(Services, UserFactory.CreateGuestUser());
     }
 
     [Route("User/Preferences")]
     [HttpGet]
-    [BlogMVCAuthorization]
+    [BlogMVCAuthorizationAttribute]
     public IActionResult Preferences(string blogSubFolder)
     {
         UserModel model = this.InitializeUserModel(blogSubFolder);
@@ -103,7 +104,7 @@ public class UserController : PublicController
     }
 
     [Route("User/SavePreferences")]
-    [BlogMVCAuthorization]
+    [BlogMVCAuthorizationAttribute]
     public IActionResult SavePreferences(string blogSubFolder, string userAbout)
     {
         UserModel model = this.InitializeUserModel(blogSubFolder);
@@ -126,7 +127,7 @@ public class UserController : PublicController
 
     [Route("User/ViewUserSocial")]
     [HttpGet]
-    [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
+    [BlogMVCAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator)]
     public IActionResult ViewUserSocial(string blogSubFolder, string userId)
     {
         UserModel model = this.InitializeUserModel(blogSubFolder);

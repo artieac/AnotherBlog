@@ -7,78 +7,57 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-public class BlogMVCAuthorizationAttribute : Attribute, IAuthorizationFilter
+/// <summary>
+/// Authorization filter attribute for blog MVC actions using .NET's TypeFilter pattern.
+/// </summary>
+public class BlogMVCAuthorizationAttribute : TypeFilterAttribute
 {
-    public BlogMVCAuthorizationAttribute()
+    public BlogMVCAuthorizationAttribute(string requiredRoles = "")
+        : base(typeof(BlogMVCAuthorizationFilter))
     {
-        this.RequiredRoles = string.Empty;
+        Arguments = [requiredRoles];
+    }
+}
+
+/// <summary>
+/// The actual authorization filter implementation with DI support.
+/// </summary>
+public class BlogMVCAuthorizationFilter : IAsyncAuthorizationFilter
+{
+    private readonly ServiceManagerBuilder _serviceManagerBuilder;
+    private readonly string _requiredRoles;
+
+    public BlogMVCAuthorizationFilter(
+        ServiceManagerBuilder serviceManagerBuilder,
+        string requiredRoles)
+    {
+        _serviceManagerBuilder = serviceManagerBuilder;
+        _requiredRoles = requiredRoles;
     }
 
-    public string RequiredRoles { get; set; }
-
-    protected Blog GetTargetBlog(AuthorizationFilterContext filterContext)
-    {
-        Blog retVal = null;
-
-        try
-        {
-            var request = filterContext.HttpContext.Request;
-            var pathSegments = request.Path.Value?.Split('/', StringSplitOptions.RemoveEmptyEntries);
-
-            if (pathSegments != null && pathSegments.Length >= 2)
-            {
-                ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                retVal = serviceManager.BlogService.GetByName(pathSegments[1]);
-            }
-        }
-        catch (Exception e)
-        {
-            LogManager.GetLogger().Error(e);
-        }
-
-        return retVal;
-    }
-
-    public void OnAuthorization(AuthorizationFilterContext filterContext)
+    public Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         bool isAuthorized = false;
 
-        SecurityPrincipal currentPrincipal = filterContext.HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
+        var currentPrincipal = context.HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
 
         try
         {
-            if (this.RequiredRoles != null)
+            if (!string.IsNullOrEmpty(_requiredRoles))
             {
-                if (this.RequiredRoles == string.Empty)
-                {
-                    if (currentPrincipal != null)
-                    {
-                        if (currentPrincipal.IsAuthenticated == true)
-                        {
-                            isAuthorized = true;
-                        }
-                    }
-                }
-                else
-                {
-                    Blog targetBlog = this.GetTargetBlog(filterContext);
+                Blog targetBlog = GetTargetBlog(context);
 
-                    if (currentPrincipal != null)
-                    {
-                        string[] roleList = this.RequiredRoles.Split(',');
-                        isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
-                    }
+                if (currentPrincipal != null)
+                {
+                    string[] roleList = _requiredRoles.Split(',');
+                    isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
                 }
             }
             else
             {
-                if (currentPrincipal != null)
+                if (currentPrincipal != null && currentPrincipal.IsAuthenticated)
                 {
-                    if (currentPrincipal.IsAuthenticated == true)
-                    {
-                        isAuthorized = true;
-                    }
+                    isAuthorized = true;
                 }
             }
         }
@@ -87,12 +66,37 @@ public class BlogMVCAuthorizationAttribute : Attribute, IAuthorizationFilter
             LogManager.GetLogger().Error(e);
         }
 
-        if (isAuthorized == false)
+        if (!isAuthorized)
         {
-            var request = filterContext.HttpContext.Request;
+            var request = context.HttpContext.Request;
             var scheme = request.Scheme;
             var host = request.Host.Value;
-            filterContext.Result = new RedirectResult($"{scheme}://{host}");
+            context.Result = new RedirectResult($"{scheme}://{host}");
         }
+
+        return Task.CompletedTask;
+    }
+
+    private Blog GetTargetBlog(AuthorizationFilterContext context)
+    {
+        Blog result = null;
+
+        try
+        {
+            var request = context.HttpContext.Request;
+            var pathSegments = request.Path.Value?.Split('/', StringSplitOptions.RemoveEmptyEntries);
+
+            if (pathSegments != null && pathSegments.Length >= 2)
+            {
+                var serviceManager = _serviceManagerBuilder.CreateServiceManager();
+                result = serviceManager.BlogService.GetBySubFolder(pathSegments[1]);
+            }
+        }
+        catch (Exception e)
+        {
+            LogManager.GetLogger().Error(e);
+        }
+
+        return result;
     }
 }

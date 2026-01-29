@@ -1,6 +1,9 @@
 using AlwaysMoveForward.AnotherBlog.Web;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.Common.Utilities;
+using Microsoft.Extensions.Options;
+using AlwaysMoveForward.Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,8 +50,15 @@ builder.Services.AddScoped<AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Page
 
 // Register application configuration
 builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("AnotherBlog"));
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("AlwaysMoveForward:Database"));
+builder.Services.Configure<DatabaseConfiguration>(builder.Configuration.GetSection("AlwaysMoveForward:Database"));
 builder.Services.Configure<OAuthSettings>(builder.Configuration.GetSection("AlwaysMoveForward:OAuth"));
+
+// Register ServiceManagerBuilder
+builder.Services.AddScoped<ServiceManagerBuilder>(sp =>
+{
+    var dbSettings = sp.GetRequiredService<IOptions<DatabaseConfiguration>>();
+    return new ServiceManagerBuilder(dbSettings);
+});
 
 var app = builder.Build();
 

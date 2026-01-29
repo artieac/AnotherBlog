@@ -22,6 +22,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
 
 public class HomeController : PublicController
 {
+    public HomeController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     [Route("Home/About")]
     [HttpGet]
     public IActionResult About(string blogSubFolder)

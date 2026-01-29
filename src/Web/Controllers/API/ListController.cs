@@ -5,11 +5,18 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
 
 [Route("api/[controller]")]
 public class ListController : BaseApiController
 {
+    public ListController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     [Route("/api/Blog/{blogSubFolder}/Lists")]
     [HttpGet]
     public IEnumerable<BlogList> Get(string blogSubFolder)
@@ -27,7 +34,7 @@ public class ListController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/List")]
     [HttpPost]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogList Post(string blogSubFolder, [FromBody] ListInputModel input)
     {
         BlogList retVal = new BlogList();
@@ -55,7 +62,7 @@ public class ListController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/List/{id:int}")]
     [HttpPut]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogList Put(string blogSubFolder, int id, [FromBody] ListInputModel input)
     {
         BlogList retVal = null;
@@ -83,7 +90,7 @@ public class ListController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/List/{id:int}/Item")]
     [HttpPost]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogList PostItem(string blogSubFolder, int id, [FromBody] ListItemInputModel input)
     {
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -111,7 +118,7 @@ public class ListController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/List/{id:int}/Item/{itemId:int}")]
     [HttpPut]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogList PutItem(string blogSubFolder, int id, int itemId, [FromBody] ListItemInputModel input)
     {
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
@@ -139,7 +146,7 @@ public class ListController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/List/{id:int}")]
     [HttpDelete]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public bool Delete(string blogSubFolder, int id)
     {
         bool retVal = false;
@@ -167,7 +174,7 @@ public class ListController : BaseApiController
 
     [Route("/api/Blog/{blogSubFolder}/List/{id:int}/Item/{itemId:int}")]
     [HttpDelete]
-    [WebAPIAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogList DeleteItem(string blogSubFolder, int id, int itemId)
     {
         BlogList retVal = null;

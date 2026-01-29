@@ -21,6 +21,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
 
 public class BlogController : PublicController
 {
+    public BlogController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
     public CommonBlogModel InitializeCommonModel(string blogSubFolder)
     {
         ViewBag.BlogSubFolder = blogSubFolder;

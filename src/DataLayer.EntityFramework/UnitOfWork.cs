@@ -6,29 +6,20 @@ using System.Transactions;
 
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using Microsoft.Extensions.Options;
+using AlwaysMoveForward.Common.Configuration;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer
 {
     public class UnitOfWork : IUnitOfWork
     {
-        static AlwaysMoveForward.Common.Configuration.DatabaseConfiguration dbConfiguration;
-
-        static UnitOfWork()
-        {
-            dbConfiguration = AlwaysMoveForward.Common.Configuration.DatabaseConfiguration.GetInstance();
-        }
-
         AnotherBlogDataContextCF dataContext;
         TransactionScope currentTransaction;
-        private readonly string _connectionString;
+        private DatabaseConfiguration DatabaseConfiguration {  get; set; }
 
-        public UnitOfWork()
+        public UnitOfWork(DatabaseConfiguration databaseConfiguration)
         {
-        }
-
-        public UnitOfWork(string connectionString)
-        {
-            _connectionString = connectionString;
+            this.DatabaseConfiguration = databaseConfiguration;
         }
 
         #region IUnitOfWork Members
@@ -104,9 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.dataContext == null)
                 {
-                    string connString = !string.IsNullOrEmpty(_connectionString)
-                        ? _connectionString
-                        : System.Configuration.ConfigurationManager.ConnectionStrings[UnitOfWork.dbConfiguration.ConnectionString].ConnectionString;
+                    string connString = this.DatabaseConfiguration.GetDecryptedConnectionString();
                     this.dataContext = new AnotherBlogDataContextCF(connString);
                 }
 

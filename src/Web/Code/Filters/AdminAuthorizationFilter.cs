@@ -16,70 +16,60 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-public class AdminAuthorizationFilter : Attribute, IAuthorizationFilter
+/// <summary>
+/// Authorization filter attribute for admin actions using .NET's TypeFilter pattern.
+/// </summary>
+public class AdminAuthorizationFilterAttribute : TypeFilterAttribute
 {
-    public AdminAuthorizationFilter()
+    public AdminAuthorizationFilterAttribute(string requiredRoles = "", bool isBlogSpecific = true)
+        : base(typeof(AdminAuthorizationFilter))
     {
-        this.RequiredRoles = string.Empty;
-        this.IsBlogSpecific = true;
+        Arguments = [requiredRoles, isBlogSpecific];
+    }
+}
+
+/// <summary>
+/// The actual authorization filter implementation with DI support.
+/// </summary>
+public class AdminAuthorizationFilter : IAsyncAuthorizationFilter
+{
+    private readonly ServiceManagerBuilder _serviceManagerBuilder;
+    private readonly string _requiredRoles;
+    private readonly bool _isBlogSpecific;
+
+    public AdminAuthorizationFilter(
+        ServiceManagerBuilder serviceManagerBuilder,
+        string requiredRoles,
+        bool isBlogSpecific)
+    {
+        _serviceManagerBuilder = serviceManagerBuilder;
+        _requiredRoles = requiredRoles;
+        _isBlogSpecific = isBlogSpecific;
     }
 
-    public string RequiredRoles { get; set; }
-    public bool IsBlogSpecific { get; set; }
-
-    protected Blog GetTargetBlog(AuthorizationFilterContext filterContext)
-    {
-        Blog retVal = null;
-
-        try
-        {
-            string blogSubFolder = string.Empty;
-            var request = filterContext.HttpContext.Request;
-
-            if (request.HasFormContentType && request.Form.ContainsKey("blogSubFolder"))
-            {
-                blogSubFolder = request.Form["blogSubFolder"];
-            }
-            else if (request.Query.ContainsKey("blogSubFolder"))
-            {
-                blogSubFolder = request.Query["blogSubFolder"];
-            }
-
-            ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-            retVal = serviceManager.BlogService.GetByName(blogSubFolder);
-        }
-        catch (Exception e)
-        {
-            LogManager.GetLogger().Error(e);
-        }
-
-        return retVal;
-    }
-
-    public void OnAuthorization(AuthorizationFilterContext filterContext)
+    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         bool isAuthorized = false;
 
-        SecurityPrincipal currentPrincipal = filterContext.HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
+        var currentPrincipal = context.HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
 
         try
         {
             if (currentPrincipal != null)
             {
-                if (string.IsNullOrEmpty(this.RequiredRoles))
+                if (string.IsNullOrEmpty(_requiredRoles))
                 {
                     isAuthorized = false;
                 }
                 else
                 {
-                    string[] roleList = this.RequiredRoles.Split(',');
+                    string[] roleList = _requiredRoles.Split(',');
 
-                    if (this.IsBlogSpecific == false)
+                    if (!_isBlogSpecific)
                     {
-                        for (int i = 0; i < roleList.Length; i++)
+                        foreach (var role in roleList)
                         {
-                            if (currentPrincipal.IsInRole(roleList[i]))
+                            if (currentPrincipal.IsInRole(role))
                             {
                                 isAuthorized = true;
                                 break;
@@ -88,7 +78,7 @@ public class AdminAuthorizationFilter : Attribute, IAuthorizationFilter
                     }
                     else
                     {
-                        Blog targetBlog = this.GetTargetBlog(filterContext);
+                        Blog targetBlog = await GetTargetBlogAsync(context);
                         isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
                     }
                 }
@@ -99,12 +89,52 @@ public class AdminAuthorizationFilter : Attribute, IAuthorizationFilter
             LogManager.GetLogger().Error(e);
         }
 
-        if (isAuthorized == false)
+        if (!isAuthorized)
         {
-            var request = filterContext.HttpContext.Request;
+            var request = context.HttpContext.Request;
             var scheme = request.Scheme;
             var host = request.Host.Value;
-            filterContext.Result = new RedirectResult($"{scheme}://{host}");
+            context.Result = new RedirectResult($"{scheme}://{host}");
         }
+    }
+
+    private Task<Blog> GetTargetBlogAsync(AuthorizationFilterContext context)
+    {
+        Blog result = null;
+
+        try
+        {
+            string blogSubFolder = string.Empty;
+            var request = context.HttpContext.Request;
+
+            if (request.RouteValues.TryGetValue("blogSubFolder", out var routeValue))
+            {
+                blogSubFolder = routeValue?.ToString() ?? string.Empty;
+            }
+            else if (request.RouteValues.TryGetValue("id", out var idValue))
+            {
+                blogSubFolder = idValue?.ToString() ?? string.Empty;
+            }
+            else if (request.HasFormContentType && request.Form.ContainsKey("blogSubFolder"))
+            {
+                blogSubFolder = request.Form["blogSubFolder"].ToString();
+            }
+            else if (request.Query.ContainsKey("blogSubFolder"))
+            {
+                blogSubFolder = request.Query["blogSubFolder"].ToString();
+            }
+
+            if (!string.IsNullOrEmpty(blogSubFolder))
+            {
+                var serviceManager = _serviceManagerBuilder.CreateServiceManager();
+                result = serviceManager.BlogService.GetBySubFolder(blogSubFolder);
+            }
+        }
+        catch (Exception e)
+        {
+            LogManager.GetLogger().Error(e);
+        }
+
+        return Task.FromResult(result);
     }
 }

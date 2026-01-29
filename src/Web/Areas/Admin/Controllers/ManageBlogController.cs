@@ -15,7 +15,12 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers;
 [Area("Admin")]
 public class ManageBlogController : AdminBaseController
 {
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
+    public ManageBlogController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
+    {
+    }
+
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, false)]
     public IActionResult Index()
     {
         ManageBlogModel model = new ManageBlogModel();
@@ -30,7 +35,7 @@ public class ManageBlogController : AdminBaseController
         return this.View(model);
     }
 
-    [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
+    [BlogMVCAuthorizationAttribute(RoleType.Names.SiteAdministrator)]
     public IActionResult GetAll()
     {
         SiteModel model = new SiteModel();
@@ -39,7 +44,7 @@ public class ManageBlogController : AdminBaseController
         return this.View(model);
     }
 
-    [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
+    [BlogMVCAuthorizationAttribute(RoleType.Names.SiteAdministrator)]
     public IActionResult EditBlog(int id)
     {
         ManageBlogModel model = new ManageBlogModel();
@@ -55,7 +60,7 @@ public class ManageBlogController : AdminBaseController
         return this.View(model);
     }
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator, IsBlogSpecific = true)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator, true)]
     public IActionResult Preferences(string id)
     {
         ManageBlogModel model = new ManageBlogModel();
@@ -69,7 +74,7 @@ public class ManageBlogController : AdminBaseController
         return this.View(model);
     }
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public IActionResult ManagePosts(string id, string filterType, string filterValue, int? page, string sortColumn, bool? sortAscending)
     {
         ManageBlogModel model = new ManageBlogModel();
@@ -126,7 +131,7 @@ public class ManageBlogController : AdminBaseController
         return this.View(model);
     }
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public IActionResult EditPost(string blogSubFolder, int? id)
     {
         ManageBlogModel model = new ManageBlogModel();
@@ -167,7 +172,7 @@ public class ManageBlogController : AdminBaseController
 
     #region Comment Management
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public IActionResult ManageComments(string id, string commentFilter)
     {
         ManageBlogModel model = new ManageBlogModel();
@@ -179,7 +184,7 @@ public class ManageBlogController : AdminBaseController
 
     #endregion
 
-    [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = true)]
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public async Task<IActionResult> FileUpload(string blogSubFolder)
     {
         AdminCommon model = this.InitializeCommonModel(blogSubFolder);

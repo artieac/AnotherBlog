@@ -12,10 +12,14 @@ public class CookieAuthenticationFilter : IAuthorizationFilter
 {
     private const string AuthCookieName = ".ASPXAUTH";
     private readonly IDataProtectionProvider _dataProtectionProvider;
+    private readonly ServiceManagerBuilder _serviceManagerBuilder;
 
-    public CookieAuthenticationFilter(IDataProtectionProvider dataProtectionProvider)
+    public CookieAuthenticationFilter(
+        IDataProtectionProvider dataProtectionProvider,
+        ServiceManagerBuilder serviceManagerBuilder)
     {
         _dataProtectionProvider = dataProtectionProvider;
+        _serviceManagerBuilder = serviceManagerBuilder;
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)
@@ -26,11 +30,11 @@ public class CookieAuthenticationFilter : IAuthorizationFilter
 
     public SecurityPrincipal ParseCookie(HttpContext httpContext)
     {
-        SecurityPrincipal retVal = new SecurityPrincipal(null, false);
+        ServiceManager serviceManager = _serviceManagerBuilder.CreateServiceManager();
+        SecurityPrincipal retVal = new SecurityPrincipal(serviceManager, UserFactory.CreateGuestUser(), false);
 
         try
         {
-            ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
             var authCookie = httpContext.Request.Cookies[AuthCookieName];
 
             if (!string.IsNullOrEmpty(authCookie))
@@ -46,27 +50,23 @@ public class CookieAuthenticationFilter : IAuthorizationFilter
 
                         if (currentUser != null)
                         {
-                            retVal = new SecurityPrincipal(currentUser, true);
+                            retVal = new SecurityPrincipal(serviceManager, currentUser, true);
                         }
                         else
                         {
-                            retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
+                            retVal = new SecurityPrincipal(serviceManager, UserFactory.CreateGuestUser(), false);
                         }
                     }
                 }
                 catch
                 {
-                    retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
+                    retVal = new SecurityPrincipal(serviceManager, UserFactory.CreateGuestUser(), false);
                 }
-            }
-            else
-            {
-                retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
             }
         }
         catch
         {
-            retVal = new SecurityPrincipal(UserFactory.CreateGuestUser(), false);
+            // Keep the default guest principal
         }
 
         return retVal;
