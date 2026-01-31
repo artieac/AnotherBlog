@@ -50,19 +50,18 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         public DbSet<Role> Roles { get; set; }
         public DbSet<SiteInfo> SiteInfos { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<AnotherBlogUser> Users { get; set; }
+        public DbSet<TagCount> TagCounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Blog
             modelBuilder.Entity<Blog>().ToTable("Blogs");
             modelBuilder.Entity<Blog>().HasKey(b => b.Id);
-            modelBuilder.Entity<Blog>().Property(b => b.Id).HasColumnName("BlogId");
 
             // BlogPost
             modelBuilder.Entity<BlogPost>().ToTable("BlogEntries");
             modelBuilder.Entity<BlogPost>().HasKey(bp => bp.Id);
-            modelBuilder.Entity<BlogPost>().Property(bp => bp.Id).HasColumnName("EntryId");
             modelBuilder.Entity<BlogPost>().Ignore(bp => bp.Tags);
             modelBuilder.Entity<BlogPost>().Ignore(bp => bp.CommentCount);
             modelBuilder.Entity<BlogPost>()
@@ -70,14 +69,19 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
                 .WithMany()
                 .HasForeignKey("BlogId");
             modelBuilder.Entity<BlogPost>()
-                .HasOne(bp => bp.Author)
+                .Navigation(bp => bp.Blog)
+                .AutoInclude();
+            modelBuilder.Entity<BlogPost>()
+                .HasOne<AnotherBlogUser>(bp => bp.Author)
                 .WithMany()
                 .HasForeignKey("UserId");
+            modelBuilder.Entity<BlogPost>()
+                .Navigation(bp => bp.Author)
+                .AutoInclude();
 
             // BlogExtension
             modelBuilder.Entity<BlogExtension>().ToTable("BlogExtensions");
             modelBuilder.Entity<BlogExtension>().HasKey(be => be.Id);
-            modelBuilder.Entity<BlogExtension>().Property(be => be.Id).HasColumnName("ExtensionId");
 
             // BlogList
             modelBuilder.Entity<BlogList>().ToTable("BlogLists");
@@ -90,6 +94,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
                 .HasMany(bl => bl.Items)
                 .WithOne(bli => bli.BlogList)
                 .HasForeignKey(bli => bli.BlogListId);
+            modelBuilder.Entity<BlogList>()
+                .Navigation(bp => bp.Items)
+                .AutoInclude();
 
             // BlogListItem
             modelBuilder.Entity<BlogListItem>().ToTable("BlogListItems");
@@ -98,24 +105,22 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
             // BlogUser
             modelBuilder.Entity<BlogUser>().ToTable("BlogUsers");
             modelBuilder.Entity<BlogUser>().HasKey(bu => bu.Id);
-            modelBuilder.Entity<BlogUser>().Property(bu => bu.Id).HasColumnName("BlogUserId");
             modelBuilder.Entity<BlogUser>()
                 .HasOne(bu => bu.Blog)
                 .WithMany()
                 .HasForeignKey("BlogId");
             modelBuilder.Entity<BlogUser>()
-                .HasOne(bu => bu.User)
+                .HasOne<AnotherBlogUser>(bu => bu.User)
                 .WithMany()
                 .HasForeignKey("UserId");
             modelBuilder.Entity<BlogUser>()
                 .HasOne(bu => bu.Role)
-                .WithMany()
-                .HasForeignKey("RoleId");
+                .WithOne()
+                .HasForeignKey<BlogUser>("RoleId");
 
             // Comment
             modelBuilder.Entity<Comment>().ToTable("EntryComments");
             modelBuilder.Entity<Comment>().HasKey(c => c.Id);
-            modelBuilder.Entity<Comment>().Property(c => c.Id).HasColumnName("CommentId");
             modelBuilder.Entity<Comment>().Property(c => c.Text).HasColumnName("Comment");
             modelBuilder.Entity<Comment>().Property(c => c.Status).HasConversion<int>();
             modelBuilder.Entity<Comment>()
@@ -163,10 +168,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
                 .HasForeignKey(t => t.BlogId);
             modelBuilder.Entity<Tag>().Ignore(t => t.BlogEntries);
 
-            // User
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<User>().HasKey(u => u.Id);
-            modelBuilder.Entity<User>().Property(u => u.Id).HasColumnName("UserId");
+            // AnotherBlogUser
+            modelBuilder.Entity<AnotherBlogUser>().ToTable("Users");
+            modelBuilder.Entity<AnotherBlogUser>().HasKey(u => u.Id);
+            modelBuilder.Entity<AnotherBlogUser>().Ignore(u => u.Roles);
+
+            // TagCount - Keyless entity for raw SQL queries
+            modelBuilder.Entity<TagCount>().HasNoKey().ToView(null);
         }
 
         public DbSet<T> GetTable<T>() where T : class

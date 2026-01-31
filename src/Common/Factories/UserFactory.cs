@@ -24,7 +24,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.Factories
         public static AnotherBlogUser Create(AlwaysMoveForward.Common.DomainModel.User oauthUser)
         {
             AnotherBlogUser retVal = new AnotherBlogUser();
-            retVal.OAuthServiceUserId = oauthUser.Id;
+            retVal.OAuthServiceUserId = oauthUser.Id.ToString();
             retVal.FirstName = oauthUser.FirstName;
             retVal.LastName = oauthUser.LastName;
             retVal.IsSiteAdministrator = false;

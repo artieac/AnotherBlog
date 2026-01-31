@@ -1,0 +1,11 @@
+{
+  "name": "anotherblog-web",
+  "version": "1.0.0",
+  "description": "AnotherBlog Web Application",
+  "scripts": {
+    "build:less": "node compile-less.js"
+  },
+  "devDependencies": {
+    "less": "^4.2.0"
+  }
+}

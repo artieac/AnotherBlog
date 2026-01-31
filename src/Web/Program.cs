@@ -4,6 +4,9 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.Common.Utilities;
 using Microsoft.Extensions.Options;
 using AlwaysMoveForward.Common.Configuration;
+using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +24,12 @@ builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add<CookieAuthenticationFilter>();
 })
-.AddNewtonsoftJson();
+.AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+});
 
 builder.Services.AddCors(options =>
 {
@@ -53,6 +61,11 @@ builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("An
 builder.Services.Configure<DatabaseConfiguration>(builder.Configuration.GetSection("AlwaysMoveForward:Database"));
 builder.Services.Configure<OAuthSettings>(builder.Configuration.GetSection("AlwaysMoveForward:OAuth"));
 
+DatabaseConfiguration databaseConfiguration = new DatabaseConfiguration();
+builder.Configuration.GetSection("AlwaysMoveForward:Database").Bind(databaseConfiguration);
+
+//DatabaseConfiguration databaseConfiguration = builder.Configuration.GetValue<DatabaseConfiguration>("AlwaysMoveForward:Database");
+
 // Register ServiceManagerBuilder
 builder.Services.AddScoped<ServiceManagerBuilder>(sp =>
 {
@@ -74,6 +87,24 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Serve static files from Content folder
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+        System.IO.Path.Combine(builder.Environment.ContentRootPath, "Content")),
+    RequestPath = "/Content"
+});
+
+// Serve static files from Scripts folder
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+        System.IO.Path.Combine(builder.Environment.ContentRootPath, "Scripts")),
+    RequestPath = "/Scripts"
+});
+
+// Default wwwroot (if it exists)
 app.UseStaticFiles();
 
 app.UseRouting();

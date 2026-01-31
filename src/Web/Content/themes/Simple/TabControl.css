@@ -1,0 +1,29 @@
+.ulDefaults {
+  padding-left: 0px;
+  margin-left: 0px;
+  list-style-type: none;
+  list-style-position: outside;
+}
+.navbar-inverse {
+  border-color: #5493E0;
+  background-color: #5493E0;
+  color: #FFFFFF;
+}
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #FFFFFF;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: #5493E0;
+  background-color: #FFFFFF;
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  color: #5493E0;
+  background-color: #5493E0;
+}
+/*# sourceMappingURL=TabControl.css.map */

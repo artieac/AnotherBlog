@@ -21,6 +21,7 @@ public class BlogController : BaseApiController
     [HttpGet]
     public IEnumerable<Blog> Get()
     {
+        IList<Blog> foo = this.Services.BlogService.GetAll();
         return this.Services.BlogService.GetAll();
     }
 

@@ -63,7 +63,7 @@
                 <div>
                     <label for="blogTheme">Theme:</label>
                     <select id="blogTheme" name="blogTheme" class="form-control">
-                        @foreach (string themeDirectory in Utils.GetThemeDirectories(_Environment.WebRootPath))
+                        @foreach (string themeDirectory in Utils.GetThemeDirectories(_Environment.ContentRootPath))
                         {
                             <!option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @(themeDirectory == Model.Common.TargetBlog.Theme ? "selected" : "")>@themeDirectory</!option>
                         }

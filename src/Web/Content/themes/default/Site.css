@@ -1,0 +1,338 @@
+.ulDefaults {
+  padding-left: 0px;
+  margin-left: 0px;
+  list-style-type: none;
+  list-style-position: outside;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8) url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
+}
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+  overflow: hidden;
+}
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+  display: block;
+}
+body {
+  font-family: Arial, Tahoma, Verdana, Sans-Serif;
+  font-size: medium;
+}
+.subBody {
+  width: 80%;
+  margin-left: 10%;
+}
+.label {
+  width: 100px;
+  font-size: medium;
+  color: #5493E0;
+  text-align: right;
+  display: inline-block;
+}
+.wideLabel {
+  width: 100px;
+  font-size: medium;
+  color: #5493E0;
+  text-align: right;
+  display: inline-block;
+  width: 200px;
+}
+.header {
+  background: #FFFFFF url(/Content/images/header.jpg) no-repeat;
+  display: block;
+  height: 300px;
+  width: 100%;
+}
+.header .siteTitle {
+  font-size: x-large;
+  color: #FFFFFF;
+  font-style: oblique;
+  text-decoration: none;
+}
+.header .loginDiv {
+  float: right;
+  text-align: right;
+  width: 40%;
+  overflow: auto;
+}
+.header .loginDiv .loginLabel {
+  font-size: small;
+  padding-right: 2px;
+  color: #FFFFFF;
+}
+.metaContentPanel {
+  float: right;
+  width: 15%;
+  text-align: left;
+  background-color: #F4F4F4;
+  border-color: #CCCCCC;
+  border-style: solid;
+  border-width: 0 1px 0 1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.metaContentPanel ul {
+  padding-left: 0px;
+  margin-left: 0px;
+  list-style-type: none;
+  list-style-position: outside;
+}
+.metaContentPanel .metaContentSectionsDefault {
+  width: 90%;
+  text-align: left;
+  border-bottom: solid 1px #CCCCCC;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 20px;
+  margin-bottom: 1%;
+}
+.metaContentPanel .navigationSection {
+  width: 90%;
+  text-align: left;
+  border-bottom: solid 1px #CCCCCC;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 20px;
+  margin-bottom: 1%;
+}
+.metaContentPanel .navigationSection .navigationSectionTitle {
+  width: 100%;
+  color: #000000;
+  font-size: medium;
+}
+.metaContentPanel .navigationSection .navigationSectionList {
+  list-style: none;
+  color: black;
+  padding-left: 5px;
+  margin-left: 5px;
+  list-style-position: outside;
+}
+.metaContentPanel .navigationSection .navigationSectionList .navigationSectionItem {
+  padding: 0 5px 0 5px;
+}
+.metaContentPanel .navigationSection .navigationSectionList .navigationSectionItem a {
+  text-decoration: none;
+}
+.metaContentPanel .contentSection {
+  width: 90%;
+  text-align: left;
+  border-bottom: solid 1px #CCCCCC;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 20px;
+  margin-bottom: 1%;
+}
+.metaContentPanel .contentSection .contentSectionTitle {
+  color: #000000;
+  font-size: medium;
+}
+.metaContentPanel .contentSection .contentSectionBody {
+  padding: 0 5px 0 5px;
+}
+.metaContentPanel .contentSection .contentSectionBody .contentSectionList {
+  padding-left: 5px;
+  margin-left: 5px;
+  list-style-type: disc;
+  list-style-position: outside;
+}
+.metaContentPanel .contentSection .contentSectionBody .contentSectionList .listItem {
+  font-size: small;
+}
+.mainContentPanel {
+  text-align: left;
+  float: left;
+  width: 80%;
+  height: 100%;
+}
+.mainContentPanel .bodyContainer {
+  text-align: left;
+  display: block;
+}
+.mainContentPanel .bodyContainer .bodyContent {
+  text-align: left;
+  width: 100%;
+}
+.mainContentPanel .bodyContainer .bodyContent .contentPageTitle {
+  font-size: larger;
+  color: #5493E0;
+  text-align: center;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection {
+  padding: 5px 5px 5px 5px;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogTitleSection {
+  width: 100%;
+  border-style: solid;
+  border-width: thin;
+  border-color: #F4F4F4;
+  padding: 5px 5px 5px 5px;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogTitleSection .blogTitle {
+  width: 100%;
+  font-size: large;
+  font-weight: bold;
+  color: #5493E0;
+  display: block;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogTitleSection .blogTitle .blogTitleLink {
+  display: inline;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogTitleSection .blogTitle .blogTitleLink a:visited,
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogTitleSection .blogTitle .blogTitleLink a:link,
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogTitleSection .blogTitle .blogTitleLink a:hover {
+  color: #5493E0;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogSubTitle,
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogFooter {
+  font-size: small;
+  font-style: italic;
+  color: black;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogText {
+  width: 100%;
+  border-style: solid;
+  border-width: thin;
+  border-color: #F4F4F4;
+  font-size: medium;
+  background-color: #FFFFFF;
+  color: #000000;
+  padding: 5px 5px 10px 5px;
+}
+.mainContentPanel .bodyContainer .bodyContent .blogEntrySection .blogTags {
+  margin: 0px 10px 0px 10px;
+  font-size: small;
+}
+.linkSectionTitle {
+  width: 100%;
+  color: black;
+  font-size: medium;
+}
+.tagClouldControl {
+  display: block;
+}
+.tagCloudTag {
+  text-decoration: none;
+}
+.windowPanePanel {
+  margin-right: 50px;
+}
+.windowPaneSection {
+  margin-right: 50px;
+}
+.commentLabel {
+  width: 5%;
+  text-align: right;
+  font-weight: bold;
+}
+.commentPanelTitle {
+  background-color: #5493E0;
+  font-size: large;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+.commentSection {
+  background-color: White;
+  padding-top: 10px;
+}
+.commentTitleSection {
+  padding: 5px 5px 5px 5px;
+  width: 100%;
+  border-style: solid;
+  border-width: thin;
+  border-color: #F4F4F4;
+}
+.commentTitle {
+  background-color: #5493E0;
+  font-size: large;
+  font-weight: bold;
+  color: #FFFFFF;
+  width: 100%;
+}
+.commentSubTitle {
+  font-size: small;
+  font-style: italic;
+}
+.commentTextSection {
+  width: 100%;
+  border-style: solid;
+  border-width: thin;
+  border-color: #F4F4F4;
+  padding: 5px 5px 10px 5px;
+}
+.controlTitle {
+  color: #5493E0;
+  font-style: normal;
+  font-size: medium;
+}
+.leftLinks {
+  text-align: left;
+  width: 30%;
+  float: left;
+}
+.rightLinks {
+  text-align: left;
+  width: 30%;
+  float: right;
+  margin-left: 50%;
+}
+/* 3 FOOTER */
+.footer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 75px;
+  text-align: left;
+  font-size: 10px;
+}
+.footer .footerCopyright {
+  float: left;
+  width: 30%;
+  text-align: left;
+}
+.footer .footerAbout {
+  float: right;
+  width: 30%;
+  text-align: right;
+}
+.errorMessage {
+  color: Red;
+}
+.input-validation-error {
+  color: Red;
+}
+.aboutContent ul li {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+.blogWritersTitle {
+  color: #CC6600;
+  text-decoration: underline;
+  font-size: large;
+}
+.blogWriterName {
+  color: #CC6600;
+  text-indent: 5px;
+}
+.blogWriterAbout {
+  color: Black;
+  text-indent: 5px;
+}
+.textAreaInput {
+  width: 90%;
+  height: 40em;
+}
+.commentAreaInput {
+  width: 90%;
+  height: 10em;
+}
+/*# sourceMappingURL=Site.css.map */

@@ -102,7 +102,7 @@ public class Utils
     {
         List<string> retVal = new List<string>();
 
-        string themePath = Path.Combine(webRootPath, "Content", "Themes");
+        string themePath = Path.Combine(webRootPath, "Themes");
 
         if (Directory.Exists(themePath))
         {

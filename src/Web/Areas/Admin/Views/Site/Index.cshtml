@@ -58,7 +58,7 @@
                         <th  class="editItemLabel">theme:</th>
                         <td colspan="2">
                             <select id="defaultTheme" name="defaultTheme">
-                                @foreach(string themeDirectory in Utils.GetThemeDirectories(_Environment.WebRootPath))
+                                @foreach (string themeDirectory in Utils.GetThemeDirectories(_Environment.ContentRootPath))
                                 {
                                     <!option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @(themeDirectory == Model.SiteInfo.DefaultTheme ? "selected" : "")>@themeDirectory</!option>
                                 }

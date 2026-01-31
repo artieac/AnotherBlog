@@ -380,31 +380,31 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public IList GetArchiveDates(int? blogId)
         {
-            IQueryable<IEnumerable<BlogPost>> foundPosts = null;
+            IQueryable<BlogPost> query = ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts;
 
             if (blogId.HasValue)
             {
-                foundPosts = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                             where foundItem.Blog.Id == blogId.Value
-                             group foundItem by new { foundItem.DatePosted.Year, foundItem.DatePosted.Month } into dateGroup
-                             let maxDate = dateGroup.Max(x => x.DatePosted)
-                             select dateGroup.Where(x => x.DatePosted == maxDate);
+                query = query.Where(foundItem => foundItem.Blog.Id == blogId.Value);
             }
-            else
-            {
-                foundPosts = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                             group foundItem by new { foundItem.DatePosted.Year, foundItem.DatePosted.Month } into dateGroup
-                             let maxDate = dateGroup.Max(x => x.DatePosted)
-                             select dateGroup.Where(x => x.DatePosted == maxDate);
-            }
+
+            var groupedPosts = query
+                .GroupBy(foundItem => new { foundItem.DatePosted.Year, foundItem.DatePosted.Month })
+                .Select(dateGroup => new
+                {
+                    Year = dateGroup.Key.Year,
+                    Month = dateGroup.Key.Month,
+                    PostCount = dateGroup.Count(),
+                    MaxDate = dateGroup.Max(x => x.DatePosted)
+                })
+                .ToList();
 
             IList retVal = new ArrayList();
 
-            foreach (IEnumerable<BlogPost> foundPost in foundPosts)
+            foreach (var groupItem in groupedPosts)
             {
                 BlogPostCount newItem = new BlogPostCount();
-                newItem.PostCount = foundPost.Count();
-                newItem.MaxDate = foundPost.ElementAt(0).DatePosted;
+                newItem.PostCount = groupItem.PostCount;
+                newItem.MaxDate = groupItem.MaxDate;
                 retVal.Add(newItem);
             }
 

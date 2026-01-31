@@ -29,13 +29,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         private ISiteInfoRepository siteInfoRepository;
         private ITagRepository tagRepository;
         private IUserRepository userRepository;
+        private IEntryCommentRepository entryCommentRepository;
 
         // Additional repositories (not in interface)
         private BlogEntryTagRepository blogEntryTagRepository;
         private BlogExtensionRepository blogExtensionRepository;
         private BlogListItemRepository blogListItemRepository;
         private BlogUserRepository blogUserRepository;
-        private EntryCommentRepository entryCommentRepository;
         private ExtensionConfigurationRepository extensionConfigurationRepository;
         private RoleRepository roleRepository;
 
@@ -155,6 +155,18 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             }
         }
 
+        public IEntryCommentRepository EntryComments
+        {
+            get
+            {
+                if (this.entryCommentRepository == null)
+                {
+                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork);
+                }
+                return this.entryCommentRepository;
+            }
+        }
+
         // Additional repository accessors (not in interface)
         public BlogEntryTagRepository BlogEntryTags
         {
@@ -201,18 +213,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                     this.blogUserRepository = new BlogUserRepository(this.UnitOfWork);
                 }
                 return this.blogUserRepository;
-            }
-        }
-
-        public EntryCommentRepository EntryComments
-        {
-            get
-            {
-                if (this.entryCommentRepository == null)
-                {
-                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork);
-                }
-                return this.entryCommentRepository;
             }
         }
 

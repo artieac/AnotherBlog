@@ -14,10 +14,11 @@ using System.Linq;
 
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class EntryCommentRepository : EntityFrameworkRepository<Comment, int>
+    public class EntryCommentRepository : EntityFrameworkRepository<Comment, int>, IEntryCommentRepository
     {
         internal EntryCommentRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)

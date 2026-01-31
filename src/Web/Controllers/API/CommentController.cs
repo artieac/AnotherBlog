@@ -70,12 +70,7 @@ public class CommentController : BaseApiController
 
         if (targetBlog != null)
         {
-            BlogPost targetEntry = Services.BlogEntryService.GetById(targetBlog, postId);
-
-            if (targetEntry != null)
-            {
-                model = targetEntry.Comments.Where(comment => comment.Status == CommentStatus.Approved).ToList();
-            }
+            model = Services.CommentService.GetByBlogAndPostId(targetBlog, postId);
         }
 
         return model;

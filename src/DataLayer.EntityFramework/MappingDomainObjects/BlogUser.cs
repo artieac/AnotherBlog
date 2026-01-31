@@ -13,7 +13,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects
 
         public int Id { get; set; }
         public Blog Blog { get; set; }
-        public User User { get; set; }
+        public AnotherBlogUser User { get; set; }
         public Role Role { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             IDictionary<string, object> objectParams = new Dictionary<string, object>();
 
-            string queryString = "SELECT COUNT(bet.BlogEntryTagId) AS Count, t.name as TagName";
+            string queryString = "SELECT COUNT(bet.Id) AS Count, t.name as TagName";
             queryString += " FROM Tags t, BlogEntryTags as bet";
             queryString += " WHERE (bet.TagId = t.id)";
 

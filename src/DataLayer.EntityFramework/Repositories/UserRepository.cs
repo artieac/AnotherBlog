@@ -43,7 +43,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                         select foundItem;
 
             // Map User to AnotherBlogUser
-            return users.ToList().Select(u => MapUserToAnotherBlogUser(u)).ToList();
+            return users.ToList();
         }
 
         public AnotherBlogUser GetByOAuthServiceUserId(long userId)
@@ -52,19 +52,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                         where foundItem.Id == userId
                         select foundItem).SingleOrDefault();
 
-            return user != null ? MapUserToAnotherBlogUser(user) : null;
-        }
-
-        private AnotherBlogUser MapUserToAnotherBlogUser(User user)
-        {
-            if (user == null) return null;
-
-            return new AnotherBlogUser
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            };
+            return user;
         }
     }
 }
