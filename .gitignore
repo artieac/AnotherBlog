@@ -3,6 +3,7 @@
 [Oo]bj/
 node_modules/
 dist/
+[Ff]ileContentIndex/
 
 # mstest test results
 TestResults

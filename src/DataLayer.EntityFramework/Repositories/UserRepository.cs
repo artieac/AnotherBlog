@@ -54,5 +54,33 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             return user;
         }
+
+        public AnotherBlogUser GetByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
+
+            var user = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                        where foundItem.Email == email
+                        select foundItem).SingleOrDefault();
+
+            return user;
+        }
+
+        public AnotherBlogUser GetByExternalId(string externalId)
+        {
+            if (string.IsNullOrEmpty(externalId))
+            {
+                return null;
+            }
+
+            var user = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                        where foundItem.OAuthServiceUserId == externalId
+                        select foundItem).SingleOrDefault();
+
+            return user;
+        }
     }
 }

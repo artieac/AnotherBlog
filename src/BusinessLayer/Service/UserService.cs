@@ -29,19 +29,16 @@ using AlwaysMoveForward.AnotherBlog.Common.Factories;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
-    public class UserService
+    public class UserService : AnotherBlogService
     {
- 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository) : base()
+
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
+            : base(unitOfWork)
         {
-            this.UnitOfWork = unitOfWork;
+            this.UserRepository = userRepository;
         }
 
-        protected IUnitOfWork UnitOfWork { get; private set; }
-
         protected IUserRepository UserRepository { get; private set; }
-
-        protected IOAuthRepository OAuthRepository { get; private set; }
 
         public AnotherBlogUser Save(long userId, bool isSiteAdmin, bool isApprovedCommenter, string userAbout)
         {
@@ -170,7 +167,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             AnotherBlogUser retVal = null;
 
-            AlwaysMoveForward.Common.DomainModel.User amfUser = this.GetAMFUserInfo(accessToken);
+            AlwaysMoveForward.Common.DomainModel.User amfUser = null;
 
             if (amfUser != null)
             {
@@ -189,9 +186,52 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return retVal;
         }
 
-        public User GetAMFUserInfo(IOAuthToken oauthToken)
+        public AnotherBlogUser GetByEmail(string email)
         {
-            return this.OAuthRepository.GetUserInfo(oauthToken);
+            return this.UserRepository.GetByEmail(email);
+        }
+
+        public AnotherBlogUser GetByExternalId(string externalId)
+        {
+            return this.UserRepository.GetByExternalId(externalId);
+        }
+
+        public AnotherBlogUser CreateFromAuth0(string email, string name, string auth0UserId)
+        {
+            AnotherBlogUser newUser = new AnotherBlogUser();
+            newUser.Email = email ?? string.Empty;
+            newUser.OAuthServiceUserId = auth0UserId ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                var nameParts = name.Split(' ', 2);
+                newUser.FirstName = nameParts[0];
+                newUser.LastName = nameParts.Length > 1 ? nameParts[1] : string.Empty;
+            }
+            else
+            {
+                newUser.FirstName = string.Empty;
+                newUser.LastName = string.Empty;
+            }
+
+            newUser.IsSiteAdministrator = false;
+            newUser.ApprovedCommenter = false;
+            newUser.About = string.Empty;
+
+            return this.UserRepository.Save(newUser);
+        }
+
+        public AnotherBlogUser UpdateExternalId(long userId, string externalId)
+        {
+            AnotherBlogUser user = this.UserRepository.GetById(userId);
+
+            if (user != null)
+            {
+                user.OAuthServiceUserId = externalId;
+                user = this.UserRepository.Save(user);
+            }
+
+            return user;
         }
     }
 }

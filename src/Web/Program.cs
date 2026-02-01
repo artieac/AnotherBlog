@@ -1,5 +1,6 @@
 using AlwaysMoveForward.AnotherBlog.Web;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
+using AlwaysMoveForward.AnotherBlog.Web.Configuration;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.Common.Utilities;
 using Microsoft.Extensions.Options;
@@ -60,6 +61,10 @@ builder.Services.AddScoped<AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Page
 builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("AnotherBlog"));
 builder.Services.Configure<DatabaseConfiguration>(builder.Configuration.GetSection("AlwaysMoveForward:Database"));
 builder.Services.Configure<OAuthSettings>(builder.Configuration.GetSection("AlwaysMoveForward:OAuth"));
+builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection("AlwaysMoveForward:Auth0"));
+
+// Add HttpClient for Auth0 API calls
+builder.Services.AddHttpClient();
 
 DatabaseConfiguration databaseConfiguration = new DatabaseConfiguration();
 builder.Configuration.GetSection("AlwaysMoveForward:Database").Bind(databaseConfiguration);
@@ -113,6 +118,7 @@ app.UseCors();
 
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Map routes

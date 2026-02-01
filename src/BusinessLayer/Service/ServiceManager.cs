@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        private UserService userService;
+        private UserService userService = null;
         public UserService UserService
         {
             get

@@ -41,25 +41,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         public IUnitOfWork UnitOfWork { get; set; }
 
-        public RepositoryManager()
-        {
-        }
-
         public RepositoryManager(UnitOfWork unitOfWork)
         {
             this.UnitOfWork = unitOfWork;
-        }
-
-        public IRepository<TargetType, int> GetRepository<TargetType>() where TargetType : class
-        {
-            IRepository<TargetType, int> retVal = null;
-
-            if (typeof(TargetType) == typeof(BlogEntryRepository))
-            {
-                retVal = (IRepository<TargetType, int>)this.BlogEntries;
-            }
-
-            return retVal;
         }
 
         // IAnotherBlogRepositoryManager interface members

@@ -31,17 +31,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             try
             {
-                string connectionString;
-
-                if (this.DatabaseConfiguration.EncryptionMethod == AlwaysMoveForward.Common.Encryption.EncryptedConfigurationSection.EncryptionMethodOptions.Internal)
-                {
-                    connectionString = this.DatabaseConfiguration.GetDecryptedConnectionString(DefaultEncryptionKey, DefaultSalt);
-                }
-                else
-                {
-                    connectionString = this.DatabaseConfiguration.GetDecryptedConnectionString();
-                }
-
                 UnitOfWork unitOfWork = this.CreateUnitOfWork();
                 IAnotherBlogRepositoryManager repositoryManager = this.CreateRepositoryManager(unitOfWork);
                 retVal = new ServiceManager(unitOfWork, repositoryManager);

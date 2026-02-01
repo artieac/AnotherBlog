@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -11,78 +11,69 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Security.Principal;
+using System.Security.Claims;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
-using Microsoft.Extensions.Options;
-using AlwaysMoveForward.Common.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 {
-    public class SecurityPrincipal : IPrincipal, IIdentity
+    public class SecurityPrincipal : ClaimsPrincipal
     {
         private ServiceManager ServiceManager { get; set; }
-      
-        public SecurityPrincipal(ServiceManager serviceManager, AnotherBlogUser currentUser) : this(serviceManager, currentUser, false) { }
+
+        public SecurityPrincipal(ServiceManager serviceManager, AnotherBlogUser currentUser)
+            : this(serviceManager, currentUser, false) { }
 
         public SecurityPrincipal(ServiceManager serviceManager, AnotherBlogUser currentUser, bool isAuthenticated)
+            : base(CreateClaimsIdentity(currentUser, isAuthenticated))
         {
             this.ServiceManager = serviceManager;
-            this.IsAuthenticated = isAuthenticated;
             this.CurrentUser = currentUser;
+        }
+
+        private static ClaimsIdentity CreateClaimsIdentity(AnotherBlogUser user, bool isAuthenticated)
+        {
+            var claims = new List<Claim>();
+
+            if (user != null)
+            {
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+                claims.Add(new Claim(ClaimTypes.Name, user.GetDisplayName() ?? string.Empty));
+
+                if (!string.IsNullOrEmpty(user.Email))
+                {
+                    claims.Add(new Claim(ClaimTypes.Email, user.Email));
+                }
+
+                if (user.IsSiteAdministrator)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, RoleType.Names.SiteAdministrator));
+                }
+
+                if (user.Roles != null)
+                {
+                    foreach (var role in user.Roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role.Value.ToString()));
+                    }
+                }
+            }
+
+            return new ClaimsIdentity(claims, isAuthenticated ? "Cookie" : null);
         }
 
         public AnotherBlogUser CurrentUser { get; private set; }
 
+        public bool IsAuthenticated => Identity?.IsAuthenticated ?? false;
+
+        public string Name => Identity?.Name ?? string.Empty;
+
         /// <summary>
-        /// Implement the IIDentity interface so that it can be used with built in .Net security methods
+        /// Override IsInRole to check against the current user's roles
         /// </summary>
-        #region IIdentity
-
-        public bool IsAuthenticated { get; set; }
-
-        public string AuthenticationType
-        {
-            get { return string.Empty; }
-        }
-
-        public string Name
-        {
-            get 
-            {
-                string retVal = string.Empty;
-                
-                if (this.CurrentUser != null)
-                {
-                    retVal = this.CurrentUser.GetDisplayName();
-                }
-
-                return retVal;
-            }
-        }
-
-        #endregion
-        /// <summary>
-        /// Implement the IPrincipal interface so that the current user can be thrown onto the current Threads
-        /// principal placeholder and passed around cleanly.
-        /// </summary>
-        #region IPrincipal
-
-        public IIdentity Identity
-        {
-            get { return this; }
-        }
-        /// <summary>
-        /// Is in role is not really used.  Originally I wanted to use the built in .Net security features (so it was used)
-        /// however with the multple blogs/user roles implementation that didn't fit this model anymore so its not used.
-        /// </summary>
-        /// <param name="targetRole"></param>
-        /// <returns></returns>
-        public bool IsInRole(string targetRole)
+        public override bool IsInRole(string targetRole)
         {
             bool retVal = false;
 
@@ -95,7 +86,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
                 if (retVal == false)
                 {
-                    foreach(int blogId in this.CurrentUser.Roles.Keys)
+                    foreach (long blogId in this.CurrentUser.Roles.Keys)
                     {
                         if (this.CurrentUser.Roles[blogId].ToString() == targetRole)
                         {
@@ -109,14 +100,9 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
             return retVal;
         }
 
-        #endregion
         /// <summary>
-        /// The replacement method for the IPrincipal.IsInRole method.  It determines if the user is in a specific
-        /// role for a specific blog
+        /// Determines if the user is in a specific role for a specific blog
         /// </summary>
-        /// <param name="targetRole">What role to check the user against.</param>
-        /// <param name="blogSubFolder">What blog to check the user against.</param>
-        /// <returns></returns>
         public bool IsInRole(string targetRole, string blogSubFolder)
         {
             bool retVal = false;
@@ -135,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                 {
                     Blog targetBlog = this.ServiceManager.BlogService.GetBySubFolder(blogSubFolder);
 
-                    if(targetBlog != null)
+                    if (targetBlog != null)
                     {
                         if (this.CurrentUser.Roles.ContainsKey(targetBlog.Id))
                         {
@@ -150,13 +136,10 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
 
             return retVal;
         }
+
         /// <summary>
-        /// Another version of the IsInRole method.  This one allows the caller to check if the user is in 
-        /// any one of the passed in roles.
+        /// Checks if the user is in any one of the passed in roles for a specific blog
         /// </summary>
-        /// <param name="targetRole"></param>
-        /// <param name="targetBlog"></param>
-        /// <returns></returns>
         public bool IsInRole(string[] targetRole, Blog targetBlog)
         {
             bool retVal = false;
@@ -185,7 +168,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities
                                 retVal = true;
                             }
                         }
-                     
                     }
                 }
             }
