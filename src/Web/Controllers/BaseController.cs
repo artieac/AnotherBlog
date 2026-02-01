@@ -68,6 +68,7 @@ public abstract class BaseController : Controller
         set
         {
             HttpContext.Items["CurrentPrincipal"] = value;
+            HttpContext.User = value;
         }
     }
 

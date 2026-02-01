@@ -22,12 +22,12 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Models;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 using AlwaysMoveForward.AnotherBlog.Web.Configuration;
+using AlwaysMoveForward.AnotherBlog.Web.Code;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
 
 public class UserController : PublicController
 {
-    private const string AuthCookieName = "AnotherBlogAuth";
     private const string Auth0StateSessionKey = "Auth0State";
     private readonly IDataProtectionProvider _dataProtectionProvider;
     private readonly Auth0Settings _auth0Settings;
@@ -75,7 +75,7 @@ public class UserController : PublicController
                 Expires = DateTimeOffset.Now.AddYears(1)
             };
 
-            Response.Cookies.Append(AuthCookieName, encryptedValue, cookieOptions);
+            Response.Cookies.Append(CookieManager.CookieNames.UserCookie, encryptedValue, cookieOptions);
 
             this.CurrentPrincipal = currentPrincipal;
         }
@@ -85,7 +85,7 @@ public class UserController : PublicController
     {
         try
         {
-            Response.Cookies.Delete(AuthCookieName);
+            Response.Cookies.Delete(CookieManager.CookieNames.UserCookie);
         }
         catch (Exception e)
         {

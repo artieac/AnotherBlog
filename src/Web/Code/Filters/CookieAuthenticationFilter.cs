@@ -10,7 +10,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
 public class CookieAuthenticationFilter : IAuthorizationFilter
 {
-    private const string AuthCookieName = ".ASPXAUTH";
     private readonly IDataProtectionProvider _dataProtectionProvider;
     private readonly ServiceManagerBuilder _serviceManagerBuilder;
 
@@ -26,6 +25,7 @@ public class CookieAuthenticationFilter : IAuthorizationFilter
     {
         var principal = ParseCookie(context.HttpContext);
         context.HttpContext.Items["CurrentPrincipal"] = principal;
+        context.HttpContext.User = principal;
     }
 
     public SecurityPrincipal ParseCookie(HttpContext httpContext)
@@ -35,7 +35,7 @@ public class CookieAuthenticationFilter : IAuthorizationFilter
 
         try
         {
-            var authCookie = httpContext.Request.Cookies[AuthCookieName];
+            var authCookie = httpContext.Request.Cookies[CookieManager.CookieNames.UserCookie];
 
             if (!string.IsNullOrEmpty(authCookie))
             {

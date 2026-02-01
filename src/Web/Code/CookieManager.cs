@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code
     {
         public struct CookieNames
         {
-            public static string UserCookie = "AMFUser";
+            public static string UserCookie = "AnotherBlogAuth";
             public static string ValidatedCookie = "Validated";
         }
 
