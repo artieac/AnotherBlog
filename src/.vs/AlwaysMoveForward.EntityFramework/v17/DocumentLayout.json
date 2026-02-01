@@ -3,8 +3,27 @@
   "WorkspaceRootPath": "C:\\personal\\sourcecode\\AnotherBlog\\src\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\appsettings.production.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\appsettings.production.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\code\\filters\\cookieauthenticationfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\code\\filters\\cookieauthenticationfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42F14647-C78F-7CA4-04E7-7223E34C8BAC}|..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\AlwaysMoveForward.Common.csproj|c:\\personal\\sourcecode\\alwaysmoveforward\\src\\common\\alwaysmoveforward.common\\encryption\\keyfileconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\views\\shared\\_userlogincontrol.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -34,7 +53,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,7 +69,72 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "Web\\appsettings.Development.json",
+              "ToolTip": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.Development.json",
+              "RelativeToolTip": "Web\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-01T17:37:33.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\Program.cs",
+              "RelativeDocumentMoniker": "Web\\Program.cs",
+              "ToolTip": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\Program.cs",
+              "RelativeToolTip": "Web\\Program.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAlwGAAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-01T17:10:24.518Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "KeyFileConfiguration.cs",
+              "DocumentMoniker": "C:\\personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Encryption\\KeyFileConfiguration.cs",
+              "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Encryption\\KeyFileConfiguration.cs",
+              "ToolTip": "C:\\personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Encryption\\KeyFileConfiguration.cs",
+              "RelativeToolTip": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Encryption\\KeyFileConfiguration.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAmwAoAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-01T16:57:26.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.json",
+              "RelativeDocumentMoniker": "Web\\appsettings.json",
+              "ToolTip": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.json",
+              "RelativeToolTip": "Web\\appsettings.json",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACUAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-01T16:51:28.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.Production.json",
+              "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.Production.json",
+              "RelativeDocumentMoniker": "Web\\appsettings.Production.json",
+              "ToolTip": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.Production.json",
+              "RelativeToolTip": "Web\\appsettings.Production.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-01T16:50:36.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "CookieManager.cs",
               "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\CookieManager.cs",
               "RelativeDocumentMoniker": "Web\\Code\\CookieManager.cs",
@@ -63,7 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "CookieAuthenticationFilter.cs",
               "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Filters\\CookieAuthenticationFilter.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Filters\\CookieAuthenticationFilter.cs",
@@ -76,20 +160,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "_UserLoginControl.cshtml",
               "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_UserLoginControl.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_UserLoginControl.cshtml",
               "ToolTip": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_UserLoginControl.cshtml",
               "RelativeToolTip": "Web\\Views\\Shared\\_UserLoginControl.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-02-01T16:35:10.109Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\UserRepository.cs",
@@ -102,7 +186,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "AnotherBlogDataContextCF.cs",
               "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Entities\\AnotherBlogDataContextCF.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Entities\\AnotherBlogDataContextCF.cs",
@@ -115,7 +199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\UserController.cs",

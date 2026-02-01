@@ -5,6 +5,7 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.Common.Utilities;
 using Microsoft.Extensions.Options;
 using AlwaysMoveForward.Common.Configuration;
+using AlwaysMoveForward.Common.Encryption;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,15 +60,33 @@ builder.Services.AddScoped<AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Page
 
 // Register application configuration
 builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("AnotherBlog"));
-builder.Services.Configure<DatabaseConfiguration>(builder.Configuration.GetSection("AlwaysMoveForward:Database"));
 builder.Services.Configure<OAuthSettings>(builder.Configuration.GetSection("AlwaysMoveForward:OAuth"));
 builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection("AlwaysMoveForward:Auth0"));
 
+// Register encryption configuration
+builder.Services.Configure<AESConfiguration>(builder.Configuration.GetSection(AESConfiguration.DEFAULT_SECTION));
+builder.Services.Configure<KeyFileConfiguration>(builder.Configuration.GetSection(KeyFileConfiguration.DEFAULT_SECTION));
+builder.Services.Configure<KeyStoreConfiguration>(builder.Configuration.GetSection(KeyStoreConfiguration.DEFAULT_SECTION));
+builder.Services.Configure<RSAXmlKeyFileConfiguration>(builder.Configuration.GetSection(RSAXmlKeyFileConfiguration.DEFAULT_SECTION));
+
+// Register DatabaseConfiguration with its encryption dependencies
+builder.Services.AddSingleton<IOptions<DatabaseConfiguration>>(sp =>
+{
+    var aesConfiguration = sp.GetRequiredService<IOptions<AESConfiguration>>();
+    var keyFileConfiguration = sp.GetRequiredService<IOptions<KeyFileConfiguration>>();
+    var keyStoreConfiguration = sp.GetRequiredService<IOptions<KeyStoreConfiguration>>();
+    var rsaXmlKeyFileConfiguration = sp.GetRequiredService<IOptions<RSAXmlKeyFileConfiguration>>();
+
+    var dbConfig = new DatabaseConfiguration(aesConfiguration, keyFileConfiguration, keyStoreConfiguration, rsaXmlKeyFileConfiguration);
+
+    // Bind the configuration values from appsettings
+    builder.Configuration.GetSection(DatabaseConfiguration.DEFAULT_SECTION).Bind(dbConfig);
+
+    return Options.Create(dbConfig);
+});
+
 // Add HttpClient for Auth0 API calls
 builder.Services.AddHttpClient();
-
-DatabaseConfiguration databaseConfiguration = new DatabaseConfiguration();
-builder.Configuration.GetSection("AlwaysMoveForward:Database").Bind(databaseConfiguration);
 
 //DatabaseConfiguration databaseConfiguration = builder.Configuration.GetValue<DatabaseConfiguration>("AlwaysMoveForward:Database");
 
