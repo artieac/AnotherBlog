@@ -27,7 +27,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
 
 public class UserController : PublicController
 {
-    private const string AuthCookieName = ".ASPXAUTH";
+    private const string AuthCookieName = "AnotherBlogAuth";
     private const string Auth0StateSessionKey = "Auth0State";
     private readonly IDataProtectionProvider _dataProtectionProvider;
     private readonly Auth0Settings _auth0Settings;

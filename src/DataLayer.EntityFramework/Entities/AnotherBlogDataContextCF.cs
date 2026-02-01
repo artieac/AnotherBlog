@@ -115,8 +115,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
                 .HasForeignKey("UserId");
             modelBuilder.Entity<BlogUser>()
                 .HasOne(bu => bu.Role)
-                .WithOne()
-                .HasForeignKey<BlogUser>("RoleId");
+                .WithMany()
+                .HasForeignKey("RoleId");
+            modelBuilder.Entity<BlogUser>()
+                .Navigation(bu => bu.Role)
+                .AutoInclude();
 
             // Comment
             modelBuilder.Entity<Comment>().ToTable("EntryComments");
@@ -153,7 +156,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
             // Role
             modelBuilder.Entity<Role>().ToTable("Roles");
             modelBuilder.Entity<Role>().HasKey(r => r.Id);
-            modelBuilder.Entity<Role>().Property(r => r.Id).HasColumnName("RoleId");
 
             // SiteInfo
             modelBuilder.Entity<SiteInfo>().ToTable("SiteInfo");
