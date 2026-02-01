@@ -31,19 +31,83 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             get { return "Id"; }
         }
 
+        private void PopulateRoles(AnotherBlogUser user)
+        {
+            if (user == null)
+            {
+                return;
+            }
+
+            user.Roles = new Dictionary<long, RoleType.Id>();
+
+            var blogUserRoles = from bu in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers
+                                where bu.User.Id == user.Id
+                                select new { BlogId = bu.Blog.Id, RoleId = bu.Role.Id };
+
+            foreach (var blogUserRole in blogUserRoles)
+            {
+                if (Enum.IsDefined(typeof(RoleType.Id), blogUserRole.RoleId))
+                {
+                    user.Roles[blogUserRole.BlogId] = (RoleType.Id)blogUserRole.RoleId;
+                }
+            }
+        }
+
+        private void PopulateRoles(IEnumerable<AnotherBlogUser> users)
+        {
+            if (users == null || !users.Any())
+            {
+                return;
+            }
+
+            var userIds = users.Select(u => u.Id).ToList();
+
+            var allBlogUserRoles = (from bu in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers
+                                    where userIds.Contains(bu.User.Id)
+                                    select new { UserId = bu.User.Id, BlogId = bu.Blog.Id, RoleId = bu.Role.Id })
+                                   .ToList();
+
+            foreach (var user in users)
+            {
+                user.Roles = new Dictionary<long, RoleType.Id>();
+
+                var userRoles = allBlogUserRoles.Where(r => r.UserId == user.Id);
+                foreach (var blogUserRole in userRoles)
+                {
+                    if (Enum.IsDefined(typeof(RoleType.Id), blogUserRole.RoleId))
+                    {
+                        user.Roles[blogUserRole.BlogId] = (RoleType.Id)blogUserRole.RoleId;
+                    }
+                }
+            }
+        }
+
+        public override AnotherBlogUser GetById(long id)
+        {
+            var user = base.GetById(id);
+            PopulateRoles(user);
+            return user;
+        }
+
+        public override IList<AnotherBlogUser> GetAll()
+        {
+            var users = base.GetAll();
+            PopulateRoles(users);
+            return users;
+        }
+
         public IList<AnotherBlogUser> GetBlogWriters(int blogId)
         {
-            // Query Users table and map to AnotherBlogUser
-            var users = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
-                        join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers on foundItem.Id equals userBlog.User.Id
-                        join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.Roles on userBlog.Role.Id equals userRoles.Id
-                        where (userRoles.Name == "Administrator" || userRoles.Name == "Blogger") &&
-                            userBlog.Blog.Id == blogId &&
-                            userBlog.Role.Id == userRoles.Id
-                        select foundItem;
+            var users = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                         join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers on foundItem.Id equals userBlog.User.Id
+                         join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.Roles on userBlog.Role.Id equals userRoles.Id
+                         where (userRoles.Name == "Administrator" || userRoles.Name == "Blogger") &&
+                             userBlog.Blog.Id == blogId &&
+                             userBlog.Role.Id == userRoles.Id
+                         select foundItem).ToList();
 
-            // Map User to AnotherBlogUser
-            return users.ToList();
+            PopulateRoles(users);
+            return users;
         }
 
         public AnotherBlogUser GetByOAuthServiceUserId(long userId)
@@ -52,6 +116,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                         where foundItem.Id == userId
                         select foundItem).SingleOrDefault();
 
+            PopulateRoles(user);
             return user;
         }
 
@@ -66,6 +131,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                         where foundItem.Email == email
                         select foundItem).SingleOrDefault();
 
+            PopulateRoles(user);
             return user;
         }
 
@@ -80,6 +146,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                         where foundItem.OAuthServiceUserId == externalId
                         select foundItem).SingleOrDefault();
 
+            PopulateRoles(user);
             return user;
         }
     }

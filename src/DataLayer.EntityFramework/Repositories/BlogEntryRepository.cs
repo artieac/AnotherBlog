@@ -438,6 +438,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             if (targetTag != null)
             {
+                // Populate BlogEntries from PostTags junction table
+                targetTag.BlogEntries = (from pt in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags
+                                         where pt.Tag.Id == targetTag.Id
+                                         select pt.Post).ToList();
+
                 if (publishedOnly == true)
                 {
                     retVal = targetTag.BlogEntries.Where(post => post.IsPublished == true).ToList();
