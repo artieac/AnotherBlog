@@ -119,4 +119,4 @@ UpgradeLog*.XML
 # Environment-specific configuration
 appsettings.production.json
 
-claude.MD
+.dockerignore

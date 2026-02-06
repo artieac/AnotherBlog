@@ -1,0 +1,50 @@
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+
+# IDE and editor files
+**/.vs/
+**/.vscode/
+**/.idea/
+**/*.user
+**/*.suo
+
+# Git
+**/.git/
+**/.gitignore
+
+# Node modules (will be installed during build)
+**/node_modules/
+
+# Test projects
+**/UnitTest/
+**/*Test*/
+**/*Tests*/
+
+# Documentation
+**/*.md
+**/docs/
+
+# Docker files (prevent recursive copying)
+**/Dockerfile*
+**/.dockerignore
+
+# Logs and temp files
+**/Logs/
+**/*.log
+**/*.tmp
+**/*.bak
+
+# Environment-specific config
+**/appsettings.Development.json
+**/appsettings.production.json
+
+# NuGet packages (will be restored during build)
+**/packages/
+
+# Legacy/unused projects
+**/DataLayer.LINQ/
+**/DataLayer.MOQ/
+**/DataLayer.NHibernate/
+**/AlwaysMoveForward.AnotherBlog.Web.NHibernate/
