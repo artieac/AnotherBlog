@@ -120,3 +120,4 @@ UpgradeLog*.XML
 appsettings.production.json
 
 .dockerignore
+.[Vv]s/ProjectEvaluation
