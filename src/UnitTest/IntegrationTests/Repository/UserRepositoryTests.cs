@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -28,8 +28,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         {
             IList<AnotherBlogUser> foundQuestions = this.RepositoryManager.UserRepository.GetAll();
 
-            Assert.IsNotNull(foundQuestions);
-            Assert.IsTrue(foundQuestions.Count > 0);
+            Assert.That(foundQuestions, Is.Not.Null);
+            Assert.That(foundQuestions.Count, Is.GreaterThan(0));
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
                 testItem = this.RepositoryManager.UserRepository.Save(testItem);
             }
 
-            Assert.IsNotNull(testItem);
-            Assert.IsTrue(testItem.Id > 0);
+            Assert.That(testItem, Is.Not.Null);
+            Assert.That(testItem.Id, Is.GreaterThan(0));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             User savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             AnotherBlogUser savedItem = this.RepositoryManager.UserRepository.Save(targetItem);
 
-            Assert.IsNotNull(savedItem);
+            Assert.That(savedItem, Is.Not.Null);
         }
 
 

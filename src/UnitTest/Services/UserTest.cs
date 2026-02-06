@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -50,8 +50,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
                 }
             }
 
-            Assert.IsNotNull(newUser);
-            Assert.AreEqual(newUser.Id, this.testUser.Id);
+            Assert.That(newUser, Is.Not.Null);
+            Assert.That(newUser.Id, Is.EqualTo(this.testUser.Id));
 
             using (this.Services.UnitOfWork.BeginTransaction())
             {
@@ -65,8 +65,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             IList<AnotherBlogUser> allUsers = Services.UserService.GetAll();
 
-            Assert.IsNotNull(allUsers);
-            Assert.Greater(allUsers.Count, 0);
+            Assert.That(allUsers, Is.Not.Null);
+            Assert.That(allUsers.Count, Is.GreaterThan(0));
         }
 
         [Test]
@@ -78,8 +78,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 
             AnotherBlogUser testIdUser = Services.UserService.GetById(testId);
 
-            Assert.IsNotNull(testIdUser);
-            Assert.AreEqual(testId, testIdUser.Id);
+            Assert.That(testIdUser, Is.Not.Null);
+            Assert.That(testIdUser.Id, Is.EqualTo(testId));
         }
     }
 }

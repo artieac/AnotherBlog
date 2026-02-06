@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -46,8 +46,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
                 blogTags = Services.TagService.GetAll(this.testBlog);
             }
 
-            Assert.IsNotNull(blogTags);
-            Assert.Greater(blogTags.Count, 0);
+            Assert.That(blogTags, Is.Not.Null);
+            Assert.That(blogTags.Count, Is.GreaterThan(0));
         }
 
         [Test]
@@ -60,8 +60,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
                 blogTags = Services.TagService.GetAllWithCount(this.testBlog);
             }
 
-            Assert.IsNotNull(blogTags);
-            Assert.Greater(blogTags.Count, 0);
+            Assert.That(blogTags, Is.Not.Null);
+            Assert.That(blogTags.Count, Is.GreaterThan(0));
         }
     }
 }

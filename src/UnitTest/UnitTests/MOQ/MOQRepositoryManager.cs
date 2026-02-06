@@ -20,6 +20,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
         Mock<IUserRepository> userRepository;
         Mock<IBlogListRepository> blogLists;
         Mock<IPollRepository> pollRepository;
+        Mock<IEntryCommentRepository> entryCommentRepository;
         
         public MOQRepositoryManager()
         {
@@ -148,6 +149,19 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
                 }
 
                 return this.userRepository.Object;
+            }
+        }
+
+        public IEntryCommentRepository EntryComments
+        {
+            get
+            {
+                if (this.entryCommentRepository == null)
+                {
+                    this.entryCommentRepository = new Mock<IEntryCommentRepository>();
+                }
+
+                return this.entryCommentRepository.Object;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -33,15 +33,15 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             SiteInfo newSite = new SiteInfo();
 
-            Assert.NotNull(newSite);
+            Assert.That(newSite, Is.Not.Null);
 
             newSite = Services.SiteInfoService.Save("TestSite", "", "", "default", "", "", "");
 
-            Assert.NotNull(newSite);
+            Assert.That(newSite, Is.Not.Null);
 
             newSite = Services.SiteInfoService.GetSiteInfo();
 
-            Assert.NotNull(newSite);
+            Assert.That(newSite, Is.Not.Null);
         }
     }
 }
