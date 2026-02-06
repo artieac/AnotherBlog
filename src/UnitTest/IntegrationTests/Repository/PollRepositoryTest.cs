@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -27,8 +27,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
         {
             IList<PollQuestion> foundQuestions = this.RepositoryManager.PollRepository.GetAll();
 
-            Assert.IsNotNull(foundQuestions);
-            Assert.IsTrue(foundQuestions.Count > 0);
+            Assert.That(foundQuestions, Is.Not.Null);
+            Assert.That(foundQuestions.Count, Is.GreaterThan(0));
         }
 
         [Test]
@@ -49,13 +49,13 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             PollQuestion savedQuestion = this.RepositoryManager.PollRepository.Save(newQuestion);
 
-            Assert.IsNotNull(savedQuestion);
+            Assert.That(savedQuestion, Is.Not.Null);
         }
 
         [Test]
         public void PollRepository_UpdateTest()
         {
-            PollQuestion targetQuestion = this.RepositoryManager.PollRepository.GetById(1);            
+            PollQuestion targetQuestion = this.RepositoryManager.PollRepository.GetById(1);
             PollOption newPoll = new PollOption();
             newPoll.OptionText = "TestPoll:" + Guid.NewGuid().ToString();
             newPoll.VoterAddresses = new List<VoterAddress>();
@@ -66,7 +66,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.IntegrationTests.Repository
 
             PollQuestion savedQuestion = this.RepositoryManager.PollRepository.Save(targetQuestion);
 
-            Assert.IsNotNull(savedQuestion);
+            Assert.That(savedQuestion, Is.Not.Null);
         }
     }
 }

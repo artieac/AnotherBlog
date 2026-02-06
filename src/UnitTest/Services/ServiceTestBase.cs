@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -13,7 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
+using Microsoft.Extensions.Options;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Configuration;
+using AlwaysMoveForward.Common.Encryption;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
@@ -22,7 +25,22 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 {
     public class ServiceTestBase
     {
-        ServiceManager Services { get; set; }
+        protected ServiceManager Services { get; set; }
+
+        public ServiceTestBase()
+        {
+            var databaseConfig = new DatabaseConfiguration(
+                Options.Create(new AESConfiguration()),
+                Options.Create(new KeyFileConfiguration()),
+                Options.Create(new KeyStoreConfiguration()),
+                Options.Create(new RSAXmlKeyFileConfiguration()))
+            {
+                ConnectionString = "Data Source=localhost\\DBLocal;Initial Catalog=AMForwardDb;User ID=test;Password=test;"
+            };
+            var options = Options.Create(databaseConfig);
+            var builder = new ServiceManagerBuilder(options);
+            this.Services = builder.CreateServiceManager();
+        }
 
         public ServiceTestBase(ServiceManager serviceManager)
         {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.Common", "..\..\AlwaysMoveForward\src\Common\AlwaysMoveForward.Common\AlwaysMoveForward.Common.csproj", "{42F14647-C78F-7CA4-04E7-7223E34C8BAC}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.Web", "Web\AlwaysMoveForward.AnotherBlog.Web.csproj", "{5C74067B-56FA-7253-62FE-C3D036F79F61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.DataLayer.EntityFramework", "DataLayer.EntityFramework\AlwaysMoveForward.AnotherBlog.DataLayer.EntityFramework.csproj", "{55522D0C-B7E6-D2CC-4DBE-0CF4A9A18D23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlwaysMoveForward.AnotherBlog.UnitTest", "UnitTest\AlwaysMoveForward.AnotherBlog.UnitTest.csproj", "{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,18 @@ Global
 		{55522D0C-B7E6-D2CC-4DBE-0CF4A9A18D23}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{55522D0C-B7E6-D2CC-4DBE-0CF4A9A18D23}.Release|x86.ActiveCfg = Release|Any CPU
 		{55522D0C-B7E6-D2CC-4DBE-0CF4A9A18D23}.Release|x86.Build.0 = Release|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Debug|x86.Build.0 = Debug|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Release|x86.ActiveCfg = Release|Any CPU
+		{8C72A092-A0F7-D51B-0E67-06EEC5AA3C28}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
