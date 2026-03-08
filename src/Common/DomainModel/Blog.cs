@@ -24,7 +24,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Id = -1;
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string SubFolder { get; set; }
@@ -32,6 +32,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public string WelcomeMessage { get; set; }
         public string ContactEmail { get; set; }
         public string Theme { get; set; }
-        public int CurrentPollId { get; set; }
+        public long CurrentPollId { get; set; }
     }
 }

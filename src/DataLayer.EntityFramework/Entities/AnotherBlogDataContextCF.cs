@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
+using MySqlConnector;
 
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_connectionString);
+                optionsBuilder.UseMySql(_connectionString, ServerVersion.AutoDetect(_connectionString));
             }
         }
 
@@ -191,11 +191,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 
         public IEnumerable<T> CreateQuery<T>(string queryString, IDictionary<string, object> queryParams) where T : class
         {
-            IList<SqlParameter> sqlParameters = new List<SqlParameter>();
+            IList<MySqlParameter> sqlParameters = new List<MySqlParameter>();
 
             foreach (string paramKey in queryParams.Keys)
             {
-                sqlParameters.Add(new SqlParameter(paramKey, queryParams[paramKey]));
+                sqlParameters.Add(new MySqlParameter(paramKey, queryParams[paramKey]));
             }
 
             return this.Set<T>().FromSqlRaw(queryString, sqlParameters.ToArray());
@@ -208,11 +208,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 
         public IEnumerable<T> ExecuteSQL<T>(string queryString, IDictionary<string, object> queryParams) where T : class
         {
-            IList<SqlParameter> sqlParameters = new List<SqlParameter>();
+            IList<MySqlParameter> sqlParameters = new List<MySqlParameter>();
 
             foreach (string paramKey in queryParams.Keys)
             {
-                sqlParameters.Add(new SqlParameter(paramKey, queryParams[paramKey]));
+                sqlParameters.Add(new MySqlParameter(paramKey, queryParams[paramKey]));
             }
 
             return this.Set<T>().FromSqlRaw(queryString, sqlParameters.ToArray());

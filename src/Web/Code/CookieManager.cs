@@ -1,6 +1,5 @@
 ﻿using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.Common.Utilities;
-using Azure;
 using Microsoft.AspNetCore.Http;
 using System.Runtime.CompilerServices;
 using static AlwaysMoveForward.AnotherBlog.Web.Code.CookieManager;

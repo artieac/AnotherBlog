@@ -305,7 +305,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.BlogEntryRepository.GetMostRead(maxResults);
         }
 
-        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
+        public IList<BlogPost> GetMostRead(long blogId, int maxResults)
         {
             return this.BlogEntryRepository.GetMostRead(blogId, maxResults);
         }
@@ -356,9 +356,9 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.BlogEntryRepository.Delete(targetEntry);
         }
 
-        public int UpdateTimesViewed(BlogPost targetPost)
+        public long UpdateTimesViewed(BlogPost targetPost)
         {
-            int retVal = 0;
+            long retVal = 0;
             
             if (targetPost != null)
             {

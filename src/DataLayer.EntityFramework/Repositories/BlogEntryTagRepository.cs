@@ -18,7 +18,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogEntryTagRepository : EntityFrameworkRepository<PostTag, int>
+    public class BlogEntryTagRepository : EntityFrameworkRepository<PostTag, long>
     {
         internal BlogEntryTagRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)

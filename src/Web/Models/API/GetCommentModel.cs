@@ -19,6 +19,6 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models.API
             this.Text = comment.Text;
         }
 
-        public int BlogPostId { get; set; }
+        public long BlogPostId { get; set; }
     }
 }

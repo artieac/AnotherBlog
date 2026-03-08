@@ -18,7 +18,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogRepository : EntityFrameworkRepository<Blog, int>, IBlogRepository
+    public class BlogRepository : EntityFrameworkRepository<Blog, long>, IBlogRepository
     {
         internal BlogRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)

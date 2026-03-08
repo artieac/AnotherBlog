@@ -60,7 +60,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Blog GetById(int id)
+        public Blog GetById(long id)
         {
             return this.BlogRepository.GetById(id);
         }
@@ -68,7 +68,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// Delete a blog entry.
         /// </summary>
         /// <param name="blogId"></param>
-        public void Delete(int blogId)
+        public void Delete(long blogId)
         {
             Blog targetBlog = this.BlogRepository.GetById(blogId);
 
@@ -106,7 +106,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <param name="about"></param>
         /// <param name="blogWelcome"></param>
         /// <returns></returns>
-        public Blog Save(int blogId, string description, string about, string blogWelcome)
+        public Blog Save(long blogId, string description, string about, string blogWelcome)
         {
             Blog itemToSave = null;
 
@@ -132,7 +132,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <param name="about"></param>
         /// <param name="blogWelcome"></param>
         /// <returns></returns>
-        public Blog Save(int blogId, string name, string subFolder, string description, string about, string blogWelcome, string blogTheme)
+        public Blog Save(long blogId, string name, string subFolder, string description, string about, string blogWelcome, string blogTheme)
         {
             Blog itemToSave = null;
 
