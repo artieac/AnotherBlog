@@ -27,19 +27,15 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     {
         public ServiceManager(
             UnitOfWork unitOfWork, 
-            IAnotherBlogRepositoryManager repositoryManager, 
-            OAuthClientBase oauthClient)
+            IAnotherBlogRepositoryManager repositoryManager)
         {
             this.UnitOfWork = unitOfWork;
             this.RepositoryManager = repositoryManager;
-            this.OAuthClient = oauthClient;
         }
 
         public UnitOfWork UnitOfWork { get; set; }
 
         public IAnotherBlogRepositoryManager RepositoryManager { get; set; }
-
-        public OAuthClientBase OAuthClient { get; private set; }
 
         private SiteInfoService siteInfo;
         public SiteInfoService SiteInfoService
@@ -125,14 +121,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
         }
 
-        private UserService userService;
+        private UserService userService = null;
         public UserService UserService
         {
             get
             {
                 if (this.userService == null)
                 {
-                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository,  new OAuthRepository(this.OAuthClient));
+                    this.userService = new UserService(this.UnitOfWork, this.RepositoryManager.UserRepository);
                 }
 
                 return this.userService;
@@ -150,6 +146,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 }
 
                 return this.pollService;
+            }
+        }
+
+        private CommentService commentService;
+        public CommentService CommentService
+        {
+            get
+            {
+                if (this.commentService == null)
+                {
+                    this.commentService = new CommentService(this.UnitOfWork, this.RepositoryManager.EntryComments);
+                }
+
+                return this.commentService;
             }
         }
     }

@@ -8,13 +8,9 @@
  * Contributors:
  *    Arthur Correa – initial contribution
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using System.Web.Routing;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
 {
@@ -22,7 +18,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Extensions
     {
         #region HtmlHelper extensions
 
-        public static IHtmlString FilterOption(this HtmlHelper htmlHelper, string optionName, string selectedOption)
+        public static IHtmlContent FilterOption(this IHtmlHelper htmlHelper, string optionName, string selectedOption)
         {
             return htmlHelper.Raw(GenerateFilterOption(optionName, selectedOption));
         }

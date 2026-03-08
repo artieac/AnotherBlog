@@ -1,126 +1,116 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using AlwaysMoveForward.Common.Utilities;
-using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters
+namespace AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
+
+/// <summary>
+/// Authorization filter attribute for Web API actions using .NET's TypeFilter pattern.
+/// </summary>
+public class WebAPIAuthorizationAttribute : TypeFilterAttribute
 {
-    public class WebAPIAuthorizationAttribute: System.Web.Http.AuthorizeAttribute
+    public WebAPIAuthorizationAttribute(string requiredRoles = "", bool isBlogSpecific = true)
+        : base(typeof(WebAPIAuthorizationFilter))
     {
-        public WebAPIAuthorizationAttribute()
-            : base()
+        Arguments = [requiredRoles, isBlogSpecific];
+    }
+}
+
+/// <summary>
+/// The actual authorization filter implementation with DI support.
+/// </summary>
+public class WebAPIAuthorizationFilter : IAsyncAuthorizationFilter
+{
+    private readonly ServiceManagerBuilder _serviceManagerBuilder;
+    private readonly string _requiredRoles;
+    private readonly bool _isBlogSpecific;
+
+    public WebAPIAuthorizationFilter(
+        ServiceManagerBuilder serviceManagerBuilder,
+        string requiredRoles,
+        bool isBlogSpecific)
+    {
+        _serviceManagerBuilder = serviceManagerBuilder;
+        _requiredRoles = requiredRoles;
+        _isBlogSpecific = isBlogSpecific;
+    }
+
+    public Task OnAuthorizationAsync(AuthorizationFilterContext context)
+    {
+        bool isAuthorized = false;
+
+        var currentPrincipal = context.HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
+
+        try
         {
-            this.RequiredRoles = string.Empty; 
-            this.IsBlogSpecific = true;
-        }
-
-        public string RequiredRoles { get; set; }
-        public bool IsBlogSpecific { get; set; }
-
-        protected Blog GetTargetBlog(System.Web.Http.Controllers.HttpActionContext actionContext)
-        {
-            Blog retVal = null;
-
-            try
+            if (currentPrincipal != null)
             {
-                string[] urlSegments = actionContext.Request.RequestUri.Segments;
-
-                if (urlSegments.Length >= 2)
+                if (string.IsNullOrEmpty(_requiredRoles))
                 {
-                    ServiceManager serviceManager = ServiceManagerBuilder.BuildServiceManager();
-                    retVal = serviceManager.BlogService.GetByName(urlSegments[1].Substring(0, urlSegments[1].Length - 1));
-                }
-            }
-            catch (Exception e)
-            {
-                LogManager.GetLogger().Error(e);
-            }
-
-            return retVal;
-        }
-
-        #region IAuthorizationFilter Members
-
-        protected override bool IsAuthorized(System.Web.Http.Controllers.HttpActionContext actionContext)
-        {
-            bool retVal = false;
-
-            SecurityPrincipal currentPrincipal = CookieAuthenticationParser.ParseCookie(HttpContext.Current.Request.Cookies);
-
-            try
-            {
-                if (currentPrincipal != null)
-                {
-                    if (string.IsNullOrEmpty(this.RequiredRoles))
+                    if (currentPrincipal.IsAuthenticated)
                     {
-                        // no required roles allow everyone.  But since this is being flagged at all
-                        // we want to be sure that the useris at least logged in
-                        if (currentPrincipal != null)
+                        isAuthorized = true;
+                    }
+                }
+                else
+                {
+                    string[] roleList = _requiredRoles.Split(',');
+
+                    if (!_isBlogSpecific)
+                    {
+                        foreach (var role in roleList)
                         {
-                            if (currentPrincipal.IsAuthenticated == true)
+                            if (currentPrincipal.IsInRole(role))
                             {
-                                retVal = true;
+                                isAuthorized = true;
+                                break;
                             }
                         }
                     }
                     else
                     {
-                        // If no currentUser then they can't have the desired roles
-                        if (currentPrincipal != null)
-                        {
-                            string[] roleList = this.RequiredRoles.Split(',');
-
-                            if (this.IsBlogSpecific == false)
-                            {
-                                for (int i = 0; i < roleList.Count(); i++)
-                                {
-                                    if (currentPrincipal.IsInRole(roleList[i]))
-                                    {
-                                        retVal = true;
-                                        break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Blog targetBlog = this.GetTargetBlog(actionContext);
-
-                                // If no currentUser then they can't have the desired roles
-                                if (currentPrincipal != null)
-                                {
-                                    retVal = currentPrincipal.IsInRole(roleList, targetBlog);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // no required roles allow everyone.  But since this is being flagged at all
-                            // we want to be sure that the useris at least logged in
-                            if (currentPrincipal != null)
-                            {
-                                if (currentPrincipal.IsAuthenticated == true)
-                                {
-                                    retVal = true;
-                                }
-                            }
-                        }
-
+                        Blog targetBlog = GetTargetBlog(context);
+                        isAuthorized = currentPrincipal.IsInRole(roleList, targetBlog);
                     }
                 }
             }
-            catch (Exception e)
-            {
-                LogManager.GetLogger().Error(e);
-            }
-
-            return retVal;
+        }
+        catch (Exception e)
+        {
+            LogManager.GetLogger().Error(e);
         }
 
-        #endregion
+        if (!isAuthorized)
+        {
+            context.Result = new UnauthorizedResult();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Blog GetTargetBlog(AuthorizationFilterContext context)
+    {
+        Blog result = null;
+
+        try
+        {
+            var request = context.HttpContext.Request;
+            var pathSegments = request.Path.Value?.Split('/', StringSplitOptions.RemoveEmptyEntries);
+
+            if (pathSegments != null && pathSegments.Length >= 2)
+            {
+                var serviceManager = _serviceManagerBuilder.CreateServiceManager();
+                result = serviceManager.BlogService.GetBySubFolder(pathSegments[1]);
+            }
+        }
+        catch (Exception e)
+        {
+            LogManager.GetLogger().Error(e);
+        }
+
+        return result;
     }
 }

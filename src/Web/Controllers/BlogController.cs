@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -8,13 +8,8 @@
  * Contributors:
  *    Arthur Correa – initial contribution
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-
+using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -22,239 +17,248 @@ using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.Web.Models;
 using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers
+namespace AlwaysMoveForward.AnotherBlog.Web.Controllers;
+
+public class BlogController : PublicController
 {
-    public class BlogController : PublicController
+    public BlogController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
     {
-        public CommonBlogModel InitializeCommonModel(string blogSubFolder)
-        {
-            ViewBag.BlogSubFolder = blogSubFolder;
+    }
 
-            CommonBlogModel retVal = new CommonBlogModel();
-            retVal = new CommonBlogModel();
-            retVal.TargetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
-            retVal.Common = this.InitializeCommonModel(retVal.TargetBlog);
-            return retVal;
+    public CommonBlogModel InitializeCommonModel(string blogSubFolder)
+    {
+        ViewBag.BlogSubFolder = blogSubFolder;
+
+        CommonBlogModel retVal = new CommonBlogModel();
+        retVal = new CommonBlogModel();
+        retVal.TargetBlog = Services.BlogService.GetBySubFolder(blogSubFolder);
+        retVal.Common = this.InitializeCommonModel(retVal.TargetBlog);
+        return retVal;
+    }
+
+    public CalendarModel InitializeCalendarModel(Blog targetBlog, DateTime targetMonth)
+    {
+        CalendarModel retVal = new CalendarModel();
+        retVal.RouteInformation = "/Blog/" + targetBlog.SubFolder + "/BlogPost";
+        retVal.TargetBlog = targetBlog;
+        retVal.TargetMonth = targetMonth;
+        retVal.CurrentMonthBlogDates = new List<DateTime>();
+
+        IList<BlogPost> blogDates = Services.BlogEntryService.GetByMonth(retVal.TargetBlog, targetMonth, true);
+
+        for (int i = 0; i < blogDates.Count; i++)
+        {
+            retVal.CurrentMonthBlogDates.Add(blogDates[i].DatePosted.Date);
         }
 
-        public CalendarModel InitializeCalendarModel(Blog targetBlog, DateTime targetMonth)
+        return retVal;
+    }
+
+    [Route("Blog/{blogSubFolder}/About")]
+    [HttpGet]
+    public IActionResult About(string blogSubFolder)
+    {
+        BlogModel model = new BlogModel();
+        model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+        model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
+        model.BlogCommon.Common.ContentTitle = "About " + model.BlogCommon.TargetBlog.Name;
+
+        if (model.BlogCommon.TargetBlog != null)
         {
-            CalendarModel retVal = new CalendarModel();
-            retVal.RouteInformation = "/Blog/" + targetBlog.SubFolder + "/BlogPost";
-            retVal.TargetBlog = targetBlog;
-            retVal.TargetMonth = targetMonth;
-            retVal.CurrentMonthBlogDates = new List<DateTime>();
+            model.BlogWriters = Services.UserService.GetBlogWriters(model.BlogCommon.TargetBlog);
+        }
+        else
+        {
+            model.BlogWriters = new List<AnotherBlogUser>();
+        }
 
-            IList<BlogPost> blogDates = Services.BlogEntryService.GetByMonth(retVal.TargetBlog, targetMonth, true);
+        return this.View(model);
+    }
 
-            for (int i = 0; i < blogDates.Count; i++)
+    [Route("Blog/{blogSubFolder}/BlogPosts")]
+    [HttpGet]
+    public IActionResult Index(string blogSubFolder, int? page)
+    {
+        BlogModel model = new BlogModel();
+        model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+
+        IList<BlogPost> foundPosts = null;
+        int currentPageIndex = 0;
+
+        if (model.BlogCommon.TargetBlog != null)
+        {
+            if (page.HasValue == true)
             {
-                retVal.CurrentMonthBlogDates.Add(blogDates[i].DatePosted.Date);
+                currentPageIndex = page.Value - 1;
             }
-
-            return retVal;
-        }
-
-        [Route("Blog/{blogSubFolder}/About"), HttpGet()]
-        public ActionResult About(string blogSubFolder)
-        {
-            BlogModel model = new BlogModel();
-            model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
-            model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            model.BlogCommon.Common.ContentTitle = "About " + model.BlogCommon.TargetBlog.Name;
 
             if (model.BlogCommon.TargetBlog != null)
             {
-                model.BlogWriters = Services.UserService.GetBlogWriters(model.BlogCommon.TargetBlog);
+                foundPosts = Services.BlogEntryService.GetAllByBlog(model.BlogCommon.TargetBlog, true);
             }
-            else
-            {
-                model.BlogWriters = new List<AnotherBlogUser>();
-            }
-
-            return this.View(model);
+        }
+        else
+        {
+            foundPosts = new List<BlogPost>();
+            model.BlogCommon.Common.ContentTitle = string.Empty;
         }
 
-        [Route("Blog/{blogSubFolder}/BlogPosts"), HttpGet()]
-        public ActionResult Index(string blogSubFolder, int? page)
-        {
-            BlogModel model = new BlogModel();
-            model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+        model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
+        model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
+        return this.View(model);
+    }
 
-            IList<BlogPost> foundPosts = null;
-            int currentPageIndex = 0;
+    [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}")]
+    [HttpGet]
+    public IActionResult Month(string blogSubFolder, int year, int month, int? page)
+    {
+        BlogModel model = new BlogModel();
+        model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+
+        IList<BlogPost> foundPosts = null;
+        int currentPageIndex = 0;
+
+        if (model.BlogCommon.TargetBlog != null)
+        {
+            if (page.HasValue == true)
+            {
+                currentPageIndex = page.Value - 1;
+            }
 
             if (model.BlogCommon.TargetBlog != null)
             {
-                if (page.HasValue == true)
-                {
-                    currentPageIndex = page.Value - 1;
-                }
+                DateTime filterDate = new DateTime(year, month, 1);
+                model.BlogCommon.Common.TargetMonth = filterDate;
 
-                if (model.BlogCommon.TargetBlog != null)
-                {
-                    foundPosts = Services.BlogEntryService.GetAllByBlog(model.BlogCommon.TargetBlog, true);
-                }
+                foundPosts = Services.BlogEntryService.GetByMonth(model.BlogCommon.TargetBlog, filterDate, true);
+                model.BlogCommon.Common.ContentTitle = "Blog entries for " + filterDate.ToString("MMMM") + " " + filterDate.ToString("yyyy");
             }
-            else
-            {
-                foundPosts = new PagedList<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = string.Empty;
-            }
-
-            model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
-            model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return this.View(model);
+        }
+        else
+        {
+            foundPosts = new List<BlogPost>();
+            model.BlogCommon.Common.ContentTitle = string.Empty;
         }
 
-     
-        [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}"), HttpGet()]
-        public ActionResult Month(string blogSubFolder, int year, int month, int? page)
-        {
-            BlogModel model = new BlogModel();
-            model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+        model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
+        model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
+        return this.View("Index", model);
+    }
 
-            IList<BlogPost> foundPosts = null;
-            int currentPageIndex = 0;
+    [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}")]
+    [HttpGet]
+    public IActionResult Day(string blogSubFolder, int year, int month, int day, int? page)
+    {
+        BlogModel model = new BlogModel();
+        model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+
+        IList<BlogPost> foundPosts = null;
+        int currentPageIndex = 0;
+
+        if (model.BlogCommon.TargetBlog != null)
+        {
+            if (page.HasValue == true)
+            {
+                currentPageIndex = page.Value - 1;
+            }
 
             if (model.BlogCommon.TargetBlog != null)
             {
-                if (page.HasValue == true)
-                {
-                    currentPageIndex = page.Value - 1;
-                }
+                DateTime filterDate = new DateTime(year, month, day);
+                model.BlogCommon.Common.TargetMonth = filterDate;
 
-                if (model.BlogCommon.TargetBlog != null)
-                {
-                    DateTime filterDate = new DateTime(year, month, 1);
-                    model.BlogCommon.Common.TargetMonth = filterDate;
-
-                    foundPosts = Services.BlogEntryService.GetByMonth(model.BlogCommon.TargetBlog, filterDate, true);
-                    model.BlogCommon.Common.ContentTitle = "Blog entries for " + filterDate.ToString("MMMM") + " " + filterDate.ToString("yyyy");
-                }
+                foundPosts = Services.BlogEntryService.GetByDate(model.BlogCommon.TargetBlog, filterDate, true);
+                model.BlogCommon.Common.ContentTitle = "Blog entries for " + filterDate.ToString("D");
             }
-            else
-            {
-                foundPosts = new PagedList<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = string.Empty;
-            }
-
-            model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
-            model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return this.View("Index", model);
+        }
+        else
+        {
+            foundPosts = new List<BlogPost>();
+            model.BlogCommon.Common.ContentTitle = string.Empty;
         }
 
-        [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}"), HttpGet()]
-        public ActionResult Day(string blogSubFolder, int year, int month, int day, int? page)
-        {
-            BlogModel model = new BlogModel();
-            model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+        model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
+        model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
+        return this.View("Index", model);
+    }
 
-            IList<BlogPost> foundPosts = null;
-            int currentPageIndex = 0;
+    [Route("Blog/{blogSubFolder}/BlogPosts/Tag/{targetTag}")]
+    [HttpGet]
+    public IActionResult Tag(string blogSubFolder, string targetTag, int? page)
+    {
+        BlogModel model = new BlogModel();
+        model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+
+        IList<BlogPost> foundPosts = null;
+        int currentPageIndex = 0;
+
+        if (model.BlogCommon.TargetBlog != null)
+        {
+            if (page.HasValue == true)
+            {
+                currentPageIndex = page.Value - 1;
+            }
 
             if (model.BlogCommon.TargetBlog != null)
             {
-                if (page.HasValue == true)
-                {
-                    currentPageIndex = page.Value - 1;
-                }
-
-                if (model.BlogCommon.TargetBlog != null)
-                {
-                    DateTime filterDate = new DateTime(year, month, day);
-                    model.BlogCommon.Common.TargetMonth = filterDate;
-
-                    foundPosts = Services.BlogEntryService.GetByDate(model.BlogCommon.TargetBlog, filterDate, true);
-                    model.BlogCommon.Common.ContentTitle = "Blog entries for " + filterDate.ToString("D");
-                }
+                targetTag = AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(targetTag);
+                foundPosts = Services.BlogEntryService.GetByTag(model.BlogCommon.TargetBlog, targetTag, true);
+                model.BlogCommon.Common.ContentTitle = "Blog entries for " + targetTag;
             }
-            else
-            {
-                foundPosts = new List<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = string.Empty;
-            }
-
-            model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
-            model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return this.View("Index", model);
         }
-
-        [Route("Blog/{blogSubFolder}/BlogPosts/Tag/{targetTag}"), HttpGet()]
-        public ActionResult Tag(string blogSubFolder, string targetTag, int? page)
+        else
         {
-            BlogModel model = new BlogModel();
-            model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
-
-            IList<BlogPost> foundPosts = null;
-            int currentPageIndex = 0;
-
-            if (model.BlogCommon.TargetBlog != null)
-            {
-                if (page.HasValue == true)
-                {
-                    currentPageIndex = page.Value - 1;
-                }
-
-                if (model.BlogCommon.TargetBlog != null)
-                {
-                    targetTag = AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(targetTag);
-                    foundPosts = Services.BlogEntryService.GetByTag(model.BlogCommon.TargetBlog, targetTag, true);
-                    model.BlogCommon.Common.ContentTitle = "Blog entries for " + targetTag;
-                }
-            }
-            else
-            {
-                foundPosts = new PagedList<BlogPost>();
-                model.BlogCommon.Common.ContentTitle = string.Empty;
-            }
-
-            model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
-            model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-            return this.View("Index", model);
+            foundPosts = new List<BlogPost>();
+            model.BlogCommon.Common.ContentTitle = string.Empty;
         }
 
-        [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}/{title}"), HttpGet()]
-        public ActionResult Post(string blogSubFolder, string year, string month, string day, string title)
+        model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
+        model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
+        return this.View("Index", model);
+    }
+
+    [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}/{title}")]
+    [HttpGet]
+    public IActionResult Post(string blogSubFolder, string year, string month, string day, string title)
+    {
+        BlogPostModel model = new BlogPostModel();
+        model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+
+        model.BlogCommon.Common.ContentTitle = "View blog entry";
+        model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
+
+        if (model.BlogCommon.TargetBlog != null)
         {
-            BlogPostModel model = new BlogPostModel();
-            model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
+            DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
+            model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
 
-            model.BlogCommon.Common.ContentTitle = "View blog entry";
-            model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-
-            if (model.BlogCommon.TargetBlog != null)
+            using (this.Services.UnitOfWork.BeginTransaction())
             {
-                DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
-                model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
-
-                using (this.Services.UnitOfWork.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        Services.BlogEntryService.UpdateTimesViewed(model.Post);
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                        this.Services.UnitOfWork.EndTransaction(false);
-                    }
+                    Services.BlogEntryService.UpdateTimesViewed(model.Post);
+                    this.Services.UnitOfWork.EndTransaction(true);
                 }
-
-                model.Author = model.Post.Author;
-                model.Tags = model.Post.Tags;
-                model.PreviousEntry = Services.BlogEntryService.GetPreviousEntry(model.BlogCommon.TargetBlog, model.Post);
-                model.NextEntry = Services.BlogEntryService.GetNextEntry(model.BlogCommon.TargetBlog, model.Post);
-            }
-            else
-            {
-                model.Post = new BlogPost();
-                model.Tags = new List<Tag>();
-                model.Comments = new PagedList<Comment>();
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                    this.Services.UnitOfWork.EndTransaction(false);
+                }
             }
 
-            return this.View(model);
+            model.Author = model.Post.Author;
+            model.Tags = model.Post.Tags;
+            model.PreviousEntry = Services.BlogEntryService.GetPreviousEntry(model.BlogCommon.TargetBlog, model.Post);
+            model.NextEntry = Services.BlogEntryService.GetNextEntry(model.BlogCommon.TargetBlog, model.Post);
         }
+        else
+        {
+            model.Post = new BlogPost();
+            model.Tags = new List<Tag>();
+            model.Comments = new List<Comment>();
+        }
+
+        return this.View(model);
     }
 }

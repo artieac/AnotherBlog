@@ -4,10 +4,10 @@
 @using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.Name;
-    ViewBag.Author = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultAuthor;
-    ViewBag.Description = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.About;
-    ViewBag.Keywords = AlwaysMoveForward.AnotherBlog.Web.MvcApplication.SiteInfo.DefaultKeywords;
+    ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.Name;
+    ViewBag.Author = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.DefaultAuthor;
+    ViewBag.Description = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.About;
+    ViewBag.Keywords = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.DefaultKeywords;
     ViewBag.Common = Model.Common;
 }
 <div class="bodyContent">        

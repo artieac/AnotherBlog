@@ -1,35 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
+
+namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
+
+[Route("api/[controller]")]
+public class TagController : BaseApiController
 {
-    public class TagController : BaseApiController
+    public TagController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
     {
-        [Route("api/Blog/{blogSubFolder}/Tags")]
-        public IList<TagCountModel> Get(string blogSubFolder)
+    }
+
+    [Route("/api/Blog/{blogSubFolder}/Tags")]
+    [HttpGet]
+    public IList<TagCountModel> Get(string blogSubFolder)
+    {
+        IList<TagCountModel> retVal = new List<TagCountModel>();
+
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+
+        if (targetBlog != null)
         {
-            IList<TagCountModel> retVal = new List<TagCountModel>();
+            System.Collections.IList tagCounts = new System.Collections.ArrayList();
+            tagCounts = this.Services.TagService.GetAllWithCount(targetBlog);
 
-            Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-
-            if (targetBlog != null)
+            foreach (TagCount tagCount in tagCounts)
             {
-                System.Collections.IList tagCounts = new System.Collections.ArrayList();
-                tagCounts = this.Services.TagService.GetAllWithCount(targetBlog);
-
-                foreach(TagCount tagCount in tagCounts)
-                {
-                    retVal.Add(new TagCountModel(blogSubFolder, tagCount));
-                }
+                retVal.Add(new TagCountModel(blogSubFolder, tagCount));
             }
-
-            return retVal;
         }
+
+        return retVal;
     }
 }

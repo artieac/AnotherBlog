@@ -11,7 +11,7 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Models
 
         public string GetPageTitle()
         {
-            return MvcApplication.SiteInfo.Name;
+            return WebApplicationState.SiteInfo.Name;
         }
     }
 }

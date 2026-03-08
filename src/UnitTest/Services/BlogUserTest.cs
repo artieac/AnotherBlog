@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -61,12 +61,12 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         [Test]
         public void BlogUserService_Save()
         {
-            Assert.IsNotNull(this.TestBlog);
-            Assert.IsNotNull(this.TestUser);
+            Assert.That(this.TestBlog, Is.Not.Null);
+            Assert.That(this.TestUser, Is.Not.Null);
 
             AnotherBlogUser testUser = Services.UserService.AddBlogRole(this.TestUser.Id, this.TestBlog.Id, this.testRole);
 
-            Assert.IsTrue(this.HasRole(testUser, testRole));
+            Assert.That(this.HasRole(testUser, testRole), Is.True);
 
             Services.UserService.RemoveBlogRole(this.TestUser.Id, this.TestBlog.Id);
         }
@@ -74,12 +74,12 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         [Test]
         public void BlogUserService_GetUserBlog()
         {
-            Assert.IsNotNull(this.TestBlog);
-            Assert.IsNotNull(this.TestUser);
+            Assert.That(this.TestBlog, Is.Not.Null);
+            Assert.That(this.TestUser, Is.Not.Null);
 
             AnotherBlogUser testUser = this.Services.UserService.AddBlogRole(this.TestUser.Id, this.TestBlog.Id, testRole);
 
-            Assert.IsTrue(this.HasRole(this.TestUser, testRole));
+            Assert.That(this.HasRole(this.TestUser, testRole), Is.True);
 
             Services.UserService.RemoveBlogRole(this.TestUser.Id, this.TestBlog.Id);
         }
@@ -87,16 +87,16 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         [Test]
         public void BlogUserService_DeleteUserBlog()
         {
-            Assert.IsNotNull(this.TestBlog);
-            Assert.IsNotNull(this.TestUser);
+            Assert.That(this.TestBlog, Is.Not.Null);
+            Assert.That(this.TestUser, Is.Not.Null);
 
             AnotherBlogUser testUser = this.Services.UserService.AddBlogRole(this.TestUser.Id, this.TestBlog.Id, testRole);
 
-            Assert.IsTrue(this.HasRole(this.TestUser, testRole));
+            Assert.That(this.HasRole(this.TestUser, testRole), Is.True);
 
             Services.UserService.RemoveBlogRole(this.TestUser.Id, this.TestBlog.Id);
 
-            Assert.IsFalse(this.HasRole(this.TestUser, testRole));
+            Assert.That(this.HasRole(this.TestUser, testRole), Is.False);
         }
     }
 }

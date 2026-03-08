@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+using Microsoft.AspNetCore.Http;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 {
     public class PageManager
     {
-        public static bool IsSiteAdministrator()
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public PageManager(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public bool IsSiteAdministrator()
         {
             bool retVal = false;
 
-            SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
+            var currentPrincipal = _httpContextAccessor.HttpContext?.Items["CurrentPrincipal"] as SecurityPrincipal;
 
             if (currentPrincipal != null)
             {
@@ -26,11 +28,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static bool CanAccessAdminTool()
+        public bool CanAccessAdminTool()
         {
             bool retVal = false;
 
-            SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
+            var currentPrincipal = _httpContextAccessor.HttpContext?.Items["CurrentPrincipal"] as SecurityPrincipal;
 
             if (currentPrincipal != null)
             {
@@ -44,11 +46,11 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             return retVal;
         }
 
-        public static string GetCurrentTheme(AlwaysMoveForward.AnotherBlog.Web.Models.CommonModel commonModel)
+        public string GetCurrentTheme(AlwaysMoveForward.AnotherBlog.Web.Models.CommonModel commonModel)
         {
             string retVal = "default";
 
-            SiteInfo siteInfo = MvcApplication.SiteInfo;
+            SiteInfo siteInfo = WebApplicationState.SiteInfo;
 
             if (siteInfo != null)
             {

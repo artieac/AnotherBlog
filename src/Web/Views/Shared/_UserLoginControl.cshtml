@@ -4,20 +4,21 @@
     <div id="loginFormsDiv">
         @if (this.Context.User != null && this.Context.User.Identity.IsAuthenticated == false)
         {
-            <form id='loginForm' action="/User/Login" method='post'>   
+            <form id='loginForm' action="/User/Login" method='post'>
                 <div>
                     <span>
-                        <input type="submit" class="btn btn-sm btn-info" id="submitLoginButton" value="log in"/>               
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                        <input type="submit" class="btn btn-sm btn-info" id="submitLoginButton" value="log in"/>
                     </span>
                 </div>
                 <br />
             </form>
         }
         else
-        { 
-            <form id='logoutForm' action="/User/Logout" method='post'>   
-                <span class="loginLabel">Hello</span>&nbsp;<a href='@Utils.GetInSecureURL(ViewBag.BlogSubFolder, "User/Preferences", HttpContext.Current.Request.Url.Authority)'>@this.Context.User.Identity.Name</a>
-                <button type="button" class="btn btn-sm btn-info" id="submitLogoutButton" onclick="SiteLogin.SubmitLogout();">log out</button>
+        {
+            <form id='logoutForm' action="/User/Logout" method='post'>
+                <span class="loginLabel">Hello</span>&nbsp;<a href='@Utils.GetInSecureURL(ViewBag.BlogSubFolder, "User/Preferences", Context.Request.Host.Value)'>@this.Context.User.Identity.Name</a>
+                <button type="submit" class="btn btn-sm btn-info" id="submitLogoutButton">log out</button>
             </form>
         } 
     </div>

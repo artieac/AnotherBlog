@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using Moq;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.NHibernate;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
+using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.UnitTest.MOQ.Repositories
 {
-    public abstract class MOQRepositoryBase<DomainType, DTOType, TIDType> : NHibernateRepository<DomainType, DTOType, TIDType>,
+    public abstract class MOQRepositoryBase<DomainType, DTOType, TIDType> : EntityFrameworkRepository<DomainType, TIDType>,
                                                           IRepository<DomainType, TIDType>
         where DomainType : class, new() where DTOType : class, DomainType, new()
     {
-        public MOQRepositoryBase(AlwaysMoveForward.Common.DataLayer.NHibernate.UnitOfWork _unitOfWork)
+        public MOQRepositoryBase(IUnitOfWork _unitOfWork)
             : base(_unitOfWork) {}
 
         public override DomainType GetByProperty(string idPropertyName, object idValue)

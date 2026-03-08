@@ -8,17 +8,13 @@
  * Contributors:
  *    Arthur Correa – initial contribution
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AlwaysMoveForward.Common.Utilities;
+using X.PagedList;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Models;
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels
 {
-    public class BlogModel 
+    public class BlogModel
     {
         public CommonBlogModel BlogCommon { get; set; }
         public IPagedList<BlogPostModel> BlogEntries { get; set; }

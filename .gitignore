@@ -3,6 +3,7 @@
 [Oo]bj/
 node_modules/
 dist/
+[Ff]ileContentIndex/
 
 # mstest test results
 TestResults
@@ -61,6 +62,8 @@ _ReSharper*
 *.ncrunch*
 .*crunch*.local.xml
 
+nul
+
 # Installshield output folder 
 [Ee]xpress
 
@@ -112,3 +115,9 @@ UpgradeLog*.XML
 [Ll]ogs/
 *.log
 *.bak
+
+# Environment-specific configuration
+appsettings.production.json
+
+.dockerignore
+.[Vv]s/ProjectEvaluation

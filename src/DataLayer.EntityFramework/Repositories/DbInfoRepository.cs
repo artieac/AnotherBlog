@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -11,27 +11,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data.Objects;
 
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class DbInfoRepository : EntityFrameworkRepository<DbInfo, DbInfo>, IDbInfoRepository
+    public class DbInfoRepository : EntityFrameworkRepository<DbInfo, int>, IDbInfoRepository
     {
-        internal DbInfoRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal DbInfoRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
+        }
 
+        public override string IdPropertyName
+        {
+            get { return "Version"; }
         }
 
         public DbInfo GetDbInfo()
@@ -40,11 +37,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
             try
             {
-                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.DbInfos select foundItem).Single();                
+                retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.DbInfos select foundItem).SingleOrDefault();
             }
             catch (Exception e)
             {
-                LogManager.GetLogger().Warn(e.Message);
+                LogManager.GetLogger().Error(e);
             }
 
             return retVal;

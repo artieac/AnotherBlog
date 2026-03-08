@@ -1,29 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Data;
 using System.Transactions;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using Microsoft.Extensions.Options;
+using AlwaysMoveForward.Common.Configuration;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer
 {
     public class UnitOfWork : IUnitOfWork
     {
-        static AlwaysMoveForward.Common.Configuration.DatabaseConfiguration dbConfiguration;
-
-        static UnitOfWork()
-        {
-            dbConfiguration = AlwaysMoveForward.Common.Configuration.DatabaseConfiguration.GetInstance();
-        }
-
         AnotherBlogDataContextCF dataContext;
         TransactionScope currentTransaction;
+        private DatabaseConfiguration DatabaseConfiguration {  get; set; }
+
+        public UnitOfWork(DatabaseConfiguration databaseConfiguration)
+        {
+            this.DatabaseConfiguration = databaseConfiguration;
+        }
 
         #region IUnitOfWork Members
 
@@ -90,7 +87,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         public void Flush()
         {
-
         }
 
         public AnotherBlogDataContextCF DataContext
@@ -99,7 +95,8 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.dataContext == null)
                 {
-                    this.dataContext = new AnotherBlogDataContextCF(System.Configuration.ConfigurationManager.ConnectionStrings[UnitOfWork.dbConfiguration.ConnectionString].ConnectionString);
+                    string connString = this.DatabaseConfiguration.GetDecryptedConnectionString();
+                    this.dataContext = new AnotherBlogDataContextCF(connString);
                 }
 
                 return this.dataContext;
@@ -113,7 +110,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
 
         public void Dispose()
         {
-
+            if (this.dataContext != null)
+            {
+                this.dataContext.Dispose();
+                this.dataContext = null;
+            }
         }
 
         #endregion

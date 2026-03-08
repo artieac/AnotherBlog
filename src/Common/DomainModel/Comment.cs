@@ -18,7 +18,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
-    public class Comment 
+    public class Comment
     {
         public Comment()
         {
@@ -32,6 +32,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public string Text { get; set; }
         public string AuthorName { get; set; }
         public DateTime DatePosted { get; set; }
+        public BlogPost Post { get; set; }
+        public int BlogId { get; set; }
         
         public void CleanCommentText()
         {

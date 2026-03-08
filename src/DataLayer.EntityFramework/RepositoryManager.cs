@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -11,206 +11,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Configuration;
 
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer
 {
-    public class RepositoryManager : IRepositoryManager
+    public class RepositoryManager : IAnotherBlogRepositoryManager
     {
-        IBlogEntryRepository blogEntryRepository;
-        IBlogEntryTagRepository blogEntryTagRepository;
-        IBlogExtensionRepository blogExtensionRepository;
-        IBlogRepository blogRepository;
-        IBlogListRepository blogListRepository;
-        IBlogListItemRepository blogListItemRepository;
-        IBlogUserRepository blogUserRepository;
-        IDbInfoRepository dbInfoRepository;
-        IEntryCommentRepository entryCommentRepository;
-        IExtensionConfigurationRepository extensionConfigurationRepository;
-        IRoleRepository roleRepository;
-        ISiteInfoRepository siteInfoRepository;
-        ITagRepository tagRepository;
-        IUserRepository userRepository;
+        // Interface-defined repositories
+        private IBlogEntryRepository blogEntryRepository;
+        private IBlogRepository blogRepository;
+        private IBlogListRepository blogListRepository;
+        private IDbInfoRepository dbInfoRepository;
+        private ISiteInfoRepository siteInfoRepository;
+        private ITagRepository tagRepository;
+        private IUserRepository userRepository;
+        private IEntryCommentRepository entryCommentRepository;
+
+        // Additional repositories (not in interface)
+        private BlogEntryTagRepository blogEntryTagRepository;
+        private BlogExtensionRepository blogExtensionRepository;
+        private BlogListItemRepository blogListItemRepository;
+        private BlogUserRepository blogUserRepository;
+        private ExtensionConfigurationRepository extensionConfigurationRepository;
+        private RoleRepository roleRepository;
 
         public IUnitOfWork UnitOfWork { get; set; }
 
-        public RepositoryManager()
+        public RepositoryManager(UnitOfWork unitOfWork)
         {
-           
+            this.UnitOfWork = unitOfWork;
         }
 
-        public IRepository<TargetType> GetRepository<TargetType>() where TargetType : class
-        {
-            IRepository<TargetType> retVal = null;
-
-            if(typeof(TargetType) == typeof(BlogEntryRepository))
-            {
-                retVal = (IRepository<TargetType>)this.BlogEntries;
-            }
-
-            return retVal;
-        }
-
-        public IBlogEntryRepository BlogEntries
-        {
-            get
-            {
-                if (this.blogEntryRepository == null)
-                {
-                    BlogEntryRepository newRepository = new BlogEntryRepository(this.UnitOfWork, this);
-                    this.blogEntryRepository = newRepository;
-                }
-
-                return this.blogEntryRepository;
-            }
-        }
-
-        public IBlogEntryTagRepository BlogEntryTags
-        {
-            get
-            {
-                if (this.blogEntryTagRepository == null)
-                {
-                    BlogEntryTagRepository newRepository = new BlogEntryTagRepository(this.UnitOfWork, this);
-                    this.blogEntryTagRepository = newRepository;
-                }
-
-                return this.blogEntryTagRepository;
-            }
-        }
-
-        public IBlogExtensionRepository BlogExtensions
-        {
-            get
-            {
-                if (this.blogExtensionRepository == null)
-                {
-                    BlogExtensionRepository newRepository = new BlogExtensionRepository(this.UnitOfWork, this);
-                    this.blogExtensionRepository = newRepository;
-                }
-
-                return this.blogExtensionRepository;
-            }
-        }
-
-        public IBlogRepository Blogs
-        {
-            get
-            {
-                if (this.blogRepository == null)
-                {
-                    BlogRepository newRepository = new BlogRepository(this.UnitOfWork, this);
-                    this.blogRepository = newRepository;
-                }
-
-                return this.blogRepository;
-            }
-        }
-
-        public IBlogListRepository BlogLists
-        {
-            get
-            {
-                if (this.blogListRepository == null)
-                {
-                    BlogListRepository newRepository = new BlogListRepository(this.UnitOfWork, this);
-                    this.blogListRepository = newRepository;
-                }
-
-                return this.blogListRepository;
-            }
-        }
-
-        public IBlogListItemRepository BlogListItems
-        {
-            get
-            {
-                if (this.blogListItemRepository == null)
-                {
-                    IBlogListItemRepository newRepository = new BlogListItemRepository(this.UnitOfWork, this);
-                    this.blogListItemRepository = newRepository;
-                }
-
-                return this.blogListItemRepository;
-            }
-        }
-
-        public IBlogUserRepository BlogUsers
-        {
-            get
-            {
-                if (this.blogUserRepository == null)
-                {
-                    BlogUserRepository newRepository = new BlogUserRepository(this.UnitOfWork, this);
-                    this.blogUserRepository = newRepository;
-                }
-
-                return this.blogUserRepository;
-            }
-        }
-
+        // IAnotherBlogRepositoryManager interface members
         public IDbInfoRepository DbInfo
         {
             get
             {
                 if (this.dbInfoRepository == null)
                 {
-                    DbInfoRepository newRepository = new DbInfoRepository(this.UnitOfWork, this);
-                    this.dbInfoRepository = newRepository;
+                    this.dbInfoRepository = new DbInfoRepository(this.UnitOfWork);
                 }
-
                 return this.dbInfoRepository;
-            }
-        }
-
-        public IEntryCommentRepository EntryComments
-        {
-            get
-            {
-                if (this.entryCommentRepository == null)
-                {
-                    EntryCommentRepository newRepository = new EntryCommentRepository(this.UnitOfWork, this);
-                    this.entryCommentRepository = newRepository;
-                }
-
-                return this.entryCommentRepository;
-            }
-        }
-
-        public IExtensionConfigurationRepository ExtensionConfiguration
-        {
-            get
-            {
-                if (this.extensionConfigurationRepository == null)
-                {
-                    ExtensionConfigurationRepository newRepository = new ExtensionConfigurationRepository(this.UnitOfWork, this);
-                    this.extensionConfigurationRepository = newRepository;
-                }
-
-                return this.extensionConfigurationRepository;
-            }
-        }
-
-        public IRoleRepository Roles
-        {
-            get
-            {
-                if (this.roleRepository == null)
-                {
-                    RoleRepository newRepository = new RoleRepository(this.UnitOfWork, this);
-                    this.roleRepository = newRepository;
-                }
-
-                return this.roleRepository;
             }
         }
 
@@ -220,11 +65,33 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.siteInfoRepository == null)
                 {
-                    SiteInfoRepository newRepository = new SiteInfoRepository(this.UnitOfWork, this);
-                    this.siteInfoRepository = newRepository;
+                    this.siteInfoRepository = new SiteInfoRepository(this.UnitOfWork);
                 }
-
                 return this.siteInfoRepository;
+            }
+        }
+
+        public IBlogEntryRepository BlogEntries
+        {
+            get
+            {
+                if (this.blogEntryRepository == null)
+                {
+                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork);
+                }
+                return this.blogEntryRepository;
+            }
+        }
+
+        public IBlogRepository Blogs
+        {
+            get
+            {
+                if (this.blogRepository == null)
+                {
+                    this.blogRepository = new BlogRepository(this.UnitOfWork);
+                }
+                return this.blogRepository;
             }
         }
 
@@ -234,25 +101,126 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.tagRepository == null)
                 {
-                    TagRepository newRepository = new TagRepository(this.UnitOfWork, this);
-                    this.tagRepository = newRepository;
+                    this.tagRepository = new TagRepository(this.UnitOfWork);
                 }
-
                 return this.tagRepository;
             }
         }
 
-        public IUserRepository Users
+        public IBlogListRepository BlogLists
+        {
+            get
+            {
+                if (this.blogListRepository == null)
+                {
+                    this.blogListRepository = new BlogListRepository(this.UnitOfWork);
+                }
+                return this.blogListRepository;
+            }
+        }
+
+        public IPollRepository PollRepository
+        {
+            get
+            {
+                throw new NotImplementedException("PollRepository is not implemented in this data layer.");
+            }
+        }
+
+        public IUserRepository UserRepository
         {
             get
             {
                 if (this.userRepository == null)
                 {
-                    UserRepository newRepository = new UserRepository(this.UnitOfWork, this);
-                    this.userRepository = newRepository;
+                    this.userRepository = new UserRepository(this.UnitOfWork);
                 }
-
                 return this.userRepository;
+            }
+        }
+
+        public IEntryCommentRepository EntryComments
+        {
+            get
+            {
+                if (this.entryCommentRepository == null)
+                {
+                    this.entryCommentRepository = new EntryCommentRepository(this.UnitOfWork);
+                }
+                return this.entryCommentRepository;
+            }
+        }
+
+        // Additional repository accessors (not in interface)
+        public BlogEntryTagRepository BlogEntryTags
+        {
+            get
+            {
+                if (this.blogEntryTagRepository == null)
+                {
+                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork);
+                }
+                return this.blogEntryTagRepository;
+            }
+        }
+
+        public BlogExtensionRepository BlogExtensions
+        {
+            get
+            {
+                if (this.blogExtensionRepository == null)
+                {
+                    this.blogExtensionRepository = new BlogExtensionRepository(this.UnitOfWork);
+                }
+                return this.blogExtensionRepository;
+            }
+        }
+
+        public BlogListItemRepository BlogListItems
+        {
+            get
+            {
+                if (this.blogListItemRepository == null)
+                {
+                    this.blogListItemRepository = new BlogListItemRepository(this.UnitOfWork);
+                }
+                return this.blogListItemRepository;
+            }
+        }
+
+        public BlogUserRepository BlogUsers
+        {
+            get
+            {
+                if (this.blogUserRepository == null)
+                {
+                    this.blogUserRepository = new BlogUserRepository(this.UnitOfWork);
+                }
+                return this.blogUserRepository;
+            }
+        }
+
+        public ExtensionConfigurationRepository ExtensionConfiguration
+        {
+            get
+            {
+                if (this.extensionConfigurationRepository == null)
+                {
+                    this.extensionConfigurationRepository = new ExtensionConfigurationRepository(this.UnitOfWork);
+                }
+                return this.extensionConfigurationRepository;
+            }
+        }
+
+        public RoleRepository Roles
+        {
+            get
+            {
+                if (this.roleRepository == null)
+                {
+                    this.roleRepository = new RoleRepository(this.UnitOfWork);
+                }
+                return this.roleRepository;
             }
         }
     }

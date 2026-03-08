@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
@@ -12,62 +7,67 @@ using AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 using AlwaysMoveForward.AnotherBlog.Web.Code.Filters;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers
+namespace AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Controllers;
+
+[Area("Admin")]
+public class SiteController : AdminBaseController
 {
-    public class SiteController : AdminBaseController
+    public SiteController(ServiceManagerBuilder serviceManagerBuilder)
+        : base(serviceManagerBuilder)
     {
-        [AdminAuthorizationFilter(RequiredRoles = RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, IsBlogSpecific = false)]
-        public ActionResult Landing()
+    }
+
+    [AdminAuthorizationFilterAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, false)]
+    public IActionResult Landing()
+    {
+        SiteModel model = new SiteModel();
+        return this.View(model);
+    }
+
+    [BlogMVCAuthorizationAttribute(RoleType.Names.SiteAdministrator)]
+    public IActionResult Index()
+    {
+        SiteModel model = new SiteModel();
+        model.SiteInfo = this.Services.SiteInfoService.GetSiteInfo();
+
+        if (model.SiteInfo == null)
         {
-            SiteModel model = new SiteModel();
-            return this.View(model);
+            model.SiteInfo = new SiteInfo();
         }
 
-        [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
-        public ActionResult Index()
+        return this.View(model);
+    }
+
+    [BlogMVCAuthorizationAttribute(RoleType.Names.SiteAdministrator)]
+    public IActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId, string defaultAuthor, string defaultKeywords)
+    {
+        if (string.IsNullOrEmpty(siteName))
         {
-            SiteModel model = new SiteModel();
-            model.SiteInfo = this.Services.SiteInfoService.GetSiteInfo();
-
-            if (model.SiteInfo == null)
-            {
-                model.SiteInfo = new SiteInfo();
-            }
-
-            return this.View(model);
+            ModelState.AddModelError("siteName", "Please enter a name for your site.");
         }
 
-        [BlogMVCAuthorization(RequiredRoles = RoleType.Names.SiteAdministrator)]
-        public ActionResult Edit(string blogSubFolder, string siteName, string siteAbout, string siteContact, string defaultTheme, string siteAnalyticsId, string defaultAuthor, string defaultKeywords)
+        if (string.IsNullOrEmpty(siteAbout))
         {
-            if (string.IsNullOrEmpty(siteName))
-            {
-                ViewData.ModelState.AddModelError("siteName", "Please enter a name for your site.");
-            }
+            ModelState.AddModelError("siteAbout", "Please enter an about message for your site.");
+        }
 
-            if (string.IsNullOrEmpty(siteAbout))
+        if (ModelState.IsValid)
+        {
+            using (this.Services.UnitOfWork.BeginTransaction())
             {
-                ViewData.ModelState.AddModelError("siteAbout", "Please enter an about message for your site.");
-            }
-
-            if (ViewData.ModelState.IsValid)
-            {
-                using (this.Services.UnitOfWork.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        MvcApplication.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId, defaultAuthor, defaultKeywords);
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                        this.Services.UnitOfWork.EndTransaction(false);
-                    }
+                    WebApplicationState.SiteInfo = Services.SiteInfoService.Save(siteName, siteAbout, siteContact, defaultTheme, siteAnalyticsId, defaultAuthor, defaultKeywords);
+                    this.Services.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                    this.Services.UnitOfWork.EndTransaction(false);
                 }
             }
-
-            return this.RedirectToAction("Index");
         }
+
+        return this.RedirectToAction("Index");
     }
 }

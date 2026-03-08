@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -42,54 +42,54 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             Blog test = new Blog();
             Services.BlogService.Save(-1, "Test", "Test", "", "", "", "default");
-            Assert.IsNotNull(test);
+            Assert.That(test, Is.Not.Null);
         }
 
         [Test]
         public void BlogService_GetAll()
         {
             IList<Blog> test = Services.BlogService.GetAll();
-            Assert.IsNotNull(test);
-            Assert.Greater(test.Count, 0);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test.Count, Is.GreaterThan(0));
         }
 
         [Test]
         public void BlogService_GetByUserId()
         {
-            Assert.IsNotNull(this.TestUser);
+            Assert.That(this.TestUser, Is.Not.Null);
 
             IList<Blog> test = Services.BlogService.GetByUserId(this.TestUser.Id);
-            Assert.IsNotNull(test);
+            Assert.That(test, Is.Not.Null);
         }
 
         [Test]
         public void BlogService_GetById()
         {
-            Assert.IsNotNull(this.TestBlog);
+            Assert.That(this.TestBlog, Is.Not.Null);
 
             Blog test = Services.BlogService.GetById(this.TestBlog.Id);
-            Assert.IsNotNull(test);
-            Assert.AreEqual(test.Id, this.TestBlog.Id);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test.Id, Is.EqualTo(this.TestBlog.Id));
         }
 
         [Test]
         public void BlogService_GetByName()
         {
-            Assert.IsNotNull(this.TestBlog);
+            Assert.That(this.TestBlog, Is.Not.Null);
 
             Blog test = Services.BlogService.GetByName(this.TestBlog.Name);
-            Assert.IsNotNull(test);
-            Assert.AreEqual(test.Name, this.TestBlog.Name);
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test.Name, Is.EqualTo(this.TestBlog.Name));
         }
 
         [Test]
         public void BlogService_GetBySubFolder()
         {
-            Assert.IsNotNull(this.TestBlog);
+            Assert.That(this.TestBlog, Is.Not.Null);
 
             Blog test = Services.BlogService.GetBySubFolder(this.TestBlog.SubFolder);
-            Assert.IsNotNull(test);
-            Assert.AreEqual(test.Name, this.TestBlog.SubFolder);
-        }        
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test.Name, Is.EqualTo(this.TestBlog.SubFolder));
+        }
     }
 }

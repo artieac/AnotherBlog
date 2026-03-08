@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -8,73 +8,72 @@
  * Contributors:
  *    Arthur Correa – initial contribution
  */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-using System.Security.Permissions;
+using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
-using AlwaysMoveForward.AnotherBlog.Web.Models;
-using AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels;
 
-namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API
+namespace AlwaysMoveForward.AnotherBlog.Web.Controllers.API;
+
+[ApiController]
+public abstract class BaseApiController : ControllerBase
 {
-    public abstract class BaseApiController : ApiController
-    {
-        private ServiceManager serviceManager;
+    private readonly ServiceManagerBuilder _serviceManagerBuilder;
+    private ServiceManager _serviceManager;
 
-        public ServiceManager Services
+    protected BaseApiController(ServiceManagerBuilder serviceManagerBuilder)
+    {
+        _serviceManagerBuilder = serviceManagerBuilder;
+    }
+
+    public ServiceManager Services
+    {
+        get
         {
-            get
+            if (_serviceManager == null)
             {
                 try
                 {
                     LogManager.GetLogger().Info("Creating Service Manager for BaseAPIController");
-                    this.serviceManager = ServiceManagerBuilder.BuildServiceManager();
+                    _serviceManager = _serviceManagerBuilder.CreateServiceManager();
                     LogManager.GetLogger().Info("Creating Service Manager Complete for BaseAPIController");
                 }
                 catch (Exception e)
                 {
                     LogManager.GetLogger().Error(e);
                 }
-
-                return this.serviceManager;
             }
+
+            return _serviceManager;
         }
+    }
 
-        public SecurityPrincipal CurrentPrincipal
+    public SecurityPrincipal CurrentPrincipal
+    {
+        get
         {
-            get 
-            {
-                SecurityPrincipal retVal = System.Threading.Thread.CurrentPrincipal as SecurityPrincipal;
+            SecurityPrincipal retVal = HttpContext.Items["CurrentPrincipal"] as SecurityPrincipal;
 
-                if (retVal == null)
+            if (retVal == null)
+            {
+                try
                 {
-                    try
-                    {
-                        retVal = new SecurityPrincipal(UserFactory.CreateGuestUser());
-                        System.Threading.Thread.CurrentPrincipal = retVal;
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                    }
+                    retVal = new SecurityPrincipal(Services, UserFactory.CreateGuestUser());
+                    HttpContext.Items["CurrentPrincipal"] = retVal;
                 }
+                catch (Exception e)
+                {
+                    LogManager.GetLogger().Error(e);
+                }
+            }
 
-                return retVal;
-            }
-            set
-            {
-                System.Threading.Thread.CurrentPrincipal = value;
-            }
+            return retVal;
+        }
+        set
+        {
+            HttpContext.Items["CurrentPrincipal"] = value;
         }
     }
 }

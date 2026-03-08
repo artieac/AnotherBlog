@@ -1,21 +1,41 @@
-﻿using System;
+/**
+ * Copyright (c) 2009 Arthur Correa.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Common Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.opensource.org/licenses/cpl1.0.php
+ *
+ * Contributors:
+ *    Arthur Correa – initial contribution
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data.Entity;
-using System.Data.Objects;
-using System.Data.Entity.ModelConfiguration;
-using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
-using AlwaysMoveForward.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 {
     public class AnotherBlogDataContextCF : DbContext
     {
-        public AnotherBlogDataContextCF(String connectionString) : base(connectionString) { }
-        public AnotherBlogDataContextCF(System.Data.Common.DbConnection dbConnection) : base(dbConnection, false){}
+        private readonly string _connectionString;
+
+        public AnotherBlogDataContextCF(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_connectionString);
+            }
+        }
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
@@ -25,235 +45,177 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
         public DbSet<BlogUser> BlogUsers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<DbInfo> DbInfos { get; set; }
-        public DbSet<ExtensionConfiguration> ExtensionConfiguration { get; set; }
+        public DbSet<ExtensionConfiguration> ExtensionConfigurations { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<SiteInfo> SiteInfos { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<AnotherBlogUser> Users { get; set; }
+        public DbSet<TagCount> TagCounts { get; set; }
 
-        protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Blog
             modelBuilder.Entity<Blog>().ToTable("Blogs");
-            modelBuilder.Entity<Blog>().HasKey(b => b.BlogId);
+            modelBuilder.Entity<Blog>().HasKey(b => b.Id);
 
+            // BlogPost
             modelBuilder.Entity<BlogPost>().ToTable("BlogEntries");
-            modelBuilder.Entity<BlogPost>().HasKey(blogPost => blogPost.EntryId);
-            modelBuilder.Entity<BlogPost>().Property(blogPost => blogPost.EntryText).HasColumnName("EntryText");
+            modelBuilder.Entity<BlogPost>().HasKey(bp => bp.Id);
+            modelBuilder.Entity<BlogPost>().Ignore(bp => bp.Tags);
+            modelBuilder.Entity<BlogPost>().Ignore(bp => bp.CommentCount);
             modelBuilder.Entity<BlogPost>()
-                .HasRequired<Blog>(blogPost => blogPost.Blog)
-                .WithMany(blog => blog.Posts)
-                .Map(blog => blog.MapKey("BlogId"));
-            modelBuilder.Entity<BlogPost>()
-                .HasRequired<User>(blogPost => blogPost.Author)
+                .HasOne(bp => bp.Blog)
                 .WithMany()
-                .Map(user => user.MapKey("UserId"));
-            modelBuilder.Entity<BlogPost>().Property(blogPost => blogPost.Title);
-            modelBuilder.Entity<BlogPost>().Property(blogPost => blogPost.IsPublished);
-            modelBuilder.Entity<BlogPost>().Property(blogPost => blogPost.DatePosted);
-            modelBuilder.Entity<BlogPost>().Property(blogPost => blogPost.DateCreated);
-            modelBuilder.Entity<BlogPost>().Property(blogPost => blogPost.TimesViewed);
+                .HasForeignKey("BlogId");
+            modelBuilder.Entity<BlogPost>()
+                .Navigation(bp => bp.Blog)
+                .AutoInclude();
+            modelBuilder.Entity<BlogPost>()
+                .HasOne<AnotherBlogUser>(bp => bp.Author)
+                .WithMany()
+                .HasForeignKey("UserId");
+            modelBuilder.Entity<BlogPost>()
+                .Navigation(bp => bp.Author)
+                .AutoInclude();
 
+            // BlogExtension
             modelBuilder.Entity<BlogExtension>().ToTable("BlogExtensions");
-            modelBuilder.Entity<BlogExtension>().HasKey(b => b.ExtensionId);
+            modelBuilder.Entity<BlogExtension>().HasKey(be => be.Id);
 
+            // BlogList
             modelBuilder.Entity<BlogList>().ToTable("BlogLists");
-            modelBuilder.Entity<BlogList>().HasKey(blogList => blogList.Id);
-            modelBuilder.Entity<BlogList>().Property(blogList => blogList.Name);
-            modelBuilder.Entity<BlogList>().HasMany<BlogListItem>(blogList => blogList.Items);
+            modelBuilder.Entity<BlogList>().HasKey(bl => bl.Id);
             modelBuilder.Entity<BlogList>()
-                .HasRequired<Blog>(blogList => blogList.Blog)
+                .HasOne(bl => bl.Blog)
                 .WithMany()
-                .Map(blog => blog.MapKey("BlogId"));
+                .HasForeignKey(bl => bl.BlogId);
+            modelBuilder.Entity<BlogList>()
+                .HasMany(bl => bl.Items)
+                .WithOne(bli => bli.BlogList)
+                .HasForeignKey(bli => bli.BlogListId);
+            modelBuilder.Entity<BlogList>()
+                .Navigation(bp => bp.Items)
+                .AutoInclude();
 
-
+            // BlogListItem
             modelBuilder.Entity<BlogListItem>().ToTable("BlogListItems");
-            modelBuilder.Entity<BlogListItem>().HasKey(blogListItem => blogListItem.Id);
-            modelBuilder.Entity<BlogListItem>().Property(blogListItem => blogListItem.Name);
-            modelBuilder.Entity<BlogListItem>().HasRequired<BlogList>(blogListItem => blogListItem.BlogList);
-      
+            modelBuilder.Entity<BlogListItem>().HasKey(bli => bli.Id);
+
+            // BlogUser
             modelBuilder.Entity<BlogUser>().ToTable("BlogUsers");
-            modelBuilder.Entity<BlogUser>().HasKey(blogUser => blogUser.BlogUserId);
+            modelBuilder.Entity<BlogUser>().HasKey(bu => bu.Id);
             modelBuilder.Entity<BlogUser>()
-                .HasRequired<Blog>(blogUser => blogUser.Blog)
-                .WithMany(blog => blog.Users)
-                .Map(blog => blog.MapKey("BlogId"));
-            modelBuilder.Entity<BlogUser>()
-                .HasRequired<User>(blogUser => blogUser.User)
+                .HasOne(bu => bu.Blog)
                 .WithMany()
-                .Map(user => user.MapKey("UserId"));
+                .HasForeignKey("BlogId");
             modelBuilder.Entity<BlogUser>()
-                .HasRequired<Role>(blogUser => blogUser.Role)
+                .HasOne<AnotherBlogUser>(bu => bu.User)
                 .WithMany()
-                .Map(role => role.MapKey("RoleId"));
+                .HasForeignKey("UserId");
+            modelBuilder.Entity<BlogUser>()
+                .HasOne(bu => bu.Role)
+                .WithMany()
+                .HasForeignKey("RoleId");
+            modelBuilder.Entity<BlogUser>()
+                .Navigation(bu => bu.Role)
+                .AutoInclude();
 
+            // Comment
             modelBuilder.Entity<Comment>().ToTable("EntryComments");
-            modelBuilder.Entity<Comment>().HasKey(comment => comment.CommentId);
+            modelBuilder.Entity<Comment>().HasKey(c => c.Id);
+            modelBuilder.Entity<Comment>().Property(c => c.Text).HasColumnName("Comment");
+            modelBuilder.Entity<Comment>().Property(c => c.Status).HasConversion<int>();
             modelBuilder.Entity<Comment>()
-                .HasRequired<BlogPost>(comment => comment.Post)
-                .WithMany(post => post.Comments)
-                .Map(post => post.MapKey("EntryId"));
-            modelBuilder.Entity<Comment>().Property(comment => comment.AuthorEmail);
-            modelBuilder.Entity<Comment>().Property(comment => comment.AuthorName);
-            modelBuilder.Entity<Comment>().Property(comment => comment.Text).HasColumnName("Comment");
-            modelBuilder.Entity<Comment>().Property(comment => comment.Status);
-            modelBuilder.Entity<Comment>().Property(comment => comment.Link);
-            modelBuilder.Entity<Comment>().Property(comment => comment.DatePosted);
-                       
+                .HasOne(c => c.Post)
+                .WithMany(bp => bp.Comments)
+                .HasForeignKey("EntryId");
+
+            // DbInfo
             modelBuilder.Entity<DbInfo>().ToTable("DbInfo");
-            modelBuilder.Entity<DbInfo>().HasKey(b => b.Version);
-            
+            modelBuilder.Entity<DbInfo>().HasKey(d => d.Version);
+
+            // ExtensionConfiguration
             modelBuilder.Entity<ExtensionConfiguration>().ToTable("ExtensionConfiguration");
-            modelBuilder.Entity<ExtensionConfiguration>().HasKey(b => b.ConfigurationId);
+            modelBuilder.Entity<ExtensionConfiguration>().HasKey(ec => ec.Id);
+            modelBuilder.Entity<ExtensionConfiguration>().Property(ec => ec.Id).HasColumnName("ConfigurationId");
 
+            // PostTag
             modelBuilder.Entity<PostTag>().ToTable("BlogEntryTags");
-            modelBuilder.Entity<PostTag>().HasKey(bet => bet.PostTagId).Property(bet => bet.PostTagId).HasColumnName("BlogEntryTagId");
+            modelBuilder.Entity<PostTag>().HasKey(pt => pt.Id);
+            modelBuilder.Entity<PostTag>().Property(pt => pt.Id).HasColumnName("BlogEntryTagId");
             modelBuilder.Entity<PostTag>()
-                .HasRequired<Tag>(bet => bet.Tag)
+                .HasOne(pt => pt.Tag)
                 .WithMany()
-                .Map(tag => tag.MapKey("TagId"));
+                .HasForeignKey("TagId");
             modelBuilder.Entity<PostTag>()
-                .HasRequired<BlogPost>(bet => bet.Post)
+                .HasOne(pt => pt.Post)
                 .WithMany()
-                .Map(post => post.MapKey("BlogEntryId"));
-            
-            modelBuilder.Entity<Role>().ToTable("Roles");
-            modelBuilder.Entity<Role>().HasKey(b => b.RoleId);
-            
-            modelBuilder.Entity<SiteInfo>().ToTable("SiteInfo");
-            modelBuilder.Entity<SiteInfo>().HasKey(b => b.SiteId);
+                .HasForeignKey("BlogEntryId");
 
+            // Role
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<Role>().HasKey(r => r.Id);
+
+            // SiteInfo
+            modelBuilder.Entity<SiteInfo>().ToTable("SiteInfo");
+            modelBuilder.Entity<SiteInfo>().HasKey(s => s.SiteId);
+
+            // Tag
             modelBuilder.Entity<Tag>().ToTable("Tags");
             modelBuilder.Entity<Tag>().HasKey(t => t.Id);
-            modelBuilder.Entity<Tag>().Property(t => t.Name);
             modelBuilder.Entity<Tag>()
-                .HasRequired<Blog>(tag => tag.Blog)
+                .HasOne(t => t.Blog)
                 .WithMany()
-                .Map(blog => blog.MapKey("BlogId"));
+                .HasForeignKey(t => t.BlogId);
+            modelBuilder.Entity<Tag>().Ignore(t => t.BlogEntries);
 
-            
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<User>().HasKey(b => b.UserId);
+            // AnotherBlogUser
+            modelBuilder.Entity<AnotherBlogUser>().ToTable("Users");
+            modelBuilder.Entity<AnotherBlogUser>().HasKey(u => u.Id);
+            modelBuilder.Entity<AnotherBlogUser>().Ignore(u => u.Roles);
+
+            // TagCount - Keyless entity for raw SQL queries
+            modelBuilder.Entity<TagCount>().HasNoKey().ToView(null);
         }
 
-        public DbSet<TableDTO> GetTable<TableDTO>() where TableDTO : class
+        public DbSet<T> GetTable<T>() where T : class
         {
-            DbSet<TableDTO> retVal = null;
-
-            Type targetType = typeof(TableDTO);
-
-            if (targetType == typeof(Blog))
-            {
-                retVal = this.Blogs as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(BlogPost))
-            {
-                retVal = this.BlogPosts as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(BlogExtension))
-            {
-                retVal = this.BlogExtensions as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(BlogList))
-            {
-                retVal = this.BlogLists as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(BlogListItem))
-            {
-                retVal = this.BlogListItems as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(BlogUser))
-            {
-                retVal = this.BlogUsers as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(Comment))
-            {
-                retVal = this.Comments as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(DbInfo))
-            {
-                retVal = this.DbInfos as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(ExtensionConfiguration))
-            {
-                retVal = this.ExtensionConfiguration as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(PostTag))
-            {
-                retVal = this.PostTags as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(Role))
-            {
-                retVal = this.Roles as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(SiteInfo))
-            {
-                retVal = this.SiteInfos as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(Tag))
-            {
-                retVal = this.Tags as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(User))
-            {
-                retVal = this.Users as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(BlogList))
-            {
-                retVal = this.BlogLists as DbSet<TableDTO>;
-            }
-            else if (targetType == typeof(BlogListItem))
-            {
-                retVal = this.BlogListItems as DbSet<TableDTO>;
-            }
-
-            return retVal;
+            return this.Set<T>();
         }
 
-        public IEnumerable<DTOType> CreateQuery<DTOType>(String queryString) where DTOType : class 
+        public IEnumerable<T> CreateQuery<T>(string queryString) where T : class
         {
-            return this.GetTable<DTOType>().SqlQuery(queryString);
+            return this.Set<T>().FromSqlRaw(queryString);
         }
 
-        public IEnumerable<DTOType> CreateQuery<DTOType>(String queryString, IDictionary<String, object> queryParams) where DTOType : class 
+        public IEnumerable<T> CreateQuery<T>(string queryString, IDictionary<string, object> queryParams) where T : class
         {
             IList<SqlParameter> sqlParameters = new List<SqlParameter>();
 
-            foreach (String paramKey in queryParams.Keys)
+            foreach (string paramKey in queryParams.Keys)
             {
                 sqlParameters.Add(new SqlParameter(paramKey, queryParams[paramKey]));
             }
 
-            return this.GetTable<DTOType>().SqlQuery(queryString, queryParams);
+            return this.Set<T>().FromSqlRaw(queryString, sqlParameters.ToArray());
         }
 
-        public IEnumerable<DestinationType> ExecuteSQL<DestinationType>(String queryString) where DestinationType : class
+        public IEnumerable<T> ExecuteSQL<T>(string queryString) where T : class
         {
-            return this.Database.SqlQuery<DestinationType>(queryString);
+            return this.Set<T>().FromSqlRaw(queryString);
         }
 
-        public IEnumerable<DestinationType> ExecuteSQL<DestinationType>(String queryString, IDictionary<String, object> queryParams) where DestinationType : class
+        public IEnumerable<T> ExecuteSQL<T>(string queryString, IDictionary<string, object> queryParams) where T : class
         {
             IList<SqlParameter> sqlParameters = new List<SqlParameter>();
 
-            foreach(String paramKey in queryParams.Keys)
+            foreach (string paramKey in queryParams.Keys)
             {
                 sqlParameters.Add(new SqlParameter(paramKey, queryParams[paramKey]));
             }
 
-            return this.Database.SqlQuery<DestinationType>(queryString, sqlParameters.ToArray());
-        }
-
-        private String GenerateEFConnectionString()
-        {
-            string connectionString = new System.Data.EntityClient.EntityConnectionStringBuilder
-            {
-                Metadata = "res://*",
-                Provider = "System.Data.SqlClient",
-                ProviderConnectionString = new System.Data.SqlClient.SqlConnectionStringBuilder(this.Database.Connection.ConnectionString).ConnectionString
-            }.ConnectionString;
-
-            return connectionString;
+            return this.Set<T>().FromSqlRaw(queryString, sqlParameters.ToArray());
         }
     }
 }

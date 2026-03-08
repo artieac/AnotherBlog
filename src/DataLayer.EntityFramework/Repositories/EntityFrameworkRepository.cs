@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -11,222 +11,193 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Linq.Expressions;
-using System.Data.Objects;
-using System.Data.Entity;
-
-using log4net;
-using log4net.Config;
-
-using AutoMapper;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class EntityFrameworkRepository<DomainClass, DTOClass> : RepositoryBase<DomainClass, DTOClass> 
-        where DomainClass : class, new()
-        where DTOClass : class, DomainClass, new()
+    public abstract class EntityFrameworkRepository<TDomainType, TIdType>
+        where TDomainType : class, new()
     {
-        public EntityFrameworkRepository(IUnitOfWork _unitOfWork, RepositoryManager repositoryManager) : 
-            base(_unitOfWork, repositoryManager)
-        {
+        protected IUnitOfWork UnitOfWork { get; private set; }
 
+        public EntityFrameworkRepository(IUnitOfWork unitOfWork)
+        {
+            this.UnitOfWork = unitOfWork;
         }
 
-        public override DomainClass Create()
-        {
-            return new DTOClass();
-        }
-
-        protected virtual DbSet<DTOClass> GetEntityInstance()
-        {
-            return ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>();
-        }
+        public abstract string IdPropertyName { get; }
 
         public virtual string BlogIdPropertyName
         {
             get { return "BlogId"; }
         }
 
-        public virtual String TableName
+        public virtual string TableName
         {
-            get { return typeof(DTOClass).Name + "s"; }
+            get { return typeof(TDomainType).Name + "s"; }
         }
 
-        public DTOClass GetDTOByProperty(String propertyName, object idValue)
+        protected UnitOfWork GetUnitOfWork()
         {
-            DTOClass retVal = null;
+            return (UnitOfWork)this.UnitOfWork;
+        }
 
-            ParameterExpression dtoParameter = Expression.Parameter(typeof(DTOClass), "dtoParam");
+        protected DbSet<TDomainType> GetDbSet()
+        {
+            return this.GetUnitOfWork().DataContext.Set<TDomainType>();
+        }
 
-            Expression<Func<DTOClass, bool>> whereExpression = Expression.Lambda<Func<DTOClass, bool>>
+        public virtual TDomainType Create()
+        {
+            return new TDomainType();
+        }
+
+        public virtual TIdType GetId(TDomainType domainEntity)
+        {
+            return (TIdType)typeof(TDomainType).GetProperty(this.IdPropertyName).GetValue(domainEntity, null);
+        }
+
+        protected TDomainType GetEntityByProperty(string propertyName, object idValue)
+        {
+            TDomainType retVal = default(TDomainType);
+
+            ParameterExpression entityParameter = Expression.Parameter(typeof(TDomainType), "entityParam");
+
+            Expression<Func<TDomainType, bool>> whereExpression = Expression.Lambda<Func<TDomainType, bool>>
             (
                 Expression.Equal
                 (
-                    Expression.Property
-                    (
-                            dtoParameter,
-                            propertyName
-                    ),
+                    Expression.Property(entityParameter, propertyName),
                     Expression.Constant(idValue)
                 ),
-                new[] { dtoParameter }
+                new[] { entityParameter }
             );
 
-            IQueryable<DTOClass> dtoItems = ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>().Where(whereExpression);
+            IQueryable<TDomainType> entities = this.GetDbSet().Where(whereExpression);
 
-            if (dtoItems != null && dtoItems.Count() > 0)
+            if (entities != null && entities.Any())
             {
-                retVal = dtoItems.Single();
+                retVal = entities.First();
             }
 
             return retVal;
         }
 
-        public virtual DTOClass GetDTOByDomain(DomainClass domainEntity)
+        public virtual TDomainType GetById(TIdType id)
         {
-            Object idValue = typeof(DomainClass).GetProperty(this.IdPropertyName).GetValue(domainEntity, null);
-            return this.GetDTOByProperty(this.IdPropertyName, idValue);
+            return this.GetEntityByProperty(this.IdPropertyName, id);
         }
 
-        public override DomainClass GetByProperty(string propertyName, object idValue)
+        public virtual TDomainType GetByProperty(string propertyName, object idValue)
         {
-            return this.GetDTOByProperty(propertyName, idValue);
+            return this.GetEntityByProperty(propertyName, idValue);
         }
 
-        public override DomainClass GetByProperty(string propertyName, object idValue, int blogId)
+        public virtual TDomainType GetByProperty(string propertyName, object idValue, int blogId)
         {
-            DTOClass retVal = null;
+            TDomainType retVal = default(TDomainType);
 
-            String sql = "SELECT * FROM " + this.TableName;
-            sql += " WHERE " + propertyName + " =@propertyValue ";
-            sql += " AND " + this.BlogIdPropertyName + "=@blogId";
+            string sql = "SELECT * FROM " + this.TableName;
+            sql += " WHERE " + propertyName + " = {0}";
+            sql += " AND " + this.BlogIdPropertyName + " = {1}";
 
-            IDictionary<String, object> queryParams = new Dictionary<String, object>();
-            queryParams.Add("propertyValue", idValue);
-            queryParams.Add("blogId", blogId);
+            IEnumerable<TDomainType> entities = this.GetDbSet().FromSqlRaw(sql, idValue, blogId);
 
-            IEnumerable<DTOClass> dtoItems = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteSQL<DTOClass>(sql, queryParams);
-
-            if (dtoItems != null)
+            if (entities != null && entities.Any())
             {
-                retVal = dtoItems.FirstOrDefault();
+                retVal = entities.First();
             }
 
             return retVal;
         }
 
-        public override IList<DomainClass> GetAll()
+        public virtual IList<TDomainType> GetAll()
         {
-            IQueryable<DTOClass> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>() select foundItem;
-            return dtoList.ToList<DomainClass>();
+            return this.GetDbSet().ToList();
         }
 
-        public override IList<DomainClass> GetAll(int blogId)
+        public virtual IList<TDomainType> GetAll(int blogId)
         {
-            String sql = "SELECT * FROM " + this.TableName;
-            sql += " WHERE " + this.BlogIdPropertyName + "=@blogId";
+            string sql = "SELECT * FROM " + this.TableName;
+            sql += " WHERE " + this.BlogIdPropertyName + " = {0}";
 
-            IDictionary<String, object> queryParams = new Dictionary<String, object>();
-            queryParams.Add("blogId", blogId);
-
-            IEnumerable<DTOClass> dtoList = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteSQL<DTOClass>(sql, queryParams);
-            return dtoList.ToList<DomainClass>();
+            return this.GetDbSet().FromSqlRaw(sql, blogId).ToList();
         }
 
-        public override IList<DomainClass> GetAllByProperty(string propertyName, object idValue)
+        public virtual IList<TDomainType> GetAllByProperty(string propertyName, object idValue)
         {
-            ParameterExpression dtoParameter = Expression.Parameter(typeof(DTOClass), "dtoParam");
+            ParameterExpression entityParameter = Expression.Parameter(typeof(TDomainType), "entityParam");
 
-            Expression<Func<DTOClass, bool>> whereExpression = Expression.Lambda<Func<DTOClass, bool>>
+            Expression<Func<TDomainType, bool>> whereExpression = Expression.Lambda<Func<TDomainType, bool>>
             (
                 Expression.Equal
                 (
-                    Expression.Property
-                    (
-                            dtoParameter,
-                            propertyName
-                    ),
+                    Expression.Property(entityParameter, propertyName),
                     Expression.Constant(idValue)
                 ),
-                new[] { dtoParameter }
+                new[] { entityParameter }
             );
 
-            IQueryable<DTOClass> dtoList = ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>().Where(whereExpression);
-
-            return dtoList.ToList<DomainClass>();
+            return this.GetDbSet().Where(whereExpression).ToList();
         }
 
-        public override IList<DomainClass> GetAllByProperty(string propertyName, object idValue, int blogId)
+        public virtual IList<TDomainType> GetAllByProperty(string propertyName, object idValue, int blogId)
         {
-            String sql = "SELECT * FROM " + this.TableName;
-            sql += " WHERE " + propertyName + " =@propertyValue ";
-            sql += " AND " + this.BlogIdPropertyName + "=@blogId";
+            string sql = "SELECT * FROM " + this.TableName;
+            sql += " WHERE " + propertyName + " = {0}";
+            sql += " AND " + this.BlogIdPropertyName + " = {1}";
 
-            IDictionary<String, object> queryParams = new Dictionary<String, object>();
-            queryParams.Add("propertyValue", idValue);
-            queryParams.Add("blogId", blogId);
-
-            IEnumerable<DTOClass> dtoList = ((UnitOfWork)this.UnitOfWork).DataContext.ExecuteSQL<DTOClass>(sql, queryParams);
-            return dtoList.ToList<DomainClass>();
+            return this.GetDbSet().FromSqlRaw(sql, idValue, blogId).ToList();
         }
 
-        public override DomainClass Save(DomainClass itemToSave)
+        public virtual TDomainType Save(TDomainType itemToSave)
         {
             if (itemToSave != null)
             {
-                DTOClass dtoItemToSave = this.GetDTOByDomain(itemToSave);
+                TIdType id = this.GetId(itemToSave);
+                TDomainType existingEntity = this.GetEntityByProperty(this.IdPropertyName, id);
 
-                if (dtoItemToSave == null)
+                if (existingEntity == null)
                 {
-                    dtoItemToSave = itemToSave as DTOClass;
-
-                    if (dtoItemToSave != null)
-                    {
-                        ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>().Add(dtoItemToSave);
-                    }
+                    this.GetDbSet().Add(itemToSave);
+                }
+                else
+                {
+                    this.GetUnitOfWork().DataContext.Entry(existingEntity).CurrentValues.SetValues(itemToSave);
                 }
 
-                ((UnitOfWork)this.UnitOfWork).DataContext.SaveChanges();
+                this.GetUnitOfWork().DataContext.SaveChanges();
             }
 
             return itemToSave;
         }
 
-        /// <summary>
-        /// Remove the blog entry
-        /// </summary>
-        /// <param name="saveItem"></param>
-        public override bool Delete(DomainClass itemToDelete)
+        public virtual bool Delete(TDomainType itemToDelete)
         {
             bool retVal = false;
 
             if (itemToDelete != null)
             {
-                DTOClass dtoItemToDelete = this.GetDTOByDomain(itemToDelete);
+                TIdType id = this.GetId(itemToDelete);
+                TDomainType entity = this.GetEntityByProperty(this.IdPropertyName, id);
 
-                if (dtoItemToDelete != null)
+                if (entity != null)
                 {
-                    ((UnitOfWork)this.UnitOfWork).DataContext.GetTable<DTOClass>().Remove(dtoItemToDelete);
-                    ((UnitOfWork)this.UnitOfWork).DataContext.SaveChanges();
+                    this.GetDbSet().Remove(entity);
+                    this.GetUnitOfWork().DataContext.SaveChanges();
+                    retVal = true;
                 }
-
-                retVal = true;
             }
 
             return retVal;
         }
 
-        public IOrderedQueryable<T> ApplyOrder<T>(IQueryable<T> source, string property, string methodName)
+        protected IOrderedQueryable<T> ApplyOrder<T>(IQueryable<T> source, string property, string methodName)
         {
             string[] props = property.Split('.');
             Type type = typeof(T);
@@ -234,8 +205,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             Expression expr = arg;
             foreach (string prop in props)
             {
-                // use reflection (not ComponentModel) to mirror LINQ
-                System.Reflection.PropertyInfo pi = type.GetProperty(prop);
+                PropertyInfo pi = type.GetProperty(prop);
                 expr = Expression.Property(expr, pi);
                 type = pi.PropertyType;
             }

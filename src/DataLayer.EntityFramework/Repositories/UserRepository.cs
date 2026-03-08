@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -11,90 +11,143 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data.Objects;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.Common.DataLayer.Entities;
-using AlwaysMoveForward.Common.DataLayer.Repositories;
-using AlwaysMoveForward.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
+using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    /// <summary>
-    /// This class contains all the code to extract User data from the repository using LINQ
-    /// </summary>
-    /// <param name="dataContext"></param>
-    public class UserRepository : EntityFrameworkRepository<User, User>, IUserRepository
+    public class UserRepository : EntityFrameworkRepository<AnotherBlogUser, long>, IUserRepository
     {
-        internal UserRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal UserRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
-
         }
 
         public override string IdPropertyName
         {
-            get { return "UserId"; }
+            get { return "Id"; }
         }
 
-        /// <summary>
-        /// Get a specific by their user name.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public User GetByUserName(string userName)
+        private void PopulateRoles(AnotherBlogUser user)
         {
-            User retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users where foundItem.UserName == userName select foundItem).Single();
-            return retVal;
-        }
-        /// <summary>
-        /// This method is used by the login.  If no match is found then something doesn't jibe in the login attempt.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public User GetByUserNameAndPassword(string userName, string password)
-        {
-            User retVal = null;
-            
-            IQueryable<User> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users 
-                                        where foundItem.UserName == userName && foundItem.Password == password 
-                                        select foundItem;
-            
-            if(dtoList!=null && dtoList.Count() > 0)
+            if (user == null)
             {
-                retVal = dtoList.Single();
+                return;
             }
 
-            return retVal;
+            user.Roles = new Dictionary<long, RoleType.Id>();
+
+            var blogUserRoles = from bu in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers
+                                where bu.User.Id == user.Id
+                                select new { BlogId = bu.Blog.Id, RoleId = bu.Role.Id };
+
+            foreach (var blogUserRole in blogUserRoles)
+            {
+                if (Enum.IsDefined(typeof(RoleType.Id), blogUserRole.RoleId))
+                {
+                    user.Roles[blogUserRole.BlogId] = (RoleType.Id)blogUserRole.RoleId;
+                }
+            }
         }
-        /// <summary>
-        /// Get a specific user by email
-        /// </summary>
-        /// <param name="userEmail"></param>
-        /// <returns></returns>
-        public User GetByEmail(string userEmail)
+
+        private void PopulateRoles(IEnumerable<AnotherBlogUser> users)
         {
-            return this.GetByProperty("Email", userEmail);
+            if (users == null || !users.Any())
+            {
+                return;
+            }
+
+            var userIds = users.Select(u => u.Id).ToList();
+
+            var allBlogUserRoles = (from bu in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers
+                                    where userIds.Contains(bu.User.Id)
+                                    select new { UserId = bu.User.Id, BlogId = bu.Blog.Id, RoleId = bu.Role.Id })
+                                   .ToList();
+
+            foreach (var user in users)
+            {
+                user.Roles = new Dictionary<long, RoleType.Id>();
+
+                var userRoles = allBlogUserRoles.Where(r => r.UserId == user.Id);
+                foreach (var blogUserRole in userRoles)
+                {
+                    if (Enum.IsDefined(typeof(RoleType.Id), blogUserRole.RoleId))
+                    {
+                        user.Roles[blogUserRole.BlogId] = (RoleType.Id)blogUserRole.RoleId;
+                    }
+                }
+            }
         }
-        /// <summary>
-        /// Get all users that have the Administrator or Blogger role for the specific blog.
-        /// </summary>
-        /// <param name="blogId"></param>
-        /// <returns></returns>
-        public IList<User> GetBlogWriters(int blogId)
+
+        public override AnotherBlogUser GetById(long id)
         {
-            IQueryable<User> retVal = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
-                                       join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers on foundItem.UserId equals userBlog.User.UserId
-                                       join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.Roles on userBlog.Role.RoleId equals userRoles.RoleId
-                                        where (userRoles.Name == "Administrator" || userRoles.Name == "Blogger") &&
-                                          userBlog.Blog.BlogId == blogId && 
-                                          userBlog.Role.RoleId == userRoles.RoleId
-                                        select foundItem;
-            return retVal.ToList();
+            var user = base.GetById(id);
+            PopulateRoles(user);
+            return user;
+        }
+
+        public override IList<AnotherBlogUser> GetAll()
+        {
+            var users = base.GetAll();
+            PopulateRoles(users);
+            return users;
+        }
+
+        public IList<AnotherBlogUser> GetBlogWriters(int blogId)
+        {
+            var users = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                         join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers on foundItem.Id equals userBlog.User.Id
+                         join userRoles in ((UnitOfWork)this.UnitOfWork).DataContext.Roles on userBlog.Role.Id equals userRoles.Id
+                         where (userRoles.Name == "Administrator" || userRoles.Name == "Blogger") &&
+                             userBlog.Blog.Id == blogId &&
+                             userBlog.Role.Id == userRoles.Id
+                         select foundItem).ToList();
+
+            PopulateRoles(users);
+            return users;
+        }
+
+        public AnotherBlogUser GetByOAuthServiceUserId(long userId)
+        {
+            var user = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                        where foundItem.Id == userId
+                        select foundItem).SingleOrDefault();
+
+            PopulateRoles(user);
+            return user;
+        }
+
+        public AnotherBlogUser GetByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
+
+            var user = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                        where foundItem.Email == email
+                        select foundItem).SingleOrDefault();
+
+            PopulateRoles(user);
+            return user;
+        }
+
+        public AnotherBlogUser GetByExternalId(string externalId)
+        {
+            if (string.IsNullOrEmpty(externalId))
+            {
+                return null;
+            }
+
+            var user = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
+                        where foundItem.OAuthServiceUserId == externalId
+                        select foundItem).SingleOrDefault();
+
+            PopulateRoles(user);
+            return user;
         }
     }
 }

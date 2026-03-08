@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -11,29 +11,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data.Objects;
 
 using AlwaysMoveForward.Common.DataLayer;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Entities;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
-using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Map;
-using AlwaysMoveForward.AnotherBlog.DataLayer;
-using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+using AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogExtensionRepository : EntityFrameworkRepository<BlogExtension, BlogExtension>, IBlogExtensionRepository
+    public class BlogExtensionRepository : EntityFrameworkRepository<BlogExtension, int>
     {
-        internal BlogExtensionRepository(IUnitOfWork unitOfWork, RepositoryManager repositoryManager)
-            : base(unitOfWork, repositoryManager)
+        internal BlogExtensionRepository(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
-
         }
 
         public override string IdPropertyName
         {
-            get { return "ExtensionId"; }
+            get { return "Id"; }
         }
 
         public BlogExtension GetByAssemblyName(string assemblyName)

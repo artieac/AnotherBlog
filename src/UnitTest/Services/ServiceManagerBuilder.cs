@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlwaysMoveForward.AnotherBlog.DataLayer;
+using AlwaysMoveForward.Common.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 {
     public class ServiceManagerBuilder : AlwaysMoveForward.AnotherBlog.BusinessLayer.Service.ServiceManagerBuilder
     {
-        protected override UnitOfWork CreateUnitOfWork(string connectionString)
+        private readonly DatabaseConfiguration _databaseConfiguration;
+
+        public ServiceManagerBuilder(IOptions<DatabaseConfiguration> databaseConfiguration)
+            : base(databaseConfiguration)
         {
-            return new UnitOfWork(connectionString);
+            _databaseConfiguration = databaseConfiguration.Value;
+        }
+
+        protected override UnitOfWork CreateUnitOfWork()
+        {
+            return new UnitOfWork(_databaseConfiguration);
         }
     }
 }

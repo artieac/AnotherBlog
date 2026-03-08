@@ -21,14 +21,14 @@
 	<br />
     <div class="footer">
     	<br />
-	    <div class="footerCopyright">Copyright &copy; @DateTime.Now.Year.ToString() @MvcApplication.SiteInfo.Name v @MvcApplication.Version</div>
-	    <div class="footerAbout"><a href='/Home/About'>About @MvcApplication.SiteInfo.Name</a></div>
+        <div class="footerCopyright">Copyright &copy; @DateTime.Now.Year.ToString() @WebApplicationState.SiteInfo.Name v @WebApplicationState.Version</div>
+        <div class="footerAbout"><a href='/Home/About'>About @WebApplicationState.SiteInfo.Name</a></div>
 	</div>
 </div>
 <div class="metaContentPanel">   
-    @Html.Partial("_BlogSelectionControl")
+    <partial name="_BlogSelectionControl"/>
     <div id="blogCalendarSection">
-	    @Html.Partial("_CalendarControl", (AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.Common.Calendar)
+	    <partial name="_CalendarControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.Common.Calendar"/>
     </div>
 	<div id="mostViewed" ng-controller="ListController">
         <div class="contentSection" ng-init="getMostViewedPosts('@ViewBag.BlogSubFolder');">
@@ -51,7 +51,7 @@
         @Html.Partial("_ArchiveControl")
     }
     <div>
-        @Html.Partial("_SyndicationControl", ViewBag.BlogSubFolder==null ? string.Empty : (string)ViewBag.BlogSubFolder )
+        <partial name="_SyndicationControl" model="ViewBag.BlogSubFolder==null ? string.Empty : (string)ViewBag.BlogSubFolder" />
     </div>   
     <div>
         <div class="contentSection">

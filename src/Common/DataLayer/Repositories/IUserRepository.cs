@@ -22,5 +22,9 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
         IList<AnotherBlogUser> GetBlogWriters(int blogId);
 
         AnotherBlogUser GetByOAuthServiceUserId(long userId);
+
+        AnotherBlogUser GetByEmail(string email);
+
+        AnotherBlogUser GetByExternalId(string externalId);
     }
 }

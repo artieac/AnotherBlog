@@ -8,12 +8,8 @@
  * Contributors:
  *    Arthur Correa – initial contribution
  */
-using System;
- using System.Collections.Generic; 
- using System.Linq; 
- using System.Text; 
- using System.Web.Mvc; 
- using System.Xml.Serialization; 
+using Microsoft.AspNetCore.Mvc;
+using System.Xml.Serialization; 
 
 namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
 {
@@ -30,13 +26,18 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
         /// Serialises the object that was passed into the constructor to XML and writes the corresponding XML to the result stream. 
         /// </summary> 
         /// <param name="context">The controller context for the current request.</param> 
-        public override void ExecuteResult(ControllerContext context)
+        public override void ExecuteResult(ActionContext context)
         {
             if (this.ObjectToSerialize != null)
             {
                 var xs = new XmlSerializer(this.ObjectToSerialize.GetType());
-                context.HttpContext.Response.ContentType = "text/xml";
-                xs.Serialize(context.HttpContext.Response.Output, this.ObjectToSerialize);
+                HttpResponse response = context.HttpContext.Response;
+                response.ContentType = "text/xml";
+                response.StatusCode = StatusCodes.Status200OK;
+
+                using var writer = new System.IO.StreamWriter(response.Body);
+                writer.Write(this.ObjectToSerialize);
+                writer.Flush();
             }
         }
     }

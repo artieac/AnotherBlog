@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -13,7 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Moq;
+using Microsoft.Extensions.Options;
 using AlwaysMoveForward.Common.DomainModel;
+using AlwaysMoveForward.Common.Configuration;
+using AlwaysMoveForward.Common.Encryption;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Service;
@@ -22,36 +25,39 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 {
     public class ServiceTestBase
     {
-        ServiceManager services;
+        protected ServiceManager Services { get; set; }
 
         public ServiceTestBase()
         {
+            var databaseConfig = new DatabaseConfiguration(
+                Options.Create(new AESConfiguration()),
+                Options.Create(new KeyFileConfiguration()),
+                Options.Create(new KeyStoreConfiguration()),
+                Options.Create(new RSAXmlKeyFileConfiguration()))
+            {
+                ConnectionString = "Data Source=localhost\\DBLocal;Initial Catalog=AMForwardDb;User ID=test;Password=test;"
+            };
+            var options = Options.Create(databaseConfig);
+            var builder = new ServiceManagerBuilder(options);
+            this.Services = builder.CreateServiceManager();
         }
 
-        public ServiceManager Services
+        public ServiceTestBase(ServiceManager serviceManager)
         {
-            get
-            {
-                if (services == null)
-                {
-                    this.services = AlwaysMoveForward.AnotherBlog.UnitTest.Services.ServiceManagerBuilder.BuildServiceManager();
-                }
-
-                return services;
-            }
+            this.Services = serviceManager;
         }
 
         public Blog TestBlog
         {
             get
             {
-                Blog retVal = Services.BlogService.GetBySubFolder("TestBlog");
+                Blog retVal = this.Services.BlogService.GetBySubFolder("TestBlog");
 
                 if (retVal == null)
                 {
                     using(this.Services.UnitOfWork.BeginTransaction())
                     {
-                        retVal = Services.BlogService.Save(-1, "TestBlog", "TestBlog", "TestBlog", "", "TestBlog", "");
+                        retVal = this.Services.BlogService.Save(-1, "TestBlog", "TestBlog", "TestBlog", "", "TestBlog", "");
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                 }
@@ -64,18 +70,18 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             get
             {
-                AnotherBlogUser retVal = Services.UserService.GetById(1);
+                AnotherBlogUser retVal = this.Services.UserService.GetById(1);
 
                 if (retVal == null)
                 {
                     using (this.Services.UnitOfWork.BeginTransaction())
                     {
-                        retVal = Services.UserService.Save(1, false, true, "");
+                        retVal = this.Services.UserService.Save(1, false, true, "");
                         this.Services.UnitOfWork.EndTransaction(true);
                     }
                 }
 
-                System.Threading.Thread.CurrentPrincipal = new AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal(retVal, true);
+                System.Threading.Thread.CurrentPrincipal = new AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities.SecurityPrincipal(this.Services, retVal, true);
 
                 return retVal;
             }

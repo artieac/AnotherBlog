@@ -19,13 +19,12 @@
             <select id="targetBlog" name="targetBlog" onchange="AdminCommon.HandleBlogSelectionChange();">
             @foreach (Blog blogItem in ViewBag.Common.UserBlogs)
             { 
-                <option id="@blogItem.Id" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @if (blogItem.Id == ViewBag.Common.TargetBlog.Id)
-                                                                                            {<text> selected </text>}>@blogItem.Name</option>
+                <!option id="@blogItem.Id" name="@blogItem.SubFolder" value="@blogItem.SubFolder" @(blogItem.Id == ViewBag.Common.TargetBlog.Id ? "selected" : "")>@blogItem.Name</!option>
             }            
             </select>
         }
         @{
-            SecurityPrincipal currentPrincipal = HttpContext.Current.User as SecurityPrincipal;
+            SecurityPrincipal currentPrincipal = Context.Items["CurrentPrincipal"] as SecurityPrincipal;
         }
         @if (currentPrincipal.IsInRole(RoleType.Names.Administrator) == true || currentPrincipal.IsInRole(RoleType.Names.Blogger) == true)
         {

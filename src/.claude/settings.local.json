@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(Get-Content \"C:\\\\Personal\\\\sourcecode\\\\AnotherBlog\\\\src\\\\UnitTest\\\\Service References\\\\BlogPostReference\\\\Reference.cs\" -Raw)",
+      "Bash(Select-Object -First 1)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet --list-sdks:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dir:*)"
+    ]
+  }
+}
