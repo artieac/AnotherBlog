@@ -19,26 +19,26 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IBlogEntryRepository : IRepository<BlogPost, int>
+    public interface IBlogEntryRepository : IRepository<BlogPost, long>
     {
         IList<BlogPost> GetAll(bool publishedOnly, int maxResults);
-        IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending);
+        IList<BlogPost> GetAllByBlog(long blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending);
         IList<BlogPost> GetMostRead(int maxResults);
-        IList<BlogPost> GetMostRead(int blogId, int maxResults);
-        BlogPost GetByTitle(string blogTitle, int blogId);
-        BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId);
-        IList<BlogPost> GetByTag(int blogId, string tagText, bool publishedOnly);
-        IList<BlogPost> GetByTag(int tagId, bool publishedOnly);
-        IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly);
+        IList<BlogPost> GetMostRead(long blogId, int maxResults);
+        BlogPost GetByTitle(string blogTitle, long blogId);
+        BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, long blogId);
+        IList<BlogPost> GetByTag(long blogId, string tagText, bool publishedOnly);
+        IList<BlogPost> GetByTag(long tagId, bool publishedOnly);
+        IList<BlogPost> GetByTag(long? blogId, long tagId, bool publishedOnly);
         IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly);
-        IList<BlogPost> GetByMonth(DateTime blogDate, int? blogId, bool publishedOnly);
+        IList<BlogPost> GetByMonth(DateTime blogDate, long? blogId, bool publishedOnly);
         IList<BlogPost> GetByDate(DateTime blogDate, bool publishedOnly);
-        IList<BlogPost> GetByDate(DateTime blogDate, int? blogId, bool publishedOnly);
-        BlogPost GetMostRecent(int blogId, bool published);
-        BlogPost GetPreviousEntry(int blogId, int currentPostId);
-        BlogPost GetNextEntry(int blogId, int currentPostId);
+        IList<BlogPost> GetByDate(DateTime blogDate, long? blogId, bool publishedOnly);
+        BlogPost GetMostRecent(long blogId, bool published);
+        BlogPost GetPreviousEntry(long blogId, long currentPostId);
+        BlogPost GetNextEntry(long blogId, long currentPostId);
         IList<DateTime> GetPublishedDatesByMonth(DateTime blogDate);
-        IList GetArchiveDates(int? blogId);
-        BlogPost GetByCommentId(int commentId);
+        IList GetArchiveDates(long? blogId);
+        BlogPost GetByCommentId(long commentId);
     }
 }

@@ -18,7 +18,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class EntryCommentRepository : EntityFrameworkRepository<Comment, int>, IEntryCommentRepository
+    public class EntryCommentRepository : EntityFrameworkRepository<Comment, long>, IEntryCommentRepository
     {
         internal EntryCommentRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -30,7 +30,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             get { return "Id"; }
         }
 
-        public IList<Comment> GetByEntry(int blogPostId, int targetStatus, int blogId)
+        public IList<Comment> GetByEntry(long blogPostId, int targetStatus, long blogId)
         {
             IEnumerable<Comment> retVal = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Comments
                                           where foundItem.Post.Id == blogPostId &&
@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal.ToList();
         }
 
-        public IList<Comment> GetByEntry(int blogPostId, int blogId)
+        public IList<Comment> GetByEntry(long blogPostId, long blogId)
         {
             IEnumerable<Comment> retVal = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Comments
                                           where foundItem.Post.Id == blogPostId &&
@@ -49,17 +49,17 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal.ToList();
         }
 
-        public IList<Comment> GetAllUnapproved(int blogId)
+        public IList<Comment> GetAllUnapproved(long blogId)
         {
             return this.GetAllByProperty("Status", (int)CommentStatus.Unapproved, blogId);
         }
 
-        public IList<Comment> GetAllApproved(int blogId)
+        public IList<Comment> GetAllApproved(long blogId)
         {
             return this.GetAllByProperty("Status", (int)CommentStatus.Approved, blogId);
         }
 
-        public IList<Comment> GetAllDeleted(int blogId)
+        public IList<Comment> GetAllDeleted(long blogId)
         {
             return this.GetAllByProperty("Status", (int)CommentStatus.Deleted, blogId);
         }

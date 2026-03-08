@@ -24,9 +24,9 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Id = -1;
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int BlogId { get; set; }
+        public long BlogId { get; set; }
 
         public Blog Blog { get; set; }
 

@@ -19,7 +19,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
     public interface IUserRepository : IRepository<AnotherBlogUser, long>
     {
-        IList<AnotherBlogUser> GetBlogWriters(int blogId);
+        IList<AnotherBlogUser> GetBlogWriters(long blogId);
 
         AnotherBlogUser GetByOAuthServiceUserId(long userId);
 

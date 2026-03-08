@@ -96,7 +96,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return users;
         }
 
-        public IList<AnotherBlogUser> GetBlogWriters(int blogId)
+        public IList<AnotherBlogUser> GetBlogWriters(long blogId)
         {
             var users = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Users
                          join userBlog in ((UnitOfWork)this.UnitOfWork).DataContext.BlogUsers on foundItem.Id equals userBlog.User.Id

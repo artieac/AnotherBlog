@@ -41,7 +41,7 @@ public class UserManagementController : AdminBaseController
         UserModel model = new UserModel();
         model.Roles = RoleType.Roles;
         IList<Blog> blogs = Services.BlogService.GetAll();
-        model.Blogs = new Dictionary<int, Blog>();
+        model.Blogs = new Dictionary<long, Blog>();
 
         for (int i = 0; i < blogs.Count; i++)
         {
@@ -104,7 +104,7 @@ public class UserManagementController : AdminBaseController
         UserModel model = new UserModel();
         model.Roles = RoleType.Roles;
         IList<Blog> blogs = Services.BlogService.GetAll();
-        model.Blogs = new Dictionary<int, Blog>();
+        model.Blogs = new Dictionary<long, Blog>();
 
         for (int i = 0; i < blogs.Count; i++)
         {
@@ -121,7 +121,7 @@ public class UserManagementController : AdminBaseController
         int targetUser = int.Parse(userId);
 
         IList<Blog> blogs = Services.BlogService.GetAll();
-        model.Blogs = new Dictionary<int, Blog>();
+        model.Blogs = new Dictionary<long, Blog>();
 
         for (int i = 0; i < blogs.Count; i++)
         {
@@ -146,7 +146,7 @@ public class UserManagementController : AdminBaseController
         model.CurrentUser = this.Services.UserService.AddBlogRole(targetUserId, blogId, roleId);
 
         IList<Blog> blogs = Services.BlogService.GetAll();
-        model.Blogs = new Dictionary<int, Blog>();
+        model.Blogs = new Dictionary<long, Blog>();
 
         for (int i = 0; i < blogs.Count; i++)
         {

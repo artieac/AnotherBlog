@@ -19,7 +19,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class BlogEntryRepository : EntityFrameworkRepository<BlogPost, int>, IBlogEntryRepository
+    public class BlogEntryRepository : EntityFrameworkRepository<BlogPost, long>, IBlogEntryRepository
     {
         internal BlogEntryRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -62,7 +62,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return dtoList.ToList();
         }
 
-        public IList<BlogPost> GetAllByBlog(int blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
+        public IList<BlogPost> GetAllByBlog(long blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending)
         {
             IQueryable<BlogPost> dtoList = null;
 
@@ -112,7 +112,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return dtoList.ToList();
         }
 
-        public IList<BlogPost> GetMostRead(int blogId, int maxResults)
+        public IList<BlogPost> GetMostRead(long blogId, int maxResults)
         {
             IQueryable<BlogPost> dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
                                            where foundItem.IsPublished == true &&
@@ -128,12 +128,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return dtoList.ToList();
         }
 
-        public BlogPost GetByTitle(string blogTitle, int blogId)
+        public BlogPost GetByTitle(string blogTitle, long blogId)
         {
             return this.GetByProperty("Title", blogTitle, blogId);
         }
 
-        public BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, int blogId)
+        public BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, long blogId)
         {
             BlogPost retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
                                where foundItem.Blog.Id == blogId &&
@@ -148,12 +148,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal;
         }
 
-        public IList<BlogPost> GetByTag(int tagId, bool publishedOnly)
+        public IList<BlogPost> GetByTag(long tagId, bool publishedOnly)
         {
             return this.GetByTag(null, tagId, publishedOnly);
         }
 
-        public IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly)
+        public IList<BlogPost> GetByTag(long? blogId, long tagId, bool publishedOnly)
         {
             IQueryable<BlogPost> dtoList = null;
 
@@ -212,7 +212,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.GetByMonth(blogDate, null, publishedOnly);
         }
 
-        public IList<BlogPost> GetByMonth(DateTime blogDate, int? blogId, bool publishedOnly)
+        public IList<BlogPost> GetByMonth(DateTime blogDate, long? blogId, bool publishedOnly)
         {
             IQueryable<BlogPost> dtoList = null;
 
@@ -263,7 +263,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.GetByDate(blogDate, null, publishedOnly);
         }
 
-        public IList<BlogPost> GetByDate(DateTime blogDate, int? blogId, bool publishedOnly)
+        public IList<BlogPost> GetByDate(DateTime blogDate, long? blogId, bool publishedOnly)
         {
             IQueryable<BlogPost> dtoList = null;
 
@@ -305,7 +305,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return dtoList.ToList();
         }
 
-        public BlogPost GetMostRecent(int blogId, bool published)
+        public BlogPost GetMostRecent(long blogId, bool published)
         {
             BlogPost retVal = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
                                where foundItem.Blog.Id == blogId && foundItem.IsPublished == true
@@ -315,7 +315,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal;
         }
 
-        public BlogPost GetPreviousEntry(int blogId, int currentPostId)
+        public BlogPost GetPreviousEntry(long blogId, long currentPostId)
         {
             BlogPost retVal = null;
 
@@ -337,7 +337,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal;
         }
 
-        public BlogPost GetNextEntry(int blogId, int currentPostId)
+        public BlogPost GetNextEntry(long blogId, long currentPostId)
         {
             BlogPost retVal = null;
 
@@ -378,7 +378,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal;
         }
 
-        public IList GetArchiveDates(int? blogId)
+        public IList GetArchiveDates(long? blogId)
         {
             IQueryable<BlogPost> query = ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts;
 
@@ -411,7 +411,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal;
         }
 
-        public BlogPost GetByCommentId(int commentId)
+        public BlogPost GetByCommentId(long commentId)
         {
             BlogPost retVal = null;
 
@@ -427,7 +427,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal;
         }
 
-        public IList<BlogPost> GetByTag(int blogId, string tagName, bool publishedOnly)
+        public IList<BlogPost> GetByTag(long blogId, string tagName, bool publishedOnly)
         {
             IList<BlogPost> retVal = new List<BlogPost>();
 

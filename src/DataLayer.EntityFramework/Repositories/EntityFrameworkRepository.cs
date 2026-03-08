@@ -98,7 +98,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.GetEntityByProperty(propertyName, idValue);
         }
 
-        public virtual TDomainType GetByProperty(string propertyName, object idValue, int blogId)
+        public virtual TDomainType GetByProperty(string propertyName, object idValue, long blogId)
         {
             TDomainType retVal = default(TDomainType);
 
@@ -121,7 +121,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.GetDbSet().ToList();
         }
 
-        public virtual IList<TDomainType> GetAll(int blogId)
+        public virtual IList<TDomainType> GetAll(long blogId)
         {
             string sql = "SELECT * FROM " + this.TableName;
             sql += " WHERE " + this.BlogIdPropertyName + " = {0}";
@@ -146,7 +146,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.GetDbSet().Where(whereExpression).ToList();
         }
 
-        public virtual IList<TDomainType> GetAllByProperty(string propertyName, object idValue, int blogId)
+        public virtual IList<TDomainType> GetAllByProperty(string propertyName, object idValue, long blogId)
         {
             string sql = "SELECT * FROM " + this.TableName;
             sql += " WHERE " + propertyName + " = {0}";

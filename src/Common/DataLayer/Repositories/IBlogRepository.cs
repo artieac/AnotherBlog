@@ -18,7 +18,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IBlogRepository : IRepository<Blog, int>
+    public interface IBlogRepository : IRepository<Blog, long>
     {
         Blog GetByName(string name);
         Blog GetBySubFolder(string subFolder);

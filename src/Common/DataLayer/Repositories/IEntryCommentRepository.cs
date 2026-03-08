@@ -18,12 +18,12 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IEntryCommentRepository : IRepository<Comment, int>
+    public interface IEntryCommentRepository : IRepository<Comment, long>
     {
-        IList<Comment> GetByEntry(int blogPostId, int targetStatus, int blogId);
-        IList<Comment> GetByEntry(int blogPostId, int blogId);
-        IList<Comment> GetAllUnapproved(int blogId);
-        IList<Comment> GetAllApproved(int blogId);
-        IList<Comment> GetAllDeleted(int blogId);
+        IList<Comment> GetByEntry(long blogPostId, int targetStatus, long blogId);
+        IList<Comment> GetByEntry(long blogPostId, long blogId);
+        IList<Comment> GetAllUnapproved(long blogId);
+        IList<Comment> GetAllApproved(long blogId);
+        IList<Comment> GetAllDeleted(long blogId);
     }
 }

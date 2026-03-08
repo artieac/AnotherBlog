@@ -17,7 +17,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class RoleRepository : EntityFrameworkRepository<Role, int>
+    public class RoleRepository : EntityFrameworkRepository<Role, long>
     {
         internal RoleRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)

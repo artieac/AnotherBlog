@@ -25,7 +25,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Id = -1;
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public CommentStatus Status { get; set; }
         public string Link { get; set; }
         public string AuthorEmail { get; set; }
@@ -33,7 +33,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public string AuthorName { get; set; }
         public DateTime DatePosted { get; set; }
         public BlogPost Post { get; set; }
-        public int BlogId { get; set; }
+        public long BlogId { get; set; }
         
         public void CleanCommentText()
         {

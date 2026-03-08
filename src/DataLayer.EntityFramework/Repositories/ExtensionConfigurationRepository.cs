@@ -17,7 +17,7 @@ using AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class ExtensionConfigurationRepository : EntityFrameworkRepository<ExtensionConfiguration, int>
+    public class ExtensionConfigurationRepository : EntityFrameworkRepository<ExtensionConfiguration, long>
     {
         public ExtensionConfigurationRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)

@@ -31,7 +31,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
             this.Tags = new List<Tag>();
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public bool IsPublished { get; set; }
         public Blog Blog { get; set; }
         public AnotherBlogUser Author { get; set; }
@@ -40,7 +40,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public DateTime DatePosted { get; set; }
         public DateTime DateCreated { get; set; }
         public int CommentCount { get; set; }
-        public int TimesViewed { get; set; }
+        public long TimesViewed { get; set; }
         public IList<Comment> Comments { get; set; }
         public IList<Tag> Tags { get; set; }
         

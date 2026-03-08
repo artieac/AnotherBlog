@@ -13,6 +13,7 @@ COPY AnotherBlog/src/Common/AlwaysMoveForward.AnotherBlog.Common.csproj ./Anothe
 COPY AnotherBlog/src/DataLayer.EntityFramework/AlwaysMoveForward.AnotherBlog.DataLayer.EntityFramework.csproj ./AnotherBlog/src/DataLayer.EntityFramework/
 COPY AlwaysMoveForward/src/Common/AlwaysMoveForward.Common/AlwaysMoveForward.Common.csproj ./AlwaysMoveForward/src/Common/AlwaysMoveForward.Common/
 COPY AlwaysMoveForward/src/Common/DataLayer.EntityFramework/AlwaysMoveForward.Common.DataLayer.EntityFramework.csproj ./AlwaysMoveForward/src/Common/DataLayer.EntityFramework/
+COPY AnotherBlog/src/UnitTest/AlwaysMoveForward.AnotherBlog.UnitTest.csproj ./AnotherBlog/src/UnitTest/
 
 # Restore NuGet packages
 RUN dotnet restore ./AnotherBlog/src/AlwaysMoveForward.EntityFramework.sln
@@ -27,7 +28,7 @@ RUN npm install && npm run build:less
 
 # Build the application
 WORKDIR /src
-RUN dotnet publish ./AnotherBlog/src/Web/AlwaysMoveForward.AnotherBlog.Web.csproj -c Release -o /app/publish --no-restore
+RUN dotnet publish ./AnotherBlog/src/Web/AlwaysMoveForward.AnotherBlog.Web.csproj -c Release -o /app/publish
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime

@@ -17,12 +17,12 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface ITagRepository : IRepository<Tag, int>
+    public interface ITagRepository : IRepository<Tag, long>
     {
-        IList<Tag> GetAll(int blogId);
-        IList GetAllWithCount(int? blogId);
-        Tag GetByName(string name, int blogId);
-        IList<Tag> GetByNames(string[] names, int blogId);
-        IList<Tag> GetByBlogEntryId(int blogEntryId);
+        IList<Tag> GetAll(long blogId);
+        IList GetAllWithCount(long? blogId);
+        Tag GetByName(string name, long blogId);
+        IList<Tag> GetByNames(string[] names, long blogId);
+        IList<Tag> GetByBlogEntryId(long blogEntryId);
     }
 }

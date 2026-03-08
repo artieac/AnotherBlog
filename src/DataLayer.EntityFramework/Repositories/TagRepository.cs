@@ -19,7 +19,7 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
-    public class TagRepository : EntityFrameworkRepository<Tag, int>, ITagRepository
+    public class TagRepository : EntityFrameworkRepository<Tag, long>, ITagRepository
     {
         internal TagRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -31,12 +31,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             get { return "Id"; }
         }
 
-        public new IList<Tag> GetAll(int blogId)
+        public new IList<Tag> GetAll(long blogId)
         {
             return this.GetAllByProperty("BlogId", blogId);
         }
 
-        public IList GetAllWithCount(int? blogId)
+        public IList GetAllWithCount(long? blogId)
         {
             IDictionary<string, object> objectParams = new Dictionary<string, object>();
 
@@ -66,12 +66,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return foundTags.ToList();
         }
 
-        public Tag GetByName(string name, int blogId)
+        public Tag GetByName(string name, long blogId)
         {
             return this.GetByProperty("Name", name, blogId);
         }
 
-        public IList<Tag> GetByNames(string[] names, int blogId)
+        public IList<Tag> GetByNames(string[] names, long blogId)
         {
             IQueryable<Tag> retVal = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags
                                      where names.Contains(foundItem.Name) && foundItem.Blog.Id == blogId
@@ -79,7 +79,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return retVal.ToList();
         }
 
-        public IList<Tag> GetByBlogEntryId(int entryId)
+        public IList<Tag> GetByBlogEntryId(long entryId)
         {
             IQueryable<Tag> retVal = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags
                                      join blogEntryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals blogEntryTag.Tag.Id

@@ -8,12 +8,12 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 
 namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
 {
-    public interface IBlogListRepository : IRepository<BlogList, int>
+    public interface IBlogListRepository : IRepository<BlogList, long>
     {
-        IList<BlogList> GetByBlog(int blogId);
+        IList<BlogList> GetByBlog(long blogId);
 
-        BlogList GetByIdAndBlogId(int listId, int blogId);
+        BlogList GetByIdAndBlogId(long listId, long blogId);
 
-        BlogList GetByNameAndBlogId(string name, int blogId);
+        BlogList GetByNameAndBlogId(string name, long blogId);
     }
 }
