@@ -113,23 +113,33 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Serve static files from Content folder
-app.UseStaticFiles(new StaticFileOptions
+var contentPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "Content");
+if (System.IO.Directory.Exists(contentPath))
 {
-    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
-        System.IO.Path.Combine(builder.Environment.ContentRootPath, "Content")),
-    RequestPath = "/Content"
-});
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(contentPath),
+        RequestPath = "/Content"
+    });
+}
 
 // Serve static files from Scripts folder
-app.UseStaticFiles(new StaticFileOptions
+var scriptsPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "Scripts");
+if (System.IO.Directory.Exists(scriptsPath))
 {
-    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
-        System.IO.Path.Combine(builder.Environment.ContentRootPath, "Scripts")),
-    RequestPath = "/Scripts"
-});
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(scriptsPath),
+        RequestPath = "/Scripts"
+    });
+}
 
 // Default wwwroot (if it exists)
-app.UseStaticFiles();
+var wwwrootPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
+if (System.IO.Directory.Exists(wwwrootPath))
+{
+    app.UseStaticFiles();
+}
 
 app.UseRouting();
 

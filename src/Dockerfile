@@ -40,6 +40,11 @@ RUN adduser --disabled-password --gecos "" appuser
 # Copy published application
 COPY --from=build /app/publish .
 
+# Copy static asset directories (Content and Scripts are not in wwwroot so
+# dotnet publish may not include them; copy directly from the build stage)
+COPY --from=build /src/AnotherBlog/src/Web/Content ./Content
+COPY --from=build /src/AnotherBlog/src/Web/Scripts ./Scripts
+
 # Set ownership to non-root user
 RUN chown -R appuser:appuser /app
 
@@ -49,7 +54,6 @@ USER appuser
 EXPOSE 8080
 
 # Set environment variables
-ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 
 # Health check
