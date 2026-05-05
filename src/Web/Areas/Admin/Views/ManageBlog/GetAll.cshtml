@@ -18,28 +18,33 @@
     </script>
 }
 <div class="bodyContent">
-    <div class="contentPageTitle">
-        <label>Manage Blogs</label>
-    </div>
-    <button type="button" name="addBlogButton" class="btn btn-primary">Add Blog</button>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th width="20%">Name</th>
-                <th width="20%">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                foreach (Blog blogItem in ViewData.Model.Blogs)
-                {
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Manage Blogs</h3>
+        </div>
+        <div class="panel-body">
+            <button type="button" name="addBlogButton" class="btn btn-primary">Add Blog</button>
+            <br /><br />
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td><a href="/Admin/ManageBlog/EditBlog/@blogItem.Id.ToString()">@blogItem.Name</a></td>
-                        <td>@blogItem.Description</td>
+                        <th width="20%">Name</th>
+                        <th width="20%">Description</th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-    <button type="button" name="addBlogButton" class="btn btn-primary">Add Blog</button>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Blog blogItem in ViewData.Model.Blogs)
+                        {
+                            <tr>
+                                <td><a href="/Admin/ManageBlog/EditBlog/@blogItem.Id.ToString()">@blogItem.Name</a></td>
+                                <td>@blogItem.Description</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <button type="button" name="addBlogButton" class="btn btn-primary">Add Blog</button>
+        </div>
+    </div>
 </div>        

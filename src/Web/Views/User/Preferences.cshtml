@@ -6,20 +6,24 @@
 }
 @section headerPlugins
 {
-    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            plugins: "link",
-            selector: 'textarea',
-            menubar: "format insert edit",
-            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link"
+            selector: '#userAbout',
+            plugins: 'link lists advlist autolink charmap code help wordcount',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            menubar: false,
+            setup: function (editor) {
+                editor.on('blur', function (e) {
+                    tinymce.triggerSave();
+                });
+            }
         });
     </script>
-    <!-- /TinyMCE -->
 }
 <div class="bodyContent">        
     <div class="contentPageTitle">
-        <label>@Model.Common.ContentTitle</label>
+        <h3>@Model.Common.ContentTitle</h3>
     </div> 
     <div class="editAreaContainer">
         <div class="editAreaSubContainer">
@@ -27,30 +31,42 @@
                 @{
                     var formAction = Model.TargetBlog == null ? "/User/SavePreferences" : $"/{Model.TargetBlog.SubFolder}/User/SavePreferences";
                 }
-                <form action="@formAction" method="post">
-                <table>
-                    <tr>
-                        <th class="editItemLabel">user name:</th>
-                        <td>@Model.CurrentUser.GetDisplayName()</td>
-                    </tr>
-                    <tr>
-                        <th  class="editItemLabel">password:</th>
-                        <td><input type="password" id="password" name="password" /></td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">email:</th>
-                        <td><input type="text" id="email" name="email" value="" /></td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">display name:</th>
-                        <td><input type="text" id="displayName" name="displayName" value="@Model.CurrentUser.GetDisplayName()" /></td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">about:</th>
-                        <td><textarea class="textAreaInput" id="userAbout" name="userAbout" cols="2">@Model.CurrentUser.About</textarea></td>
-                    </tr>
-                </table>
-                <input style="margin-left:25%" type="submit" ID="saveButton" value="Save"/>
+                <form action="@formAction" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">user name:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">@Model.CurrentUser.GetDisplayName()</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="password" name="password" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">email:</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="email" name="email" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="displayName" class="col-sm-2 control-label">display name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="displayName" name="displayName" value="@Model.CurrentUser.GetDisplayName()" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userAbout" class="col-sm-2 control-label">about:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="userAbout" name="userAbout" rows="10">@Model.CurrentUser.About</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" id="saveButton" class="btn btn-primary" value="Save"/>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

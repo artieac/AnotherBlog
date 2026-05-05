@@ -11,16 +11,16 @@
 @section headerPlugins
 {
     <script src="/Scripts/Controllers/BlogController.js" type="text/javascript"></script>
-    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            plugins: "link",
-            selector: 'textarea',
-            menubar: "format insert edit",
-            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link",
+            selector: '#blogAbout',
+            plugins: 'link lists advlist autolink charmap code help wordcount',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            menubar: false,
             setup: function (editor) {
                 editor.on('blur', function (e) {
-                    tinyMCE.triggerSave();
+                    tinymce.triggerSave();
                 });
             }
         });
@@ -32,17 +32,18 @@
 
 <div class="bodyContent" ng-controller="BlogController">
     <div class="panel panel-default">
-        <div class="panel-header">Edit Blog Settings: @Model.Common.TargetBlog.Name</div>
-        <br />
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Blog Settings: @Model.Common.TargetBlog.Name</h3>
+        </div>
         <div class="panel-body">
             @if (ViewData.ModelState.IsValid == false)
             {
                 <div class="alert alert-danger">
-                    @Html.ValidationMessage("userName")
+                    @Html.ValidationMessage("blogWelcome")
                     <br />
-                    @Html.ValidationMessage("email")
+                    @Html.ValidationMessage("blogDescription")
                     <br />
-                    @Html.ValidationMessage("displayName")
+                    @Html.ValidationMessage("blogAbout")
                     <br />
                 </div>
             }
@@ -51,17 +52,17 @@
                 <input type="hidden" name="blogName" id="blogName" value="@Model.Common.TargetBlog.Name" />
                 <input type="hidden" id="blogTheme" name="blogTheme" value="@Model.Common.TargetBlog.Theme" />
                 <input type="hidden" id="blogSubFolder" name="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" />
-                <div>
+                <div class="form-group">
                     <label for="blogWelcome">Welcome Message:</label>
                     <input type="text" name="blogWelcome" id="blogWelcome" value="@Model.Common.TargetBlog.WelcomeMessage" class="form-control" />
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="blogDescription">Description:</label>
                     <input type="text" name="blogDescription" id="blogDescription" value="@Model.Common.TargetBlog.Description" class="form-control" />
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="blogAbout">About:</label>
-                    <textarea name="blogAbout" id="blogAbout" class="form-control">@Model.Common.TargetBlog.About</textarea>
+                    <textarea name="blogAbout" id="blogAbout" class="form-control" rows="10">@Model.Common.TargetBlog.About</textarea>
                 </div>
                 <button type="button" class="btn btn-primary" id="saveButton" name="saveButton" ng-click="saveBlog()">Save Changes</button>
             </form>

@@ -33,11 +33,15 @@ public class CommentController : BaseApiController
             {
                 foreach (BlogPost post in posts)
                 {
-                    foreach (Comment comment in post.Comments)
+                    if(post.Comments != null)
                     {
-                        GetCommentModel newItem = new GetCommentModel(comment);
-                        newItem.BlogPostId = post.Id;
-                        model.Add(newItem);
+                        foreach (Comment comment in post.Comments)
+                        {
+                            GetCommentModel newItem = new GetCommentModel(comment);
+                            newItem.BlogPostId = post.Id;
+                            model.Add(newItem);
+                        }
+
                     }
                 }
             }

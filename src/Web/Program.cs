@@ -157,11 +157,13 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "AdminBlogSubFolder",
-    pattern: "Admin/{controller}/{action}/{blogSubFolder}/{id?}");
+    pattern: "Admin/{controller}/{action}/{blogSubFolder}/{id?}",
+    defaults: new { area = "Admin" });
 
 app.MapControllerRoute(
     name: "PostSpecific",
-    pattern: "Admin/{controller}/{action}/{blogSubFolder}/{blogPostId}/{filter?}");
+    pattern: "Admin/{controller}/{action}/{blogSubFolder}/{blogPostId}/{filter?}",
+    defaults: new { area = "Admin" });
 
 app.MapControllerRoute(
     name: "default",

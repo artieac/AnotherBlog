@@ -18,31 +18,36 @@
     </script>
 }
 <div class="bodyContent">        
-    <div class="contentPageTitle">
-        <H1>Manage Users</H1>
-    </div> 
-    <button type="button" class="btn btn-primary" name="addButton">Add User</button>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th width="20%">User</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-        @{
-            foreach (AnotherBlogUser blogUser in @Model.Users)
-            {   
-                <tr>
-                    <td><a href="/Admin/UserManagement/Edit/@blogUser.Id.ToString()">@blogUser.GetDisplayName()</a></td>
-                    <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.Id.ToString()"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a></td>
-                </tr>
-            }
-        }
-        </tbody>
-    </table>
-    <div class="pager">
-        @Html.PagedListPager(Model.Users, page => Url.Action("Index", new { page }))
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Manage Users</h3>
+        </div>
+        <div class="panel-body">
+            <button type="button" class="btn btn-primary" name="addButton">Add User</button>
+            <br /><br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th width="20%">User</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @{
+                    foreach (AnotherBlogUser blogUser in @Model.Users)
+                    {   
+                        <tr>
+                            <td><a href="/Admin/UserManagement/Edit/@blogUser.Id.ToString()">@blogUser.GetDisplayName()</a></td>
+                            <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.Id.ToString()"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a></td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+            <div class="pager">
+                @Html.PagedListPager(Model.Users, page => Url.Action("Index", new { page }))
+            </div>
+            <button type="button" class="btn btn-primary" name="addButton">Add User</button>
+        </div>
     </div>
-    <button type="button" class="btn btn-primary" name="addButton">Add User</button>
 </div>
