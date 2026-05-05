@@ -48,10 +48,12 @@ body {
   width: 200px;
 }
 .header {
-  background: #FFFFFF url(/Content/images/header.jpg) no-repeat;
+  background: #FFFFFF url(/Content/images/header.jpg) no-repeat center center;
+  background-size: cover;
   display: block;
   height: 300px;
-  width: 100%;
+  width: 100vw;
+  margin-left: -10vw;
 }
 .header .siteTitle {
   font-size: x-large;

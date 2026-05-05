@@ -9,73 +9,68 @@
 
 @section headerPlugins
 {
-    <!-- TinyMCE -->
-    <script type="text/javascript" src="/Content/tiny_mce/tiny_mce.js"></script>
-    <script type="text/javascript">
-        tinyMCE.init({
-            // General options
-            mode: "textareas",
-            theme: "AnotherBlog"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#siteAbout',
+            plugins: 'link lists advlist autolink charmap code help wordcount',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            menubar: false,
+            setup: function (editor) {
+                editor.on('blur', function (e) {
+                    tinymce.triggerSave();
+                });
+            }
         });
     </script>
-    <!-- /TinyMCE -->
 }
 <div class="bodyContent">        
-    <div class="contentPageTitle">
-        <label>Edit Site Info</label>
-    </div> 
-    <div class="editAreaContainer">
-        <div class="editAreaSubContainer">
-            <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Site Info</h3>
+        </div>
+        <div class="panel-body">
             <form action='/Admin/Site/Edit' method="post">
-                <table>
-                    <tr>
-                        <th class="editItemLabel">name:</th>
-                        <td><input type="text" id="siteName" name="siteName" value="@Model.SiteInfo.Name" maxlength="50"/></td>
-                        <td>@Html.ValidationMessage("siteName")</td>
-                    </tr>
-                    <tr>
-                        <th  class="editItemLabel">contact:</th>
-                        <td><input type="text" id="siteContact" name="siteContact" value="@Model.SiteInfo.ContactEmail" maxlength="50"/></td>
-                        <td>@Html.ValidationMessage("siteContact")</td>
-                    </tr>
-                    <tr>
-                        <th  class="editItemLabel">site analytics:</th>
-                        <td><input type="text" id="siteAnalytics" name="siteAnalyticsId" value="@Model.SiteInfo.SiteAnalyticsId" maxlength="50"/></td>
-                        <td>@Html.ValidationMessage("siteAnalyticsId")</td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">default author:</th>
-                        <td><input type="text" id="defaultAuthor" name="defaultAuthor" value="@Model.SiteInfo.DefaultAuthor" maxlength="50" /></td>
-                        <td>@Html.ValidationMessage("defaultAuthor")</td>
-                    </tr>
-                    <tr>
-                        <th class="editItemLabel">default keywords:</th>
-                        <td><input type="text" id="defaultKeywords" name="defaultKeywords" value="@Model.SiteInfo.DefaultKeywords" maxlength="100" /></td>
-                        <td>@Html.ValidationMessage("defaultKeywords")</td>
-                    </tr>
-                    <tr>
-                        <th  class="editItemLabel">theme:</th>
-                        <td colspan="2">
-                            <select id="defaultTheme" name="defaultTheme">
-                                @foreach (string themeDirectory in Utils.GetThemeDirectories(_Environment.ContentRootPath))
-                                {
-                                    <!option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @(themeDirectory == Model.SiteInfo.DefaultTheme ? "selected" : "")>@themeDirectory</!option>
-                                }
-                            </select> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <th  class="editItemLabel">about:</th>
-                        <td colspan="2"><textarea class="textAreaInput" cols="80" rows="20" id="siteAbout" name="siteAbout">@Model.SiteInfo.About</textarea></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="right">
-                            <input type="submit" ID="saveButton" value="Save"/>                
-                        </td>
-                    </tr>
-                </table>
+                <div class="form-group">
+                    <label for="siteName">Name:</label>
+                    <input type="text" id="siteName" name="siteName" value="@Model.SiteInfo.Name" maxlength="50" class="form-control" />
+                    @Html.ValidationMessage("siteName")
+                </div>
+                <div class="form-group">
+                    <label for="siteContact">Contact Email:</label>
+                    <input type="text" id="siteContact" name="siteContact" value="@Model.SiteInfo.ContactEmail" maxlength="50" class="form-control" />
+                    @Html.ValidationMessage("siteContact")
+                </div>
+                <div class="form-group">
+                    <label for="siteAnalytics">Site Analytics ID:</label>
+                    <input type="text" id="siteAnalytics" name="siteAnalyticsId" value="@Model.SiteInfo.SiteAnalyticsId" maxlength="50" class="form-control" />
+                    @Html.ValidationMessage("siteAnalyticsId")
+                </div>
+                <div class="form-group">
+                    <label for="defaultAuthor">Default Author:</label>
+                    <input type="text" id="defaultAuthor" name="defaultAuthor" value="@Model.SiteInfo.DefaultAuthor" maxlength="50" class="form-control" />
+                    @Html.ValidationMessage("defaultAuthor")
+                </div>
+                <div class="form-group">
+                    <label for="defaultKeywords">Default Keywords:</label>
+                    <input type="text" id="defaultKeywords" name="defaultKeywords" value="@Model.SiteInfo.DefaultKeywords" maxlength="100" class="form-control" />
+                    @Html.ValidationMessage("defaultKeywords")
+                </div>
+                <div class="form-group">
+                    <label for="defaultTheme">Default Theme:</label>
+                    <select id="defaultTheme" name="defaultTheme" class="form-control">
+                        @foreach (string themeDirectory in Utils.GetThemeDirectories(_Environment.ContentRootPath))
+                        {
+                            <!option id="@themeDirectory" name="@themeDirectory" value="@themeDirectory" @(themeDirectory == Model.SiteInfo.DefaultTheme ? "selected" : "")>@themeDirectory</!option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="siteAbout">About:</label>
+                    <textarea id="siteAbout" name="siteAbout" class="form-control" rows="15">@Model.SiteInfo.About</textarea>
+                </div>
                 <br />
+                <button type="submit" id="saveButton" class="btn btn-primary">Save Changes</button>
             </form>
         </div>
     </div>

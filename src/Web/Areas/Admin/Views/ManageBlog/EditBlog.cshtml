@@ -13,16 +13,16 @@
 @section headerPlugins
 {
     <script src="/Scripts/Controllers/BlogController.js" type="text/javascript"></script>
-    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            plugins: "link",
-            selector: 'textarea',
-            menubar: "format insert edit",
-            toolbar: "alignleft aligncenter alignright alignjustify fontsizeselect bullist numlist outdent indent blockquote undo redo link",
+            selector: '#blogAbout',
+            plugins: 'link lists advlist autolink charmap code help wordcount',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            menubar: false,
             setup: function (editor) {
                 editor.on('blur', function (e) {
-                    tinyMCE.triggerSave();
+                    tinymce.triggerSave();
                 });
             }
         });
@@ -30,11 +30,10 @@
 }
 <div class="bodyContent" ng-controller="BlogController">
     <div class="panel panel-primary">
-        <div class="panel-header">
-            Edit Blog
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Blog</h3>
         </div>
-        <div>
-            <br />
+        <div class="panel-body">
             <form id="saveBlogForm" action='/Admin/ManageBlog/EditBlog/@Model.Common.TargetBlog.Id' method="post">
                 <input type="hidden" name="blogId" id="blogId" value="@Model.Common.TargetBlog.Id" />
                 @if (ViewData.ModelState.IsValid == false)
@@ -44,23 +43,23 @@
                         <br />
                         @Html.ValidationMessage("blogDescription")
                         <br />
-                        @Html.ValidationMessage("blogDescription")
+                        @Html.ValidationMessage("blogWelcome")
                         <br />
                     </div>
                 }
-                <div>
+                <div class="form-group">
                     <label for="blogName">Name:</label>
                     <input type="text" name="blogName" id="blogName" value="@Model.Common.TargetBlog.Name" class="form-control" />
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="blogDescription">Description:</label>
                     <input type="text" name="blogDescription" id="blogDescription" value="@Model.Common.TargetBlog.Description" class="form-control" />
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="blogSubFolder">SubFolder:</label>
                     <input type="text" name="blogSubFolder" id="blogSubFolder" value="@Model.Common.TargetBlog.SubFolder" class="form-control" />
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="blogTheme">Theme:</label>
                     <select id="blogTheme" name="blogTheme" class="form-control">
                         @foreach (string themeDirectory in Utils.GetThemeDirectories(_Environment.ContentRootPath))
@@ -69,13 +68,13 @@
                         }
                     </select>
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="blogWelcome">Welcome Message:</label>
                     <input type="text" name="blogWelcome" id="blogWelcome" value="@Model.Common.TargetBlog.WelcomeMessage" class="form-control" />
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="blogAbout">About:</label>
-                    <textarea name="blogAbout" id="blogAbout" class="form-control">@Model.Common.TargetBlog.About</textarea>
+                    <textarea name="blogAbout" id="blogAbout" class="form-control" rows="10">@Model.Common.TargetBlog.About</textarea>
                 </div>
                 <br />
                 <button type="button" id="saveButton" class="btn btn-primary" ng-click="saveBlog()">Save</button>
