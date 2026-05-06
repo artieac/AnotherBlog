@@ -1,6 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const less = require('less');
+import fs from 'fs';
+import path from 'path';
+import less from 'less';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Function to recursively find all .less files
 function findLessFiles(dir, fileList = []) {

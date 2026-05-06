@@ -65,6 +65,15 @@ public class BlogPostController : BaseApiController
         return this.Services.BlogEntryService.GetMostRecent(targetBlog);
     }
 
+    [Route("/api/Blog/{blogSubFolder}/BlogPosts/All")]
+    [HttpGet]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
+    public IEnumerable<BlogPost> GetAllByBlog(string blogSubFolder)
+    {
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+        return this.Services.BlogEntryService.GetAllByBlog(targetBlog, false);
+    }
+
     [Route("/api/Blog/{blogSubFolder}/BlogPost/{id:int}")]
     [HttpGet]
     public BlogPost GetById(string blogSubFolder, int id)

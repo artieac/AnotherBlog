@@ -1,15 +1,30 @@
-﻿@model int
+@model long
 @{
     Layout = "";
 }
-<div id="commentListSection" ng-init="getComments('@ViewBag.BlogSubFolder', '@Model');" ng-model="blogPostComments">
-    <div class="commentSection" ng-repeat="comment in blogPostComments">
-        <div class="commentTitleSection">
-            <div class="commentSubTitle"> by {{ comment.AuthorName }} on {{ comment.DefaultDateStringFormat }}</div>
-                <div><a ng-show="comment.Link != ''" href="{{ comment.Link }}">{{ comment.Link }}</a></div>
+<div id="commentListSection" ng-init="getComments('@ViewBag.BlogSubFolder', '@Model');" ng-model="blogPostComments" class="space-y-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8" ng-repeat="comment in blogPostComments">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-sm">
+                {{ comment.AuthorName.charAt(0).toUpperCase() }}
             </div>
-        <div class="commentTextSection">
-            <div>{{ comment.Text }}</div>
+            <div>
+                <p class="font-bold text-slate-900 leading-none mb-1">{{ comment.AuthorName }}</p>
+                <p class="text-xs text-slate-400 font-medium">Discussion &bull; {{ comment.DefaultDateStringFormat }}</p>
+            </div>
+            <div class="ml-auto" ng-show="comment.Link != ''">
+                <a href="{{ comment.Link }}" target="_blank" class="text-slate-400 hover:text-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </a>
+            </div>
         </div>
+        <div class="text-slate-600 leading-relaxed font-medium">
+            {{ comment.Text }}
+        </div>
+    </div>
+    
+    <!-- Empty State -->
+    <div ng-show="blogPostComments.length == 0" class="bg-slate-50/50 rounded-2xl p-10 text-center border border-slate-100 border-dashed">
+        <p class="text-slate-400 font-bold">No comments yet. Be the first to join the conversation!</p>
     </div>
 </div>

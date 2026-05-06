@@ -1,14 +1,18 @@
-﻿<div id="blogListSection" ng-controller="BlogController" >
-	<div class="navigationSection" ng-init="getAllBlogs();">
-        <div class="navigationSectionTitle">
-            <label>Blogs</label>
-        </div> 
-        <div class="navigationSectionBody" >
-            <ul class="navigationSectionList">
-                <li class="navigationSectionItem" ng-repeat="blogItem in allBlogs">
-                    <a href='/Blog/{{blogItem.SubFolder}}/BlogPosts'>{{blogItem.Name}}</a>
-                </li>
-            </ul>
+<div id="blogListSection" ng-controller="BlogController" class="bg-white rounded-2xl">
+	<div class="px-6 py-6 border-b border-slate-100" ng-init="getAllBlogs();">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Our Blogs</h3>
+    </div>
+    <div class="p-2">
+        <div ng-repeat="blogItem in allBlogs" class="group">
+            <a href='/Blog/{{blogItem.SubFolder}}/BlogPosts' class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-blue-50 transition-all">
+                <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 group-hover:text-white"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{{blogItem.Name}}</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Explore Feed</span>
+                </div>
+            </a>
         </div>
     </div>
 </div>
