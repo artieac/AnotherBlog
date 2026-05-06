@@ -144,7 +144,7 @@ public class ListsControlController : BaseApiController
                 {
                     BlogListItem newItem = new BlogListItem();
                     newItem.Name = currentItem.MaxDate.ToString("MMMM") + " " + currentItem.MaxDate.ToString("yyyy");
-                    newItem.RelatedLink = urlRoot + "/" + currentItem.MaxDate.ToString("yyyy") + "/" + currentItem.MaxDate.ToString("MM");
+                    newItem.RelatedLink = urlRoot + currentItem.MaxDate.ToString("yyyy") + "/" + currentItem.MaxDate.ToString("MM");
                     model.ListItems.Add(newItem);
                 }
             }

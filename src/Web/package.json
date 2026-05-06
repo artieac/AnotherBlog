@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build:less": "node compile-less.js",
+    "build:tailwind": "tailwindcss -i ./Content/global.css -o ./wwwroot/css/global.css",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
