@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\areas\\admin\\controllers\\adminbasecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\controllers\\adminbasecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\areas\\admin\\controllers\\appcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\controllers\\appcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\areas\\admin\\views\\site\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\views\\site\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\areas\\admin\\controllers\\manageblogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\controllers\\manageblogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\controllers\\api\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\controllers\\api\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -231,10 +247,6 @@
       "AbsoluteMoniker": "D:0:0:{42F14647-C78F-7CA4-04E7-7223E34C8BAC}|..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\AlwaysMoveForward.Common.csproj|c:\\personal\\sourcecode\\alwaysmoveforward\\src\\common\\alwaysmoveforward.common\\configuration\\emailconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\areas\\admin\\controllers\\manageblogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\controllers\\manageblogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\code\\filters\\adminauthorizationfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\code\\filters\\adminauthorizationfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -302,10 +314,6 @@
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\views\\shared\\_bloglayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\areas\\admin\\views\\site\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\views\\site\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\areas\\admin\\views\\manageblog\\editblog.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\areas\\admin\\views\\manageblog\\editblog.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -368,11 +376,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "SiteInfoRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\SiteInfoRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\SiteInfoRepository.cs",
@@ -389,31 +397,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Site.css",
-              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Content\\Site.css",
-              "RelativeDocumentMoniker": "Web\\Content\\Site.css",
-              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Content\\Site.css",
-              "RelativeToolTip": "Web\\Content\\Site.css",
+              "DocumentIndex": 0,
+              "Title": "AdminBaseController.cs",
+              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\AdminBaseController.cs",
+              "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Controllers\\AdminBaseController.cs",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\AdminBaseController.cs",
+              "RelativeToolTip": "Web\\Areas\\Admin\\Controllers\\AdminBaseController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-06T01:09:59.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppController.cs",
+              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\AppController.cs",
+              "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Controllers\\AppController.cs",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\AppController.cs",
+              "RelativeToolTip": "Web\\Areas\\Admin\\Controllers\\AppController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-03-10T14:57:03.162Z"
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-06T01:08:30.363Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.json",
-              "RelativeDocumentMoniker": "Web\\appsettings.json",
-              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.json",
-              "RelativeToolTip": "Web\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-01T18:07:02.132Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Program.cs",
               "RelativeDocumentMoniker": "Web\\Program.cs",
@@ -426,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "_CommonLayout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_CommonLayout.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_CommonLayout.cshtml",
@@ -438,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "RepositoryManager.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\RepositoryManager.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\RepositoryManager.cs",
@@ -451,12 +461,62 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "ManageBlogController.cs",
+              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
+              "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
+              "RelativeToolTip": "Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAmwBkAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-28T23:59:22.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
+              "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
+              "RelativeToolTip": "Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
+              "ViewState": "AgIAABYAAAAAAAAAAAAMwEcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-28T14:12:40.216Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.json",
+              "RelativeDocumentMoniker": "Web\\appsettings.json",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.json",
+              "RelativeToolTip": "Web\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-01T18:07:02.132Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Site.css",
+              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Content\\Site.css",
+              "RelativeDocumentMoniker": "Web\\Content\\Site.css",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Content\\Site.css",
+              "RelativeToolTip": "Web\\Content\\Site.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-10T14:57:03.162Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "CommentController.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\CommentController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\API\\CommentController.cs",
-              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\CommentController.cs*",
-              "RelativeToolTip": "Web\\Controllers\\API\\CommentController.cs*",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\CommentController.cs",
+              "RelativeToolTip": "Web\\Controllers\\API\\CommentController.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAqwCMAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-08T20:49:44.046Z",
@@ -464,7 +524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "Common.css",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Content\\Common.css",
               "RelativeDocumentMoniker": "Web\\Content\\Common.css",
@@ -476,7 +536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.Development.json",
               "RelativeDocumentMoniker": "Web\\appsettings.Development.json",
@@ -488,7 +548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_Layout.cshtml",
@@ -500,7 +560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "_AdminToolLayout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\Shared\\_AdminToolLayout.cshtml",
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\Shared\\_AdminToolLayout.cshtml",
@@ -512,7 +572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "appsettings.Production.json",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\appsettings.Production.json",
               "RelativeDocumentMoniker": "Web\\appsettings.Production.json",
@@ -524,7 +584,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "Blog.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\Blog.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\Blog.cs",
@@ -536,7 +596,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "ServiceManagerBuilder.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Service\\ServiceManagerBuilder.cs",
               "RelativeDocumentMoniker": "BusinessLayer\\Service\\ServiceManagerBuilder.cs",
@@ -548,7 +608,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "AlwaysMoveForward.AnotherBlog.Web",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\AlwaysMoveForward.AnotherBlog.Web.csproj",
               "RelativeDocumentMoniker": "Web\\AlwaysMoveForward.AnotherBlog.Web.csproj",
@@ -559,7 +619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "package.json",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\package.json",
               "RelativeDocumentMoniker": "Web\\package.json",
@@ -571,7 +631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "UserManagementController.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\UserManagementController.cs",
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Controllers\\UserManagementController.cs",
@@ -583,7 +643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "AnotherBlogDataContextCF.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Entities\\AnotherBlogDataContextCF.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Entities\\AnotherBlogDataContextCF.cs",
@@ -595,7 +655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "EFUnitOfWork.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\DataLayer.EntityFramework\\EFUnitOfWork.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\DataLayer.EntityFramework\\EFUnitOfWork.cs",
@@ -607,7 +667,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "DatabaseConfiguration.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Configuration\\DatabaseConfiguration.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Configuration\\DatabaseConfiguration.cs",
@@ -619,7 +679,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "BlogTest.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\UnitTest\\Services\\BlogTest.cs",
               "RelativeDocumentMoniker": "UnitTest\\Services\\BlogTest.cs",
@@ -631,7 +691,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "GetCommentModel.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Models\\API\\GetCommentModel.cs",
               "RelativeDocumentMoniker": "Web\\Models\\API\\GetCommentModel.cs",
@@ -643,7 +703,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "UserModel.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Models\\UserModel.cs",
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Models\\UserModel.cs",
@@ -655,7 +715,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "BlogService.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Service\\BlogService.cs",
               "RelativeDocumentMoniker": "BusinessLayer\\Service\\BlogService.cs",
@@ -667,7 +727,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 29,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DataLayer\\Repositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "Common\\DataLayer\\Repositories\\IUserRepository.cs",
@@ -679,7 +739,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 30,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "BusinessLayer\\Service\\UserService.cs",
@@ -691,7 +751,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\UserRepository.cs",
@@ -703,7 +763,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 31,
               "Title": "EntryCommentRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\EntryCommentRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\EntryCommentRepository.cs",
@@ -715,7 +775,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 32,
               "Title": "IEntryCommentRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DataLayer\\Repositories\\IEntryCommentRepository.cs",
               "RelativeDocumentMoniker": "Common\\DataLayer\\Repositories\\IEntryCommentRepository.cs",
@@ -727,7 +787,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 35,
               "Title": "TagRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\TagRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\TagRepository.cs",
@@ -739,7 +799,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 34,
               "Title": "ITagRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DataLayer\\Repositories\\ITagRepository.cs",
               "RelativeDocumentMoniker": "Common\\DataLayer\\Repositories\\ITagRepository.cs",
@@ -751,7 +811,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 33,
               "Title": "EntityFrameworkRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\EntityFrameworkRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\EntityFrameworkRepository.cs",
@@ -763,7 +823,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 36,
               "Title": "BlogEntryRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\BlogEntryRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\BlogEntryRepository.cs",
@@ -775,7 +835,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 37,
               "Title": "BlogRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\BlogRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\BlogRepository.cs",
@@ -787,7 +847,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 38,
               "Title": "IBlogRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DataLayer\\Repositories\\IBlogRepository.cs",
               "RelativeDocumentMoniker": "Common\\DataLayer\\Repositories\\IBlogRepository.cs",
@@ -799,7 +859,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 39,
               "Title": "BlogListRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\BlogListRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\BlogListRepository.cs",
@@ -811,7 +871,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 40,
               "Title": "IBlogListRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DataLayer\\Repositories\\IBlogListRepository.cs",
               "RelativeDocumentMoniker": "Common\\DataLayer\\Repositories\\IBlogListRepository.cs",
@@ -823,7 +883,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 41,
               "Title": "IBlogEntryRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DataLayer\\Repositories\\IBlogEntryRepository.cs",
               "RelativeDocumentMoniker": "Common\\DataLayer\\Repositories\\IBlogEntryRepository.cs",
@@ -835,7 +895,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 42,
               "Title": "RoleRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\RoleRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\RoleRepository.cs",
@@ -847,7 +907,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 43,
               "Title": "ExtensionConfigurationRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\ExtensionConfigurationRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\ExtensionConfigurationRepository.cs",
@@ -859,7 +919,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 45,
               "Title": "BlogUserRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\BlogUserRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\BlogUserRepository.cs",
@@ -871,7 +931,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 44,
               "Title": "DbInfoRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\DbInfoRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\DbInfoRepository.cs",
@@ -883,7 +943,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 46,
               "Title": "BlogListItemRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\BlogListItemRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\BlogListItemRepository.cs",
@@ -895,7 +955,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 47,
               "Title": "BlogExtensionRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\BlogExtensionRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\BlogExtensionRepository.cs",
@@ -907,7 +967,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 48,
               "Title": "BlogEntryTagRepository.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\DataLayer.EntityFramework\\Repositories\\BlogEntryTagRepository.cs",
               "RelativeDocumentMoniker": "DataLayer.EntityFramework\\Repositories\\BlogEntryTagRepository.cs",
@@ -919,7 +979,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 49,
               "Title": "BlogEntryService.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Service\\BlogEntryService.cs",
               "RelativeDocumentMoniker": "BusinessLayer\\Service\\BlogEntryService.cs",
@@ -931,7 +991,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 50,
               "Title": "TagCount.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\TagCount.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\TagCount.cs",
@@ -943,7 +1003,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 51,
               "Title": "Tag.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\Tag.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\Tag.cs",
@@ -955,7 +1015,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 53,
               "Title": "CommentStatus.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\CommentStatus.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\CommentStatus.cs",
@@ -967,7 +1027,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 54,
               "Title": "Comment.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\Comment.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\Comment.cs",
@@ -979,7 +1039,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 55,
               "Title": "BlogPostCount.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\BlogPostCount.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\BlogPostCount.cs",
@@ -991,7 +1051,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 56,
               "Title": "BlogPost.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\BlogPost.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\BlogPost.cs",
@@ -1003,7 +1063,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 52,
               "Title": "RoleType.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\RoleType.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\RoleType.cs",
@@ -1015,7 +1075,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 57,
               "Title": "BlogListItem.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\BlogListItem.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\BlogListItem.cs",
@@ -1027,7 +1087,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 58,
               "Title": "BlogList.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\BlogList.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\BlogList.cs",
@@ -1039,7 +1099,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 59,
               "Title": "CookieManager.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\CookieManager.cs",
               "RelativeDocumentMoniker": "Web\\Code\\CookieManager.cs",
@@ -1051,7 +1111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 60,
               "Title": "LoggingConfiguration.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Configuration\\LoggingConfiguration.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Configuration\\LoggingConfiguration.cs",
@@ -1063,7 +1123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 61,
               "Title": "EmailConfiguration.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Configuration\\EmailConfiguration.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Configuration\\EmailConfiguration.cs",
@@ -1075,7 +1135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 63,
               "Title": "CookieAuthenticationFilter.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Filters\\CookieAuthenticationFilter.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Filters\\CookieAuthenticationFilter.cs",
@@ -1087,7 +1147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 62,
               "Title": "AdminAuthorizationFilter.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Filters\\AdminAuthorizationFilter.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Filters\\AdminAuthorizationFilter.cs",
@@ -1099,19 +1159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
-              "Title": "ManageBlogController.cs",
-              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
-              "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
-              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
-              "RelativeToolTip": "Web\\Areas\\Admin\\Controllers\\ManageBlogController.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAApwBkAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T23:59:22.467Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 68,
               "Title": "BlogMVCAuthorizationAttribute.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Filters\\BlogMVCAuthorizationAttribute.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Filters\\BlogMVCAuthorizationAttribute.cs",
@@ -1123,7 +1171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 64,
               "Title": "SecurityPrincipal.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Utilities\\SecurityPrincipal.cs",
               "RelativeDocumentMoniker": "BusinessLayer\\Utilities\\SecurityPrincipal.cs",
@@ -1135,7 +1183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 66,
               "Title": "BaseController.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\BaseController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\BaseController.cs",
@@ -1147,7 +1195,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 65,
               "Title": "SecurityPrincipalBase.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Security\\SecurityPrincipalBase.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Security\\SecurityPrincipalBase.cs",
@@ -1159,7 +1207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 93,
               "Title": "EncryptedConfigurationSection.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Encryption\\EncryptedConfigurationSection.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\Encryption\\EncryptedConfigurationSection.cs",
@@ -1170,7 +1218,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 67,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\UserController.cs",
@@ -1182,7 +1230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 69,
               "Title": "WebSiteSettings.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Configuration\\WebSiteSettings.cs",
               "RelativeDocumentMoniker": "Web\\Configuration\\WebSiteSettings.cs",
@@ -1194,7 +1242,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 71,
               "Title": "RemoteOAuthUser.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\DomainModel\\RemoteOAuthUser.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\DomainModel\\RemoteOAuthUser.cs",
@@ -1206,7 +1254,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 72,
               "Title": "IRemoteOAuthUser.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\DomainModel\\IRemoteOAuthUser.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\DomainModel\\IRemoteOAuthUser.cs",
@@ -1218,7 +1266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 73,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\DomainModel\\User.cs",
               "RelativeDocumentMoniker": "..\\..\\AlwaysMoveForward\\src\\Common\\AlwaysMoveForward.Common\\DomainModel\\User.cs",
@@ -1230,7 +1278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 74,
               "Title": "EditPost.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\ManageBlog\\EditPost.cshtml",
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\ManageBlog\\EditPost.cshtml",
@@ -1242,7 +1290,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 70,
               "Title": "AnotherBlogUser.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\AnotherBlogUser.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\AnotherBlogUser.cs",
@@ -1254,7 +1302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 76,
               "Title": "Microsoft.NET.Sdk.DefaultItems.Shared.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\10.0.102\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.Shared.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Program Files\\dotnet\\sdk\\10.0.102\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.DefaultItems.Shared.targets",
@@ -1266,7 +1314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 77,
               "Title": "_BlogLayout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Blog\\_BlogLayout.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Blog\\_BlogLayout.cshtml",
@@ -1278,7 +1326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 75,
               "Title": "Post.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Blog\\Post.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Blog\\Post.cshtml",
@@ -1290,7 +1338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 78,
               "Title": "Preferences.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\User\\Preferences.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\User\\Preferences.cshtml",
@@ -1302,7 +1350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 79,
               "Title": "_BlogLayout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\Shared\\_BlogLayout.cshtml",
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\Shared\\_BlogLayout.cshtml",
@@ -1314,19 +1362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
-              "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
-              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
-              "RelativeToolTip": "Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAMwEcAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-28T14:12:40.216Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 80,
               "Title": "EditBlog.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\ManageBlog\\EditBlog.cshtml",
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\ManageBlog\\EditBlog.cshtml",
@@ -1338,7 +1374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 81,
               "Title": "Posts.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\RSS\\Posts.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\RSS\\Posts.cshtml",
@@ -1350,7 +1386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 82,
               "Title": "Atom.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\RSS\\Atom.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\RSS\\Atom.cshtml",
@@ -1362,7 +1398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 83,
               "Title": "Utils.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Utilities\\Utils.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Utilities\\Utils.cs",
@@ -1374,7 +1410,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 84,
               "Title": "PageManager.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Utilities\\PageManager.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Utilities\\PageManager.cs",
@@ -1386,7 +1422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 85,
               "Title": "About.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Home\\About.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Home\\About.cshtml",
@@ -1398,7 +1434,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 86,
               "Title": "FilterExtension.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Extensions\\FilterExtension.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Extensions\\FilterExtension.cs",
@@ -1410,7 +1446,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 87,
               "Title": "ManageComments.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\ManageBlog\\ManageComments.cshtml",
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\ManageBlog\\ManageComments.cshtml",
@@ -1422,7 +1458,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 88,
               "Title": "_UserLoginControl.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_UserLoginControl.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_UserLoginControl.cshtml",
@@ -1434,7 +1470,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 90,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Blog\\Index.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Blog\\Index.cshtml",
@@ -1446,7 +1482,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 89,
               "Title": "ModelBase.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Models\\ModelBase.cs",
               "RelativeDocumentMoniker": "Web\\Models\\ModelBase.cs",
@@ -1458,7 +1494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 91,
               "Title": "XmlResult.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Code\\Utilities\\XmlResult.cs",
               "RelativeDocumentMoniker": "Web\\Code\\Utilities\\XmlResult.cs",
@@ -1470,7 +1506,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 92,
               "Title": "DataMapper.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DataLayer\\Map\\DataMapper.cs",
               "RelativeDocumentMoniker": "Common\\DataLayer\\Map\\DataMapper.cs",

@@ -141,6 +141,17 @@ if (System.IO.Directory.Exists(wwwrootPath))
     app.UseStaticFiles();
 }
 
+// Serve static files from dist folder
+var distPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "dist");
+if (System.IO.Directory.Exists(distPath))
+{
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(distPath),
+        RequestPath = "/dist"
+    });
+}
+
 app.UseRouting();
 
 app.UseCors();
@@ -151,6 +162,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Map routes
+app.MapControllerRoute(
+    name: "AdminApp",
+    pattern: "Admin/App/{*path}",
+    defaults: new { area = "Admin", controller = "App", action = "Index" });
+
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Site}/{action=Index}/{id?}");
