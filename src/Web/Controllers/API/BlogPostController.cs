@@ -128,7 +128,7 @@ public class BlogPostController : BaseApiController
                         input.Tags = string.Empty;
                     }
 
-                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, -1, input.IsPublished, input.Tags.Split(','));
+                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, -1, input.IsPublished, input.Tags.Split(','), this.CurrentPrincipal.CurrentUser);
                     this.Services.UnitOfWork.EndTransaction(true);
                 }
                 catch (Exception e)
@@ -161,7 +161,7 @@ public class BlogPostController : BaseApiController
                         input.Tags = string.Empty;
                     }
 
-                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, id, input.IsPublished, input.Tags.Split(','));
+                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, id, input.IsPublished, input.Tags.Split(','), this.CurrentPrincipal.CurrentUser);
                     this.Services.UnitOfWork.EndTransaction(true);
                 }
                 catch (Exception e)

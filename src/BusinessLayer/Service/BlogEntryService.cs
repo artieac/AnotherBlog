@@ -24,6 +24,9 @@ using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
 
+using AlwaysMoveForward.AnotherBlog.DataLayer;
+using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
+
 namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 {
     /// <summary>
@@ -44,6 +47,36 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         protected ITagRepository TagRepository { get; private set; }
 
+        private void AttachDependencies(Blog targetBlog, AnotherBlogUser currentUser)
+        {
+            var unitOfWork = this.UnitOfWork as UnitOfWork;
+
+            if (unitOfWork != null)
+            {
+                var dataContext = unitOfWork.DataContext;
+
+                if (targetBlog != null && targetBlog.Id > 0)
+                {
+                    var trackedBlog = dataContext.Blogs.Local.FirstOrDefault(b => b.Id == targetBlog.Id);
+
+                    if (trackedBlog == null)
+                    {
+                        dataContext.Blogs.Attach(targetBlog);
+                    }
+                }
+
+                if (currentUser != null && currentUser.Id > 0)
+                {
+                    var trackedUser = dataContext.Users.Local.FirstOrDefault(u => u.Id == currentUser.Id);
+
+                    if (trackedUser == null)
+                    {
+                        dataContext.Users.Attach(currentUser);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Save a blog entry to the database.
         /// </summary>
@@ -54,14 +87,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <param name="isPublished"></param>
         /// <param name="_submitChanges"></param>
         /// <returns></returns>
-        public BlogPost Save(Blog targetBlog, string title, string entryText, int entryId, bool isPublished, string[] tagNames)
+        public BlogPost Save(Blog targetBlog, string title, string entryText, int entryId, bool isPublished, string[] tagNames, AnotherBlogUser currentUser)
         {
+            this.AttachDependencies(targetBlog, currentUser);
+
             BlogPost itemToSave = null;
             DateTime startDate = new DateTime(2009, 1, 1);
 
             if (entryId <= 0)
             {
-                itemToSave = BlogPostFactory.Create(targetBlog, ((SecurityPrincipal)System.Threading.Thread.CurrentPrincipal).CurrentUser);
+                itemToSave = BlogPostFactory.Create(targetBlog, currentUser);
                 itemToSave.SetPublishState(isPublished);
             }
             else
@@ -72,7 +107,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             itemToSave.Title = title;
             itemToSave.EntryText = entryText;
             itemToSave.Blog = targetBlog;
-            itemToSave.Author = ((SecurityPrincipal)System.Threading.Thread.CurrentPrincipal).CurrentUser;
+            itemToSave.Author = currentUser;
             itemToSave.SetPublishState(isPublished);
             itemToSave = this.AddTags(itemToSave, tagNames);
 

@@ -40,6 +40,9 @@
 
         addBlogPostRequest.save(blogPostInput, function (data) {
             jQuery("#blogPostId").val(data.Id);
+            if (typeof ManageBlogPosts !== 'undefined') {
+                ManageBlogPosts.ToggleSaveState(false);
+            }
         });
     }
 
@@ -52,6 +55,9 @@
 
         updateBlogPostRequest.update(blogPostInput, function (data) {
             jQuery("#blogPostId").val(data.Id);
+            if (typeof ManageBlogPosts !== 'undefined') {
+                ManageBlogPosts.ToggleSaveState(false);
+            }
         });            
     }
 });
