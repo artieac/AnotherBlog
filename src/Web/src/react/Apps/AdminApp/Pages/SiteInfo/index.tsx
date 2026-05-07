@@ -90,7 +90,7 @@ export const SiteInfoPage: React.FC = () => {
                 <WysiwygEditor
                     label="About"
                     value={formData.About}
-                    onBlur={handleAboutChange}
+                    onChange={handleAboutChange}
                 />
                 <div className="flex space-x-4">
                     <Button type="submit" variant="primary">Save</Button>
