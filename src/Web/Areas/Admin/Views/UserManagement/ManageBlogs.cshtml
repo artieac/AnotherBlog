@@ -21,7 +21,7 @@
                         <td>@Model.Blogs[blogId].Name</td>
                         <td>@Model.Blogs[blogId].Description</td>
                         <td>@Model.Roles[Model.CurrentUser.Roles[blogId]]</td>
-                        <td><a href="/Admin/UserManagement/DeleteRole?blogId=@blogId&userId=@Model.CurrentUser.Id"><img src="/Content/images/action_delete.png" class="deleteComment" alt=""/></a></td>
+                        <td><a href="/Admin/UserManagement/DeleteRole?blogId=@blogId&userId=@Model.CurrentUser.Id"><img src="@Url.Content("~/Content/images/action_delete.png")" class="deleteComment" alt=""/></a></td>
                     </tr>
                 }
             </tbody>                    
