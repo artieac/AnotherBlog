@@ -94,9 +94,10 @@ export const EditUserPage: React.FC = () => {
                     </label>
                 </div>
                 <WysiwygEditor
+                    key={formData.Id}
                     label="About"
                     value={formData.About}
-                    onBlur={handleAboutChange}
+                    onChange={handleAboutChange}
                 />
                 <div className="flex space-x-4">
                     <Button type="submit" variant="primary">Save</Button>

@@ -113,9 +113,10 @@ export const EditPostPage: React.FC = () => {
                     onChange={handleTagsChange}
                 />
                 <WysiwygEditor
+                    key={formData.Id}
                     label="Content"
                     value={formData.EntryText}
-                    onBlur={handleTextChange}
+                    onChange={handleTextChange}
                 />
                 <div className="flex space-x-4">
                     <Button type="submit" variant="primary">Save</Button>
