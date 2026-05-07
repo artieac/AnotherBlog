@@ -3,11 +3,11 @@
         var saveStateImage = $("#blogPostSaveStateImage");
 
         if (isDirty === true) {
-            $("#blogPostSaveStateImage").attr('src', '/Content/Images/action_delete.png');
+            $("#blogPostSaveStateImage").attr('src', '/Content/images/action_delete.png');
             $("#saveButton").removeAttr("disabled");
         }
         else {
-            $("#blogPostSaveStateImage").attr('src', '/Content/Images/action_check.png');
+            $("#blogPostSaveStateImage").attr('src', '/Content/images/action_check.png');
             $("#saveButton").attr("disabled", "disabled");
         }
     };

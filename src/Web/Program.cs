@@ -119,6 +119,11 @@ app.UseHttpsRedirection();
 
 // Serve static files from Content folder
 var contentPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "Content");
+if (!System.IO.Directory.Exists(contentPath))
+{
+    contentPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "content");
+}
+
 if (System.IO.Directory.Exists(contentPath))
 {
     app.UseStaticFiles(new StaticFileOptions
@@ -130,6 +135,11 @@ if (System.IO.Directory.Exists(contentPath))
 
 // Serve static files from Scripts folder
 var scriptsPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "Scripts");
+if (!System.IO.Directory.Exists(scriptsPath))
+{
+    scriptsPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "scripts");
+}
+
 if (System.IO.Directory.Exists(scriptsPath))
 {
     app.UseStaticFiles(new StaticFileOptions
