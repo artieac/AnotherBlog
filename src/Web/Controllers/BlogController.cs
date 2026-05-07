@@ -233,6 +233,11 @@ public class BlogController : PublicController
             DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
             model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
 
+            if (model.Post == null)
+            {
+                return this.NotFound();
+            }
+
             using (this.Services.UnitOfWork.BeginTransaction())
             {
                 try

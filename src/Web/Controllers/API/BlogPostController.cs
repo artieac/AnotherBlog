@@ -114,6 +114,7 @@ public class BlogPostController : BaseApiController
     [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogPost Post(string blogSubFolder, [FromBody] BlogPostInput input)
     {
+        Console.WriteLine($"Attempting to save blog post for blog: {blogSubFolder}");
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
         BlogPost retVal = new BlogPost();
 
@@ -128,15 +129,22 @@ public class BlogPostController : BaseApiController
                         input.Tags = string.Empty;
                     }
 
-                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, -1, input.IsPublished, input.Tags.Split(','), this.CurrentPrincipal.CurrentUser);
+                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, 0, input.IsPublished, input.Tags.Split(','), this.CurrentPrincipal.CurrentUser);
                     this.Services.UnitOfWork.EndTransaction(true);
+                    Console.WriteLine("Successfully saved blog post.");
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine($"Error saving blog post: {e.Message}");
+                    Console.WriteLine(e.StackTrace);
                     LogManager.GetLogger().Error(e);
                     this.Services.UnitOfWork.EndTransaction(false);
                 }
             }
+        }
+        else
+        {
+            Console.WriteLine($"Blog not found for subfolder: {blogSubFolder}");
         }
 
         return retVal;

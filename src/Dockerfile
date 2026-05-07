@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Install Node.js for LESS compilation
+# Install Node.js for LESS and Tailwind compilation
 RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
 
 # Copy solution and project files first for better layer caching
@@ -22,9 +22,12 @@ RUN dotnet restore ./AnotherBlog/src/AlwaysMoveForward.EntityFramework.sln
 COPY AnotherBlog/ ./AnotherBlog/
 COPY AlwaysMoveForward/ ./AlwaysMoveForward/
 
-# Install npm dependencies and build LESS files
+# Install npm dependencies and build frontend assets
 WORKDIR /src/AnotherBlog/src/Web
-RUN npm install && npm run build:less
+RUN npm install
+RUN npm run build:less
+RUN npm run build:tailwind
+RUN npm run build
 
 # Build the application
 WORKDIR /src
@@ -34,16 +37,19 @@ RUN dotnet publish ./AnotherBlog/src/Web/AlwaysMoveForward.AnotherBlog.Web.cspro
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
+# Install curl for health check
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 # Create non-root user for security
 RUN adduser --disabled-password --gecos "" appuser
 
 # Copy published application
 COPY --from=build /app/publish .
 
-# Copy static asset directories (Content and Scripts are not in wwwroot so
-# dotnet publish may not include them; copy directly from the build stage)
-COPY --from=build /src/AnotherBlog/src/Web/Content ./Content
-COPY --from=build /src/AnotherBlog/src/Web/Scripts ./Scripts
+# Ensure static asset directories are present
+# Content and Scripts are copied to the publish folder via csproj settings,
+# but we ensure they are fully synced if needed.
+# Vite output in wwwroot/dist/admin is already included in the publish output.
 
 # Set ownership to non-root user
 RUN chown -R appuser:appuser /app
@@ -55,6 +61,7 @@ EXPOSE 8080
 
 # Set environment variables
 ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_HTTP_PORTS=8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \

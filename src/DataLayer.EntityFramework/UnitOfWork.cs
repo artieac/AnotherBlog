@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
-using System.Transactions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
@@ -14,7 +15,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
     public class UnitOfWork : IUnitOfWork
     {
         AnotherBlogDataContextCF dataContext;
-        TransactionScope currentTransaction;
+        IDbContextTransaction currentTransaction;
         private DatabaseConfiguration DatabaseConfiguration {  get; set; }
 
         public UnitOfWork(DatabaseConfiguration databaseConfiguration)
@@ -33,31 +34,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         {
             if (this.currentTransaction == null)
             {
-                System.Transactions.IsolationLevel isoLevel = System.Transactions.IsolationLevel.Unspecified;
-
-                switch (isolationLevel)
-                {
-                    case System.Data.IsolationLevel.Chaos:
-                        isoLevel = System.Transactions.IsolationLevel.Chaos;
-                        break;
-                    case System.Data.IsolationLevel.ReadCommitted:
-                        isoLevel = System.Transactions.IsolationLevel.ReadCommitted;
-                        break;
-                    case System.Data.IsolationLevel.ReadUncommitted:
-                        isoLevel = System.Transactions.IsolationLevel.ReadUncommitted;
-                        break;
-                    case System.Data.IsolationLevel.RepeatableRead:
-                        isoLevel = System.Transactions.IsolationLevel.RepeatableRead;
-                        break;
-                    case System.Data.IsolationLevel.Serializable:
-                        isoLevel = System.Transactions.IsolationLevel.Serializable;
-                        break;
-                    case System.Data.IsolationLevel.Snapshot:
-                        isoLevel = System.Transactions.IsolationLevel.Snapshot;
-                        break;
-                }
-
-                this.currentTransaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = isoLevel });
+                this.currentTransaction = this.DataContext.Database.BeginTransaction(isolationLevel);
             }
 
             return currentTransaction;
@@ -69,7 +46,11 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (canCommit)
                 {
-                    currentTransaction.Complete();
+                    currentTransaction.Commit();
+                }
+                else
+                {
+                    currentTransaction.Rollback();
                 }
 
                 currentTransaction.Dispose();

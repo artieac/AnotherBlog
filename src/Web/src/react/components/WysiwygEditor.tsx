@@ -12,6 +12,7 @@ export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onBlur, lab
         <div className="mb-4">
             {label && <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>}
             <Editor
+                tinymceScriptSrc="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"
                 init={{
                     height: 400,
                     menubar: false,

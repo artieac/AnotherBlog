@@ -46,7 +46,7 @@ public class ListController : BaseApiController
             {
                 try
                 {
-                    retVal = Services.BlogListService.Save(targetBlog, -1, input.Name, input.ShowOrdered);
+                    retVal = Services.BlogListService.Save(targetBlog, 0, input.Name, input.ShowOrdered);
                     this.Services.UnitOfWork.EndTransaction(true);
                 }
                 catch (Exception e)
@@ -102,7 +102,7 @@ public class ListController : BaseApiController
             {
                 try
                 {
-                    retVal = this.Services.BlogListService.UpdateItem(retVal, -1, input.Name, input.RelatedLink, input.DisplayOrder);
+                    retVal = this.Services.BlogListService.UpdateItem(retVal, 0, input.Name, input.RelatedLink, input.DisplayOrder);
                     this.Services.UnitOfWork.EndTransaction(true);
                 }
                 catch (Exception e)

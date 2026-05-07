@@ -100,10 +100,10 @@ public class WebAPIAuthorizationFilter : IAsyncAuthorizationFilter
             var request = context.HttpContext.Request;
             var pathSegments = request.Path.Value?.Split('/', StringSplitOptions.RemoveEmptyEntries);
 
-            if (pathSegments != null && pathSegments.Length >= 2)
+            if (pathSegments != null && pathSegments.Length >= 3)
             {
                 var serviceManager = _serviceManagerBuilder.CreateServiceManager();
-                result = serviceManager.BlogService.GetBySubFolder(pathSegments[1]);
+                result = serviceManager.BlogService.GetBySubFolder(pathSegments[2]);
             }
         }
         catch (Exception e)

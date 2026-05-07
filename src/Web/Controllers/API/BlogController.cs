@@ -48,7 +48,7 @@ public class BlogController : BaseApiController
         if (!string.IsNullOrEmpty(input.Name) &&
             !string.IsNullOrEmpty(input.SubFolder))
         {
-            retVal = this.Services.BlogService.Save(-1, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
+            retVal = this.Services.BlogService.Save(0, input.Name, input.SubFolder, input.Description, input.About, input.Welcome, input.Theme);
         }
 
         return retVal;

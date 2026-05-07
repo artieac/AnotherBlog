@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
     {
         public Tag()
         {
-            this.Id = -1;
+            this.Id = 0;
         }
 
         public long Id { get; set; }

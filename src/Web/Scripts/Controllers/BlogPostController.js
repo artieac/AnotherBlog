@@ -25,7 +25,7 @@
             $scope.blogPostInput.Text = jQuery("#inputText").val();
             $scope.blogPostInput.Tags = jQuery("#tagInput").val();
 
-            if (blogPostId < 0) {
+            if (blogPostId <= 0) {
                 $scope.addBlogPost(blogSubFolder, $scope.blogPostInput);
             }
             else {

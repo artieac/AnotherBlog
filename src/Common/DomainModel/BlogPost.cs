@@ -26,7 +26,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 
         public BlogPost()
         {
-            this.Id = -1;
+            this.Id = 0;
             this.DatePosted = BlogPost.StartDate;
             this.Tags = new List<Tag>();
         }

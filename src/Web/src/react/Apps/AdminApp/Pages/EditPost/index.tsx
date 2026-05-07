@@ -16,11 +16,11 @@ export const EditPostPage: React.FC = () => {
     const [formData, setFormData] = useState<IBlogPost | null>(null);
 
     useEffect(() => {
-        if (id && id !== '-1' && blogSubFolder) {
+        if (id && id !== '0' && id !== '-1' && blogSubFolder) {
             dispatch(fetchPostById({ blogSubFolder, id: parseInt(id) }));
         } else {
             dispatch(setCurrentPost({
-                Id: -1,
+                Id: 0,
                 Title: '',
                 EntryText: '',
                 IsPublished: false,
@@ -83,7 +83,7 @@ export const EditPostPage: React.FC = () => {
 
     return (
         <div className="bg-white shadow rounded-lg p-6">
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">{formData.Id === -1 ? 'Add' : 'Edit'} Post</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-6">{formData.Id <= 0 ? 'Add' : 'Edit'} Post</h1>
             <form onSubmit={handleSubmit}>
                 <TextInput
                     label="Title"

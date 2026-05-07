@@ -8,6 +8,7 @@ using AlwaysMoveForward.Common.Configuration;
 using AlwaysMoveForward.Common.Encryption;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.DataProtection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,7 +54,8 @@ builder.Services.AddSession(options =>
 });
 
 // Add data protection
-builder.Services.AddDataProtection();
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "DataProtection-Keys")));
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.PageManager>();
@@ -88,6 +90,9 @@ builder.Services.AddSingleton<IOptions<DatabaseConfiguration>>(sp =>
 // Add HttpClient for Auth0 API calls
 builder.Services.AddHttpClient();
 
+// Add health checks
+builder.Services.AddHealthChecks();
+
 //DatabaseConfiguration databaseConfiguration = builder.Configuration.GetValue<DatabaseConfiguration>("AlwaysMoveForward:Database");
 
 // Register ServiceManagerBuilder
@@ -106,7 +111,7 @@ LogManager.Configure(loggerFactory);
 // Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error/Index");
+    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 
@@ -187,5 +192,7 @@ app.MapControllerRoute(
 
 // Initialize site info
 WebApplicationState.Initialize(app.Services);
+
+app.MapHealthChecks("/health");
 
 app.Run();
