@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostsByBlog } from '@/redux/BlogPostSlice';
+import { fetchPostsByBlog, deletePost } from '@/redux/BlogPostSlice';
 import { RootState, AppDispatch } from '@/redux/store';
 import { Table } from '@/components/Table';
 import { Button } from '@/components/Button';
@@ -18,12 +18,35 @@ export const ManagePostsPage: React.FC = () => {
         }
     }, [blogSubFolder, dispatch]);
 
+    const handleDelete = async (id: number) => {
+        if (blogSubFolder && window.confirm('Are you sure you want to delete this post?')) {
+            await dispatch(deletePost({ blogSubFolder, id }));
+        }
+    };
+
     const columns = [
         { header: 'Title', key: 'Title', render: (post: IBlogPost) => <Link to={`/Admin/App/EditPost/${blogSubFolder}/${post.Id}`} className="text-blue-600 hover:underline">{post.Title}</Link> },
         { header: 'Date Posted', key: 'DatePosted', render: (post: IBlogPost) => new Date(post.DatePosted).toLocaleDateString() },
         { header: 'Published', key: 'IsPublished', render: (post: IBlogPost) => post.IsPublished ? 'Yes' : 'No' },
         { header: 'Views', key: 'TimesViewed' },
         { header: 'Comments', key: 'CommentCount' },
+        { 
+            header: 'Actions', 
+            key: 'Actions', 
+            render: (post: IBlogPost) => (
+                <div className="flex space-x-2">
+                    {!post.IsPublished && (
+                        <Button 
+                            variant="danger" 
+                            size="sm" 
+                            onClick={() => handleDelete(post.Id)}
+                        >
+                            Delete
+                        </Button>
+                    )}
+                </div>
+            ) 
+        },
     ];
 
     if (loading) return <div>Loading...</div>;

@@ -41,6 +41,7 @@
                             <th width="10%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=DatePosted&sortAscending=@sortAscending.ToString()">Date Posted</a></th>
                             <th width="5%"><a href="/Admin/ManageBlog/ManagePosts/@Model.Common.TargetBlog.SubFolder?sortColumn=TimesViewed&sortAscending=@sortAscending.ToString()">Times Viewed</a></th>
                             <th width="5%">Comments</th>
+                            <th width="5%">Actions</th>
                         </tr>
                     </thead>
                     @{
@@ -54,6 +55,12 @@
                                 <td>@blogPost.Post.DatePosted</td>
                                 <td>@blogPost.Post.TimesViewed</td>
                                 <td>@blogPost.Post.CommentCount.ToString()</td>
+                                <td>
+                                    @if (blogPost.Post.IsPublished == false)
+                                    {
+                                        <a href="/Admin/ManageBlog/DeletePost/@Model.Common.TargetBlog.SubFolder/@blogPost.Post.Id">Delete</a>
+                                    }
+                                </td>
                             </tr>
                         }
                     }

@@ -183,10 +183,33 @@ public class BlogPostController : BaseApiController
         return retVal;
     }
 
-    [Route("/api/{blogSubFolder}/BlogPost/{id:int}")]
+    [Route("/api/Blog/{blogSubFolder}/BlogPost/{id:int}")]
     [HttpDelete]
     [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
-    public void Delete(int id)
+    public void Delete(string blogSubFolder, int id)
     {
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+
+        if (targetBlog != null)
+        {
+            BlogPost targetPost = this.Services.BlogEntryService.GetById(targetBlog, id);
+
+            if (targetPost != null)
+            {
+                using (this.Services.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        this.Services.BlogEntryService.Delete(targetPost);
+                        this.Services.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.Services.UnitOfWork.EndTransaction(false);
+                    }
+                }
+            }
+        }
     }
 }
