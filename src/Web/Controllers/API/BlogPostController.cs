@@ -84,6 +84,15 @@ public class BlogPostController : BaseApiController
         return retVal;
     }
 
+    [Route("/api/Blog/{blogSubFolder}/BlogPost/{id:int}/Tags")]
+    [HttpGet]
+    public IEnumerable<Tag> GetTags(string blogSubFolder, int id)
+    {
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+        BlogPost post = this.Services.BlogEntryService.GetById(targetBlog, id);
+        return post?.Tags ?? new List<Tag>();
+    }
+
     [Route("/api/Blog/{blogSubFolder}/BlogPost/{year:int}/{month:int}")]
     [HttpGet]
     public IList<BlogPost> GetByMonth(string blogSubFolder, int year, int month)

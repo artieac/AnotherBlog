@@ -78,9 +78,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
                     }
                 );
             modelBuilder.Entity<BlogPost>()
-                .Navigation(bp => bp.Tags)
-                .AutoInclude();
-            modelBuilder.Entity<BlogPost>()
                 .HasOne(bp => bp.Blog)
                 .WithMany()
                 .HasForeignKey("BlogId");

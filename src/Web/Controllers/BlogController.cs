@@ -253,7 +253,7 @@ public class BlogController : PublicController
             }
 
             model.Author = model.Post.Author;
-            model.Tags = model.Post.Tags;
+            model.Tags = new List<Tag>();
             model.PreviousEntry = Services.BlogEntryService.GetPreviousEntry(model.BlogCommon.TargetBlog, model.Post);
             model.NextEntry = Services.BlogEntryService.GetNextEntry(model.BlogCommon.TargetBlog, model.Post);
         }

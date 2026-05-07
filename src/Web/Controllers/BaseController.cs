@@ -89,7 +89,6 @@ public abstract class BaseController : Controller
                 BlogPostModel blogPost = new BlogPostModel();
                 blogPost.Post = blogPosts[i];
                 blogPost.Author = blogPosts[i].Author;
-                blogPost.Tags = blogPosts[i].Tags;
                 retVal.Add(blogPost);
             }
         }

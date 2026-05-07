@@ -19,6 +19,11 @@
         $scope.blogPostComments = getCommentsRequest.query({ blogSubFolder: blogSubFolder, blogPostId: blogPostId });
     }
 
+    $scope.getPostTags = function (blogSubFolder, blogPostId) {
+        var getPostTagsRequest = $resource('/api/Blog/:blogSubFolder/BlogPost/:blogPostId/Tags');
+        $scope.postTags = getPostTagsRequest.query({ blogSubFolder: blogSubFolder, blogPostId: blogPostId });
+    }
+
     $scope.submitComment = function (blogSubFolder, blogPostId) {
         $http.post('/api/Blog/' + blogSubFolder + '/BlogPost/' + blogPostId + '/Comment', $scope.newComment)
             .success(function (data) {
