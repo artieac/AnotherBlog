@@ -379,7 +379,7 @@
               "RelativeDocumentMoniker": "Web\\Views\\Blog\\Post.cshtml",
               "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Blog\\Post.cshtml",
               "RelativeToolTip": "Web\\Views\\Blog\\Post.cshtml",
-              "ViewState": "AgIAADEAAAAAAAAAAAAjwFUAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAADAAAAAAAAAAAAAjwFEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-01-28T15:26:05.825Z",
               "EditorCaption": ""
@@ -442,9 +442,9 @@
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "BusinessLayer\\Service\\UserService.cs",
-              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Service\\UserService.cs*",
-              "RelativeToolTip": "BusinessLayer\\Service\\UserService.cs*",
-              "ViewState": "AgIAAMIAAAAAAAAAAAAAwMYAAAAuAAAAAAAAAA==",
+              "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\BusinessLayer\\Service\\UserService.cs",
+              "RelativeToolTip": "BusinessLayer\\Service\\UserService.cs",
+              "ViewState": "AgIAAMUAAAAAAAAAAAAiwNcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-28T21:54:11.437Z",
               "EditorCaption": ""
@@ -483,7 +483,7 @@
               "RelativeDocumentMoniker": "Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
               "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
               "RelativeToolTip": "Web\\Areas\\Admin\\Views\\Site\\Index.cshtml",
-              "ViewState": "AgIAABYAAAAAAAAAAAAMwEcAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAMwFMAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-01-28T14:12:40.216Z",
               "EditorCaption": ""
