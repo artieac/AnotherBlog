@@ -216,7 +216,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             newUser.IsSiteAdministrator = false;
             newUser.ApprovedCommenter = false;
-            newUser.About = string.Empty;
+            newUser.About = string.Empty;         
 
             return this.UserRepository.Save(newUser);
         }
