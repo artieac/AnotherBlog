@@ -388,7 +388,14 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public bool Delete(BlogPost targetEntry)
         {
-            return this.BlogEntryRepository.Delete(targetEntry);
+            bool retVal = false;
+
+            if (targetEntry != null && targetEntry.IsPublished == false)
+            {
+                retVal = this.BlogEntryRepository.Delete(targetEntry);
+            }
+
+            return retVal;
         }
 
         public long UpdateTimesViewed(BlogPost targetPost)

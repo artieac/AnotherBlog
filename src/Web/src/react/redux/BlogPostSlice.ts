@@ -28,6 +28,11 @@ export const savePost = createAsyncThunk('posts/save', async ({ blogSubFolder, p
     return await BlogPostRepository.save(blogSubFolder, post);
 });
 
+export const deletePost = createAsyncThunk('posts/delete', async ({ blogSubFolder, id }: { blogSubFolder: string, id: number }) => {
+    await BlogPostRepository.delete(blogSubFolder, id);
+    return id;
+});
+
 const blogPostSlice = createSlice({
     name: 'blogPosts',
     initialState,
@@ -61,6 +66,9 @@ const blogPostSlice = createSlice({
                     state.posts.push(action.payload);
                 }
                 state.currentPost = action.payload;
+            })
+            .addCase(deletePost.fulfilled, (state, action) => {
+                state.posts = state.posts.filter(p => p.Id !== action.payload);
             });
     },
 });

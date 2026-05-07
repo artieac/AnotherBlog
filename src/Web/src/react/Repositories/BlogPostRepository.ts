@@ -30,6 +30,10 @@ class BlogPostRepository {
             return RestClient.post<IBlogPost>(`/api/Blog/${blogSubFolder}/BlogPost`, apiInput);
         }
     }
+
+    public async delete(blogSubFolder: string, id: number): Promise<void> {
+        return RestClient.delete<void>(`/api/Blog/${blogSubFolder}/BlogPost/${id}`);
+    }
 }
 
 export default new BlogPostRepository();
