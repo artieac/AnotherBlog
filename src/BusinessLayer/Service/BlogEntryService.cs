@@ -140,27 +140,35 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 targetPost.Tags = new List<Tag>();
             }
-            else
+
+            // identify tags to remove
+            var tagsToRemove = targetPost.Tags.Where(t => !names.Any(n => n.Trim().Equals(t.Name, StringComparison.OrdinalIgnoreCase))).ToList();
+            
+            foreach (var tag in tagsToRemove)
             {
-                targetPost.Tags.Clear();
+                targetPost.Tags.Remove(tag);
             }
 
-            for (int i = 0; i < names.Length; i++)
+            // identify tags to add
+            foreach (string name in names)
             {
-                string trimmedName = names[i].Trim();
-
-                if (trimmedName != string.Empty)
+                string trimmedName = name.Trim();
+                
+                if (!string.IsNullOrEmpty(trimmedName))
                 {
-                    Tag currentTag = this.TagRepository.GetByName(trimmedName, targetPost.Blog.Id);
-
-                    if (currentTag == null)
+                    if (!targetPost.Tags.Any(t => t.Name.Equals(trimmedName, StringComparison.OrdinalIgnoreCase)))
                     {
-                        currentTag = new Tag();
-                        currentTag.Name = trimmedName;
-                        currentTag.BlogId = targetPost.Blog.Id;
-                    }
+                        Tag currentTag = this.TagRepository.GetByName(trimmedName, targetPost.Blog.Id);
 
-                    targetPost.Tags.Add(currentTag);
+                        if (currentTag == null)
+                        {
+                            currentTag = new Tag();
+                            currentTag.Name = trimmedName;
+                            currentTag.BlogId = targetPost.Blog.Id;
+                        }
+
+                        targetPost.Tags.Add(currentTag);
+                    }
                 }
             }
 

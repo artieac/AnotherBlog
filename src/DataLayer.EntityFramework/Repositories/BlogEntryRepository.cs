@@ -16,6 +16,7 @@ using System.Linq;
 using AlwaysMoveForward.Common.DataLayer;
 using AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
@@ -34,6 +35,13 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public override string TableName
         {
             get { return "BlogEntries"; }
+        }
+
+        public override BlogPost GetById(long id)
+        {
+            return this.GetDbSet()
+                .Include(p => p.Tags)
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public IList<BlogPost> GetAll(bool publishedOnly, int maxResults)

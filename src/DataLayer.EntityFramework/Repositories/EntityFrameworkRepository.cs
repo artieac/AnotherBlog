@@ -168,7 +168,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 }
                 else
                 {
-                    this.GetUnitOfWork().DataContext.Entry(existingEntity).CurrentValues.SetValues(itemToSave);
+                    if (!ReferenceEquals(existingEntity, itemToSave))
+                    {
+                        this.GetUnitOfWork().DataContext.Entry(existingEntity).CurrentValues.SetValues(itemToSave);
+                    }
+                    else
+                    {
+                        this.GetUnitOfWork().DataContext.Entry(existingEntity).State = EntityState.Modified;
+                    }
                 }
 
                 this.GetUnitOfWork().DataContext.SaveChanges();
