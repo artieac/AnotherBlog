@@ -79,7 +79,9 @@ public class BlogPostController : BaseApiController
     public BlogPost GetById(string blogSubFolder, int id)
     {
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
-        return this.Services.BlogEntryService.GetById(targetBlog, id);
+        BlogPost retVal = this.Services.BlogEntryService.GetById(targetBlog, id);
+        Console.WriteLine($"Retrieved blog post ID: {id}. Tag count: {retVal?.Tags?.Count ?? 0}");
+        return retVal;
     }
 
     [Route("/api/Blog/{blogSubFolder}/BlogPost/{year:int}/{month:int}")]
@@ -114,7 +116,9 @@ public class BlogPostController : BaseApiController
     [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogPost Post(string blogSubFolder, [FromBody] BlogPostInput input)
     {
-        Console.WriteLine($"Attempting to save blog post for blog: {blogSubFolder}");
+        Console.WriteLine($"Attempting to create blog post for blog: {blogSubFolder}");
+        Console.WriteLine($"Input Title: {input.Title}");
+        
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
         BlogPost retVal = new BlogPost();
 
@@ -129,9 +133,10 @@ public class BlogPostController : BaseApiController
                         input.Tags = string.Empty;
                     }
 
+                    Console.WriteLine($"Input Tags: {input.Tags}");
                     retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, 0, input.IsPublished, input.Tags.Split(','), this.CurrentPrincipal.CurrentUser);
                     this.Services.UnitOfWork.EndTransaction(true);
-                    Console.WriteLine("Successfully saved blog post.");
+                    Console.WriteLine($"Successfully saved blog post with ID: {retVal.Id} and Title: {retVal.Title}. Tag count: {retVal.Tags?.Count ?? 0}");
                 }
                 catch (Exception e)
                 {
@@ -155,6 +160,9 @@ public class BlogPostController : BaseApiController
     [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogPost Put(string blogSubFolder, int id, [FromBody] BlogPostInput input)
     {
+        Console.WriteLine($"Attempting to update blog post ID: {id} for blog: {blogSubFolder}");
+        Console.WriteLine($"Input Title: {input.Title}");
+
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
         BlogPost retVal = new BlogPost();
 
@@ -169,11 +177,15 @@ public class BlogPostController : BaseApiController
                         input.Tags = string.Empty;
                     }
 
+                    Console.WriteLine($"Input Tags: {input.Tags}");
                     retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, id, input.IsPublished, input.Tags.Split(','), this.CurrentPrincipal.CurrentUser);
                     this.Services.UnitOfWork.EndTransaction(true);
+                    Console.WriteLine($"Successfully updated blog post with ID: {retVal.Id} and Title: {retVal.Title}. Tag count: {retVal.Tags?.Count ?? 0}");
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine($"Error updating blog post: {e.Message}");
+                    Console.WriteLine(e.StackTrace);
                     LogManager.GetLogger().Error(e);
                     this.Services.UnitOfWork.EndTransaction(false);
                 }

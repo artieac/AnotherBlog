@@ -10,7 +10,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects
             this.Id = -1;
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public Tag Tag { get; set; }
         public BlogPost Post { get; set; }
     }
