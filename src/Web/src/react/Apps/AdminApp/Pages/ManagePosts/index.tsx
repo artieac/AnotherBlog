@@ -24,8 +24,13 @@ export const ManagePostsPage: React.FC = () => {
         }
     };
 
+    const sortedPosts = React.useMemo(() => {
+        return [...posts].sort((a, b) => new Date(b.DateCreated).getTime() - new Date(a.DateCreated).getTime());
+    }, [posts]);
+
     const columns = [
         { header: 'Title', key: 'Title', render: (post: IBlogPost) => <Link to={`/Admin/App/EditPost/${blogSubFolder}/${post.Id}`} className="text-blue-600 hover:underline">{post.Title}</Link> },
+        { header: 'Date Created', key: 'DateCreated', render: (post: IBlogPost) => new Date(post.DateCreated).toLocaleDateString() },
         { header: 'Date Posted', key: 'DatePosted', render: (post: IBlogPost) => new Date(post.DatePosted).toLocaleDateString() },
         { header: 'Published', key: 'IsPublished', render: (post: IBlogPost) => post.IsPublished ? 'Yes' : 'No' },
         { header: 'Views', key: 'TimesViewed' },
@@ -65,7 +70,7 @@ export const ManagePostsPage: React.FC = () => {
                     </Link>
                 </div>
             </div>
-            <Table data={posts} columns={columns} keyField="Id" />
+            <Table data={sortedPosts} columns={columns} keyField="Id" />
         </div>
     );
 };
