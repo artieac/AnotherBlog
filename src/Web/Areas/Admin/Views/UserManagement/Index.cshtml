@@ -38,7 +38,7 @@
                     {   
                         <tr>
                             <td><a href="/Admin/UserManagement/Edit/@blogUser.Id.ToString()">@blogUser.GetDisplayName()</a></td>
-                            <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.Id.ToString()"><img src="/Content/images/action_delete.png" class="deleteComment" alt="" /></a></td>
+                            <td><a href="/Admin/UserManagement/Delete?userId=@blogUser.Id.ToString()"><img src="@Url.Content("~/Content/images/action_delete.png")" class="deleteComment" alt="" /></a></td>
                         </tr>
                     }
                 }

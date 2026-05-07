@@ -9,7 +9,7 @@
 
 @section headerPlugins
 {
-	<script src="/Scripts/Controllers/ManageListsController.js" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/Controllers/ManageListsController.js")" type="text/javascript"></script>
 }
    
 @{
@@ -43,7 +43,7 @@
 				<td><input type="checkbox" name="showOrdered" value="{{ blogList.ShowOrdered }}" ng-disabled="blogListElements.selectedList!=blogList.Id" ng-model="blogList.ShowOrdered"/></td>
 				<td>
 					<a ng-click="deleteList(blogList.Id, '@Model.Common.TargetBlog.SubFolder');">
-						<img src="/Content/images/action_delete.png" class="deleteList" alt=""/>
+						<img src="@Url.Content("~/Content/images/action_delete.png")" class="deleteList" alt=""/>
 					</a>
 					<button class="btn btn-primary" ng-click="updateList('@Model.Common.TargetBlog.SubFolder', blogList.Id);" ng-show="blogListElements.selectedList==blogList.Id">Save</button>
 				</td>
@@ -79,7 +79,7 @@
 						<td><input type="text" name="displayOrder" class="readonly" value="{{listItem.DisplayOrder}}" ng-model="listItem.DisplayOrder" ng-disabled="blogListItemElements.selectedListItem!=listItem.Id" /></td>
 						<td>
 							<a ng-click="deleteListItem('@Model.Common.TargetBlog.SubFolder', currentList.Id, listItem.Id);">
-								<img src="/Content/images/action_delete.png" class="deleteList" alt="" />
+								<img src="@Url.Content("~/Content/images/action_delete.png")" class="deleteList" alt="" />
 							</a>
 							<button type="button" class="btn btn-primary" ng-click="updateListItem('@Model.Common.TargetBlog.SubFolder', currentList.Id, listItem.Id);" ng-show="blogListItemElements.selectedListItem==listItem.Id">Save</button>
 						</td>
