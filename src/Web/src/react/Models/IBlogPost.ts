@@ -1,6 +1,5 @@
 import { IBlog } from './IBlog';
 import { IUser } from './IUser';
-import { ITag } from './ITag';
 
 export interface IBlogPost {
     Id: number;
@@ -13,5 +12,4 @@ export interface IBlogPost {
     DateCreated: string;
     CommentCount: number;
     TimesViewed: number;
-    Tags: ITag[];
 }

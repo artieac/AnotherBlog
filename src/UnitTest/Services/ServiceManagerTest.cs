@@ -25,7 +25,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         private Mock<IAnotherBlogRepositoryManager> mockRepositoryManager;
         private Mock<IBlogRepository> mockBlogRepository;
         private Mock<IBlogEntryRepository> mockBlogEntryRepository;
-        private Mock<ITagRepository> mockTagRepository;
         private Mock<ISiteInfoRepository> mockSiteInfoRepository;
         private Mock<IUserRepository> mockUserRepository;
         private Mock<IBlogListRepository> mockBlogListRepository;
@@ -38,7 +37,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
             mockRepositoryManager = new Mock<IAnotherBlogRepositoryManager>();
             mockBlogRepository = new Mock<IBlogRepository>();
             mockBlogEntryRepository = new Mock<IBlogEntryRepository>();
-            mockTagRepository = new Mock<ITagRepository>();
             mockSiteInfoRepository = new Mock<ISiteInfoRepository>();
             mockUserRepository = new Mock<IUserRepository>();
             mockBlogListRepository = new Mock<IBlogListRepository>();
@@ -46,7 +44,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 
             mockRepositoryManager.Setup(x => x.Blogs).Returns(mockBlogRepository.Object);
             mockRepositoryManager.Setup(x => x.BlogEntries).Returns(mockBlogEntryRepository.Object);
-            mockRepositoryManager.Setup(x => x.Tags).Returns(mockTagRepository.Object);
             mockRepositoryManager.Setup(x => x.SiteInfo).Returns(mockSiteInfoRepository.Object);
             mockRepositoryManager.Setup(x => x.UserRepository).Returns(mockUserRepository.Object);
             mockRepositoryManager.Setup(x => x.BlogLists).Returns(mockBlogListRepository.Object);
@@ -109,28 +106,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
 
             var service1 = manager.BlogEntryService;
             var service2 = manager.BlogEntryService;
-
-            Assert.That(service1, Is.SameAs(service2));
-        }
-
-        [Test]
-        public void TagService_ReturnsLazyLoadedInstance()
-        {
-            var manager = new ServiceManager(mockUnitOfWork.Object, mockRepositoryManager.Object);
-
-            var service = manager.TagService;
-
-            Assert.That(service, Is.Not.Null);
-            Assert.That(service, Is.TypeOf<TagService>());
-        }
-
-        [Test]
-        public void TagService_ReturnsSameInstanceOnMultipleCalls()
-        {
-            var manager = new ServiceManager(mockUnitOfWork.Object, mockRepositoryManager.Object);
-
-            var service1 = manager.TagService;
-            var service2 = manager.TagService;
 
             Assert.That(service1, Is.SameAs(service2));
         }

@@ -32,14 +32,12 @@
         <partial name="_CalendarControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.CalendarModel)ViewBag.BlogCommon.Common.Calendar" />
     </div>
 	<div id="mostViewed">
-        <partial name="_ListControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.API.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts"/>
-    </div>                     
-    <div id="blogTagsSection">
-        <partial name="_TagControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon"/>
-	</div>        
-    <div>
-        <partial name="_SyndicationControl" model="ViewBag.BlogCommon.TargetBlog.SubFolder" />
-    </div>  
+	    <partial name="_ListControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.API.ListControlModel)ViewBag.BlogCommon.Common.MostViewedPosts"/>
+	</div>                     
+	<div>
+	    <partial name="_SyndicationControl" model="ViewBag.BlogCommon.TargetBlog.SubFolder" />
+	</div>  
+  
     <div>
         <partial name="_BlogListsControl"/>
     </div>

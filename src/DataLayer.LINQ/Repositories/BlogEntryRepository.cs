@@ -135,65 +135,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return this.Map(retVal);
         }
 
-        public IList<BlogPost> GetByTag(int tagId, bool publishedOnly)
-        {
-            return this.GetByTag(null, tagId, publishedOnly);
-        }
-
-        public IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly)
-        {
-            IQueryable<BlogEntryDTO> dtoList = null;
-
-            if (blogId.HasValue)
-            {
-                if (publishedOnly == true)
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId 
-                              where tagItem.BlogId == blogId.Value && 
-                              tagItem.Id == tagId &&
-                              foundItem.IsPublished == true
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-                }
-                else
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId
-                              where tagItem.BlogId == blogId.Value && 
-                              tagItem.Id == tagId
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-                }
-            }
-            else
-            {
-                if (publishedOnly == true)
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId
-                              where tagItem.Id == tagId && foundItem.IsPublished == true
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-
-                }
-                else
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryDTOs
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.BlogEntryTagDTOs on foundItem.EntryId equals entryTag.BlogEntryDTO.EntryId
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.TagDTOs on entryTag.TagDTO.Id equals tagId
-                              where tagItem.Id == tagId
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-                }
-            }
-
-            return this.Map(dtoList.ToList());
-        }
-
         public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
         {
             return this.GetByMonth(blogDate, null, publishedOnly);

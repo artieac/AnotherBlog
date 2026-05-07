@@ -28,7 +28,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         {
             this.Id = 0;
             this.DatePosted = BlogPost.StartDate;
-            this.Tags = new List<Tag>();
         }
 
         public long Id { get; set; }
@@ -42,7 +41,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public int CommentCount { get; set; }
         public long TimesViewed { get; set; }
         public IList<Comment> Comments { get; set; }
-        public IList<Tag> Tags { get; set; }
         
         public IList<Comment> FilteredComments(CommentStatus targetStatus)
         {

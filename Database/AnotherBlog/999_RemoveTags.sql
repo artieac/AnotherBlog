@@ -1,0 +1,7 @@
+-- MySQL Script to remove Tag-related tables
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS BlogEntryTags;
+DROP TABLE IF EXISTS Tags;
+
+SET FOREIGN_KEY_CHECKS = 1;

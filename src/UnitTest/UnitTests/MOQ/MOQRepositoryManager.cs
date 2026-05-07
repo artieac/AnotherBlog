@@ -16,7 +16,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
         Mock<IBlogRepository> blogRepository;
         Mock<IDbInfoRepository> dbInfoRepository;
         Mock<ISiteInfoRepository> siteInfoRepository;
-        Mock<ITagRepository> tagRepository;
         Mock<IUserRepository> userRepository;
         Mock<IBlogListRepository> blogLists;
         Mock<IPollRepository> pollRepository;
@@ -80,23 +79,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
                 }
 
                 return this.siteInfoRepository.Object;
-            }
-        }
-
-        public ITagRepository Tags
-        {
-            get
-            {
-                if (this.tagRepository == null)
-                {
-                    this.tagRepository = new Mock<ITagRepository>();
-                    MOQTagRepositoryHelper.ConfigureGetAll(this.tagRepository);
-                    MOQTagRepositoryHelper.ConfigureGetByName(this.tagRepository);
-                    MOQTagRepositoryHelper.ConfigureSave(this.tagRepository);
-                
-                }
-
-                return this.tagRepository.Object;
             }
         }
 

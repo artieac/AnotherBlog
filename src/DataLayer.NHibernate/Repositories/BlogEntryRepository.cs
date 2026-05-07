@@ -30,12 +30,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 {
     public class BlogEntryRepository : NHibernateRepository<BlogPost, BlogPostDTO, int>, IBlogEntryRepository
     {
-        public BlogEntryRepository(UnitOfWork unitOfWork, ITagRepository tagRepository) : base(unitOfWork)
+        public BlogEntryRepository(UnitOfWork unitOfWork) : base(unitOfWork)
         {
-            this.TagRepository = tagRepository as TagRepository;    
         }
-
-        protected TagRepository TagRepository { get; set; }
 
         protected override BlogPostDTO GetDTOById(BlogPost domainInstance)
         {
@@ -151,59 +148,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             criteria.Add(Restrictions.Eq(Projections.SqlFunction("day", NHibernate.NHibernateUtil.DateTime, Projections.Property("DatePosted")), postDate.Date.Day));
 
             return this.GetDataMapper().Map(criteria.UniqueResult<BlogPostDTO>());
-        }
-
-        public IList<BlogPost> GetByTag(int tagId, bool publishedOnly)
-        {
-            return this.GetByTag(null, tagId, publishedOnly);
-        }
-
-        public IList<BlogPost> GetByTag(int? blogId, int tagId, bool publishedOnly)
-        {
-            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
-
-            if (blogId.HasValue)
-            {
-                criteria.CreateCriteria("Blog").Add(Expression.Eq("Id", blogId.Value));
-            }
-
-            if (publishedOnly == true)
-            {
-                criteria.Add(Expression.Eq("IsPublished", true));
-            }
-
-            criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", tagId));
-            criteria.AddOrder(Order.Desc("DatePosted"));
-
-            return this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
-        }
-
-        public IList<BlogPost> GetByTag(int blogId, string tagText, bool publishedOnly)
-        {
-            IList<BlogPost> retVal = new List<BlogPost>();
-
-            ICriteria tagCriteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
-            tagCriteria.Add(Expression.Eq("Name", tagText));
-            tagCriteria.Add(Expression.Eq("BlogId", blogId));
-
-            TagDTO targetTag = tagCriteria.UniqueResult<TagDTO>();
-
-            if (targetTag != null)
-            {
-                ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<BlogPostDTO>();
-                criteria.CreateCriteria("Blog").Add(Expression.Eq("Id", blogId));
-
-                if (publishedOnly == true)
-                {
-                    criteria.Add(Expression.Eq("IsPublished", true));
-                }
-
-                criteria.CreateCriteria("Tags").Add(Expression.Eq("Id", targetTag.Id));
-                criteria.AddOrder(Order.Desc("DatePosted"));
-                retVal = this.GetDataMapper().Map(criteria.List<BlogPostDTO>());
-            }
-
-            return retVal;
         }
 
         public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
@@ -360,29 +304,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
 
         public override BlogPost Save(BlogPost itemToSave)
         {
-            if (itemToSave != null && itemToSave.Tags != null)
-            {
-                BlogPostDTO dtoPost = this.GetDTOById(itemToSave.Id);
-
-                if (dtoPost != null)
-                {
-                    foreach (Tag domainTag in itemToSave.Tags)
-                    {
-                        if (dtoPost.Tags.FirstOrDefault(t => t.Id == domainTag.Id) == null)
-                        {
-                            ICriteria criteria = this.UnitOfWork.CurrentSession.CreateCriteria<TagDTO>();
-                            criteria.Add(Expression.Eq("Id", domainTag.Id));
-                            TagDTO existsTest = criteria.UniqueResult<TagDTO>();
-
-                            if (existsTest != null)
-                            {
-                                dtoPost.Tags.Add(existsTest);
-                            }
-                        }
-                    }
-                }
-            }
-
             return base.Save(itemToSave);
         }
     }

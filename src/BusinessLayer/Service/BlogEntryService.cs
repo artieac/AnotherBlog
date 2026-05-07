@@ -37,15 +37,12 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
     {
         public const string DefaultPostSort = "DatePosted";
 
-        public BlogEntryService(IUnitOfWork unitOfWork, IBlogEntryRepository blogEntryRepository, ITagRepository tagRepository) : base(unitOfWork) 
+        public BlogEntryService(IUnitOfWork unitOfWork, IBlogEntryRepository blogEntryRepository) : base(unitOfWork) 
         {
             this.BlogEntryRepository = blogEntryRepository;
-            this.TagRepository = tagRepository;
         }
 
         protected IBlogEntryRepository BlogEntryRepository { get; private set; }
-
-        protected ITagRepository TagRepository { get; private set; }
 
         private void AttachDependencies(Blog targetBlog, AnotherBlogUser currentUser)
         {
@@ -87,7 +84,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <param name="isPublished"></param>
         /// <param name="_submitChanges"></param>
         /// <returns></returns>
-        public BlogPost Save(Blog targetBlog, string title, string entryText, int entryId, bool isPublished, string[] tagNames, AnotherBlogUser currentUser)
+        public BlogPost Save(Blog targetBlog, string title, string entryText, int entryId, bool isPublished, AnotherBlogUser currentUser)
         {
             this.AttachDependencies(targetBlog, currentUser);
 
@@ -109,7 +106,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             itemToSave.Blog = targetBlog;
             itemToSave.Author = currentUser;
             itemToSave.SetPublishState(isPublished);
-            itemToSave = this.AddTags(itemToSave, tagNames);
 
             return this.Save(itemToSave);
         }
@@ -132,47 +128,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             }
 
             return blogPost;
-        }
-
-        private BlogPost AddTags(BlogPost targetPost, string[] names)
-        {
-            if (targetPost.Tags == null)
-            {
-                targetPost.Tags = new List<Tag>();
-            }
-
-            // identify tags to remove
-            var tagsToRemove = targetPost.Tags.Where(t => !names.Any(n => n.Trim().Equals(t.Name, StringComparison.OrdinalIgnoreCase))).ToList();
-            
-            foreach (var tag in tagsToRemove)
-            {
-                targetPost.Tags.Remove(tag);
-            }
-
-            // identify tags to add
-            foreach (string name in names)
-            {
-                string trimmedName = name.Trim();
-                
-                if (!string.IsNullOrEmpty(trimmedName))
-                {
-                    if (!targetPost.Tags.Any(t => t.Name.Equals(trimmedName, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        Tag currentTag = this.TagRepository.GetByName(trimmedName, targetPost.Blog.Id);
-
-                        if (currentTag == null)
-                        {
-                            currentTag = new Tag();
-                            currentTag.Name = trimmedName;
-                            currentTag.BlogId = targetPost.Blog.Id;
-                        }
-
-                        targetPost.Tags.Add(currentTag);
-                    }
-                }
-            }
-
-            return targetPost;
         }
         
         /// <summary>
@@ -274,23 +229,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 retVal = this.BlogEntryRepository.GetByDateAndTitle(blogTitle, postDate, targetBlog.Id);
             }
 
-            return retVal;
-        }
-
-        /// <summary>
-        /// Get all blog entries that have a particular tag associated with them whether they are published or not.
-        /// </summary>
-        /// <param name="targetBlog"></param>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        public IList<BlogPost> GetByTag(Blog targetBlog, string tag, bool publishedOnly)
-        {
-            IList<BlogPost> retVal = new List<BlogPost>();
-
-            if (targetBlog != null)
-            {
-                retVal = this.BlogEntryRepository.GetByTag(targetBlog.Id, tag, publishedOnly);
-            }
             return retVal;
         }
 

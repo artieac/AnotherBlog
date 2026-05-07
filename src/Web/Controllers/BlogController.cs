@@ -183,41 +183,6 @@ public class BlogController : PublicController
         return this.View("Index", model);
     }
 
-    [Route("Blog/{blogSubFolder}/BlogPosts/Tag/{targetTag}")]
-    [HttpGet]
-    public IActionResult Tag(string blogSubFolder, string targetTag, int? page)
-    {
-        BlogModel model = new BlogModel();
-        model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
-
-        IList<BlogPost> foundPosts = null;
-        int currentPageIndex = 0;
-
-        if (model.BlogCommon.TargetBlog != null)
-        {
-            if (page.HasValue == true)
-            {
-                currentPageIndex = page.Value - 1;
-            }
-
-            if (model.BlogCommon.TargetBlog != null)
-            {
-                targetTag = AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(targetTag);
-                foundPosts = Services.BlogEntryService.GetByTag(model.BlogCommon.TargetBlog, targetTag, true);
-                model.BlogCommon.Common.ContentTitle = "Blog entries for " + targetTag;
-            }
-        }
-        else
-        {
-            foundPosts = new List<BlogPost>();
-            model.BlogCommon.Common.ContentTitle = string.Empty;
-        }
-
-        model.BlogEntries = this.PopulateBlogPostInfo(foundPosts, currentPageIndex);
-        model.BlogCommon.Common.Calendar = this.InitializeCalendarModel(model.BlogCommon.TargetBlog, model.BlogCommon.Common.TargetMonth);
-        return this.View("Index", model);
-    }
-
     [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}/{title}")]
     [HttpGet]
     public IActionResult Post(string blogSubFolder, string year, string month, string day, string title)
@@ -253,14 +218,12 @@ public class BlogController : PublicController
             }
 
             model.Author = model.Post.Author;
-            model.Tags = new List<Tag>();
             model.PreviousEntry = Services.BlogEntryService.GetPreviousEntry(model.BlogCommon.TargetBlog, model.Post);
             model.NextEntry = Services.BlogEntryService.GetNextEntry(model.BlogCommon.TargetBlog, model.Post);
         }
         else
         {
             model.Post = new BlogPost();
-            model.Tags = new List<Tag>();
             model.Comments = new List<Comment>();
         }
 

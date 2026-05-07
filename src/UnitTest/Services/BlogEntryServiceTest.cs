@@ -25,7 +25,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
     {
         private Mock<IUnitOfWork> mockUnitOfWork;
         private Mock<IBlogEntryRepository> mockBlogEntryRepository;
-        private Mock<ITagRepository> mockTagRepository;
         private BlogEntryService service;
         private Blog testBlog;
         private BlogPost testPost;
@@ -35,9 +34,8 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
         {
             mockUnitOfWork = new Mock<IUnitOfWork>();
             mockBlogEntryRepository = new Mock<IBlogEntryRepository>();
-            mockTagRepository = new Mock<ITagRepository>();
 
-            service = new BlogEntryService(mockUnitOfWork.Object, mockBlogEntryRepository.Object, mockTagRepository.Object);
+            service = new BlogEntryService(mockUnitOfWork.Object, mockBlogEntryRepository.Object);
 
             testBlog = new Blog { Id = 1, Name = "TestBlog", SubFolder = "test" };
             testPost = new BlogPost
@@ -182,27 +180,6 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Services
             var result = service.GetByDateAndTitle(null, DateTime.Now, "Test Post");
 
             Assert.That(result, Is.Null);
-        }
-
-        [Test]
-        public void GetByTag_WithValidBlog_ReturnsPosts()
-        {
-            var posts = new List<BlogPost> { testPost };
-            mockBlogEntryRepository.Setup(x => x.GetByTag(testBlog.Id, "testtag", true)).Returns(posts);
-
-            var result = service.GetByTag(testBlog, "testtag", true);
-
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void GetByTag_WithNullBlog_ReturnsEmptyList()
-        {
-            var result = service.GetByTag(null, "testtag", true);
-
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]

@@ -20,7 +20,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
         {
             BlogDataMap.ConfigureAutoMapper();
             UserDataMap.ConfigureAutoMapper();
-            TagDataMap.ConfigureAutoMapper();
 
             if (AutoMapper.Mapper.FindTypeMapFor<Comment, EntryCommentsDTO>() == null)
             {
@@ -38,7 +37,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
             if (AutoMapper.Mapper.FindTypeMapFor<BlogPost, BlogPostDTO>() == null)
             {
                 AutoMapper.Mapper.CreateMap<BlogPost, BlogPostDTO>()
-                    .ForMember(dest => dest.Tags, src => src.ResolveUsing<TagDTOListResolver>())
                     .ForMember(dest => dest.Comments, src => src.ResolveUsing<CommentDTOListResolver>());
             }
 

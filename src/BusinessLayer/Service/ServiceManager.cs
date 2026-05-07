@@ -58,7 +58,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             {
                 if (this.blogEntryService == null)
                 {
-                    this.blogEntryService = new BlogEntryService(this.UnitOfWork, this.RepositoryManager.BlogEntries, this.RepositoryManager.Tags);
+                    this.blogEntryService = new BlogEntryService(this.UnitOfWork, this.RepositoryManager.BlogEntries);
                 }
 
                 return this.blogEntryService;
@@ -76,20 +76,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 }
 
                 return this.blogService;
-            }
-        }
-
-        private TagService tagService;
-        public TagService TagService
-        {
-            get
-            {
-                if (this.tagService == null)
-                {
-                    this.tagService = new TagService(this.UnitOfWork, this.RepositoryManager.Tags);
-                }
-
-                return this.tagService;
             }
         }
 

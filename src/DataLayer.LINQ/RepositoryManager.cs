@@ -27,7 +27,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
     public class RepositoryManager : IRepositoryManager
     {
         IBlogEntryRepository blogEntryRepository;
-        IBlogEntryTagRepository blogEntryTagRepository;
         IBlogExtensionRepository blogExtensionRepository;
         IBlogRepository blogRepository;
         IBlogUserRepository blogUserRepository;
@@ -36,7 +35,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         IExtensionConfigurationRepository extensionConfigurationRepository;
         IRoleRepository roleRepository;
         ISiteInfoRepository siteInfoRepository;
-        ITagRepository tagRepository;
         IUserRepository userRepository;
         IBlogListRepository blogLists;
         IBlogListItemRepository blogListItems;
@@ -69,19 +67,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return this.blogEntryRepository;
-            }
-        }
-
-        public IBlogEntryTagRepository BlogEntryTags
-        {
-            get
-            {
-                if (this.blogEntryTagRepository == null)
-                {
-                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork, this);
-                }
-
-                return this.blogEntryTagRepository;
             }
         }
 
@@ -186,19 +171,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return this.siteInfoRepository;
-            }
-        }
-
-        public ITagRepository Tags
-        {
-            get
-            {
-                if (this.tagRepository == null)
-                {
-                    this.tagRepository = new TagRepository(this.UnitOfWork, this);
-                }
-
-                return this.tagRepository;
             }
         }
 

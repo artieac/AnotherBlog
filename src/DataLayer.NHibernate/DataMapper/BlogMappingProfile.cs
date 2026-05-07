@@ -37,10 +37,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
 //                .ForMember(dest => dest.Roles, opt => opt.ResolveUsing<BlogUserListResolver>())
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<Tag, TagDTO>()
-                .ForMember(dest => dest.BlogEntries, opt => opt.Ignore());
-            CreateMap<TagDTO, Tag>();
-
             CreateMap<Comment, EntryCommentsDTO>()
                     .ForMember(dest => dest.BlogPost, opt => opt.Ignore())
                     .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (int)src.Status))
