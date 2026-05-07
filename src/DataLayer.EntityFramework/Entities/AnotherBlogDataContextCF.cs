@@ -74,7 +74,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
                     {
                         j.ToTable("BlogEntryTags");
                         j.HasKey(pt => pt.Id);
-                        j.Property(pt => pt.Id).HasColumnName("BlogEntryTagId").ValueGeneratedOnAdd();
+                        j.Property(pt => pt.Id).HasColumnName("Id").ValueGeneratedOnAdd();
                     }
                 );
             modelBuilder.Entity<BlogPost>()
