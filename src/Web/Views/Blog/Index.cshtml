@@ -59,7 +59,13 @@
                 </article>
             }
             <div class="pt-6">
-                @Html.PagedListPager(Model.BlogEntries, page => Url.Action("Index", new { page }))
+                @Html.PagedListPager(Model.BlogEntries, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+                {
+                    UlElementClasses = new[] { "flex", "justify-center", "gap-1" },
+                    LiElementClasses = new[] { "list-none" },
+                    PageClasses = new[] { "flex", "items-center", "justify-center", "min-w-[40px]", "h-10", "px-3", "rounded-lg", "border", "border-slate-200", "bg-white", "text-sm", "font-semibold", "text-slate-700", "hover:bg-slate-50", "hover:border-slate-300", "transition-all" },
+                    ActiveLiElementClass = "[&>a]:bg-blue-600 [&>a]:text-white [&>a]:border-blue-600 [&>span]:bg-blue-600 [&>span]:text-white [&>span]:border-blue-600"
+                })
             </div>
         }
         else
