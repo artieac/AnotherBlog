@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import React from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 interface WysiwygEditorProps {
     value: string;
@@ -8,31 +9,35 @@ interface WysiwygEditorProps {
 }
 
 export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, label }) => {
-    const editorConfig = useMemo(() => ({
-        height: 400,
-        menubar: false,
-        plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            ['clean']
         ],
-        toolbar: 'undo redo | blocks | ' +
-            'bold italic forecolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-    }), []);
+    };
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image'
+    ];
 
     return (
         <div className="mb-4">
             {label && <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>}
-            <Editor
-                apiKey="no-api-key"
-                tinymceScriptSrc="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"
-                init={editorConfig}
-                value={value}
-                onEditorChange={(content) => onChange(content)}
-            />
+            <div className="bg-white">
+                <ReactQuill 
+                    theme="snow"
+                    value={value || ''}
+                    onChange={onChange}
+                    modules={modules}
+                    formats={formats}
+                />
+            </div>
         </div>
     );
 };
