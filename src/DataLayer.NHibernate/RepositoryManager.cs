@@ -44,7 +44,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             {
                 if (this.blogEntryRepository == null)
                 {
-                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork, this.Tags);
+                    this.blogEntryRepository = new BlogEntryRepository(this.UnitOfWork);
                 }
 
                 return this.blogEntryRepository;
@@ -90,20 +90,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return this.siteInfoRepository;
-            }
-        }
-
-        private ITagRepository tagRepository;
-        public ITagRepository Tags
-        {
-            get
-            {
-                if (this.tagRepository == null)
-                {
-                    this.tagRepository = new TagRepository(this.UnitOfWork);
-                }
-
-                return this.tagRepository;
             }
         }
 

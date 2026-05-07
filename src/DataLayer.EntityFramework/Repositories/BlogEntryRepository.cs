@@ -40,7 +40,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         public override BlogPost GetById(long id)
         {
             return this.GetDbSet()
-                .Include(p => p.Tags)
                 .FirstOrDefault(p => p.Id == id);
         }
 
@@ -154,65 +153,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                                select foundItem).FirstOrDefault();
 
             return retVal;
-        }
-
-        public IList<BlogPost> GetByTag(long tagId, bool publishedOnly)
-        {
-            return this.GetByTag(null, tagId, publishedOnly);
-        }
-
-        public IList<BlogPost> GetByTag(long? blogId, long tagId, bool publishedOnly)
-        {
-            IQueryable<BlogPost> dtoList = null;
-
-            if (blogId.HasValue)
-            {
-                if (publishedOnly == true)
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Blog.Id == blogId.Value &&
-                              foundItem.IsPublished == true &&
-                              tagItem.Id == tagId
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-                }
-                else
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Blog.Id == blogId.Value &&
-                              tagItem.Id == tagId
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-                }
-            }
-            else
-            {
-                if (publishedOnly == true)
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
-                              where foundItem.IsPublished == true &&
-                              tagItem.Id == tagId
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-                }
-                else
-                {
-                    dtoList = from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.BlogPosts
-                              join entryTag in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags on foundItem.Id equals entryTag.Post.Id
-                              join tagItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags on entryTag.Tag.Id equals tagItem.Id
-                              where tagItem.Id == tagId
-                              orderby foundItem.DatePosted descending
-                              select foundItem;
-                }
-            }
-
-            return dtoList.ToList();
         }
 
         public IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly)
@@ -430,35 +370,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             if (targetComment != null)
             {
                 retVal = targetComment.Post;
-            }
-
-            return retVal;
-        }
-
-        public IList<BlogPost> GetByTag(long blogId, string tagName, bool publishedOnly)
-        {
-            IList<BlogPost> retVal = new List<BlogPost>();
-
-            Tag targetTag = (from foundItem in ((UnitOfWork)this.UnitOfWork).DataContext.Tags
-                             where foundItem.Blog.Id == blogId &&
-                             foundItem.Name == tagName
-                             select foundItem).FirstOrDefault();
-
-            if (targetTag != null)
-            {
-                // Populate BlogEntries from PostTags junction table
-                targetTag.BlogEntries = (from pt in ((UnitOfWork)this.UnitOfWork).DataContext.PostTags
-                                         where pt.Tag.Id == targetTag.Id
-                                         select pt.Post).ToList();
-
-                if (publishedOnly == true)
-                {
-                    retVal = targetTag.BlogEntries.Where(post => post.IsPublished == true).ToList();
-                }
-                else
-                {
-                    retVal = targetTag.BlogEntries;
-                }
             }
 
             return retVal;

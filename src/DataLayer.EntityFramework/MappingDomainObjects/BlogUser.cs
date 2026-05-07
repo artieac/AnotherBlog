@@ -8,7 +8,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects
     {
         public BlogUser()
         {
-            this.Id = -1;
+            this.Id = 0;
         }
 
         public int Id { get; set; }

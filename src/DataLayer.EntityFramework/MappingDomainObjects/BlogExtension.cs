@@ -6,7 +6,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.MappingDomainObjects
     {
         public BlogExtension()
         {
-            this.Id = -1;
+            this.Id = 0;
         }
 
         public int Id { get; set; }

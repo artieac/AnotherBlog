@@ -174,7 +174,14 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                     }
                     else
                     {
-                        this.GetUnitOfWork().DataContext.Entry(existingEntity).State = EntityState.Modified;
+                        // If it's the same instance, EF's change tracker will already have the changes.
+                        // Setting State = Modified can sometimes interfere with relationship tracking.
+                        // We only need to ensure it's tracked as Modified if it wasn't already.
+                        var entry = this.GetUnitOfWork().DataContext.Entry(existingEntity);
+                        if (entry.State == EntityState.Unchanged)
+                        {
+                            entry.State = EntityState.Modified;
+                        }
                     }
                 }
 

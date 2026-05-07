@@ -14,14 +14,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
     public class RepositoryManager : IAnotherBlogRepositoryManager
     {
         Mock<IBlogEntryRepository> blogEntryRepository;
-        Mock<IBlogEntryTagRepository> blogEntryTagRepository;
         Mock<IBlogRepository> blogRepository;
         Mock<IBlogUserRepository> blogUserRepository;
         Mock<IDbInfoRepository> dbInfoRepository;
         Mock<ICommentRepository> entryCommentRepository;
         Mock<IRoleRepository> roleRepository;
         Mock<ISiteInfoRepository> siteInfoRepository;
-        Mock<ITagRepository> tagRepository;
         Mock<IUserRepository> userRepository;
         Mock<IBlogListRepository> blogLists;
         Mock<IBlogListItemRepository> blogListItems;
@@ -45,19 +43,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return this.blogEntryRepository.Object;
-            }
-        }
-
-        public IBlogEntryTagRepository BlogEntryTags
-        {
-            get
-            {
-                if (this.blogEntryTagRepository == null)
-                {
-                    this.blogEntryTagRepository = new Mock<IBlogEntryTagRepository>();
-                }
-
-                return this.blogEntryTagRepository.Object;
             }
         }
 
@@ -137,24 +122,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                 }
 
                 return this.siteInfoRepository.Object;
-            }
-        }
-
-        public ITagRepository Tags
-        {
-            get
-            {
-                if (this.tagRepository == null)
-                {
-                    this.tagRepository = new Mock<ITagRepository>();
-                    AlwaysMoveForward.AnotherBlog.DataLayer.Repositories.MOQTagRepositoryHelper.ConfigureCreate(this.tagRepository);
-                    AlwaysMoveForward.AnotherBlog.DataLayer.Repositories.MOQTagRepositoryHelper.ConfigureGetAll(this.tagRepository);
-                    AlwaysMoveForward.AnotherBlog.DataLayer.Repositories.MOQTagRepositoryHelper.ConfigureGetByName(this.tagRepository);
-                    AlwaysMoveForward.AnotherBlog.DataLayer.Repositories.MOQTagRepositoryHelper.ConfigureSave(this.tagRepository);
-                
-                }
-
-                return this.tagRepository.Object;
             }
         }
 

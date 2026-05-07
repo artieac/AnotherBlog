@@ -49,12 +49,6 @@
                     ManageBlogPosts.ToggleSaveState(true);
                 }
             });
-
-            $("#tagInput").change(function () {
-                if (typeof ManageBlogPosts !== 'undefined') {
-                    ManageBlogPosts.ToggleSaveState(true);
-                }
-            });
         });
     </script>
 }
@@ -92,26 +86,6 @@
                     <textarea id="inputText" name="inputText" rows="25" class="form-control" style="display:none;">@Model.EntryList[0].Post.EntryText</textarea>
                 </div>
                 <br/>
-                @{
-                    String tagsAsString = "";
-
-                    if (Model.EntryList[0].Post != null)
-                    {
-                        if (Model.EntryList[0].Tags.Count > 0)
-                        {
-                            tagsAsString = Model.EntryList[0].Tags[0].Name;
-                        }
-
-                        for (int i = 1; i < Model.EntryList[0].Tags.Count; i++)
-                        {
-                            tagsAsString += "," + Model.EntryList[0].Tags[i].Name;
-                        }
-                    }
-                }
-                <div class="form-group">
-                    <label for="tagInput">Tags</label>
-                    <input type="text" id="tagInput" name="tagInput" value="@tagsAsString" class="form-control" placeholder="Tags" required />
-                </div>
                 <button type="button" class="btn btn-primary" id="saveButton" name="saveButton" ng-click="saveBlogPost()">Save</button>
             </form>
             <div id="fileUploadSection">

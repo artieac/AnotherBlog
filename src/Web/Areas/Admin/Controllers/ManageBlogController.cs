@@ -108,11 +108,7 @@ public class ManageBlogController : AdminBaseController
                 currentPageIndex = page.Value - 1;
             }
 
-            if (filterType == "tag")
-            {
-                foundPosts = Services.BlogEntryService.GetByTag(model.Common.TargetBlog, filterValue, false);
-            }
-            else if (filterType == "month")
+            if (filterType == "month")
             {
                 DateTime filterDate = DateTime.ParseExact(filterValue, "MM-dd-yyyy", System.Threading.Thread.CurrentThread.CurrentCulture);
                 foundPosts = Services.BlogEntryService.GetByMonth(model.Common.TargetBlog, filterDate, false);
@@ -153,11 +149,6 @@ public class ManageBlogController : AdminBaseController
             if (blogPost.Post == null)
             {
                 blogPost.Post = new BlogPost();
-                blogPost.Tags = new List<Tag>();
-            }
-            else
-            {
-                blogPost.Tags = blogPost.Post.Tags;
             }
 
             model.EntryList = X.PagedList.Extensions.PagedListExtensions.ToPagedList(new List<BlogPostModel> { blogPost }, 1, 1);

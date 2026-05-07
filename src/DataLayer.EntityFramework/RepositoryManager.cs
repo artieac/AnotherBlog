@@ -27,12 +27,10 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         private IBlogListRepository blogListRepository;
         private IDbInfoRepository dbInfoRepository;
         private ISiteInfoRepository siteInfoRepository;
-        private ITagRepository tagRepository;
         private IUserRepository userRepository;
         private IEntryCommentRepository entryCommentRepository;
 
         // Additional repositories (not in interface)
-        private BlogEntryTagRepository blogEntryTagRepository;
         private BlogExtensionRepository blogExtensionRepository;
         private BlogListItemRepository blogListItemRepository;
         private BlogUserRepository blogUserRepository;
@@ -95,18 +93,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
             }
         }
 
-        public ITagRepository Tags
-        {
-            get
-            {
-                if (this.tagRepository == null)
-                {
-                    this.tagRepository = new TagRepository(this.UnitOfWork);
-                }
-                return this.tagRepository;
-            }
-        }
-
         public IBlogListRepository BlogLists
         {
             get
@@ -152,18 +138,6 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         }
 
         // Additional repository accessors (not in interface)
-        public BlogEntryTagRepository BlogEntryTags
-        {
-            get
-            {
-                if (this.blogEntryTagRepository == null)
-                {
-                    this.blogEntryTagRepository = new BlogEntryTagRepository(this.UnitOfWork);
-                }
-                return this.blogEntryTagRepository;
-            }
-        }
-
         public BlogExtensionRepository BlogExtensions
         {
             get

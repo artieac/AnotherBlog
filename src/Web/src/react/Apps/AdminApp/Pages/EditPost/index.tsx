@@ -27,17 +27,19 @@ export const EditPostPage: React.FC = () => {
                 DatePosted: new Date().toISOString(),
                 DateCreated: new Date().toISOString(),
                 CommentCount: 0,
-                TimesViewed: 0,
-                Tags: []
+                TimesViewed: 0
             } as any));
         }
     }, [id, blogSubFolder, dispatch]);
 
     useEffect(() => {
         if (currentPost) {
-            setFormData(currentPost);
+            // Only update formData if it's not set yet, or if we loaded a different post
+            if (!formData || formData.Id !== currentPost.Id) {
+                setFormData(currentPost);
+            }
         }
-    }, [currentPost]);
+    }, [currentPost, formData]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         if (formData) {
@@ -58,16 +60,6 @@ export const EditPostPage: React.FC = () => {
         }
     };
 
-    const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (formData) {
-            const tagNames = e.target.value.split(',');
-            setFormData({
-                ...formData,
-                Tags: tagNames.map(name => ({ Name: name.trim() } as any))
-            });
-        }
-    }
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (formData && blogSubFolder) {
@@ -78,8 +70,6 @@ export const EditPostPage: React.FC = () => {
 
     if (loading || !formData) return <div>Loading...</div>;
     if (error) return <div className="text-red-600">Error: {error}</div>;
-
-    const tagsString = formData.Tags.map(t => t.Name).join(', ');
 
     return (
         <div className="bg-white shadow rounded-lg p-6">
@@ -105,13 +95,6 @@ export const EditPostPage: React.FC = () => {
                         <span className="ml-2 text-sm text-gray-700">Published</span>
                     </label>
                 </div>
-                <TextInput
-                    label="Tags (comma separated)"
-                    id="tags"
-                    name="tags"
-                    value={tagsString}
-                    onChange={handleTagsChange}
-                />
                 <WysiwygEditor
                     key={formData.Id}
                     label="Content"

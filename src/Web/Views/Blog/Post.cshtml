@@ -7,7 +7,6 @@
     ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.Name + " - " + Model.Post.Title;
     ViewBag.Description = Model.Post.ShortEntryText;
     ViewBag.Author = Model.Author.GetDisplayName();
-    ViewBag.Keywords = string.Join(",", Model.Post.Tags.Select(t => t.Name));
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
     ViewBag.BlogSubFolder = Model.BlogCommon.TargetBlog.SubFolder;
@@ -41,16 +40,6 @@
         <!-- Post Content -->
         <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed mb-10">
             @Html.Raw(Model.Post.EntryText)
-        </div>
-
-        <!-- Tags -->
-        <div ng-controller="BlogController" ng-init="getPostTags('@ViewBag.BlogSubFolder', '@Model.Post.Id');">
-            <div class="flex flex-wrap gap-2 pt-8 border-t border-slate-50" ng-show="postTags.length > 0">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2 self-center">Tags:</span>
-                <a ng-repeat="tag in postTags" href="/Blog/@ViewBag.BlogSubFolder/Tag/{{tag.Name}}" class="px-3 py-1 bg-slate-50 hover:bg-blue-600 text-slate-500 hover:text-white text-[10px] font-bold rounded transition-colors uppercase tracking-wide">
-                    #{{tag.Name}}
-                </a>
-            </div>
         </div>
     </div>
 </article>
