@@ -65,8 +65,14 @@
                         }
                     }
                 </table>
-                <div class="pager">
-                    @Html.PagedListPager(Model.EntryList, page => Url.Action("ManagePosts", new { id = Model.Common.TargetBlog.SubFolder, sortColumn = Model.Common.SortColumn, sortAscending = Model.Common.SortAscending, page }))
+                <div class="pt-6">
+                    @Html.PagedListPager(Model.EntryList, page => Url.Action("ManagePosts", new { id = Model.Common.TargetBlog.SubFolder, sortColumn = Model.Common.SortColumn, sortAscending = Model.Common.SortAscending, page }), new PagedListRenderOptions
+                    {
+                        UlElementClasses = new[] { "flex", "justify-center", "gap-1" },
+                        LiElementClasses = new[] { "list-none" },
+                        PageClasses = new[] { "flex", "items-center", "justify-center", "min-w-[40px]", "h-10", "px-3", "rounded-lg", "border", "border-slate-200", "bg-white", "text-sm", "font-semibold", "text-slate-700", "hover:bg-slate-50", "hover:border-slate-300", "transition-all" },
+                        ActiveLiElementClass = "[&>a]:bg-blue-600 [&>a]:text-white [&>a]:border-blue-600 [&>span]:bg-blue-600 [&>span]:text-white [&>span]:border-blue-600"
+                    })
                 </div>
                 <button type="button" class="btn btn-primary" id="addButton" name="addButton">Write new post</button>
             </div>
