@@ -42,7 +42,7 @@
         <partial name="_BlogListsControl"/>
     </div>
 	<div id="blogArchiveSection">
-        _Html.Partial("_ArchiveControl", (AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon)
+        <partial name="_ArchiveControl" model="(AlwaysMoveForward.AnotherBlog.Web.Models.BlogModels.CommonBlogModel)ViewBag.BlogCommon"/>
 	</div>      
 	<div id="googlePluginSection">
 		@{
@@ -51,7 +51,7 @@
             googleAdParams.Add("adSlot", "5638996162");
             googleAdParams.Add("adWidth", "120");
             googleAdParams.Add("adHeight", "600");
-            _Html.RenderPartial("../Plugins/GoogleAdControl", (IDictionary<string, string>)googleAdParams);     
-        } 
+        }
+        <partial name="../Plugins/GoogleAdControl" model="googleAdParams" />     
 	</div>   
 </div>   

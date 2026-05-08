@@ -10,8 +10,8 @@
 
 @section headerPlugins
 {
-    <script src="@Url.Content("~/Scripts/Controllers/ListController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Controllers/BlogController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Controllers/ListController.js")?v=@WebApplicationState.Version" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Controllers/BlogController.js")?v=@WebApplicationState.Version" type="text/javascript"></script>
     @RenderSection("headerPlugins", false)
 }
 

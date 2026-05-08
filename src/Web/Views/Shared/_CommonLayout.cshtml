@@ -19,15 +19,15 @@
     <link href="/css/global.css?v=@WebApplicationState.Version" rel="stylesheet" />
     
     <!-- Core Scripts -->
-    <script src="@Url.Content("~/Scripts/jquery-1.9.1.js")"></script>
-    <script src="@Url.Content("~/Scripts/angular.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/angular-resource.js")"></script>
-    <script src="@Url.Content("~/Scripts/Modules/ServiceDefinitionModule.js")"></script>
-    <script src="@Url.Content("~/Scripts/Common/SiteLogin.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-1.9.1.js")?v=@WebApplicationState.Version"></script>
+    <script src="@Url.Content("~/Scripts/angular.min.js")?v=@WebApplicationState.Version"></script>
+    <script src="@Url.Content("~/Scripts/angular-resource.js")?v=@WebApplicationState.Version"></script>
+    <script src="@Url.Content("~/Scripts/Modules/ServiceDefinitionModule.js")?v=@WebApplicationState.Version"></script>
+    <script src="@Url.Content("~/Scripts/Common/SiteLogin.js")?v=@WebApplicationState.Version"></script>
 
     <!-- Legacy support for Pager and Calendar -->
-    <link href="@Url.Content("~/Content/themes/" + PageManager.GetCurrentTheme(ViewBag.Common) + "/Pager.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Content/themes/" + PageManager.GetCurrentTheme(ViewBag.Common) + "/calendar.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/themes/" + PageManager.GetCurrentTheme(ViewBag.Common) + "/Pager.css")?v=@WebApplicationState.Version" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/themes/" + PageManager.GetCurrentTheme(ViewBag.Common) + "/calendar.css")?v=@WebApplicationState.Version" rel="stylesheet" />
 
     <!-- Google Tag Manager -->
     <script>

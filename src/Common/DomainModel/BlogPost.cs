@@ -21,7 +21,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
 {
     public class BlogPost
     {
-        public const int MaxShortEntryLength = 1000;
+        public const int MaxShortEntryLength = 500;
         public static readonly DateTime StartDate = new DateTime(2009, 1, 1);
 
         public BlogPost()
