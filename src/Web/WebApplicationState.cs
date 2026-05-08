@@ -10,7 +10,7 @@ public static class WebApplicationState
     private static SiteInfo _siteInfo;
     private static WebSiteSettings _siteSettings;
 
-    public static string Version => "1.2.7";
+    public static string Version => "1.2.8";
 
     public static WebSiteSettings WebSiteConfiguration => _siteSettings;
 

@@ -47,7 +47,7 @@ async function compileLessFile(lessFile) {
 
 // Main compilation process
 async function compileAll() {
-    const contentDir = path.join(__dirname, 'Content');
+    const contentDir = path.join(__dirname, 'wwwroot', 'Content');
 
     if (!fs.existsSync(contentDir)) {
         console.error('Content directory not found');
