@@ -29,7 +29,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                     if (sourceList != null)
                     {
                         // go through and remove any items that were removed in the domain and need to be removed in the dto
-                        foreach (long blogId in destinationList.Keys)
+                        foreach (long blogId in destinationList.Keys.ToList())
                         {
                             BlogUserDTO destinationItem = sourceList.FirstOrDefault(t => t.BlogId == blogId);
 
@@ -54,7 +54,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                     }
                 }
 
-                return source.New(destinationList, typeof(IDictionary<int, RoleType.Id>));
+                return source.New(destinationList, typeof(IDictionary<long, RoleType.Id>));
             }
         }
         
@@ -67,6 +67,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                 if (destinationList == null)
                 {
                     destinationList = new List<BlogUserDTO>();
+                    ((UserDTO)source.Context.DestinationValue).Roles = destinationList;
                 }
 
                 if (source.Value != null)
@@ -80,17 +81,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                         {
                             if (!sourceList.ContainsKey(destinationList[i].BlogId))
                             {
-                                BlogUserDTO destinationItem = destinationList.FirstOrDefault(t => t.BlogId == destinationList[i].BlogId);
-
-                                if (destinationItem == null)
-                                {
-                                    destinationList.RemoveAt(i);
-                                }
+                                destinationList.RemoveAt(i);
                             }
                         }
 
                         // add in all of the new items, or update items already in the list
-                        foreach(int blogId in sourceList.Keys)
+                        foreach(long blogId in sourceList.Keys)
                         {
                             BlogUserDTO blogUserDTO = destinationList.FirstOrDefault(t => t.BlogId == blogId);
 
@@ -99,7 +95,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                                 blogUserDTO = new BlogUserDTO();
                                 blogUserDTO.RoleId = (int)sourceList[blogId];
                                 blogUserDTO.User = (UserDTO)source.Context.DestinationValue;
-                                blogUserDTO.BlogId = blogId;
+                                blogUserDTO.BlogId = (int)blogId;
                                 destinationList.Add(blogUserDTO);
                             }
                             else

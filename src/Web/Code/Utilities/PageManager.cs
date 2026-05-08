@@ -37,7 +37,8 @@ namespace AlwaysMoveForward.AnotherBlog.Web.Code.Utilities
             if (currentPrincipal != null)
             {
                 if (currentPrincipal.IsInRole(RoleType.Names.SiteAdministrator) ||
-                    currentPrincipal.IsInRole(RoleType.Names.Administrator))
+                    currentPrincipal.IsInRole(RoleType.Names.Administrator) ||
+                    currentPrincipal.IsInRole(RoleType.Names.Blogger))
                 {
                     retVal = true;
                 }
