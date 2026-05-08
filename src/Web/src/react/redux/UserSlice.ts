@@ -4,14 +4,16 @@ import UserRepository from '../Repositories/UserRepository';
 
 interface UserState {
     users: IUser[];
-    currentUser: IUser | null;
+    loggedInUser: IUser | null;
+    selectedUser: IUser | null;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: UserState = {
     users: [],
-    currentUser: null,
+    loggedInUser: null,
+    selectedUser: null,
     loading: false,
     error: null,
 };
@@ -22,6 +24,10 @@ export const fetchUsers = createAsyncThunk('users/fetchAll', async () => {
 
 export const fetchUserById = createAsyncThunk('users/fetchById', async (id: number) => {
     return await UserRepository.getById(id);
+});
+
+export const fetchCurrentUser = createAsyncThunk('users/fetchCurrent', async () => {
+    return await UserRepository.getCurrent();
 });
 
 export const saveUser = createAsyncThunk('users/save', async (user: IUser) => {
@@ -37,8 +43,11 @@ const userSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        setCurrentUser: (state, action: PayloadAction<IUser | null>) => {
-            state.currentUser = action.payload;
+        setLoggedInUser: (state, action: PayloadAction<IUser | null>) => {
+            state.loggedInUser = action.payload;
+        },
+        setSelectedUser: (state, action: PayloadAction<IUser | null>) => {
+            state.selectedUser = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -55,7 +64,10 @@ const userSlice = createSlice({
                 state.error = action.error.message || 'Failed to fetch users';
             })
             .addCase(fetchUserById.fulfilled, (state, action) => {
-                state.currentUser = action.payload;
+                state.selectedUser = action.payload;
+            })
+            .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+                state.loggedInUser = action.payload;
             })
             .addCase(saveUser.fulfilled, (state, action) => {
                 const index = state.users.findIndex(u => u.Id === action.payload.Id);
@@ -64,7 +76,11 @@ const userSlice = createSlice({
                 } else {
                     state.users.push(action.payload);
                 }
-                state.currentUser = action.payload;
+                state.selectedUser = action.payload;
+                // If the user just edited themselves, update loggedInUser too
+                if (state.loggedInUser && state.loggedInUser.Id === action.payload.Id) {
+                    state.loggedInUser = action.payload;
+                }
             })
             .addCase(deleteUser.fulfilled, (state, action) => {
                 state.users = state.users.filter(u => u.Id !== action.payload);
@@ -72,5 +88,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { setCurrentUser } = userSlice.actions;
+export const { setLoggedInUser, setSelectedUser } = userSlice.actions;
 export default userSlice.reducer;

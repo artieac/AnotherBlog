@@ -1,8 +1,0 @@
-﻿@model AlwaysMoveForward.AnotherBlog.Web.Areas.Admin.Models.AdminCommon
-<form id="fileUploadForm" action="/Admin/ManageBlog/FileUpload/" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="blogSubFolder" value="@Model.TargetBlog.SubFolder" />
-    <label style="text-align:left">upload file</label>
-    <input id="imageFile" name="imageFile" type="file"  />
-    <br />
-    <input type="button" id="submitFileUploadButton" value="upload" onclick="ManageBlogPosts.SubmitFileUpload();"/>
-</form>

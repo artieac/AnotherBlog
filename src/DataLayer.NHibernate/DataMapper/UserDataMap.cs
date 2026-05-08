@@ -80,17 +80,12 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DataMapper
                         {
                             if (!sourceList.ContainsKey(destinationList[i].BlogId))
                             {
-                                BlogUserDTO destinationItem = destinationList.FirstOrDefault(t => t.BlogId == destinationList[i].BlogId);
-
-                                if (destinationItem == null)
-                                {
-                                    destinationList.RemoveAt(i);
-                                }
+                                destinationList.RemoveAt(i);
                             }
                         }
 
                         // add in all of the new items, or update items already in the list
-                        foreach(int blogId in sourceList.Keys)
+                        foreach(long blogId in sourceList.Keys)
                         {
                             BlogUserDTO blogUserDTO = destinationList.FirstOrDefault(t => t.BlogId == blogId);
 

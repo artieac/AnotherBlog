@@ -10,6 +10,10 @@ class UserRepository {
         return RestClient.get<IUser>(`/api/Users/${id}`);
     }
 
+    public async getCurrent(): Promise<IUser> {
+        return RestClient.get<IUser>('/api/Users/Current');
+    }
+
     public async save(user: IUser): Promise<IUser> {
         return RestClient.post<IUser>(`/api/Users/${user.Id}`, user);
     }

@@ -50,6 +50,9 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.DTO
         public virtual string LastName { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]
+        public virtual string DisplayName { get; set; }
+
+        [NHibernate.Mapping.Attributes.Property]
         public virtual string AccessToken { get; set; }
 
         [NHibernate.Mapping.Attributes.Property]

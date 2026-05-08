@@ -16,6 +16,7 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DomainModel
         public bool ApprovedCommenter { get; set; }
         public bool IsSiteAdministrator { get; set; }
         public string About { get; set; }
+        public string DisplayName { get; set; }
 
         public IDictionary<long, RoleType.Id> Roles { get; set; }
 

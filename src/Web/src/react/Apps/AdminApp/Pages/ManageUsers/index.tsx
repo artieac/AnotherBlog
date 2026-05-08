@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchUsers, deleteUser } from '@/redux/UserSlice';
 import { RootState, AppDispatch } from '@/redux/store';
 import { Table } from '@/components/Table';
@@ -9,6 +9,7 @@ import { IUser } from '@/Models/IUser';
 
 export const ManageUsersPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     const { users, loading, error } = useSelector((state: RootState) => state.users);
 
     useEffect(() => {
@@ -29,7 +30,10 @@ export const ManageUsersPage: React.FC = () => {
             header: 'Actions', 
             key: 'Id', 
             render: (user: IUser) => (
-                <Button variant="danger" onClick={() => handleDelete(user.Id)}>Delete</Button>
+                <div className="flex space-x-2">
+                    <Button variant="secondary" onClick={() => navigate(`/Admin/App/EditUser/${user.Id}`)}>Edit</Button>
+                    <Button variant="danger" onClick={() => handleDelete(user.Id)}>Delete</Button>
+                </div>
             )
         },
     ];
