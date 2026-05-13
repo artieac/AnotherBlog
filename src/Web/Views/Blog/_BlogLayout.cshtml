@@ -25,7 +25,7 @@
 </div>
 <div class="metaContentPanel">   
     <div id="blogListSection">
-        <partial name="../Blog/BlogSelectionControl" model="ViewBag.BlogCommon.Common.BlogList as IDictionary<int, AlwaysMoveForward.AnotherBlog.Common.DomainModel.Blog>" />
+        <partial name="_BlogSelectionControl" />
 	</div>
     <div id="blogCalendarSection">
 	    @{ViewBag.BlogCommon.Common.Calendar.RouteInformation = "/Home/Index";}

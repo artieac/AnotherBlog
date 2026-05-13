@@ -1,22 +1,24 @@
-﻿@{
-    Layout = null;
-}
-<div class="contentSection">
-    <div class="contentSectionTitle">
-        <label>{{ listElement.listTitle }}</label>
+﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.API.ListControlModel
+<div ng-init="listElement = @Html.Raw(JsonConvert.SerializeObject(Model))" class="space-y-4">
+    <div class="border-b border-slate-100 pb-2">
+        <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">{{ listElement.Title }}</h3>
     </div> 
-    <div class="contentSectionBody" ng-switch on="listElement.showOrdered">
+    <div ng-switch on="listElement.ShowOrdered">
         <div ng-switch-when="true">
-            <ol class="contentSectionList">
-                <li class="listItem" ng-repeat="listItem in listElement.Items | filter:listElement.showOrdered">
-                    <a href="{{ listItem.RelatedLink }}">{{ listItem.Name }}</a>
+            <ol class="space-y-2 list-decimal list-inside">
+                <li ng-repeat="listItem in listElement.ListItems">
+                    <a href="{{ listItem.RelatedLink }}" class="text-sm font-semibold text-slate-700 hover:text-blue-600 transition-colors leading-snug">
+                        {{ listItem.Name }}
+                    </a>
                 </li>
             </ol>
         </div>
         <div ng-switch-default>
-            <ul class="contentSectionList">
-                <li class="listItem" ng-repeat="listItem in listElement.Items">
-                    <a href="{{ listItem.RelatedLink }}">{{ listItem.Name }}</a>
+            <ul class="space-y-2">
+                <li ng-repeat="listItem in listElement.ListItems">
+                    <a href="{{ listItem.RelatedLink }}" class="text-sm font-semibold text-slate-700 hover:text-blue-600 transition-colors block leading-snug">
+                        {{ listItem.Name }}
+                    </a>
                 </li>
             </ul>
         </div>
