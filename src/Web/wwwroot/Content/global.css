@@ -7,3 +7,10 @@
     @apply absolute inset-0 bg-gradient-to-b from-black/60 to-transparent;
   }
 }
+
+@layer utilities {
+  .ql-align-center { @apply text-center; }
+  .ql-align-right { @apply text-right; }
+  .ql-align-justify { @apply text-justify; }
+  .ql-video { @apply w-full aspect-video; }
+}

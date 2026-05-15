@@ -38,8 +38,10 @@
         </header>
 
         <!-- Post Content -->
-        <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed mb-10">
-            @Html.Raw(Model.Post.EntryText)
+        <div class="ql-snow">
+            <div class="ql-editor !p-0 text-slate-700 leading-relaxed mb-10">
+                @Html.Raw(Model.Post.EntryText)
+            </div>
         </div>
     </div>
 </article>

@@ -91,6 +91,7 @@ export const SiteInfoPage: React.FC = () => {
                     label="About"
                     value={formData.About}
                     onChange={handleAboutChange}
+                    showPreview={true}
                 />
                 <div className="flex space-x-4">
                     <Button type="submit" variant="primary">Save</Button>
