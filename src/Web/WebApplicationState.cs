@@ -10,7 +10,8 @@ public static class WebApplicationState
     private static SiteInfo _siteInfo;
     private static WebSiteSettings _siteSettings;
 
-    public static string Version => "1.2.8";
+    public static string Version => _version;
+    private static readonly string _version = DateTime.Now.Ticks.ToString();
 
     public static WebSiteSettings WebSiteConfiguration => _siteSettings;
 
