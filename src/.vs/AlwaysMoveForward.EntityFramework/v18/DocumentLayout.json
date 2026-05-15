@@ -326,7 +326,7 @@
               "RelativeDocumentMoniker": "Web\\Controllers\\API\\ListController.cs",
               "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\ListController.cs",
               "RelativeToolTip": "Web\\Controllers\\API\\ListController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAqwB8AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-15T14:01:22.651Z",
               "EditorCaption": ""
@@ -413,8 +413,7 @@
               "RelativeToolTip": "Common\\DomainModel\\BlogPost.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAWwA0AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-08T20:34:55.112Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-08T20:34:55.112Z"
             },
             {
               "$type": "Document",

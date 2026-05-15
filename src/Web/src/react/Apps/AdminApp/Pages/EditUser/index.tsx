@@ -171,6 +171,7 @@ export const EditUserPage: React.FC = () => {
                     label="About"
                     value={formData.About}
                     onChange={handleAboutChange}
+                    showPreview={true}
                 />
                 <div className="flex space-x-4 mt-6">
                     <Button type="submit" variant="primary">Save</Button>
