@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\controllers\\api\\blogpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\controllers\\api\\blogpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\controllers\\api\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\controllers\\api\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -29,10 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\controllers\\api\\blogpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\controllers\\api\\blogpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D71FF22F-6AE8-63E5-5E75-F73050829466}|BusinessLayer\\AlwaysMoveForward.AnotherBlog.BusinessLayer.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\businesslayer\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -312,7 +312,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -320,20 +320,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ListController.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\ListController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\API\\ListController.cs",
               "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\ListController.cs",
               "RelativeToolTip": "Web\\Controllers\\API\\ListController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAqwB8AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-15T14:01:22.651Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ExternalBlogPostModel.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Models\\API\\ExternalBlogPostModel.cs",
               "RelativeDocumentMoniker": "Web\\Models\\API\\ExternalBlogPostModel.cs",
@@ -357,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "_CommonLayout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_CommonLayout.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_CommonLayout.cshtml",
@@ -381,7 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_Layout.cshtml",
@@ -393,19 +393,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "BlogPostController.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\BlogPostController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\API\\BlogPostController.cs",
               "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\API\\BlogPostController.cs",
               "RelativeToolTip": "Web\\Controllers\\API\\BlogPostController.cs",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAqwFUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAiwIYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T20:35:06.123Z"
+              "WhenOpened": "2026-05-07T20:35:06.123Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BlogPost.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Common\\DomainModel\\BlogPost.cs",
               "RelativeDocumentMoniker": "Common\\DomainModel\\BlogPost.cs",
@@ -413,8 +414,7 @@
               "RelativeToolTip": "Common\\DomainModel\\BlogPost.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAWwA0AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-08T20:34:55.112Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-08T20:34:55.112Z"
             },
             {
               "$type": "Document",
@@ -430,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Blog\\Index.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Blog\\Index.cshtml",
@@ -442,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "BlogController.cs",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Controllers\\BlogController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\BlogController.cs",

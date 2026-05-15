@@ -100,6 +100,7 @@ export const EditPostPage: React.FC = () => {
                     label="Content"
                     value={formData.EntryText}
                     onChange={handleTextChange}
+                    showPreview={true}
                 />
                 <div className="flex space-x-4">
                     <Button type="submit" variant="primary">Save</Button>
