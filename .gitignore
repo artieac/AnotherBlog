@@ -121,3 +121,5 @@ appsettings.production.json
 
 .dockerignore
 .[Vv]s/ProjectEvaluation
+.[Vv]s/AlwaysMoveForward.EntityFramework
+.[Vv]s/AlwaysMoveForward.NHibernate
