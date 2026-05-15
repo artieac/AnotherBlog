@@ -21,7 +21,6 @@ public class BlogController : BaseApiController
     [HttpGet]
     public IEnumerable<Blog> Get()
     {
-        IList<Blog> foo = this.Services.BlogService.GetAll();
         return this.Services.BlogService.GetAll();
     }
 
@@ -41,6 +40,7 @@ public class BlogController : BaseApiController
 
     [Route("/api/Blog")]
     [HttpPost]
+    [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator, false)]
     public Blog Post([FromBody] BlogInputModel input)
     {
         Blog retVal = null;
@@ -73,7 +73,7 @@ public class BlogController : BaseApiController
         {
             Blog targetBlog = this.Services.BlogService.GetById(id);
 
-            if (targetBlog == null)
+            if (targetBlog != null)
             {
                 if (this.CurrentPrincipal.IsInRole(RoleType.Names.Administrator, targetBlog.SubFolder) ||
                     this.CurrentPrincipal.IsInRole(RoleType.Names.Blogger, targetBlog.SubFolder))

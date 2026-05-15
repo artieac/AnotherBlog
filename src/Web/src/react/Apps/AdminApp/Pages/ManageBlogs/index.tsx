@@ -10,6 +10,7 @@ import { IBlog } from '@/Models/IBlog';
 export const ManageBlogsPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { blogs, loading, error } = useSelector((state: RootState) => state.blogs);
+    const { loggedInUser } = useSelector((state: RootState) => state.users);
 
     useEffect(() => {
         dispatch(fetchBlogs());
@@ -24,8 +25,9 @@ export const ManageBlogsPage: React.FC = () => {
             key: 'Actions', 
             render: (blog: IBlog) => (
                 <div className="flex space-x-4">
-                    <Link to={`/Admin/App/ManagePosts/${blog.SubFolder}`} className="text-blue-600 hover:underline">Manage Posts</Link>
-                    <Link to={`/Admin/App/ManageComments/${blog.SubFolder}`} className="text-blue-600 hover:underline">Manage Comments</Link>
+                    <Link to={`/Admin/App/ManagePosts/${blog.SubFolder}`} className="text-blue-600 hover:underline">Posts</Link>
+                    <Link to={`/Admin/App/ManageLists/${blog.SubFolder}`} className="text-blue-600 hover:underline">Lists</Link>
+                    <Link to={`/Admin/App/ManageComments/${blog.SubFolder}`} className="text-blue-600 hover:underline">Comments</Link>
                 </div>
             )
         },
@@ -34,15 +36,24 @@ export const ManageBlogsPage: React.FC = () => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div className="text-red-600">Error: {error}</div>;
 
+    const filteredBlogs = loggedInUser?.IsSiteAdministrator
+        ? blogs
+        : blogs.filter(blog => {
+            const role = loggedInUser?.Roles[blog.Id];
+            return role === 1 || role === 2; // Administrator = 1, Blogger = 2
+        });
+
     return (
         <div className="bg-white shadow rounded-lg p-6">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-gray-900">Manage Blogs</h1>
-                <Link to="/Admin/App/EditBlog/-1">
-                    <Button variant="primary">Add Blog</Button>
-                </Link>
+                {loggedInUser?.IsSiteAdministrator && (
+                    <Link to="/Admin/App/EditBlog/-1">
+                        <Button variant="primary">Add Blog</Button>
+                    </Link>
+                )}
             </div>
-            <Table data={blogs} columns={columns} keyField="Id" />
+            <Table data={filteredBlogs} columns={columns} keyField="Id" />
         </div>
     );
 };

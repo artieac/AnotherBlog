@@ -4,6 +4,7 @@ import siteReducer from './SiteSlice';
 import userReducer from './UserSlice';
 import blogPostReducer from './BlogPostSlice';
 import commentReducer from './CommentSlice';
+import blogListReducer from './BlogListSlice';
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         users: userReducer,
         blogPosts: blogPostReducer,
         comments: commentReducer,
+        blogLists: blogListReducer,
     },
 });
 
