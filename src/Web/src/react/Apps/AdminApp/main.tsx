@@ -9,6 +9,8 @@ import { EditBlogPage } from './Pages/EditBlog';
 import { ManagePostsPage } from './Pages/ManagePosts';
 import { EditPostPage } from './Pages/EditPost';
 import { ManageCommentsPage } from './Pages/ManageComments';
+import { ManageListsPage } from './Pages/ManageLists';
+import { EditListPage } from './Pages/EditList';
 import { SiteInfoPage } from './Pages/SiteInfo';
 import { ManageUsersPage } from './Pages/ManageUsers';
 import { EditUserPage } from './Pages/EditUser';
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
             {
                 path: 'ManageComments/:blogSubFolder',
                 element: <ManageCommentsPage />,
+            },
+            {
+                path: 'ManageLists/:blogSubFolder',
+                element: <ManageListsPage />,
+            },
+            {
+                path: 'EditList/:blogSubFolder/:id',
+                element: <EditListPage />,
             },
             {
                 path: 'ManageUsers',
