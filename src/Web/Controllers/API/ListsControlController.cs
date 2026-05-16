@@ -136,7 +136,7 @@ public class ListsControlController : BaseApiController
 
         if (foundItems != null)
         {
-            for (int i = 0; i < foundItems.Count; i++)
+            for (int i = foundItems.Count - 1; i >= 0; i--)
             {
                 BlogPostCount currentItem = foundItems[i] as BlogPostCount;
 
