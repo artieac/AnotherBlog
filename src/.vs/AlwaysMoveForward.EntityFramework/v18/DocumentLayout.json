@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\views\\shared\\_commonlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\views\\shared\\_commonlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\wwwroot\\css\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\wwwroot\\css\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\views\\blog\\post.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\views\\blog\\post.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\views\\shared\\_commonlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|solutionrelative:web\\views\\shared\\_commonlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5C74067B-56FA-7253-62FE-C3D036F79F61}|Web\\AlwaysMoveForward.AnotherBlog.Web.csproj|c:\\personal\\sourcecode\\anotherblog\\src\\web\\views\\blog\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,7 +38,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "global.css",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\wwwroot\\css\\global.css",
               "RelativeDocumentMoniker": "Web\\wwwroot\\css\\global.css",
@@ -51,7 +51,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "global.css",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\wwwroot\\Content\\global.css",
               "RelativeDocumentMoniker": "Web\\wwwroot\\Content\\global.css",
@@ -59,25 +59,24 @@
               "RelativeToolTip": "Web\\wwwroot\\Content\\global.css",
               "ViewState": "AgIAACQAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-05-15T23:30:40.621Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T23:30:40.621Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "_CommonLayout.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_CommonLayout.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_CommonLayout.cshtml",
               "ToolTip": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Shared\\_CommonLayout.cshtml",
               "RelativeToolTip": "Web\\Views\\Shared\\_CommonLayout.cshtml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-15T23:25:14.288Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Post.cshtml",
               "DocumentMoniker": "C:\\Personal\\sourcecode\\AnotherBlog\\src\\Web\\Views\\Blog\\Post.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Blog\\Post.cshtml",
@@ -85,8 +84,7 @@
               "RelativeToolTip": "Web\\Views\\Blog\\Post.cshtml",
               "ViewState": "AgIAAD8AAAAAAAAAAAAAAEsAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-15T23:22:46.432Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T23:22:46.432Z"
             },
             {
               "$type": "Document",
@@ -98,8 +96,7 @@
               "RelativeToolTip": "Web\\Views\\Blog\\Index.cshtml",
               "ViewState": "AgIAAEMAAAAAAAAAAAAjwC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-15T23:20:32.382Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T23:20:32.382Z"
             }
           ]
         }
