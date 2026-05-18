@@ -47,21 +47,23 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
         {
             if (itemToSave != null)
             {
+                var dataContext = ((UnitOfWork)this.UnitOfWork).DataContext;
+
                 if (itemToSave.Blog != null && itemToSave.Blog.Id > 0)
                 {
-                    var trackedBlog = ((UnitOfWork)this.UnitOfWork).DataContext.Blogs.Local.FirstOrDefault(b => b.Id == itemToSave.Blog.Id);
-                    if (trackedBlog == null)
+                    var trackedBlog = dataContext.Blogs.Find(itemToSave.Blog.Id);
+                    if (trackedBlog != null)
                     {
-                        ((UnitOfWork)this.UnitOfWork).DataContext.Blogs.Attach(itemToSave.Blog);
+                        itemToSave.Blog = trackedBlog;
                     }
                 }
 
                 if (itemToSave.Author != null && itemToSave.Author.Id > 0)
                 {
-                    var trackedUser = ((UnitOfWork)this.UnitOfWork).DataContext.Users.Local.FirstOrDefault(u => u.Id == itemToSave.Author.Id);
-                    if (trackedUser == null)
+                    var trackedUser = dataContext.Users.Find(itemToSave.Author.Id);
+                    if (trackedUser != null)
                     {
-                        ((UnitOfWork)this.UnitOfWork).DataContext.Users.Attach(itemToSave.Author);
+                        itemToSave.Author = trackedUser;
                     }
                 }
             }
