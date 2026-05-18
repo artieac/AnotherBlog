@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { IComment } from '../Models/IComment';
+import { IComment } from '../types/comment.types';
 import CommentRepository from '../Repositories/CommentRepository';
 
 interface CommentState {
@@ -58,3 +58,4 @@ const commentSlice = createSlice({
 });
 
 export default commentSlice.reducer;
+

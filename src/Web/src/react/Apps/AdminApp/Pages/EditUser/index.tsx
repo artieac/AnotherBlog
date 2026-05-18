@@ -8,8 +8,8 @@ import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
 import { WysiwygEditor } from '@/components/WysiwygEditor';
 import { Table } from '@/components/Table';
-import { IUser } from '@/Models/IUser';
-import { IBlog } from '@/Models/IBlog';
+import { IUser } from '@/types/user.types';
+import { IBlog } from '@/types/blog.types';
 
 const ROLE_OPTIONS = [
     { label: 'None', value: 0 },
@@ -181,3 +181,4 @@ export const EditUserPage: React.FC = () => {
         </div>
     );
 };
+

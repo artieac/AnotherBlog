@@ -66,14 +66,27 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
                 userToSave.About = string.Empty;
             }
 
-            return this.UserRepository.Save(userToSave);
+            return this.Save(userToSave);
         }
 
         public AnotherBlogUser Save(AnotherBlogUser user)
         {
             if(user != null)
             {
-                user = this.UserRepository.Save(user);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        user = this.UserRepository.Save(user);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.UnitOfWork.EndTransaction(false);
+                        throw;
+                    }
+                }
             }
 
             return user;

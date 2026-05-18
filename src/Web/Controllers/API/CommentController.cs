@@ -102,21 +102,9 @@ public class CommentController : BaseApiController
         {
             model = targetEntry.Comments.Where(comment => comment.Status == CommentStatus.Approved).ToList();
 
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    Comment newComment = targetEntry.AddComment(input.AuthorName, input.AuthorEmail, input.CommentText, input.CommentLink, this.CurrentPrincipal.CurrentUser);
-                    this.Services.BlogEntryService.Save(targetEntry);
-                    model.Add(newComment);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            Comment newComment = targetEntry.AddComment(input.AuthorName, input.AuthorEmail, input.CommentText, input.CommentLink, this.CurrentPrincipal.CurrentUser);
+            this.Services.BlogEntryService.Save(targetEntry);
+            model.Add(newComment);
         }
 
         return model;

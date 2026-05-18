@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 class RestClient {
     private client: AxiosInstance;
@@ -9,6 +9,36 @@ class RestClient {
                 'Content-Type': 'application/json',
             },
         });
+
+        this.setupInterceptors();
+    }
+
+    private setupInterceptors() {
+        this.client.interceptors.response.use(
+            (response) => response,
+            (error: AxiosError) => {
+                if (error.response) {
+                    const status = error.response.status;
+                    if (status === 401) {
+                        // Handle unauthorized (e.g., redirect to login or clear auth state)
+                        console.error('Unauthorized access - 401');
+                    } else if (status === 403) {
+                        console.error('Forbidden access - 403');
+                    } else if (status === 500) {
+                        console.error('Server error - 500');
+                    }
+                }
+                return Promise.reject(this.normalizeError(error));
+            }
+        );
+    }
+
+    private normalizeError(error: AxiosError): any {
+        return {
+            message: (error.response?.data as any)?.message || error.message || 'An unexpected error occurred',
+            status: error.response?.status,
+            data: error.response?.data,
+        };
     }
 
     public async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {

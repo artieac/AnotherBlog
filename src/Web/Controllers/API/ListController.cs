@@ -42,19 +42,7 @@ public class ListController : BaseApiController
 
         if (targetBlog != null)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = Services.BlogListService.Save(targetBlog, 0, input.Name, input.ShowOrdered);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = Services.BlogListService.Save(targetBlog, 0, input.Name, input.ShowOrdered);
         }
 
         return retVal;
@@ -70,19 +58,7 @@ public class ListController : BaseApiController
 
         if (targetBlog != null)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = Services.BlogListService.Save(targetBlog, id, input.Name, input.ShowOrdered);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = Services.BlogListService.Save(targetBlog, id, input.Name, input.ShowOrdered);
         }
 
         return retVal;
@@ -98,19 +74,7 @@ public class ListController : BaseApiController
 
         if (retVal != null)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = this.Services.BlogListService.UpdateItem(retVal, 0, input.Name, input.RelatedLink, input.DisplayOrder);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = this.Services.BlogListService.UpdateItem(retVal, 0, input.Name, input.RelatedLink, input.DisplayOrder);
         }
 
         return retVal;
@@ -126,19 +90,7 @@ public class ListController : BaseApiController
 
         if (retVal != null)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = this.Services.BlogListService.UpdateItem(retVal, itemId, input.Name, input.RelatedLink, input.DisplayOrder);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = this.Services.BlogListService.UpdateItem(retVal, itemId, input.Name, input.RelatedLink, input.DisplayOrder);
         }
 
         return retVal;
@@ -154,19 +106,7 @@ public class ListController : BaseApiController
 
         if (blogList != null)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = Services.BlogListService.Delete(blogList);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = Services.BlogListService.Delete(blogList);
         }
 
         return retVal;
@@ -177,27 +117,12 @@ public class ListController : BaseApiController
     [WebAPIAuthorizationAttribute(RoleType.Names.SiteAdministrator + "," + RoleType.Names.Administrator + "," + RoleType.Names.Blogger, true)]
     public BlogList DeleteItem(string blogSubFolder, int id, int itemId)
     {
-        BlogList retVal = null;
+        BlogList retVal = this.Services.BlogListService.GetById(id);
 
-        using (this.Services.UnitOfWork.BeginTransaction())
+        if (retVal != null)
         {
-            try
-            {
-                retVal = this.Services.BlogListService.GetById(id);
-
-                if (retVal != null)
-                {
-                    retVal.RemoveItem(itemId);
-                }
-
-                retVal = this.Services.BlogListService.Save(retVal);
-                this.Services.UnitOfWork.EndTransaction(true);
-            }
-            catch (Exception e)
-            {
-                LogManager.GetLogger().Error(e);
-                this.Services.UnitOfWork.EndTransaction(false);
-            }
+            retVal.RemoveItem(itemId);
+            retVal = this.Services.BlogListService.Save(retVal);
         }
 
         return retVal;

@@ -5,7 +5,7 @@ import { fetchPostsByBlog, deletePost } from '@/redux/BlogPostSlice';
 import { RootState, AppDispatch } from '@/redux/store';
 import { Table } from '@/components/Table';
 import { Button } from '@/components/Button';
-import { IBlogPost } from '@/Models/IBlogPost';
+import { IBlogPost } from '@/types/blog-post.types';
 
 export const ManagePostsPage: React.FC = () => {
     const { blogSubFolder } = useParams<{ blogSubFolder: string }>();
@@ -152,3 +152,4 @@ export const ManagePostsPage: React.FC = () => {
         </div>
     );
 };
+

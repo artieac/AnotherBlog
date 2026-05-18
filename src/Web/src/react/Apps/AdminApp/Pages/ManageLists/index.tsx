@@ -5,7 +5,7 @@ import { fetchListsByBlog, deleteList } from '@/redux/BlogListSlice';
 import { RootState, AppDispatch } from '@/redux/store';
 import { Table } from '@/components/Table';
 import { Button } from '@/components/Button';
-import { IBlogList } from '@/Models/IBlogList';
+import { IBlogList } from '@/types/blog-list.types';
 
 export const ManageListsPage: React.FC = () => {
     const { blogSubFolder } = useParams<{ blogSubFolder: string }>();
@@ -73,3 +73,4 @@ export const ManageListsPage: React.FC = () => {
         </div>
     );
 };
+

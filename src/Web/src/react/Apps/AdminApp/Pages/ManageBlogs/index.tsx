@@ -5,7 +5,7 @@ import { fetchBlogs } from '@/redux/BlogSlice';
 import { RootState, AppDispatch } from '@/redux/store';
 import { Table } from '@/components/Table';
 import { Button } from '@/components/Button';
-import { IBlog } from '@/Models/IBlog';
+import { IBlog } from '@/types/blog.types';
 
 export const ManageBlogsPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -57,3 +57,4 @@ export const ManageBlogsPage: React.FC = () => {
         </div>
     );
 };
+

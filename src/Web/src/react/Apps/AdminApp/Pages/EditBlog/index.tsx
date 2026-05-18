@@ -6,7 +6,7 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
 import { WysiwygEditor } from '@/components/WysiwygEditor';
-import { IBlog } from '@/Models/IBlog';
+import { IBlog } from '@/types/blog.types';
 
 export const EditBlogPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -112,3 +112,4 @@ export const EditBlogPage: React.FC = () => {
         </div>
     );
 };
+

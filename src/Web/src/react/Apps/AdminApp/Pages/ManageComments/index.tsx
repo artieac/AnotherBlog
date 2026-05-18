@@ -5,7 +5,7 @@ import { fetchCommentsByBlog, updateCommentStatus, deleteComment } from '@/redux
 import { RootState, AppDispatch } from '@/redux/store';
 import { Table } from '@/components/Table';
 import { Button } from '@/components/Button';
-import { IComment } from '@/Models/IComment';
+import { IComment } from '@/types/comment.types';
 
 export const ManageCommentsPage: React.FC = () => {
     const { blogSubFolder } = useParams<{ blogSubFolder: string }>();
@@ -76,3 +76,4 @@ export const ManageCommentsPage: React.FC = () => {
         </div>
     );
 };
+

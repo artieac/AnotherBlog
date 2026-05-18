@@ -42,38 +42,26 @@ public class UsersController : BaseApiController
 
         if (this.CurrentPrincipal.CurrentUser.IsSiteAdministrator == true)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
+            retVal = Services.UserService.GetById(id);
+
+            if (retVal == null)
             {
-                try
-                {
-                    retVal = Services.UserService.GetById(id);
-
-                    if (retVal == null)
-                    {
-                        retVal = new AnotherBlogUser();
-                    }
-
-                    retVal.IsSiteAdministrator = input.IsSiteAdministrator;
-                    retVal.ApprovedCommenter = input.ApprovedCommenter;
-                    retVal.About = AlwaysMoveForward.Common.Utilities.Utils.StripJavascript(input.About);
-                    retVal.FirstName = input.FirstName;
-                    retVal.LastName = input.LastName;
-                    retVal.DisplayName = input.DisplayName;
-
-                    if (input.Roles != null)
-                    {
-                        retVal.Roles = input.Roles;
-                    }
-
-                    retVal = Services.UserService.Save(retVal);
-
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
+                retVal = new AnotherBlogUser();
             }
+
+            retVal.IsSiteAdministrator = input.IsSiteAdministrator;
+            retVal.ApprovedCommenter = input.ApprovedCommenter;
+            retVal.About = AlwaysMoveForward.Common.Utilities.Utils.StripJavascript(input.About);
+            retVal.FirstName = input.FirstName;
+            retVal.LastName = input.LastName;
+            retVal.DisplayName = input.DisplayName;
+
+            if (input.Roles != null)
+            {
+                retVal.Roles = input.Roles;
+            }
+
+            retVal = Services.UserService.Save(retVal);
         }
 
         return retVal;

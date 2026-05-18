@@ -43,6 +43,32 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
                 .FirstOrDefault(p => p.Id == id);
         }
 
+        public override BlogPost Save(BlogPost itemToSave)
+        {
+            if (itemToSave != null)
+            {
+                if (itemToSave.Blog != null && itemToSave.Blog.Id > 0)
+                {
+                    var trackedBlog = ((UnitOfWork)this.UnitOfWork).DataContext.Blogs.Local.FirstOrDefault(b => b.Id == itemToSave.Blog.Id);
+                    if (trackedBlog == null)
+                    {
+                        ((UnitOfWork)this.UnitOfWork).DataContext.Blogs.Attach(itemToSave.Blog);
+                    }
+                }
+
+                if (itemToSave.Author != null && itemToSave.Author.Id > 0)
+                {
+                    var trackedUser = ((UnitOfWork)this.UnitOfWork).DataContext.Users.Local.FirstOrDefault(u => u.Id == itemToSave.Author.Id);
+                    if (trackedUser == null)
+                    {
+                        ((UnitOfWork)this.UnitOfWork).DataContext.Users.Attach(itemToSave.Author);
+                    }
+                }
+            }
+
+            return base.Save(itemToSave);
+        }
+
         public IList<BlogPost> GetAll(bool publishedOnly, int maxResults)
         {
             IQueryable<BlogPost> dtoList = null;

@@ -44,36 +44,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         protected IBlogEntryRepository BlogEntryRepository { get; private set; }
 
-        private void AttachDependencies(Blog targetBlog, AnotherBlogUser currentUser)
-        {
-            var unitOfWork = this.UnitOfWork as UnitOfWork;
-
-            if (unitOfWork != null)
-            {
-                var dataContext = unitOfWork.DataContext;
-
-                if (targetBlog != null && targetBlog.Id > 0)
-                {
-                    var trackedBlog = dataContext.Blogs.Local.FirstOrDefault(b => b.Id == targetBlog.Id);
-
-                    if (trackedBlog == null)
-                    {
-                        dataContext.Blogs.Attach(targetBlog);
-                    }
-                }
-
-                if (currentUser != null && currentUser.Id > 0)
-                {
-                    var trackedUser = dataContext.Users.Local.FirstOrDefault(u => u.Id == currentUser.Id);
-
-                    if (trackedUser == null)
-                    {
-                        dataContext.Users.Attach(currentUser);
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Save a blog entry to the database.
         /// </summary>
@@ -86,8 +56,6 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         /// <returns></returns>
         public BlogPost Save(Blog targetBlog, string title, string entryText, int entryId, bool isPublished, AnotherBlogUser currentUser)
         {
-            this.AttachDependencies(targetBlog, currentUser);
-
             BlogPost itemToSave = null;
             DateTime startDate = new DateTime(2009, 1, 1);
 
@@ -124,7 +92,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             if(blogPost != null)
             {
-                blogPost = this.BlogEntryRepository.Save(blogPost);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        blogPost = this.BlogEntryRepository.Save(blogPost);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.UnitOfWork.EndTransaction(false);
+                        throw;
+                    }
+                }
             }
 
             return blogPost;
@@ -338,7 +319,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
             if (targetEntry != null && targetEntry.IsPublished == false)
             {
-                retVal = this.BlogEntryRepository.Delete(targetEntry);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        retVal = this.BlogEntryRepository.Delete(targetEntry);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.UnitOfWork.EndTransaction(false);
+                        throw;
+                    }
+                }
             }
 
             return retVal;
@@ -351,7 +345,7 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             if (targetPost != null)
             {
                 targetPost.TimesViewed++;
-                this.BlogEntryRepository.Save(targetPost);
+                this.Save(targetPost);
                 retVal = targetPost.TimesViewed;
             }
 

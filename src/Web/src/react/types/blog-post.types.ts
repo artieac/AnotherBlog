@@ -1,5 +1,5 @@
-import { IBlog } from './IBlog';
-import { IUser } from './IUser';
+import { IBlog } from './blog.types';
+import { IUser } from './user.types';
 
 export interface IBlogPost {
     Id: number;
@@ -13,3 +13,4 @@ export interface IBlogPost {
     CommentCount: number;
     TimesViewed: number;
 }
+

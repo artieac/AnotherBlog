@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { IBlog } from '../Models/IBlog';
+import { IBlog } from '../types/blog.types';
 import BlogRepository from '../Repositories/BlogRepository';
 
 interface BlogState {
@@ -66,3 +66,4 @@ const blogSlice = createSlice({
 
 export const { setCurrentBlog } = blogSlice.actions;
 export default blogSlice.reducer;
+
