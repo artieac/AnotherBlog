@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AlwaysMoveForward.Common.DataLayer;
+using AlwaysMoveForward.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.Common.DataLayer.Repositories;
@@ -94,7 +95,20 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             if(list != null)
             {
-                list = this.BlogListRepository.Save(list);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        list = this.BlogListRepository.Save(list);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.UnitOfWork.EndTransaction(false);
+                        throw;
+                    }
+                }
             }
 
             return list;
@@ -104,8 +118,21 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         {
             if (blogList != null)
             {
-                blogList.AddItem(blogListItemId, itemName, relatedLink, displayOrder);
-                blogList = this.BlogListRepository.Save(blogList);
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        blogList.AddItem(blogListItemId, itemName, relatedLink, displayOrder);
+                        blogList = this.BlogListRepository.Save(blogList);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.UnitOfWork.EndTransaction(false);
+                        throw;
+                    }
+                }
             }
 
             return blogList;
@@ -113,8 +140,28 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
 
         public bool Delete(BlogList blogList)
         {
-            blogList.Items.Clear();
-            return this.BlogListRepository.Delete(blogList);
+            bool retVal = false;
+
+            if (blogList != null)
+            {
+                using (this.UnitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        blogList.Items.Clear();
+                        retVal = this.BlogListRepository.Delete(blogList);
+                        this.UnitOfWork.EndTransaction(true);
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger().Error(e);
+                        this.UnitOfWork.EndTransaction(false);
+                        throw;
+                    }
+                }
+            }
+
+            return retVal;
         }       
     }
 }

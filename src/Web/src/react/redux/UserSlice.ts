@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../Models/IUser';
+import { IUser } from '../types/user.types';
 import UserRepository from '../Repositories/UserRepository';
 
 interface UserState {
@@ -90,3 +90,4 @@ const userSlice = createSlice({
 
 export const { setLoggedInUser, setSelectedUser } = userSlice.actions;
 export default userSlice.reducer;
+

@@ -52,7 +52,22 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             newItem.DefaultAuthor = defaultAuthor;
             newItem.DefaultKeywords = defaultKeywords;
 
-            return this.SiteInfoRepository.Save(newItem);
+            using (this.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    newItem = this.SiteInfoRepository.Save(newItem);
+                    this.UnitOfWork.EndTransaction(true);
+                }
+                catch (Exception e)
+                {
+                    AlwaysMoveForward.Common.Utilities.LogManager.GetLogger().Error(e);
+                    this.UnitOfWork.EndTransaction(false);
+                    throw;
+                }
+            }
+
+            return newItem;
         }
     }
 }

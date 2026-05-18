@@ -1,50 +1,62 @@
 import RestClient from './RestClient';
-import { IBlogPost } from '../Models/IBlogPost';
+import { IBlogPost } from '@/types/blog-post.types';
 
 class BlogPostRepository {
     public async getAll(): Promise<IBlogPost[]> {
-        return RestClient.get<IBlogPost[]>('/api/BlogPosts');
+        try {
+            return await RestClient.get<IBlogPost[]>('/api/BlogPosts');
+        } catch (error) {
+            console.error('Failed to fetch all blog posts:', error);
+            throw new Error('Could not retrieve blog posts. Please try again later.');
+        }
     }
 
     public async getAllByBlog(blogSubFolder: string): Promise<IBlogPost[]> {
-        return RestClient.get<IBlogPost[]>(`/api/Blog/${blogSubFolder}/BlogPosts/All`);
+        try {
+            return await RestClient.get<IBlogPost[]>(`/api/Blog/${blogSubFolder}/BlogPosts/All`);
+        } catch (error) {
+            console.error(`Failed to fetch posts for blog ${blogSubFolder}:`, error);
+            throw new Error('Could not retrieve blog posts for this blog.');
+        }
     }
 
     public async getById(blogSubFolder: string, id: number): Promise<IBlogPost> {
-        return RestClient.get<IBlogPost>(`/api/Blog/${blogSubFolder}/BlogPost/${id}`);
+        try {
+            return await RestClient.get<IBlogPost>(`/api/Blog/${blogSubFolder}/BlogPost/${id}`);
+        } catch (error) {
+            console.error(`Failed to fetch post ${id} for blog ${blogSubFolder}:`, error);
+            throw new Error('Could not retrieve the blog post.');
+        }
     }
 
-    public async save(blogSubFolder: string, blogPost: any): Promise<IBlogPost> {
-        console.log('Starting save process for blog post:', blogPost);
-        // Map EntryText to Text if needed, or adjust API to accept EntryText
-        // The API uses BlogPostInput which has 'Text'
-        const apiInput = {
-            IsPublished: blogPost.IsPublished,
-            Title: blogPost.Title,
-            Text: blogPost.EntryText
-        };
-
-        let savedPost: IBlogPost;
+    public async save(blogSubFolder: string, blogPost: IBlogPost): Promise<IBlogPost> {
         try {
-            if (blogPost.Id && blogPost.Id > 0) {
-                console.log(`Sending PUT request to /api/Blog/${blogSubFolder}/BlogPost/${blogPost.Id}`);
-                savedPost = await RestClient.put<IBlogPost>(`/api/Blog/${blogSubFolder}/BlogPost/${blogPost.Id}`, apiInput);
-            } else {
-                console.log(`Sending POST request to /api/Blog/${blogSubFolder}/BlogPost`);
-                savedPost = await RestClient.post<IBlogPost>(`/api/Blog/${blogSubFolder}/BlogPost`, apiInput);
-            }
-            console.log('Main post save successful. Saved post details:', savedPost);
-        } catch (error) {
-            console.error('Error saving main post:', error);
-            throw error;
-        }
+            const apiInput = {
+                IsPublished: blogPost.IsPublished,
+                Title: blogPost.Title,
+                Text: blogPost.EntryText
+            };
 
-        return savedPost;
+            if (blogPost.Id && blogPost.Id > 0) {
+                return await RestClient.put<IBlogPost>(`/api/Blog/${blogSubFolder}/BlogPost/${blogPost.Id}`, apiInput);
+            } else {
+                return await RestClient.post<IBlogPost>(`/api/Blog/${blogSubFolder}/BlogPost`, apiInput);
+            }
+        } catch (error) {
+            console.error(`Failed to save blog post in ${blogSubFolder}:`, error);
+            throw new Error('Could not save the blog post. Please check your input.');
+        }
     }
 
     public async delete(blogSubFolder: string, id: number): Promise<void> {
-        return RestClient.delete<void>(`/api/Blog/${blogSubFolder}/BlogPost/${id}`);
+        try {
+            return await RestClient.delete<void>(`/api/Blog/${blogSubFolder}/BlogPost/${id}`);
+        } catch (error) {
+            console.error(`Failed to delete post ${id} in blog ${blogSubFolder}:`, error);
+            throw new Error('Could not delete the blog post.');
+        }
     }
 }
 
 export default new BlogPostRepository();
+

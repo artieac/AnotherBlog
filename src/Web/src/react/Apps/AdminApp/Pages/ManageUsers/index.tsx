@@ -5,7 +5,7 @@ import { fetchUsers, deleteUser } from '@/redux/UserSlice';
 import { RootState, AppDispatch } from '@/redux/store';
 import { Table } from '@/components/Table';
 import { Button } from '@/components/Button';
-import { IUser } from '@/Models/IUser';
+import { IUser } from '@/types/user.types';
 
 export const ManageUsersPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -50,3 +50,4 @@ export const ManageUsersPage: React.FC = () => {
         </div>
     );
 };
+

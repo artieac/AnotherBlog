@@ -170,7 +170,22 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             itemToSave.WelcomeMessage = blogWelcome;
             itemToSave.Theme = blogTheme;
 
-            return this.BlogRepository.Save(itemToSave);
+            using (this.UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    itemToSave = this.BlogRepository.Save(itemToSave);
+                    this.UnitOfWork.EndTransaction(true);
+                }
+                catch (System.Exception e)
+                {
+                    AlwaysMoveForward.Common.Utilities.LogManager.GetLogger().Error(e);
+                    this.UnitOfWork.EndTransaction(false);
+                    throw;
+                }
+            }
+
+            return itemToSave;
         }
     }
 }

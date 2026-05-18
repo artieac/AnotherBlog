@@ -120,19 +120,7 @@ public class BlogPostController : BaseApiController
 
         if (targetBlog != null)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, 0, input.IsPublished, this.CurrentPrincipal.CurrentUser);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, 0, input.IsPublished, this.CurrentPrincipal.CurrentUser);
         }
 
         return retVal;
@@ -148,19 +136,7 @@ public class BlogPostController : BaseApiController
 
         if (targetBlog != null)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, id, input.IsPublished, this.CurrentPrincipal.CurrentUser);
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    LogManager.GetLogger().Error(e);
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = Services.BlogEntryService.Save(targetBlog, input.Title, input.Text, id, input.IsPublished, this.CurrentPrincipal.CurrentUser);
         }
 
         return retVal;
@@ -179,19 +155,7 @@ public class BlogPostController : BaseApiController
 
             if (targetPost != null)
             {
-                using (this.Services.UnitOfWork.BeginTransaction())
-                {
-                    try
-                    {
-                        this.Services.BlogEntryService.Delete(targetPost);
-                        this.Services.UnitOfWork.EndTransaction(true);
-                    }
-                    catch (Exception e)
-                    {
-                        LogManager.GetLogger().Error(e);
-                        this.Services.UnitOfWork.EndTransaction(false);
-                    }
-                }
+                this.Services.BlogEntryService.Delete(targetPost);
             }
         }
     }

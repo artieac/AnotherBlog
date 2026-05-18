@@ -5,7 +5,7 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
 import { WysiwygEditor } from '@/components/WysiwygEditor';
-import { ISiteInfo } from '@/Models/ISiteInfo';
+import { ISiteInfo } from '@/types/site-info.types';
 
 export const SiteInfoPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -100,3 +100,4 @@ export const SiteInfoPage: React.FC = () => {
         </div>
     );
 };
+

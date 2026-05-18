@@ -27,19 +27,8 @@ public class SiteInfoController : BaseApiController
 
         if (this.CurrentPrincipal.CurrentUser.IsSiteAdministrator == true)
         {
-            using (this.Services.UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    retVal = Services.SiteInfoService.Save(input.Name, input.About, input.ContactEmail, input.DefaultTheme, input.SiteAnalyticsId, input.DefaultAuthor, input.DefaultKeywords);
-                    WebApplicationState.SiteInfo = retVal;
-                    this.Services.UnitOfWork.EndTransaction(true);
-                }
-                catch (Exception e)
-                {
-                    this.Services.UnitOfWork.EndTransaction(false);
-                }
-            }
+            retVal = Services.SiteInfoService.Save(input.Name, input.About, input.ContactEmail, input.DefaultTheme, input.SiteAnalyticsId, input.DefaultAuthor, input.DefaultKeywords);
+            WebApplicationState.SiteInfo = retVal;
         }
 
         return retVal;

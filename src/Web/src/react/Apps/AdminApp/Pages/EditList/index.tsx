@@ -6,7 +6,7 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
 import { Table } from '@/components/Table';
-import { IBlogList, IBlogListItem } from '@/Models/IBlogList';
+import { IBlogList, IBlogListItem } from '@/types/blog-list.types';
 
 export const EditListPage: React.FC = () => {
     const { blogSubFolder, id } = useParams<{ blogSubFolder: string, id: string }>();
@@ -189,3 +189,4 @@ export const EditListPage: React.FC = () => {
         </div>
     );
 };
+

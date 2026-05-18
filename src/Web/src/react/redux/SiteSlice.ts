@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ISiteInfo } from '../Models/ISiteInfo';
+import { ISiteInfo } from '../types/site-info.types';
 import SiteRepository from '../Repositories/SiteRepository';
 
 interface SiteState {
@@ -46,3 +46,4 @@ const siteSlice = createSlice({
 });
 
 export default siteSlice.reducer;
+
