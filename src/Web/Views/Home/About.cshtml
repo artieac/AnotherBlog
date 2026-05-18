@@ -13,7 +13,21 @@
     <div class="contentPageTitle">
         <label>@Model.Common.ContentTitle</label>
     </div> 
-    <div class="aboutContent">
-        @Html.Raw(@Model.SiteInfo.About)
+    <div class="aboutContent ql-snow">
+        <div class="ql-editor public-post-content p-0 text-slate-700 leading-relaxed">
+            @Html.Raw(Model.SiteInfo.About)
+        </div>
     </div>
+
+    <style>
+        /* Ultimate fallback to ensure bullets and numbers are visible */
+        .public-post-content.ql-editor ul, 
+        .public-post-content.ql-editor ol {
+            list-style-position: inside !important;
+            padding-left: 0 !important;
+        }
+        .public-post-content.ql-editor li {
+            display: list-item !important;
+        }
+    </style>
 </div>
