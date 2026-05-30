@@ -183,9 +183,32 @@ public class BlogController : PublicController
         return this.View("Index", model);
     }
 
+    [Route("Blog/{blogSubFolder}/Post/{postId}")]
+    [HttpGet]
+    public IActionResult Post(string blogSubFolder, int postId)
+    {
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+        BlogPost post = Services.BlogEntryService.GetById(targetBlog, postId);
+        return this.ViewPost(blogSubFolder, post);
+    }
+
     [Route("Blog/{blogSubFolder}/BlogPost/{year}/{month}/{day}/{title}")]
     [HttpGet]
     public IActionResult Post(string blogSubFolder, string year, string month, string day, string title)
+    {
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+        BlogPost post = null;
+
+        if (targetBlog != null)
+        {
+            DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
+            post = Services.BlogEntryService.GetByDateAndTitle(targetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
+        }
+
+        return this.ViewPost(blogSubFolder, post);
+    }
+
+    private IActionResult ViewPost(string blogSubFolder, BlogPost post)
     {
         BlogPostModel model = new BlogPostModel();
         model.BlogCommon = this.InitializeCommonModel(blogSubFolder);
@@ -195,8 +218,7 @@ public class BlogController : PublicController
 
         if (model.BlogCommon.TargetBlog != null)
         {
-            DateTime postDate = DateTime.Parse(month + "/" + day + "/" + year);
-            model.Post = Services.BlogEntryService.GetByDateAndTitle(model.BlogCommon.TargetBlog, postDate, AlwaysMoveForward.Common.Utilities.Utils.DecodeFromUrl(title));
+            model.Post = post;
 
             if (model.Post == null)
             {
@@ -227,6 +249,6 @@ public class BlogController : PublicController
             model.Comments = new List<Comment>();
         }
 
-        return this.View(model);
+        return this.View("Post", model);
     }
 }

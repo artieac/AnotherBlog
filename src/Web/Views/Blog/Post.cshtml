@@ -28,9 +28,37 @@
                 <time class="text-xs font-semibold text-slate-400">@Model.Post.DatePosted.ToLongDateString()</time>
             </div>
 
-            <h1 class="text-2xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
-                @Model.Post.Title
-            </h1>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem;">
+                <h1 class="text-2xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight" style="margin: 0;">
+                    @Model.Post.Title
+                </h1>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span id="copyFeedback" style="display: none; font-size: 10px; font-weight: bold; color: #16a34a; text-transform: uppercase; white-space: nowrap;">URL Copied!</span>
+                    <button onclick="copyPostUrl()" style="padding: 8px; border: none; background: none; cursor: pointer; color: #94a3b8; display: flex; align-items: center; justify-content: center;" title="Copy post URL">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <script>
+                function copyPostUrl() {
+                    const postUrl = window.location.origin + "/Blog/@Model.BlogCommon.TargetBlog.SubFolder/Post/@Model.Post.Id";
+                    navigator.clipboard.writeText(postUrl).then(() => {
+                        const feedback = document.getElementById('copyFeedback');
+                        if (feedback) {
+                            feedback.style.display = 'inline';
+                            setTimeout(() => {
+                                feedback.style.display = 'none';
+                            }, 2000);
+                        }
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                }
+            </script>
 
             <div class="text-sm font-medium text-slate-400 border-b border-slate-50 pb-1">
                 By <span class="font-bold text-slate-700">@Model.Author.GetDisplayName()</span> &bull; Author
