@@ -14,6 +14,34 @@
     <meta name="author" content="@ViewBag.Author" />
     <meta name="description" content="@ViewBag.Description" />
     <meta content="@ViewBag.Author, @ViewBag.KeyWords" name="keywords" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="@(ViewBag.CanonicalUrl ?? $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
+
+    <!-- Open Graph (Facebook/LinkedIn) -->
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:type" content="@(ViewBag.OgType ?? "website")" />
+    <meta property="og:url" content="@(ViewBag.CanonicalUrl ?? $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
+    <meta property="og:site_name" content="@WebApplicationState.SiteInfo.Name" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@ViewBag.Title" />
+    <meta name="twitter:description" content="@ViewBag.Description" />
+
+    <!-- Default JSON-LD for GEO (Fallback if not provided by view) -->
+    @if(ViewBag.DisableDefaultJsonLd != true)
+    {
+        <script type="application/ld+json">
+        {
+            "@@context": "https://schema.org",
+            "@@type": "WebSite",
+            "name": "@WebApplicationState.SiteInfo.Name",
+            "url": "@($"{Context.Request.Scheme}://{Context.Request.Host}")"
+        }
+        </script>
+    }
     
     <!-- Modern Tailwind CSS -->
     <link href="/css/global.css?v=@WebApplicationState.Version" rel="stylesheet" />

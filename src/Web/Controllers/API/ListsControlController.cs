@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Web.Models.API;
@@ -45,6 +46,39 @@ public class ListsControlController : BaseApiController
         return retVal;
     }
 
+    private ListControlModel GetRecentMostViewed(string blogSubFolder, int numberToGet)
+    {
+        ListControlModel retVal = new ListControlModel();
+        IList<BlogPost> postList = new List<BlogPost>();
+        Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+
+        if (targetBlog == null)
+        {
+            postList = Services.BlogEntryService.GetMostRecent(numberToGet);
+        }
+        else
+        {
+            postList = Services.BlogEntryService.GetAllByBlog(targetBlog, true, numberToGet);
+        }
+
+        postList = postList.OrderByDescending(p => p.TimesViewed).ToList();
+
+        retVal.OpenLinkInNewWindow = false;
+        retVal.Title = "Recently Popular";
+        retVal.ShowOrdered = true;
+        retVal.ListItems = new List<BlogListItem>();
+
+        for (int i = 0; i < postList.Count; i++)
+        {
+            BlogListItem newItem = new BlogListItem();
+            newItem.Name = postList[i].Title;
+            newItem.RelatedLink = AlwaysMoveForward.AnotherBlog.Web.Code.Utilities.Utils.GenerateBlogEntryLink(postList[i].Blog.SubFolder, postList[i]);
+            retVal.ListItems.Add(newItem);
+        }
+
+        return retVal;
+    }
+
     [Route("/api/Lists/Blogs/All")]
     [HttpGet]
     public ListControlModel Blogs()
@@ -72,6 +106,13 @@ public class ListsControlController : BaseApiController
     public ListControlModel MostViewed()
     {
         return this.GetMostViewed(string.Empty, 5);
+    }
+
+    [Route("/api/Lists/BlogPosts/RecentMostViewed")]
+    [HttpGet]
+    public ListControlModel RecentMostViewed()
+    {
+        return this.GetRecentMostViewed(string.Empty, 5);
     }
 
     [Route("/api/Lists/Blog/{blogSubFolder}")]
@@ -110,6 +151,13 @@ public class ListsControlController : BaseApiController
     public ListControlModel MostViewedByBlog(string blogSubFolder)
     {
         return this.GetMostViewed(blogSubFolder, 5);
+    }
+
+    [Route("/api/Lists/Blog/{blogSubFolder}/RecentMostViewed")]
+    [HttpGet]
+    public ListControlModel RecentMostViewedByBlog(string blogSubFolder)
+    {
+        return this.GetRecentMostViewed(blogSubFolder, 5);
     }
 
     [Route("/api/Lists/Blog/{blogSubFolder}/ArchiveDates")]

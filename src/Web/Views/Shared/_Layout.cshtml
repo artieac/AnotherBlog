@@ -35,7 +35,7 @@
         </div>
 
         <div id="mostViewed" ng-controller="ListController" class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
-            <div ng-init="getMostViewedPosts('@ViewBag.BlogSubFolder');">
+            <div ng-init="getRecentlyMostViewedPosts('@ViewBag.BlogSubFolder');">
                 <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-3">{{ mostViewedPosts.Title }}</h3>
                 <div class="space-y-3">
                     <div ng-repeat="listItem in mostViewedPosts.ListItems">

@@ -1,4 +1,4 @@
-﻿theApp.controller('ListController', function ($scope, $resource, $http) {
+theApp.controller('ListController', function ($scope, $resource, $http) {
     $scope.getAllBlogs = function () {
         var allBlogsRequest = $resource('/api/Lists/Blogs/All');
         $scope.allBlogs = allBlogsRequest.get();
@@ -12,6 +12,17 @@
         else {
             var mostViewedPostsRequest = $resource('/api/Lists/BlogPosts/MostViewed');
             $scope.mostViewedPosts = mostViewedPostsRequest.get();
+        }
+    }
+
+    $scope.getRecentlyMostViewedPosts = function (blogSubFolder) {
+        if (blogSubFolder != null && blogSubFolder != '') {
+            var recentMostViewedPostsRequestForBlog = $resource('/api/Lists/Blog/:blogSubFolder/RecentMostViewed');
+            $scope.mostViewedPosts = recentMostViewedPostsRequestForBlog.get({ blogSubFolder: blogSubFolder });
+        }
+        else {
+            var recentMostViewedPostsRequest = $resource('/api/Lists/BlogPosts/RecentMostViewed');
+            $scope.mostViewedPosts = recentMostViewedPostsRequest.get();
         }
     }
 
