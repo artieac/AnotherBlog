@@ -5,7 +5,8 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.Name + " - " + Model.Post.Title;
-    ViewBag.Description = Model.Post.ShortEntryText ?? Model.Post.Title;
+    var rawDescription = Model.Post.ShortEntryText ?? Model.Post.Title;
+    ViewBag.Description = rawDescription.Length > 155 ? rawDescription.Substring(0, 155) + "..." : rawDescription;
     ViewBag.Author = Model.Author.GetDisplayName();
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
