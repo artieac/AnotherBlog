@@ -5,12 +5,40 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.Name + " - " + Model.Post.Title;
-    ViewBag.Description = Model.Post.ShortEntryText;
+    ViewBag.Description = Model.Post.ShortEntryText ?? Model.Post.Title;
     ViewBag.Author = Model.Author.GetDisplayName();
     ViewBag.Common = Model.BlogCommon.Common;
     ViewBag.BlogCommon = Model.BlogCommon;
     ViewBag.BlogSubFolder = Model.BlogCommon.TargetBlog.SubFolder;
+
+    // Advanced SEO & GEO specific to this blog post
+    ViewBag.CanonicalUrl = $"{Context.Request.Scheme}://{Context.Request.Host}/Blog/{Model.BlogCommon.TargetBlog.SubFolder}/Post/{Model.Post.Id}";
+    ViewBag.OgType = "article";
+    ViewBag.DisableDefaultJsonLd = true; // Disable default WebSite schema
 }
+
+<!-- JSON-LD for Generative Engine Optimization (GEO) -->
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "BlogPosting",
+    "mainEntityOfPage": {
+        "@@type": "WebPage",
+        "@@id": "@ViewBag.CanonicalUrl"
+    },
+    "headline": "@Html.Raw(Model.Post.Title.Replace("\"", "\\\""))",
+    "description": "@Html.Raw((Model.Post.ShortEntryText ?? Model.Post.Title).Replace("\"", "\\\"").Replace("\n", " ").Replace("\r", ""))",
+    "datePublished": "@Model.Post.DatePosted.ToString("o")",
+    "author": {
+        "@@type": "Person",
+        "name": "@Html.Raw(Model.Author.GetDisplayName().Replace("\"", "\\\""))"
+    },
+    "publisher": {
+        "@@type": "Organization",
+        "name": "@Html.Raw(AlwaysMoveForward.AnotherBlog.Web.WebApplicationState.SiteInfo.Name.Replace("\"", "\\\""))"
+    }
+}
+</script>
 
 @section headerPlugins
 {
