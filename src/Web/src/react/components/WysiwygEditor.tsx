@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import QuillTableBetter from 'quill-table-better';
+import 'quill-table-better/dist/quill-table-better.css';
+
+Quill.register({ 'modules/table-better': QuillTableBetter }, true);
 
 interface WysiwygEditorProps {
     value: string;
@@ -13,20 +17,31 @@ export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, l
     const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
 
     const modules = {
+        table: false,
         toolbar: [
-            [{ 'header': [1, 2, false] }],
+            [{ 'header': [1, 2, 3, false] }],
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
             ['link', 'image'],
+            ['table-better'],
             ['clean']
         ],
+        'table-better': {
+            language: 'en_US',
+            menus: ['column', 'row', 'merge', 'table', 'cell', 'wrap', 'copy', 'delete'],
+            toolbarTable: true
+        },
+        keyboard: {
+            bindings: QuillTableBetter.keyboardBindings
+        }
     };
 
     const formats = [
         'header',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
         'list', 'bullet', 'indent',
-        'link', 'image'
+        'link', 'image',
+        'table-better', 'table', 'tr', 'td', 'th'
     ];
 
     return (
