@@ -39,6 +39,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<BlogPostView> BlogPostViews { get; set; }
         public DbSet<BlogExtension> BlogExtensions { get; set; }
         public DbSet<BlogList> BlogLists { get; set; }
         public DbSet<BlogListItem> BlogListItems { get; set; }
@@ -127,6 +128,15 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Entities
                 .HasOne(c => c.Post)
                 .WithMany(bp => bp.Comments)
                 .HasForeignKey("EntryId");
+
+            // BlogPostView
+            modelBuilder.Entity<BlogPostView>().ToTable("BlogPostViews");
+            modelBuilder.Entity<BlogPostView>().HasKey(v => new { v.BlogPostId, v.Year, v.Month });
+            modelBuilder.Entity<BlogPostView>()
+                .HasOne<BlogPost>()
+                .WithMany()
+                .HasForeignKey(v => v.BlogPostId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // DbInfo
             modelBuilder.Entity<DbInfo>().ToTable("DbInfo");

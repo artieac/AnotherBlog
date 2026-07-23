@@ -52,16 +52,24 @@ public class ListsControlController : BaseApiController
         IList<BlogPost> postList = new List<BlogPost>();
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
 
+        // Order by the sum of BlogPostViews (rolling 13-month window).
+        // Fall back to all-time TimesViewed only if no recent view data exists at all.
         if (targetBlog == null)
         {
-            postList = Services.BlogEntryService.GetMostRecent(numberToGet);
+            postList = Services.BlogEntryService.GetMostReadRecently(numberToGet);
+            if (postList.Count == 0)
+            {
+                postList = Services.BlogEntryService.GetMostRead(numberToGet);
+            }
         }
         else
         {
-            postList = Services.BlogEntryService.GetAllByBlog(targetBlog, true, numberToGet);
+            postList = Services.BlogEntryService.GetMostReadRecently(targetBlog.Id, numberToGet);
+            if (postList.Count == 0)
+            {
+                postList = Services.BlogEntryService.GetMostRead(targetBlog.Id, numberToGet);
+            }
         }
-
-        postList = postList.OrderByDescending(p => p.TimesViewed).ToList();
 
         retVal.OpenLinkInNewWindow = false;
         retVal.Title = "Recently Popular";

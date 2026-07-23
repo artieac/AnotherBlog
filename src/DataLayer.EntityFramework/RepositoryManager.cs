@@ -36,6 +36,7 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
         private BlogUserRepository blogUserRepository;
         private ExtensionConfigurationRepository extensionConfigurationRepository;
         private RoleRepository roleRepository;
+        private IBlogPostViewRepository blogPostViewRepository;
 
         public IUnitOfWork UnitOfWork { get; set; }
 
@@ -195,6 +196,17 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer
                     this.roleRepository = new RoleRepository(this.UnitOfWork);
                 }
                 return this.roleRepository;
+            }
+        }
+        public IBlogPostViewRepository BlogPostViews
+        {
+            get
+            {
+                if (this.blogPostViewRepository == null)
+                {
+                    this.blogPostViewRepository = new BlogPostViewRepository(this.UnitOfWork);
+                }
+                return this.blogPostViewRepository;
             }
         }
     }

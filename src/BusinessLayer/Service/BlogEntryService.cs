@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -23,6 +23,7 @@ using AlwaysMoveForward.AnotherBlog.Common.Utilities;
 using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 using AlwaysMoveForward.AnotherBlog.Common.Factories;
 using AlwaysMoveForward.AnotherBlog.BusinessLayer.Utilities;
+using AlwaysMoveForward.AnotherBlog.Common;
 
 using AlwaysMoveForward.AnotherBlog.DataLayer;
 using AlwaysMoveForward.AnotherBlog.DataLayer.Entities;
@@ -272,6 +273,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
             return this.BlogEntryRepository.GetMostRead(blogId, maxResults);
         }
 
+        public IList<BlogPost> GetMostReadRecently(int maxResults)
+        {
+            return this.BlogEntryRepository.GetMostReadRecently(maxResults);
+        }
+
+        public IList<BlogPost> GetMostReadRecently(long blogId, int maxResults)
+        {
+            return this.BlogEntryRepository.GetMostReadRecently(blogId, maxResults);
+        }
+
         public BlogPost GetPreviousEntry(Blog targetBlog, BlogPost currentEntry)
         {
             BlogPost retVal = null;
@@ -341,12 +352,16 @@ namespace AlwaysMoveForward.AnotherBlog.BusinessLayer.Service
         public long UpdateTimesViewed(BlogPost targetPost)
         {
             long retVal = 0;
-            
+
             if (targetPost != null)
             {
                 targetPost.TimesViewed++;
                 this.Save(targetPost);
                 retVal = targetPost.TimesViewed;
+
+                // Fire domain event so the monthly view listener can
+                // record this view in BlogPostViews for the current month.
+                EventManager.FireBlogPostViewedEvent(targetPost.Id, DateTime.Now.Year, DateTime.Now.Month);
             }
 
             return retVal;

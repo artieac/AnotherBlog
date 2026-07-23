@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -25,6 +25,8 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
         IList<BlogPost> GetAllByBlog(long blogId, bool publishedOnly, int maxResults, string sortColumn, bool sortAscending);
         IList<BlogPost> GetMostRead(int maxResults);
         IList<BlogPost> GetMostRead(long blogId, int maxResults);
+        IList<BlogPost> GetMostReadRecently(int maxResults);
+        IList<BlogPost> GetMostReadRecently(long blogId, int maxResults);
         BlogPost GetByTitle(string blogTitle, long blogId);
         BlogPost GetByDateAndTitle(string blogTitle, DateTime postDate, long blogId);
         IList<BlogPost> GetByMonth(DateTime blogDate, bool publishedOnly);
