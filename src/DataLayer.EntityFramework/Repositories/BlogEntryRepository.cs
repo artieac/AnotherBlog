@@ -163,6 +163,61 @@ namespace AlwaysMoveForward.AnotherBlog.DataLayer.Repositories
             return dtoList.ToList();
         }
 
+        public IList<BlogPost> GetMostReadRecently(int maxResults)
+        {
+            var dataContext = ((UnitOfWork)this.UnitOfWork).DataContext;
+
+            // Any() acts as an inner-join filter — only posts that have at least
+            // one BlogPostViews row are included. The correlated Sum() subquery
+            // is fully translatable by EF Core to SQL.
+            var query = from post in dataContext.BlogPosts
+                        where post.IsPublished == true
+                              && dataContext.BlogPostViews.Any(v => v.BlogPostId == post.Id)
+                        let totalViews = dataContext.BlogPostViews
+                            .Where(v => v.BlogPostId == post.Id)
+                            .Sum(v => (long)v.TimesViewed)
+                        orderby totalViews descending
+                        select new { post, totalViews };
+
+            if (maxResults > 0)
+            {
+                query = query.Take(maxResults);
+            }
+
+            return query
+                .AsEnumerable()
+                .Select(x => { x.post.TimesViewed = x.totalViews; return x.post; })
+                .ToList();
+        }
+
+        public IList<BlogPost> GetMostReadRecently(long blogId, int maxResults)
+        {
+            var dataContext = ((UnitOfWork)this.UnitOfWork).DataContext;
+
+            // Any() acts as an inner-join filter — only posts that have at least
+            // one BlogPostViews row are included. The correlated Sum() subquery
+            // is fully translatable by EF Core to SQL.
+            var query = from post in dataContext.BlogPosts
+                        where post.IsPublished == true
+                              && post.Blog.Id == blogId
+                              && dataContext.BlogPostViews.Any(v => v.BlogPostId == post.Id)
+                        let totalViews = dataContext.BlogPostViews
+                            .Where(v => v.BlogPostId == post.Id)
+                            .Sum(v => (long)v.TimesViewed)
+                        orderby totalViews descending
+                        select new { post, totalViews };
+
+            if (maxResults > 0)
+            {
+                query = query.Take(maxResults);
+            }
+
+            return query
+                .AsEnumerable()
+                .Select(x => { x.post.TimesViewed = x.totalViews; return x.post; })
+                .ToList();
+        }
+
         public BlogPost GetByTitle(string blogTitle, long blogId)
         {
             return this.GetByProperty("Title", blogTitle, blogId);

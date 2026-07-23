@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009 Arthur Correa.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
@@ -29,5 +29,6 @@ namespace AlwaysMoveForward.AnotherBlog.Common.DataLayer.Repositories
         IPollRepository PollRepository { get; }
         IUserRepository UserRepository { get; }
         IEntryCommentRepository EntryComments { get; }
+        IBlogPostViewRepository BlogPostViews { get; }
     }
 }

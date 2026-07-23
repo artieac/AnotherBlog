@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +20,7 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
         Mock<IBlogListRepository> blogLists;
         Mock<IPollRepository> pollRepository;
         Mock<IEntryCommentRepository> entryCommentRepository;
+        Mock<IBlogPostViewRepository> blogPostViewRepository;
         
         public MOQRepositoryManager()
         {
@@ -144,6 +145,19 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest
                 }
 
                 return this.entryCommentRepository.Object;
+            }
+        }
+
+        public IBlogPostViewRepository BlogPostViews
+        {
+            get
+            {
+                if (this.blogPostViewRepository == null)
+                {
+                    this.blogPostViewRepository = new Mock<IBlogPostViewRepository>();
+                }
+
+                return this.blogPostViewRepository.Object;
             }
         }
     }
