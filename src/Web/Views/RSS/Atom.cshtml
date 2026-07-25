@@ -1,4 +1,4 @@
-﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.RSS.RSSModel
+@model AlwaysMoveForward.AnotherBlog.Web.Models.RSS.RSSModel
 @inject IHttpContextAccessor _HttpContext
 @{
     Layout = null;
@@ -16,13 +16,13 @@
         <title>@WebApplicationState.SiteInfo.Name - @blogItem.SubFolder Feed</title>
         @Html.Raw("<link>" + Model.Scheme + "://" + Model.Authority + "/Blog/" + @blogItem.SubFolder + "/BlogPosts</link>")
         <updated>@Model.MostRecentPosts[blogItem].ToShortDateString() @Model.MostRecentPosts[blogItem].ToShortTimeString()</updated>
-        <id>urn:_HttpContext.Request.Host/@blogItem.SubFolder</id>
+        <id>urn:@(Model.Authority)/@blogItem.SubFolder</id>
         @foreach (BlogPost blogEntry in Model.BlogEntries[blogItem])
          {   
             <entry>
             <title>@blogEntry.Title</title>
             @Html.Raw("<link>" + Model.Scheme + "://" + Model.Authority + @Utils.GenerateBlogEntryLink(blogItem.SubFolder, blogEntry) + "</link>")
-                <id>urn:_HttpContext.Request.Scheme://_HttpContext.Request.Host@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry)</id>
+                <id>urn:@(Model.Scheme)://@(Model.Authority)@Utils.GenerateBlogEntryLink(blogEntry.Blog.SubFolder, blogEntry)</id>
             <author>
                 <name>@blogEntry.Author.GetDisplayName()</name>
             </author>

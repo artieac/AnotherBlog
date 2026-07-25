@@ -1,4 +1,4 @@
-﻿@model AlwaysMoveForward.AnotherBlog.Web.Models.RSS.RSSModel
+@model AlwaysMoveForward.AnotherBlog.Web.Models.RSS.RSSModel
 @inject IHttpContextAccessor _HttpContext;
 @{
     Layout = null;
@@ -9,7 +9,7 @@
 @using AlwaysMoveForward.AnotherBlog.Common.DomainModel;
 @using AlwaysMoveForward.AnotherBlog.Web.Code.Utilities;
 
-<?xml-stylesheet type="text/xsl" href="http://_HttpContext.Request.Host/Content/rss2html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="@(Model.Scheme)://@(Model.Authority)/Content/rss2html.xsl"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:cf="http://www.microsoft.com/schemas/rss/core/2005" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:wfw="http://wellformedweb.org/CommentAPI/">
     @foreach (Blog blogItem in Model.BlogEntries.Keys)
     {
