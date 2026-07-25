@@ -69,6 +69,7 @@ public class RSSController : PublicController
 
         model = this.GetBlogPosts(allBlogs, model);
 
+        Response.ContentType = "application/rss+xml; charset=utf-8";
         return this.View(model);
     }
 
@@ -101,6 +102,7 @@ public class RSSController : PublicController
             model.MostRecentPosts[allBlogs[i]] = mostRecent;
         }
 
+        Response.ContentType = "application/atom+xml; charset=utf-8";
         return this.View(model);
     }
 
@@ -116,6 +118,7 @@ public class RSSController : PublicController
         model.Scheme = this.Request.Scheme;
         model.Authority = this.Request.Host.Value;
         model = this.GetBlogPosts(targetBlog, model);
+        Response.ContentType = "application/rss+xml; charset=utf-8";
         return this.View("Posts", model);
     }
 
@@ -128,9 +131,12 @@ public class RSSController : PublicController
         model.MostRecentPosts = new Dictionary<Blog, DateTime>();
 
         Blog targetBlog = this.Services.BlogService.GetBySubFolder(blogSubFolder);
+        model.Scheme = this.Request.Scheme;
+        model.Authority = this.Request.Host.Value;
         model.MostRecentPosts = new Dictionary<Blog, DateTime>();
         model = this.GetBlogPosts(targetBlog, model);
 
+        Response.ContentType = "application/atom+xml; charset=utf-8";
         return this.View("Atom", model);
     }
 }
