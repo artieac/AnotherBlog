@@ -36,14 +36,6 @@ export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, l
         }
     };
 
-    const formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent',
-        'link', 'image',
-        'table-better', 'table', 'tr', 'td', 'th'
-    ];
-
     return (
         <div className="mb-4">
             <div className="flex justify-between items-center mb-1">
@@ -74,7 +66,6 @@ export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, l
                         value={value || ''}
                         onChange={onChange}
                         modules={modules}
-                        formats={formats}
                     />
                 ) : (
                     <div className="ql-container ql-snow" style={{ border: 'none' }}>
