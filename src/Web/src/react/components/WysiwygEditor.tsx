@@ -6,6 +6,26 @@ import 'quill-table-better/dist/quill-table-better.css';
 
 Quill.register({ 'modules/table-better': QuillTableBetter }, true);
 
+// Quill's own bundled (but never enabled here) basic table module still
+// auto-registers a clipboard matcher for <tr> as soon as `quill` is
+// imported - `table: false` below only stops that module from being
+// instantiated, it does not stop the matcher from registering. That
+// matcher tags every table row with its own legacy `table` format on top
+// of quill-table-better's formats, corrupting the delta produced when
+// re-parsing saved post HTML back into the editor: the table renders fine
+// on creation/preview (those never go through HTML->Delta conversion) but
+// silently disappears the moment a saved post is loaded. Strip the legacy
+// matcher from the clipboard quill-table-better registers, before it gets
+// a chance to run.
+const TableClipboard = Quill.import('modules/clipboard') as any;
+class SafeTableClipboard extends TableClipboard {
+    constructor(quill: any, options: any) {
+        super(quill, options);
+        this.matchers = this.matchers.filter(([selector]: [string, unknown]) => selector !== 'tr');
+    }
+}
+Quill.register({ 'modules/clipboard': SafeTableClipboard }, true);
+
 interface WysiwygEditorProps {
     value: string;
     onChange: (content: string) => void;
