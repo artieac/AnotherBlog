@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill-new';
+import { Delta } from 'quill';
 import 'react-quill-new/dist/quill.snow.css';
 import QuillTableBetter from 'quill-table-better';
 import 'quill-table-better/dist/quill-table-better.css';
@@ -35,6 +36,27 @@ interface WysiwygEditorProps {
 
 export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, label, showPreview = false }) => {
     const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
+    const quillRef = useRef<ReactQuill>(null);
+    const initialValueRef = useRef(value);
+
+    // react-quill-new loads its initial `value` via Quill's `setContents`, which
+    // (per quill-table-better's own README) does not build table blots correctly
+    // and silently drops the table. Reload the initial content through
+    // `updateContents` instead, the pattern quill-table-better documents for
+    // initializing data. This only needs to run once per mount - the editor
+    // itself must therefore never be unmounted/remounted (e.g. by the preview
+    // tab toggle below), or this bug reappears on every remount.
+    useLayoutEffect(() => {
+        const initialValue = initialValueRef.current;
+        const editor = quillRef.current?.getEditor();
+        if (!editor || !initialValue || !initialValue.includes('<table')) {
+            return;
+        }
+        const converted = editor.clipboard.convert({ html: initialValue });
+        const delta = new Delta().delete(editor.getLength()).concat(converted);
+        editor.updateContents(delta, Quill.sources.SILENT);
+        editor.setSelection(0, Quill.sources.SILENT);
+    }, []);
 
     const modules = {
         table: false,
@@ -80,16 +102,18 @@ export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, l
                 )}
             </div>
             <div className="bg-white border rounded-md overflow-hidden">
-                {activeTab === 'edit' ? (
-                    <ReactQuill 
+                <div style={{ display: activeTab === 'edit' ? 'block' : 'none' }}>
+                    <ReactQuill
+                        ref={quillRef}
                         theme="snow"
                         value={value || ''}
                         onChange={onChange}
                         modules={modules}
                     />
-                ) : (
+                </div>
+                {activeTab === 'preview' && (
                     <div className="ql-container ql-snow" style={{ border: 'none' }}>
-                        <div 
+                        <div
                             className="ql-editor p-4 min-h-[200px]"
                             dangerouslySetInnerHTML={{ __html: value || '' }}
                         />
