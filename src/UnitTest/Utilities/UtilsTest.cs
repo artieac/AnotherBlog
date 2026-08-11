@@ -63,23 +63,33 @@ namespace AlwaysMoveForward.AnotherBlog.UnitTest.Utilities
         }
 
         [Test]
-        public void StripHtml_WithMultilineHtml_RemovesTags()
+        public void StripHtml_WithMultilineHtml_RemovesTagsAndCollapsesWhitespace()
         {
             var input = "<p>Line 1\n<span>Line 2</span></p>";
 
             var result = Utils.StripHtml(input);
 
-            Assert.That(result, Is.EqualTo("Line 1\nLine 2"));
+            Assert.That(result, Is.EqualTo("Line 1 Line 2"));
         }
 
         [Test]
-        public void StripHtml_WithSelfClosingTags_RemovesTags()
+        public void StripHtml_WithSelfClosingTags_RemovesTagsAndInsertsSeparatingSpace()
         {
             var input = "Text<br/>More text<hr/>";
 
             var result = Utils.StripHtml(input);
 
-            Assert.That(result, Is.EqualTo("TextMore text"));
+            Assert.That(result, Is.EqualTo("Text More text"));
+        }
+
+        [Test]
+        public void StripHtml_WithTable_InsertsSpacesBetweenCells()
+        {
+            var input = "<table><tbody><tr><td>Header1</td><td>Header2</td></tr><tr><td>Row1A</td><td>Row1B</td></tr></tbody></table>";
+
+            var result = Utils.StripHtml(input);
+
+            Assert.That(result, Is.EqualTo("Header1 Header2 Row1A Row1B"));
         }
 
         [Test]

@@ -103,12 +103,17 @@ export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, l
             </div>
             <div className="bg-white border rounded-md overflow-hidden">
                 <div style={{ display: activeTab === 'edit' ? 'block' : 'none' }}>
+                    {/* useSemanticHTML=false: Quill's getSemanticHTML() (the default
+                        react-quill-new uses) replaces every space character with
+                        &nbsp;, which then can't wrap when rendered elsewhere (e.g.
+                        the post-listing summary). root.innerHTML doesn't do that. */}
                     <ReactQuill
                         ref={quillRef}
                         theme="snow"
                         value={value || ''}
                         onChange={onChange}
                         modules={modules}
+                        useSemanticHTML={false}
                     />
                 </div>
                 {activeTab === 'preview' && (
