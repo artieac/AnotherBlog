@@ -30,7 +30,12 @@ namespace AlwaysMoveForward.AnotherBlog.Common.Utilities
 
             if (inputString != null)
             {
-                retVal = Regex.Replace(inputString, @"<(.|\n)*?>", string.Empty);
+                // Replace with a space rather than deleting outright - tags are what
+                // separate table cells/rows (and other block elements) from each
+                // other, so deleting them with nothing in their place glues adjacent
+                // cell/element text into one unbroken word.
+                retVal = Regex.Replace(inputString, @"<(.|\n)*?>", " ");
+                retVal = Regex.Replace(retVal, @"\s+", " ").Trim();
             }
 
             return retVal;
