@@ -53,7 +53,18 @@ export const WysiwygEditor: React.FC<WysiwygEditorProps> = ({ value, onChange, l
             return;
         }
         const converted = editor.clipboard.convert({ html: initialValue });
-        const delta = new Delta().delete(editor.getLength()).concat(converted);
+        // clipboard.convert() doesn't always terminate its last insert op with
+        // a trailing "\n". That's harmless for setContents() on a fresh editor
+        // (Quill tops up the missing newline itself), but here we're deleting
+        // the existing document and splicing this delta in via updateContents -
+        // without the trailing newline, the last line of content (e.g. a
+        // paragraph after a table) gets silently dropped when Quill
+        // re-normalizes the document to restore its always-ends-in-"\n"
+        // invariant. Ensure it's there before splicing.
+        const lastOp = converted.ops[converted.ops.length - 1];
+        const endsWithNewline = typeof lastOp?.insert === 'string' && lastOp.insert.endsWith('\n');
+        const safeConverted = endsWithNewline ? converted : converted.concat(new Delta().insert('\n'));
+        const delta = new Delta().delete(editor.getLength()).concat(safeConverted);
         editor.updateContents(delta, Quill.sources.SILENT);
         editor.setSelection(0, Quill.sources.SILENT);
     }, []);
